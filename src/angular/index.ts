@@ -74,3 +74,41 @@ export type { SummaryTileTone } from "./shadcn-summary-tile.component";
 export { ShadcnSummaryTilesComponent } from "./shadcn-summary-tiles.component";
 
 export { ShadcnLoadingOverlayComponent } from "./shadcn-loading-overlay.component";
+
+// ── Lote 3 (final): overlay / composição ────────────────────────────────────
+
+export { ShadcnDialogComponent } from "./shadcn-dialog.component";
+export type { ShadcnDialogSize } from "./shadcn-dialog.component";
+
+export { ShadcnDropdownComponent } from "./shadcn-dropdown.component";
+export type { ShadcnDropdownPlacement, ShadcnDropdownSize } from "./shadcn-dropdown.component";
+
+export { ShadcnDropdownItemComponent } from "./shadcn-dropdown-item.component";
+
+export { ShadcnEditFieldModalComponent } from "./shadcn-edit-field-modal.component";
+
+export { ShadcnRequiredFieldsDialogComponent } from "./shadcn-required-fields-dialog.component";
+export type { RequiredField } from "./shadcn-required-fields-dialog.component";
+
+export { ShadcnOnboardingPanelComponent } from "./shadcn-onboarding-panel.component";
+
+export { SparkGridEmptyStateComponent } from "./spark-grid-empty-state.component";
+
+export {
+  ShadcnSettingsListComponent,
+  ShadcnSettingsEditButtonComponent
+} from "./shadcn-settings-list.component";
+
+export { ShadcnSettingsListGroupComponent } from "./shadcn-settings-list-group.component";
+export type { SettingsGroupIconColor } from "./shadcn-settings-list-group.component";
+
+export { ShadcnSettingsListItemComponent } from "./shadcn-settings-list-item.component";
+
+export { ShadcnSettingsEditableFieldComponent } from "./shadcn-settings-editable-field.component";
+
+export { ShadcnSpecSheetComponent } from "./shadcn-spec-sheet.component";
+
+export { ShadcnSpecSheetSectionComponent } from "./shadcn-spec-sheet-section.component";
+export type { SpecSheetAccentColor } from "./shadcn-spec-sheet-section.component";
+
+export { ShadcnSpecSheetFieldComponent } from "./shadcn-spec-sheet-field.component";

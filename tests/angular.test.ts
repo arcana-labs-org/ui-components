@@ -9,10 +9,10 @@
  * valueChange, digitação no input → valueChange, seleção em tabs/segmented/accordion).
  */
 import "@angular/compiler";
-import { Component, provideZonelessChangeDetection } from "@angular/core";
+import { Component, ViewChild, provideZonelessChangeDetection } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-browser/testing";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import {
   ArcanaTabPanelDirective,
   InputCurrencyComponent,
@@ -23,21 +23,34 @@ import {
   ShadcnButtonComponent,
   ShadcnCheckboxComponent,
   ShadcnDatePickerComponent,
+  ShadcnDialogComponent,
+  ShadcnDropdownComponent,
+  ShadcnDropdownItemComponent,
   ShadcnInputBooleanComponent,
   ShadcnInputComponent,
   ShadcnInputMaskComponent,
   ShadcnLoadingOverlayComponent,
   ShadcnNoticeComponent,
   ShadcnNumberStepperComponent,
+  ShadcnOnboardingPanelComponent,
   ShadcnRadioCardGroupComponent,
+  ShadcnRequiredFieldsDialogComponent,
   ShadcnSegmentedOptionsComponent,
   ShadcnSelectComponent,
+  ShadcnSettingsEditableFieldComponent,
+  ShadcnSettingsListComponent,
+  ShadcnSettingsListGroupComponent,
+  ShadcnSettingsListItemComponent,
+  ShadcnSpecSheetComponent,
+  ShadcnSpecSheetFieldComponent,
+  ShadcnSpecSheetSectionComponent,
   ShadcnSummaryTileComponent,
   ShadcnSummaryTilesComponent,
   ShadcnSwitchComponent,
   ShadcnSwitchSegmentedComponent,
   ShadcnTableComponent,
-  ShadcnTabsComponent
+  ShadcnTabsComponent,
+  SparkGridEmptyStateComponent
 } from "../src/angular";
 
 beforeAll(() => {
@@ -581,5 +594,318 @@ describe("Angular adapter", () => {
     fixture.componentInstance.close();
     fixture.detectChanges();
     expect(document.body.querySelector(".msp-panel")).toBeFalsy();
+  });
+
+  // ── Lote 3 (final): overlay / composição ──────────────────────────────────
+
+  // Remove qualquer portal remanescente no <body> entre testes (dialogs/dropdowns
+  // teleportam pro body; se um teste falhar no meio, evita poluir o próximo).
+  afterEach(() => {
+    document.body
+      .querySelectorAll(".shadcn-dialog-overlay, .shadcn-dropdown__menu, .msp-panel, .shadcn-select__panel")
+      .forEach((n) => n.remove());
+  });
+
+  it("ShadcnDialog: teleporta pro body, projeta o conteúdo e fecha via footer {hide}", () => {
+    @Component({
+      standalone: true,
+      imports: [ShadcnDialogComponent],
+      template: `
+        <div arcanaShadcnDialog #d title="Olá" description="Desc" [footerTemplate]="ft">
+          <p class="dlg-body-marker">Corpo projetado</p>
+        </div>
+        <ng-template #ft let-hide>
+          <button class="dlg-footer-btn" (click)="hide()">Fechar</button>
+        </ng-template>
+      `
+    })
+    class Host {
+      @ViewChild("d") dialog!: ShadcnDialogComponent;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeFalsy();
+
+    fixture.componentInstance.dialog.show();
+    fixture.detectChanges();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeTruthy();
+    const content = document.body.querySelector(".shadcn-dialog-content")!;
+    expect(content.getAttribute("role")).toBe("dialog");
+    expect(document.body.querySelector(".shadcn-dialog-title")?.textContent).toContain("Olá");
+    // Projeção (<ng-content>) DENTRO da embedded view movida pro <body> funciona:
+    expect(document.body.querySelector(".shadcn-dialog-body .dlg-body-marker")?.textContent)
+      .toContain("Corpo projetado");
+
+    const footerBtn = document.body.querySelector<HTMLElement>(".dlg-footer-btn");
+    expect(footerBtn).toBeTruthy();
+    click(footerBtn);
+    fixture.detectChanges();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeFalsy();
+  });
+
+  it("ShadcnDropdown/Item: abre menu no body, herda size do pai e fecha ao clicar o item", () => {
+    @Component({
+      standalone: true,
+      imports: [ShadcnDropdownComponent, ShadcnDropdownItemComponent],
+      template: `
+        <div arcanaShadcnDropdown #dd size="comfortable">
+          <button arcanaDropdownTrigger class="dd-trigger">Abrir</button>
+          <div arcanaShadcnDropdownItem (click)="hits = hits + 1">Renomear</div>
+          <div arcanaShadcnDropdownItem [divided]="true" variant="danger">Deletar</div>
+        </div>
+      `
+    })
+    class Host {
+      hits = 0;
+      @ViewChild("dd") dd!: ShadcnDropdownComponent;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector(".shadcn-dropdown")).toBeTruthy();
+
+    click(el.querySelector(".shadcn-dropdown__trigger"));
+    fixture.detectChanges();
+    const menu = document.body.querySelector(".shadcn-dropdown__menu");
+    expect(menu).toBeTruthy();
+    expect(menu!.classList.contains("shadcn-dropdown__menu--comfortable")).toBe(true);
+
+    const items = menu!.querySelectorAll(".shadcn-dropdown-item");
+    expect(items).toHaveLength(2);
+    // size herdado do dropdown pai via inject(ShadcnDropdownComponent):
+    expect(items[0].classList.contains("shadcn-dropdown-item--comfortable")).toBe(true);
+    expect(items[1].classList.contains("shadcn-dropdown-item--danger")).toBe(true);
+    expect(menu!.querySelector(".shadcn-dropdown-item__separator")).toBeTruthy();
+
+    click(items[0]);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.hits).toBe(1);
+    expect(document.body.querySelector(".shadcn-dropdown__menu")).toBeFalsy();
+  });
+
+  it("ShadcnOnboardingPanel: emite classes e dispara action no clique da CTA", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnOnboardingPanelComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnOnboardingPanelComponent);
+    fixture.componentRef.setInput("icon", "fa-solid fa-clock");
+    fixture.componentRef.setInput("title", "Configure horários");
+    fixture.componentRef.setInput("actionLabel", "Adicionar");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-onboarding")).toBe(true);
+    expect(el.querySelector(".shadcn-onboarding__title")?.textContent).toContain("Configure horários");
+    const onAction = vi.fn();
+    fixture.componentInstance.action.subscribe(onAction);
+    click(el.querySelector(".shadcn-onboarding__cta"));
+    expect(onAction).toHaveBeenCalledOnce();
+  });
+
+  it("SparkGridEmptyState: mostra o painel só após carregar e vazio sem filtro", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [SparkGridEmptyStateComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(SparkGridEmptyStateComponent);
+    fixture.componentRef.setInput("total", 0);
+    fixture.componentRef.setInput("loading", true);
+    fixture.componentRef.setInput("filtered", false);
+    fixture.componentRef.setInput("icon", "fa-solid fa-box");
+    fixture.componentRef.setInput("title", "Nada aqui");
+    fixture.componentRef.setInput("actionLabel", "Criar");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("spark-grid-empty-state")).toBe(true);
+    // Ainda carregando → sem painel.
+    expect(el.querySelector(".shadcn-onboarding")).toBeFalsy();
+
+    // Primeiro flip loading true → false arma o `loaded`.
+    fixture.componentRef.setInput("loading", false);
+    fixture.detectChanges();
+    // Terminou de carregar, total 0, sem filtro → painel de onboarding aparece.
+    expect(el.querySelector(".shadcn-onboarding")).toBeTruthy();
+    expect(el.querySelector(".shadcn-onboarding__title")?.textContent).toContain("Nada aqui");
+  });
+
+  it("ShadcnSettingsList família: list > group (collapsible) > item com ação", () => {
+    @Component({
+      standalone: true,
+      imports: [
+        ShadcnSettingsListComponent,
+        ShadcnSettingsListGroupComponent,
+        ShadcnSettingsListItemComponent
+      ],
+      template: `
+        <div arcanaShadcnSettingsList>
+          <section
+            arcanaShadcnSettingsListGroup
+            #grp
+            title="Pedidos"
+            icon="fa-solid fa-cart-shopping"
+            iconColor="indigo"
+            [collapsible]="true"
+            [defaultCollapsed]="true"
+          >
+            <div arcanaShadcnSettingsListItem label="Plano" caption="Config do plano">
+              <span class="my-ctrl">Profissional</span>
+            </div>
+          </section>
+        </div>
+      `
+    })
+    class Host {
+      @ViewChild("grp") grp!: ShadcnSettingsListGroupComponent;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector(".shadcn-settings-list")).toBeTruthy();
+    const group = el.querySelector(".shadcn-settings-list__group")!;
+    expect(group.classList.contains("shadcn-settings-list__group--collapsible")).toBe(true);
+    expect(group.classList.contains("shadcn-settings-list__group--collapsed")).toBe(true);
+    expect(el.querySelector(".shadcn-settings-list__group-title")?.textContent).toContain("Pedidos");
+    expect(el.querySelector(".shadcn-settings-list__group-icon--indigo")).toBeTruthy();
+    expect(el.querySelector(".shadcn-settings-list__label")?.textContent).toContain("Plano");
+    expect(el.querySelector(".shadcn-settings-list__caption")?.textContent).toContain("Config do plano");
+    expect(el.querySelector(".shadcn-settings-list__action .my-ctrl")).toBeTruthy();
+
+    // Toggle expande.
+    click(el.querySelector(".shadcn-settings-list__group-head"));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.grp.isCollapsed).toBe(false);
+    expect(group.classList.contains("shadcn-settings-list__group--collapsed")).toBe(false);
+  });
+
+  it("ShadcnSettingsEditableField: abre modal, edita o buffer e salva", () => {
+    @Component({
+      standalone: true,
+      imports: [ShadcnSettingsEditableFieldComponent],
+      template: `
+        <div
+          arcanaShadcnSettingsEditableField
+          label="Nome"
+          type="text"
+          [value]="val"
+          (valueChange)="val = $event"
+          (save)="saved = $event"
+        ></div>
+      `
+    })
+    class Host {
+      val = "Antigo";
+      saved: unknown = null;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector(".shadcn-settings-list__current-value")?.textContent).toContain("Antigo");
+
+    // Abre o modal.
+    click(el.querySelector(".shadcn-settings-list__edit-btn"));
+    fixture.detectChanges();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeTruthy();
+
+    // Edita o input (buffer) e salva.
+    const input = document.body.querySelector<HTMLInputElement>(".shadcn-dialog-body input.shadcn-input");
+    expect(input).toBeTruthy();
+    input!.value = "Novo";
+    input!.dispatchEvent(new Event("input", { bubbles: true }));
+    fixture.detectChanges();
+
+    const saveBtn = Array.from(document.body.querySelectorAll<HTMLElement>(".shadcn-dialog-footer button"))
+      .find((b) => (b.textContent ?? "").includes("Salvar"))!;
+    click(saveBtn);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.val).toBe("Novo");
+    expect(fixture.componentInstance.saved).toBe("Novo");
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeFalsy();
+  });
+
+  it("ShadcnRequiredFieldsDialog: lista os campos e teleporta pro body", () => {
+    @Component({
+      standalone: true,
+      imports: [ShadcnRequiredFieldsDialogComponent],
+      template: `
+        <div arcanaShadcnRequiredFieldsDialog #rf [fields]="fields" description="Faltam"></div>
+      `
+    })
+    class Host {
+      fields = [
+        { key: "a", label: "Nome", hint: "Passo 1" },
+        { key: "b", label: "CPF", hint: "Passo 2" }
+      ];
+      @ViewChild("rf") rf!: ShadcnRequiredFieldsDialogComponent;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    fixture.componentInstance.rf.show();
+    fixture.detectChanges();
+    expect(document.body.querySelector(".rf-header")).toBeTruthy();
+    expect(document.body.querySelectorAll(".rf-item")).toHaveLength(2);
+    expect(document.body.querySelector(".rf-item__label")?.textContent).toContain("Nome");
+    fixture.componentInstance.rf.hide();
+    fixture.detectChanges();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeFalsy();
+  });
+
+  it("ShadcnSpecSheet família: sheet > section > field (valor + vazio)", () => {
+    @Component({
+      standalone: true,
+      imports: [
+        ShadcnSpecSheetComponent,
+        ShadcnSpecSheetSectionComponent,
+        ShadcnSpecSheetFieldComponent
+      ],
+      template: `
+        <article arcanaShadcnSpecSheet docNum="Cadastro Nº 042" title="Popgás" metaLabel="Status">
+          <section arcanaShadcnSpecSheetSection title="Dados" sectionNum="§ 01" icon="fa-solid fa-file" iconColor="blue">
+            <div arcanaShadcnSpecSheetField label="Razão Social" value="Popgás LTDA"></div>
+            <div arcanaShadcnSpecSheetField label="CNPJ"></div>
+          </section>
+        </article>
+      `
+    })
+    class Host {}
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector(".shadcn-spec-sheet")).toBeTruthy();
+    expect(el.querySelector(".shadcn-spec-sheet__doc-num")?.textContent).toContain("Cadastro Nº 042");
+    expect(el.querySelector(".shadcn-spec-sheet__doc-title")?.textContent).toContain("Popgás");
+    expect(el.querySelector(".shadcn-spec-sheet__meta-label")?.textContent).toContain("Status");
+
+    const section = el.querySelector(".shadcn-spec-sheet__section")!;
+    expect(section.querySelector(".shadcn-spec-sheet__section-icon--blue")).toBeTruthy();
+    expect(section.querySelector(".shadcn-spec-sheet__section-num")?.textContent).toContain("§ 01");
+    const grid = section.querySelector(".shadcn-spec-sheet__grid")!;
+    expect(grid.classList.contains("shadcn-spec-sheet__grid--cols-2")).toBe(true);
+
+    const fields = el.querySelectorAll(".shadcn-spec-sheet__field");
+    expect(fields).toHaveLength(2);
+    expect(fields[0].querySelector(".shadcn-spec-sheet__value")?.textContent).toContain("Popgás LTDA");
+    const emptyValue = fields[1].querySelector(".shadcn-spec-sheet__value")!;
+    expect(emptyValue.classList.contains("shadcn-spec-sheet__value--empty")).toBe(true);
+    expect(emptyValue.textContent).toContain("Não informado");
   });
 });
