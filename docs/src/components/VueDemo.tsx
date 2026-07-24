@@ -3,6 +3,10 @@ import { createApp, defineComponent, type Component as VueComponent } from "vue"
 // The maska plugin registers the global `v-maska` directive, so any demo (now or
 // in a future batch) that renders ShadcnInputMask / ShadcnDatePicker just works.
 import Maska from "maska";
+// ShadcnInputBoolean renders `<ShadcnSelect>` by GLOBAL name (its SFC does not
+// import it locally — in the host app it is registered globally). We mirror that
+// here so the boolean-select demo resolves the component.
+import ShadcnSelect from "../../../src/vue/components/ShadcnSelect.vue";
 
 /**
  * A tiny stand-in for Element Plus's `<el-tooltip>` — ShadcnTabs references it in
@@ -14,6 +18,23 @@ const ElTooltipStub = defineComponent({
   name: "el-tooltip",
   setup(_props, { slots }) {
     return () => slots.default?.();
+  }
+});
+
+/**
+ * A stand-in for Element Plus's `<el-date-picker>`. ShadcnDatePicker's composite
+ * `type="date"` mode layers an invisible `<el-date-picker>` behind a masked text
+ * input purely to host the calendar popover — the visible, interactive part is the
+ * masked input, which works on its own. We are not shipping Element Plus into the
+ * docs, so we register a transparent stub (renders nothing) to keep the date-picker
+ * demo warning-free; the masked field remains fully live.
+ */
+const ElDatePickerStub = defineComponent({
+  name: "el-date-picker",
+  props: { modelValue: {}, type: {}, disabled: {}, clearable: {}, editable: {}, placeholder: {}, format: {}, valueFormat: {} },
+  emits: ["update:modelValue", "change"],
+  setup() {
+    return () => null;
   }
 });
 
@@ -35,6 +56,8 @@ export function VueDemo({ component, className }: { component: VueComponent; cla
     const app = createApp(component);
     app.use(Maska);
     app.component("el-tooltip", ElTooltipStub);
+    app.component("el-date-picker", ElDatePickerStub);
+    app.component("ShadcnSelect", ShadcnSelect);
     app.mount(hostRef.current);
     return () => app.unmount();
   }, [component]);

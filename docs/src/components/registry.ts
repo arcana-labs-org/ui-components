@@ -21,18 +21,18 @@ export const COMPONENTS: ComponentEntry[] = [
   // ── Forms ──────────────────────────────────────────────────────────────
   { id: "shadcn-button", name: "ShadcnButton", category: "forms", docKey: "button" },
   { id: "shadcn-input", name: "ShadcnInput", category: "forms", docKey: "input" },
-  { id: "shadcn-input-mask", name: "ShadcnInputMask", category: "forms" },
-  { id: "shadcn-input-boolean", name: "ShadcnInputBoolean", category: "forms" },
-  { id: "shadcn-number-stepper", name: "ShadcnNumberStepper", category: "forms" },
+  { id: "shadcn-input-mask", name: "ShadcnInputMask", category: "forms", docKey: "inputMask" },
+  { id: "shadcn-input-boolean", name: "ShadcnInputBoolean", category: "forms", docKey: "inputBoolean" },
+  { id: "shadcn-number-stepper", name: "ShadcnNumberStepper", category: "forms", docKey: "numberStepper" },
   { id: "shadcn-select", name: "ShadcnSelect", category: "forms", docKey: "select" },
-  { id: "multi-select-popover", name: "MultiSelectPopover", category: "forms" },
+  { id: "multi-select-popover", name: "MultiSelectPopover", category: "forms", docKey: "multiSelectPopover" },
   { id: "shadcn-checkbox", name: "ShadcnCheckbox", category: "forms", docKey: "checkbox" },
   { id: "shadcn-switch", name: "ShadcnSwitch", category: "forms", docKey: "switch" },
-  { id: "shadcn-radio-card-group", name: "ShadcnRadioCardGroup", category: "forms" },
-  { id: "shadcn-segmented-options", name: "ShadcnSegmentedOptions", category: "forms" },
-  { id: "shadcn-date-picker", name: "ShadcnDatePicker", category: "forms" },
-  { id: "input-currency", name: "InputCurrency", category: "forms" },
-  { id: "labeled-button", name: "LabeledButton", category: "forms" },
+  { id: "shadcn-radio-card-group", name: "ShadcnRadioCardGroup", category: "forms", docKey: "radioCardGroup" },
+  { id: "shadcn-segmented-options", name: "ShadcnSegmentedOptions", category: "forms", docKey: "segmentedOptions" },
+  { id: "shadcn-date-picker", name: "ShadcnDatePicker", category: "forms", docKey: "datePicker" },
+  { id: "input-currency", name: "InputCurrency", category: "forms", docKey: "inputCurrency" },
+  { id: "labeled-button", name: "LabeledButton", category: "forms", docKey: "labeledButton" },
 
   // ── Data display ───────────────────────────────────────────────────────
   { id: "shadcn-badge", name: "ShadcnBadge", category: "dataDisplay", docKey: "badge" },
@@ -50,8 +50,8 @@ export const COMPONENTS: ComponentEntry[] = [
 
   // ── Overlay ────────────────────────────────────────────────────────────
   { id: "shadcn-dialog", name: "ShadcnDialog", category: "overlay", docKey: "dialog" },
-  { id: "shadcn-dropdown", name: "ShadcnDropdown", category: "overlay" },
-  { id: "shadcn-dropdown-item", name: "ShadcnDropdownItem", category: "overlay" },
+  { id: "shadcn-dropdown", name: "ShadcnDropdown", category: "overlay", docKey: "dropdown" },
+  { id: "shadcn-dropdown-item", name: "ShadcnDropdownItem", category: "overlay", docKey: "dropdownItem" },
   { id: "shadcn-edit-field-modal", name: "ShadcnEditFieldModal", category: "overlay" },
   { id: "shadcn-required-fields-dialog", name: "ShadcnRequiredFieldsDialog", category: "overlay" },
   { id: "shadcn-notice", name: "ShadcnNotice", category: "overlay" },
@@ -59,8 +59,8 @@ export const COMPONENTS: ComponentEntry[] = [
 
   // ── Layout & navigation ────────────────────────────────────────────────
   { id: "shadcn-tabs", name: "ShadcnTabs", category: "layoutNav", docKey: "tabs" },
-  { id: "shadcn-accordion", name: "ShadcnAccordion", category: "layoutNav" },
-  { id: "shadcn-accordion-item", name: "ShadcnAccordionItem", category: "layoutNav" },
+  { id: "shadcn-accordion", name: "ShadcnAccordion", category: "layoutNav", docKey: "accordion" },
+  { id: "shadcn-accordion-item", name: "ShadcnAccordionItem", category: "layoutNav", docKey: "accordionItem" },
   { id: "shadcn-switch-card", name: "ShadcnSwitchCard", category: "layoutNav" },
   { id: "shadcn-switch-row", name: "ShadcnSwitchRow", category: "layoutNav" },
   { id: "shadcn-switch-segmented", name: "ShadcnSwitchSegmented", category: "layoutNav" },

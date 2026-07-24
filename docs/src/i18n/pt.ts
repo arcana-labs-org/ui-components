@@ -100,6 +100,45 @@ export const pt: Messages = {
     },
     dialog: {
       blurb: "Um modal no estilo shadcn com API baseada em ref — chame <c>show()</c> / <c>hide()</c> no ref do componente em vez de usar <c>v-model</c>. Ele teleporta pro <c>&lt;body&gt;</c>, prende o foco, fecha no Escape (e opcionalmente no clique do overlay) e empilha corretamente quando aninhado. Presets de tamanho vão de <c>sm → full</c>; os slots <c>header</c> e <c>footer</c> são opcionais (o slot footer recebe <c>{ hide }</c>)."
+    },
+    inputMask: {
+      blurb: "Um input de texto com máscara construído sobre a diretiva <c>v-maska</c> e estilizado igual ao <c>ShadcnInput</c>. Passe uma string em <c>mask</c>, ou um array de strings para máscaras dinâmicas por tamanho (ex.: fixo vs. celular). O <c>v-model</c> sempre guarda o valor <b>raw</b> — sem os caracteres da máscara —, então CPF, CNPJ, CEP ou telefone chegam sem formatação no backend enquanto o campo mostra o display formatado. Exige o <c>v-maska</c> registrado globalmente."
+    },
+    inputBoolean: {
+      blurb: "Um select sim/não para campos booleanos, renderizado como um <c>ShadcnSelect</c>. Ele normaliza os formatos booleanos usuais — <c>true</c>/<c>1</c>, <c>false</c>/<c>0</c>, <c>null</c>. Uma <c>variation</c> troca os rótulos para <c>status</c> (Ativo/Inativo) ou para valores tipo SQL <c>nullable</c> (<c>IS_NOT_NULL</c>/<c>IS_NULL</c>) em filtros. Quando <c>clearable</c> (padrão), uma opção \"Todos\" no topo zera o valor para <c>null</c>."
+    },
+    numberStepper: {
+      blurb: "Um input numérico ladeado por botões <c>−</c> / <c>+</c> para ajustes finos de quantidade. Os botões respeitam <c>min</c> / <c>max</c> / <c>step</c> e ficam desativados nos limites; as setas Cima/Baixo funcionam pelo teclado, e um valor vazio ou inválido é coagido para <c>min</c> no blur. Os spinners nativos ficam escondidos em favor dos botões custom."
+    },
+    multiSelectPopover: {
+      blurb: "Um popover genérico teleportado pro body com abas configuráveis e multi-seleção por checkbox — uma base reutilizável para pickers que abrangem vários buckets (usuários + departamentos, filiais, máquinas…). O <c>v-model</c> é um mapa <c>{ [tabKey]: number[] }</c>, um array de ids selecionados por aba. Cada aba fornece um <c>fetch()</c> async cujo resultado é cacheado pelo lifetime do componente; o painel faz flip e shift para caber na viewport. Os slots <c>trigger</c> e <c>item</c> customizam a renderização."
+    },
+    radioCardGroup: {
+      blurb: "Um grupo de cards selecionáveis apoiados por elementos <c>&lt;input type=\"radio\"&gt;</c> reais — mais tátil que um select quando há poucas opções e cada uma carrega descrição, ícone ou badge. As opções são objetos <c>{ label, value, description?, icon?, badge?, disabled? }</c>. Disponha-as empilhadas, <c>inline</c>, ou num número fixo de <c>columns</c>, e mova o radio para o <c>end</c> quando um ícone à esquerda deve carregar o peso visual."
+    },
+    segmentedOptions: {
+      blurb: "Um segmented control para N opções mutuamente exclusivas dentro de uma cápsula — o irmão multi-opção do binário <c>ShadcnSwitchSegmented</c>. O segmento ativo fica destacado; as opções aceitam um <c>icon</c> opcional e um <c>disabled</c> por opção. <c>compact</c> e <c>squared</c> ajustam a geometria, <c>activeColor</c> sobrescreve a cor do ativo, e <c>autoSelectFirst</c> seleciona a primeira opção habilitada quando nada está selecionado (útil em listas dinâmicas)."
+    },
+    datePicker: {
+      blurb: "Um campo de data estilizado shadcn. Para <c>type=\"date\"</c> ele compõe um input de texto mascarado ao vivo <c>DD/MM/AAAA</c> (via <c>v-maska</c>) com um popover de calendário do Element Plus aberto pelo ícone de calendário; os outros types (<c>daterange</c>, <c>month</c>, <c>year</c>) usam o calendário direto. O <c>v-model</c> é uma string ISO <c>YYYY-MM-DD</c> (ou uma tupla para ranges), e datas digitadas são validadas estritamente (31/02 é rejeitado)."
+    },
+    inputCurrency: {
+      blurb: "Um input de moeda construído sobre o <c>v-money3</c> que formata enquanto o usuário digita — separador de milhar, vírgula decimal e uma <c>fraction</c> configurável de casas decimais (BRL por padrão). Ative a flag <c>shadcn</c> para o campo com estilo zinc e ícone de moeda à esquerda; <c>min</c> / <c>max</c> limitam o valor e <c>allowBlank</c> permite um campo vazio. O <c>v-model</c> carrega a string formatada; o estado disabled mostra um valor formatado somente-leitura."
+    },
+    labeledButton: {
+      blurb: "O botão base por trás dos wrappers de botão de nível mais alto: um <c>label</c>, um <c>icon</c> opcional à esquerda (classe FontAwesome) e um estado <c>loading</c> que troca o ícone por um spinner e desativa o botão. Ative a flag <c>shadcn</c> para mapear a prop legada <c>color</c> numa variant semântica shadcn (danger → destructive, grey → ghost, blue → info, …); sem ela, o estilo Bootstrap legado é mantido. <c>centerLabel</c> / <c>centerContent</c> controlam o alinhamento em botões full-width."
+    },
+    accordion: {
+      blurb: "O container de um conjunto de <c>ShadcnAccordionItem</c>s colapsáveis. Ele fornece o estado aberto/fechado aos filhos via provide/inject e liga a um <c>v-model</c>. No modo single padrão (<c>accordion</c>) o model é o <c>name</c> do item aberto (ou <c>null</c>); passe <c>:accordion=\"false\"</c> para o modo múltiplo, onde o model vira um array de names abertos."
+    },
+    accordionItem: {
+      blurb: "Um único painel colapsável dentro de um <c>ShadcnAccordion</c>, identificado por um <c>name</c> obrigatório. O cabeçalho mostra a prop <c>title</c> (ou um slot <c>title</c> para cabeçalhos ricos) mais um chevron que gira ao abrir; o slot default é o corpo colapsável. <c>disabled</c> bloqueia o toggle. Ele lê seu estado aberto do accordion pai — só funciona aninhado dentro de um."
+    },
+    dropdown: {
+      blurb: "Um menu dropdown no estilo shadcn que substitui o <c>el-dropdown</c>. O slot <c>trigger</c> segura o que abre o menu; o slot default segura os <c>ShadcnDropdownItem</c>s (e recebe um helper <c>close</c>). O menu teleporta pro <c>&lt;body&gt;</c> para escapar do <c>overflow:hidden</c> de ancestrais, se posiciona com flip/shift automático e fecha no clique externo, Escape ou seleção de item. <c>placement</c> e uma densidade <c>size</c> (propagada aos itens) o ajustam."
+    },
+    dropdownItem: {
+      blurb: "Uma linha dentro de um <c>ShadcnDropdown</c>: um <c>icon</c> opcional, o rótulo (slot default) e um slot <c>suffix</c> opcional (ex.: um atalho). <c>variant</c> o colore como <c>default</c>, <c>danger</c>, <c>success</c> ou <c>warning</c>; <c>divided</c> desenha um separador acima dele para isolar ações destrutivas. No clique ele emite <c>click</c> e — a menos que <c>closeOnClick</c> seja false — pede pro dropdown pai fechar via um evento customizado que sobe por bubble."
     }
   }
 };

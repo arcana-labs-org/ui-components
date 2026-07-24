@@ -30,7 +30,21 @@ export type DocumentedKey =
   | "checkbox"
   | "switch"
   | "tabs"
-  | "dialog";
+  | "dialog"
+  // ── Batch 2 ──
+  | "inputMask"
+  | "inputBoolean"
+  | "numberStepper"
+  | "multiSelectPopover"
+  | "radioCardGroup"
+  | "segmentedOptions"
+  | "datePicker"
+  | "inputCurrency"
+  | "labeledButton"
+  | "accordion"
+  | "accordionItem"
+  | "dropdown"
+  | "dropdownItem";
 
 export interface SectionProse {
   title: string;
