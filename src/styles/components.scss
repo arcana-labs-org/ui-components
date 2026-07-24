@@ -1896,7 +1896,8 @@
 }
 
 /* ─── Tipografia ──────────────────────────────────────────────────────── */
-.arcana-onboarding__title {
+/* Parent-scoped (0,0,2,0) so host/global `h3` margins can't bleed in. */
+.arcana-onboarding .arcana-onboarding__title {
     font-size: 19px;
     font-weight: 700;
     color: #09090b;
@@ -3148,7 +3149,8 @@
     margin-bottom: 6px;
 }
 
-.arcana-spec-sheet__doc-title {
+/* Parent-scoped (0,0,2,0) so host/global `h1`–`h3` margins can't bleed in. */
+.arcana-spec-sheet .arcana-spec-sheet__doc-title {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.015em;
@@ -3207,7 +3209,13 @@
     min-width: 0;
 }
 
-.arcana-spec-sheet__section-title {
+/*
+ * The title is an <h3>. Parent-scoped selector (specificity 0,0,2,0) so a host
+ * app's global heading rules (e.g. `.prose h3`, Bootstrap's `h3 { margin }`)
+ * can't bleed in asymmetric margins/size — which would knock the title out of
+ * vertical-centre alignment with the boxed icon.
+ */
+.arcana-spec-sheet__section-head-left .arcana-spec-sheet__section-title {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
