@@ -1,7 +1,24 @@
 import { describe, it, expect, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
+    ShadcnDialog,
+    type ShadcnDialogHandle,
+    ShadcnDropdown,
+    ShadcnDropdownItem,
+    ShadcnEditFieldModal,
+    type ShadcnEditFieldModalHandle,
+    ShadcnRequiredFieldsDialog,
+    type ShadcnRequiredFieldsDialogHandle,
+    ShadcnOnboardingPanel,
+    SparkGridEmptyState,
+    ShadcnSettingsList,
+    ShadcnSettingsListGroup,
+    ShadcnSettingsListItem,
+    ShadcnSettingsEditableField,
+    ShadcnSpecSheet,
+    ShadcnSpecSheetSection,
+    ShadcnSpecSheetField,
     ShadcnButton,
     ShadcnBadge,
     ShadcnInput,
@@ -339,5 +356,244 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(
             container.querySelector(".shadcn-loading-overlay__text")!.textContent
         ).toBe("Salvando…");
+    });
+
+    // ── React lote 3 (final): overlay / composição ─────────────────────────
+
+    it("ShadcnDialog abre/fecha via ref e teleporta pro body com as classes shadcn", () => {
+        function Harness() {
+            const ref = useRef<ShadcnDialogHandle>(null);
+            return (
+                <>
+                    <button onClick={() => ref.current?.show()}>abrir</button>
+                    <ShadcnDialog
+                        ref={ref}
+                        title="Meu Modal"
+                        footer={(hide) => <button onClick={hide}>fechar</button>}
+                    >
+                        <p>corpo do dialog</p>
+                    </ShadcnDialog>
+                </>
+            );
+        }
+        const { getByText } = render(<Harness />);
+        // Fechado por default — nada no body.
+        expect(document.querySelector(".shadcn-dialog-overlay")).toBeNull();
+
+        fireEvent.click(getByText("abrir"));
+        const overlay = document.querySelector(".shadcn-dialog-overlay")!;
+        expect(overlay).toBeTruthy();
+        expect(document.querySelector(".shadcn-dialog-content")).toBeTruthy();
+        expect(document.querySelector(".shadcn-dialog-title")!.textContent).toBe("Meu Modal");
+        expect(getByText("corpo do dialog")).toBeTruthy();
+
+        fireEvent.click(getByText("fechar"));
+        expect(document.querySelector(".shadcn-dialog-overlay")).toBeNull();
+    });
+
+    it("ShadcnDropdown abre no click do trigger e o item dispara onClick + fecha", () => {
+        const onClick = vi.fn();
+        const { getByText } = render(
+            <ShadcnDropdown trigger={<button>menu</button>}>
+                <ShadcnDropdownItem icon="fa-solid fa-pen" onClick={onClick}>
+                    Renomear
+                </ShadcnDropdownItem>
+            </ShadcnDropdown>
+        );
+        expect(document.querySelector(".shadcn-dropdown__menu")).toBeNull();
+
+        fireEvent.click(getByText("menu"));
+        const menu = document.querySelector(".shadcn-dropdown__menu")!;
+        expect(menu).toBeTruthy();
+        const item = document.querySelector(".shadcn-dropdown-item")!;
+        expect(item.classList.contains("shadcn-dropdown-item--default")).toBe(true);
+
+        fireEvent.click(getByText("Renomear"));
+        expect(onClick).toHaveBeenCalledOnce();
+        // closeOnClick default → menu fecha.
+        expect(document.querySelector(".shadcn-dropdown__menu")).toBeNull();
+    });
+
+    it("ShadcnEditFieldModal abre via ref e dispara onSave", () => {
+        const onSave = vi.fn();
+        function Harness() {
+            const ref = useRef<ShadcnEditFieldModalHandle>(null);
+            return (
+                <>
+                    <button onClick={() => ref.current?.show()}>editar</button>
+                    <ShadcnEditFieldModal ref={ref} title="Alterar Plano" onSave={onSave}>
+                        <input aria-label="campo" />
+                    </ShadcnEditFieldModal>
+                </>
+            );
+        }
+        const { getByText } = render(<Harness />);
+        fireEvent.click(getByText("editar"));
+        expect(document.querySelector(".shadcn-dialog-title")!.textContent).toBe("Alterar Plano");
+        fireEvent.click(getByText("Salvar Alterações"));
+        expect(onSave).toHaveBeenCalledOnce();
+    });
+
+    it("ShadcnRequiredFieldsDialog lista os campos pendentes via ref", () => {
+        function Harness() {
+            const ref = useRef<ShadcnRequiredFieldsDialogHandle>(null);
+            return (
+                <>
+                    <button onClick={() => ref.current?.show()}>validar</button>
+                    <ShadcnRequiredFieldsDialog
+                        ref={ref}
+                        fields={[
+                            { key: "name", label: "Nome", hint: "Passo 1" },
+                            { key: "doc", label: "CNPJ", hint: "Passo 2" },
+                        ]}
+                    />
+                </>
+            );
+        }
+        const { getByText } = render(<Harness />);
+        fireEvent.click(getByText("validar"));
+        expect(document.querySelectorAll(".rf-item").length).toBe(2);
+        expect(getByText("Nome")).toBeTruthy();
+        expect(getByText("CNPJ")).toBeTruthy();
+    });
+
+    it("ShadcnOnboardingPanel renderiza visual + CTA e dispara onAction", () => {
+        const onAction = vi.fn();
+        const { container, getByText } = render(
+            <ShadcnOnboardingPanel
+                icon="fa-solid fa-clock"
+                title="Configure os horários"
+                description="Cadastre os intervalos."
+                actionLabel="Adicionar"
+                onAction={onAction}
+            />
+        );
+        expect(container.querySelector(".shadcn-onboarding")).toBeTruthy();
+        expect(container.querySelectorAll(".shadcn-onboarding__ring").length).toBe(2);
+        expect(container.querySelector(".shadcn-onboarding__title")!.textContent).toBe(
+            "Configure os horários"
+        );
+        fireEvent.click(getByText("Adicionar"));
+        expect(onAction).toHaveBeenCalledOnce();
+    });
+
+    it("SparkGridEmptyState mostra o painel só quando carregou vazio e sem filtro", () => {
+        const { container, rerender, queryByText } = render(
+            <SparkGridEmptyState
+                total={0}
+                loading
+                filtered={false}
+                icon="fa-solid fa-box"
+                title="Sem itens"
+                actionLabel="Criar"
+            >
+                <div>conteúdo da grid</div>
+            </SparkGridEmptyState>
+        );
+        // Ainda carregando → sem painel, children visível.
+        expect(container.querySelector(".shadcn-onboarding")).toBeNull();
+
+        // loading true → false com total 0 e sem filtro → painel aparece.
+        rerender(
+            <SparkGridEmptyState
+                total={0}
+                loading={false}
+                filtered={false}
+                icon="fa-solid fa-box"
+                title="Sem itens"
+                actionLabel="Criar"
+            >
+                <div>conteúdo da grid</div>
+            </SparkGridEmptyState>
+        );
+        expect(container.querySelector(".shadcn-onboarding")).toBeTruthy();
+        expect(queryByText("Sem itens")).toBeTruthy();
+    });
+
+    it("família ShadcnSettingsList monta com as classes compartilhadas", () => {
+        const { container, getByText } = render(
+            <ShadcnSettingsList>
+                <ShadcnSettingsListGroup
+                    title="Pedidos"
+                    icon="fa-solid fa-cart-shopping"
+                    iconColor="indigo"
+                >
+                    <ShadcnSettingsListItem label="Plano" caption="Funcionalidades">
+                        <span className="shadcn-settings-list__current-value">Pro</span>
+                    </ShadcnSettingsListItem>
+                </ShadcnSettingsListGroup>
+            </ShadcnSettingsList>
+        );
+        expect(container.querySelector(".shadcn-settings-list")).toBeTruthy();
+        expect(
+            container.querySelector(".shadcn-settings-list__group-icon--indigo")
+        ).toBeTruthy();
+        expect(container.querySelector(".shadcn-settings-list__item")).toBeTruthy();
+        expect(container.querySelector(".shadcn-settings-list__caption")!.textContent).toBe(
+            "Funcionalidades"
+        );
+        expect(getByText("Plano")).toBeTruthy();
+    });
+
+    it("ShadcnSettingsListGroup collapsible alterna a visibilidade dos items", () => {
+        const { container, getByText } = render(
+            <ShadcnSettingsListGroup title="Avançado" collapsible defaultCollapsed>
+                <ShadcnSettingsListItem label="Escondido" />
+            </ShadcnSettingsListGroup>
+        );
+        // Colapsado por default → item não renderiza.
+        expect(container.querySelector(".shadcn-settings-list__item")).toBeNull();
+        fireEvent.click(getByText("Avançado"));
+        expect(container.querySelector(".shadcn-settings-list__item")).toBeTruthy();
+    });
+
+    it("ShadcnSettingsEditableField mostra display + abre modal e salva o buffer", () => {
+        const onValueChange = vi.fn();
+        const onSave = vi.fn();
+        const { container, getByText } = render(
+            <ShadcnSettingsEditableField
+                label="Desconto"
+                caption="Valor aplicado"
+                type="text"
+                value="10"
+                onValueChange={onValueChange}
+                onSave={onSave}
+            />
+        );
+        expect(container.querySelector(".shadcn-settings-list__current-value")!.textContent).toBe(
+            "10"
+        );
+        fireEvent.click(getByText("Alterar"));
+        expect(document.querySelector(".shadcn-dialog-content")).toBeTruthy();
+        fireEvent.click(getByText("Salvar Alterações"));
+        expect(onValueChange).toHaveBeenCalledWith("10");
+        expect(onSave).toHaveBeenCalledWith("10");
+    });
+
+    it("família ShadcnSpecSheet monta header/section/field com as classes e emptyText", () => {
+        const { container, getByText } = render(
+            <ShadcnSpecSheet
+                docNum="Cadastro Nº 042"
+                title="Popgás"
+                metaLabel="Status"
+                meta={<span className="shadcn-spec-sheet-badge">Ativo</span>}
+                footer={<button>Alterar</button>}
+            >
+                <ShadcnSpecSheetSection title="Dados" sectionNum="§ 01" columns={2}>
+                    <ShadcnSpecSheetField label="Razão Social" value="Popgás Ltda" />
+                    <ShadcnSpecSheetField label="CNPJ" value={null} />
+                </ShadcnSpecSheetSection>
+            </ShadcnSpecSheet>
+        );
+        expect(container.querySelector("article.shadcn-spec-sheet")).toBeTruthy();
+        expect(container.querySelector(".shadcn-spec-sheet__doc-num")!.textContent).toBe(
+            "Cadastro Nº 042"
+        );
+        expect(container.querySelector(".shadcn-spec-sheet__grid--cols-2")).toBeTruthy();
+        expect(container.querySelector(".shadcn-spec-sheet__footer")).toBeTruthy();
+        // Field vazio (value=null) mostra o emptyText com a classe --empty.
+        const emptyValue = container.querySelector(".shadcn-spec-sheet__value--empty")!;
+        expect(emptyValue.textContent).toBe("Não informado");
+        expect(getByText("Popgás Ltda")).toBeTruthy();
     });
 });

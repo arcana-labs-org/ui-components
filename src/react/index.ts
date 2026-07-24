@@ -105,3 +105,67 @@ export type { ShadcnSummaryTilesProps } from "./ShadcnSummaryTiles";
 
 export { ShadcnLoadingOverlay } from "./ShadcnLoadingOverlay";
 export type { ShadcnLoadingOverlayProps } from "./ShadcnLoadingOverlay";
+
+// ── React lote 3 (final): overlay / composição ──────────────────────────────
+
+export { ShadcnDialog } from "./ShadcnDialog";
+export type {
+    ShadcnDialogProps,
+    ShadcnDialogHandle,
+    ShadcnDialogSize,
+} from "./ShadcnDialog";
+
+export { ShadcnDropdown, ShadcnDropdownItem } from "./ShadcnDropdown";
+export type {
+    ShadcnDropdownProps,
+    ShadcnDropdownItemProps,
+    ShadcnDropdownPlacement,
+    ShadcnDropdownSize,
+} from "./ShadcnDropdown";
+
+export { ShadcnEditFieldModal } from "./ShadcnEditFieldModal";
+export type {
+    ShadcnEditFieldModalProps,
+    ShadcnEditFieldModalHandle,
+} from "./ShadcnEditFieldModal";
+
+export { ShadcnRequiredFieldsDialog } from "./ShadcnRequiredFieldsDialog";
+export type {
+    ShadcnRequiredFieldsDialogProps,
+    ShadcnRequiredFieldsDialogHandle,
+    RequiredField,
+} from "./ShadcnRequiredFieldsDialog";
+
+export { ShadcnOnboardingPanel } from "./ShadcnOnboardingPanel";
+export type { ShadcnOnboardingPanelProps } from "./ShadcnOnboardingPanel";
+
+export { SparkGridEmptyState } from "./SparkGridEmptyState";
+export type { SparkGridEmptyStateProps } from "./SparkGridEmptyState";
+
+export {
+    ShadcnSettingsList,
+    ShadcnSettingsListGroup,
+    ShadcnSettingsListItem,
+    ShadcnSettingsEditButton,
+} from "./ShadcnSettingsList";
+export type {
+    ShadcnSettingsListProps,
+    ShadcnSettingsListGroupProps,
+    ShadcnSettingsListItemProps,
+    ShadcnSettingsEditButtonProps,
+    SettingsGroupIconColor,
+} from "./ShadcnSettingsList";
+
+export { ShadcnSettingsEditableField } from "./ShadcnSettingsEditableField";
+export type { ShadcnSettingsEditableFieldProps } from "./ShadcnSettingsEditableField";
+
+export {
+    ShadcnSpecSheet,
+    ShadcnSpecSheetSection,
+    ShadcnSpecSheetField,
+} from "./ShadcnSpecSheet";
+export type {
+    ShadcnSpecSheetProps,
+    ShadcnSpecSheetSectionProps,
+    ShadcnSpecSheetFieldProps,
+} from "./ShadcnSpecSheet";
