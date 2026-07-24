@@ -1,7 +1,7 @@
 <h1 align="center">@arcanalabs/ui-components</h1>
 
 <p align="center">
-  A typed, shadcn-style component library — <b>40 components</b>, native for
+  A typed, shadcn-style component library — <b>39 components</b>, native for
   <b>Vue 3</b>, <b>React</b>, <b>Angular</b> and <b>Svelte 5</b>,
   sharing one framework-agnostic stylesheet.
 </p>
