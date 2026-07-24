@@ -54,3 +54,54 @@ export type {
     ShadcnAccordionProps,
     ShadcnAccordionItemProps,
 } from "./ShadcnAccordion";
+
+// ── React lote 2 ────────────────────────────────────────────────────────────
+
+export { ShadcnSelect } from "./ShadcnSelect";
+export type { ShadcnSelectProps, SelectOption } from "./ShadcnSelect";
+
+export { ShadcnInputBoolean } from "./ShadcnInputBoolean";
+export type { ShadcnInputBooleanProps } from "./ShadcnInputBoolean";
+
+export { ShadcnNumberStepper } from "./ShadcnNumberStepper";
+export type { ShadcnNumberStepperProps } from "./ShadcnNumberStepper";
+
+export { ShadcnRadioCardGroup } from "./ShadcnRadioCardGroup";
+export type {
+    ShadcnRadioCardGroupProps,
+    RadioCardOption,
+} from "./ShadcnRadioCardGroup";
+
+export { ShadcnSwitchSegmented } from "./ShadcnSwitchSegmented";
+export type { ShadcnSwitchSegmentedProps } from "./ShadcnSwitchSegmented";
+
+export { MultiSelectPopover } from "./MultiSelectPopover";
+export type {
+    MultiSelectPopoverProps,
+    MultiSelectTab,
+    MultiSelectTriggerContext,
+} from "./MultiSelectPopover";
+
+export { ShadcnInputMask } from "./ShadcnInputMask";
+export type { ShadcnInputMaskProps } from "./ShadcnInputMask";
+
+export { InputCurrency } from "./InputCurrency";
+export type { InputCurrencyProps } from "./InputCurrency";
+
+export { ShadcnDatePicker } from "./ShadcnDatePicker";
+export type { ShadcnDatePickerProps } from "./ShadcnDatePicker";
+
+export { ShadcnTable } from "./ShadcnTable";
+export type { ShadcnTableProps, ShadcnTableColumn } from "./ShadcnTable";
+
+export { ShadcnSummaryTile } from "./ShadcnSummaryTile";
+export type {
+    ShadcnSummaryTileProps,
+    SummaryTileTone,
+} from "./ShadcnSummaryTile";
+
+export { ShadcnSummaryTiles } from "./ShadcnSummaryTiles";
+export type { ShadcnSummaryTilesProps } from "./ShadcnSummaryTiles";
+
+export { ShadcnLoadingOverlay } from "./ShadcnLoadingOverlay";
+export type { ShadcnLoadingOverlayProps } from "./ShadcnLoadingOverlay";
