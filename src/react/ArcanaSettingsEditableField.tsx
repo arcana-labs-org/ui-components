@@ -39,6 +39,8 @@ export interface ArcanaSettingsEditableFieldProps {
     disabled?: boolean;
     nested?: boolean;
     displayFormatter?: (value: unknown) => string;
+    /** Rótulo do botão trigger de edição. Default: "Alterar". */
+    editLabel?: string;
     modalTitle?: string;
     modalDescription?: string;
     inputLabel?: string;
@@ -72,6 +74,7 @@ export function ArcanaSettingsEditableField({
     disabled = false,
     nested = false,
     displayFormatter,
+    editLabel = "Alterar",
     modalTitle = "",
     modalDescription = "",
     inputLabel = "",
@@ -103,7 +106,7 @@ export function ArcanaSettingsEditableField({
     const valueClasses = ["arcana-settings-list__current-value"];
     if (isEmpty) valueClasses.push("arcana-settings-list__current-value--empty");
 
-    const resolvedModalTitle = modalTitle || `Alterar ${label}`;
+    const resolvedModalTitle = modalTitle || `${editLabel} ${label}`;
     const resolvedInputLabel = inputLabel || label;
 
     const openModal = () => {
@@ -130,6 +133,7 @@ export function ArcanaSettingsEditableField({
         input = (
             <ArcanaInputCurrency
                 value={bufferValue as string | number}
+                shadcn
                 onValueChange={(v) => setBufferValue(v)}
             />
         );
@@ -178,7 +182,7 @@ export function ArcanaSettingsEditableField({
                     <path d="M12 20h9" />
                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
                 </svg>
-                Alterar
+                {editLabel}
             </button>
 
             <ArcanaEditFieldDialog

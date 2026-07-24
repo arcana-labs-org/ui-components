@@ -64,7 +64,7 @@ interface SelectOption {
           <path d="M12 20h9" />
           <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
         </svg>
-        Alterar
+        {{ editLabel }}
       </button>
     </div>
 
@@ -87,7 +87,7 @@ interface SelectOption {
               <input arcanaInput [value]="$any(bufferValue)" [placeholder]="inputPlaceholder" (valueChange)="bufferValue = $event" />
             }
             @case ('currency') {
-              <div arcanaInputCurrency [value]="$any(bufferValue)" (valueChange)="bufferValue = $event"></div>
+              <div arcanaInputCurrency [shadcn]="true" [value]="$any(bufferValue)" (valueChange)="bufferValue = $event"></div>
             }
             @case ('number') {
               <input arcanaInput [value]="$any(bufferValue)" type="number" [min]="min" [max]="max" [placeholder]="inputPlaceholder" (valueChange)="bufferValue = $event" />
@@ -111,6 +111,7 @@ export class ArcanaSettingsEditableFieldComponent {
   @Input() options: SelectOption[] = [];
   @Input() disabled = false;
   @Input() nested = false;
+  @Input() editLabel = "Alterar";
   @Input() displayFormatter?: (value: unknown) => string;
   @Input() modalTitle = "";
   @Input() modalDescription = "";
@@ -152,7 +153,7 @@ export class ArcanaSettingsEditableFieldComponent {
   }
 
   get resolvedModalTitle(): string {
-    return this.modalTitle || `Alterar ${this.label}`;
+    return this.modalTitle || `${this.editLabel} ${this.label}`;
   }
 
   get resolvedInputLabel(): string {

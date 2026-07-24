@@ -84,7 +84,6 @@ function readStoredFramework(): Framework {
 }
 
 const STARS_KEY = "arcana-docs-stars";
-const STARS_TTL = 6 * 60 * 60 * 1000; // 6h
 
 function formatStars(n: number): string {
   if (n >= 1000) return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "")}k`;
@@ -107,12 +106,9 @@ function GithubStars() {
   });
 
   useEffect(() => {
-    let fresh = false;
-    try {
-      const raw = localStorage.getItem(STARS_KEY);
-      if (raw) { const parsed = JSON.parse(raw); if (typeof parsed.ts === "number" && Date.now() - parsed.ts < STARS_TTL) fresh = true; }
-    } catch { /* ignore */ }
-    if (fresh) return;
+    // Always refresh on mount so the count never gets stuck on a stale cached
+    // value (e.g. a 0 fetched before the repo had any stars). The cached value
+    // above is only for an instant first paint; the network result wins.
     const controller = new AbortController();
     fetch("https://api.github.com/repos/arcana-labs-org/ui-components", { signal: controller.signal, headers: { Accept: "application/vnd.github+json" } })
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error("gh"))))

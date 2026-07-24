@@ -702,9 +702,9 @@ const SettingsEditableFieldDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaSettingsList>
-        <ArcanaSettingsEditableField :label="$dt.editableUnitName" :caption="$dt.editableUnitNameCaption" type="text" v-model="name" />
-        <ArcanaSettingsEditableField :label="$dt.editableFirstPurchaseDiscount" :caption="$dt.editableFirstPurchaseDiscountCaption" type="currency" v-model="discount" />
-        <ArcanaSettingsEditableField :label="$dt.settingsPlan" :caption="$dt.settingsPlanShortCaption" type="select" :options="planOptions" v-model="plan" />
+        <ArcanaSettingsEditableField :edit-label="$dt.actionChange" :label="$dt.editableUnitName" :caption="$dt.editableUnitNameCaption" type="text" v-model="name" />
+        <ArcanaSettingsEditableField :edit-label="$dt.actionChange" :label="$dt.editableFirstPurchaseDiscount" :caption="$dt.editableFirstPurchaseDiscountCaption" type="currency" v-model="discount" />
+        <ArcanaSettingsEditableField :edit-label="$dt.actionChange" :label="$dt.settingsPlan" :caption="$dt.settingsPlanShortCaption" type="select" :options="planOptions" v-model="plan" />
       </ArcanaSettingsList>
       <p class="demo-note">{{ $dt.editableFieldHintPrefix }} <strong>{{ $dt.actionChange }}</strong> {{ $dt.editableFieldHintSuffix }}</p>
     </div>
@@ -1737,6 +1737,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "label", type: "string", default: "— (required)", description: "Row label." },
       { name: "caption", type: "string", default: "''", description: "Muted description under the label." },
       { name: "type", type: "text | currency | number | select", default: "text", description: "Which input the edit modal renders." },
+      { name: "editLabel", type: "string", default: "'Alterar'", description: "Trigger button label (also the default modal title prefix). Pass a translated value for i18n." },
       { name: "options", type: "Array<{ label, value }>", default: "[]", description: "Options for type='select'." },
       { name: "displayFormatter", type: "(value) => string", default: "null", description: "Formats the read-only display next to the button." },
       { name: "nested", type: "boolean", default: "false", description: "Sub-item styling (forwarded to the inner list item)." },

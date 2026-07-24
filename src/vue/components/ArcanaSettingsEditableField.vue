@@ -12,7 +12,7 @@
             @click="openModal"
         >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-            Alterar
+            {{ editLabel }}
         </button>
 
         <!--
@@ -36,6 +36,7 @@
                     <ArcanaInputCurrency
                         v-else-if="type === 'currency'"
                         v-model="bufferValue"
+                        :shadcn="true"
                     />
                     <ArcanaInput
                         v-else-if="type === 'number'"
@@ -146,6 +147,15 @@ export default {
             default: false,
         },
         /**
+         * Rótulo do botão de edição (o trigger ao lado do valor). Configurável
+         * pra i18n / verbos alternativos ("Editar", "Configurar"). Também compõe
+         * o título default do modal (`${editLabel} ${label}`).
+         */
+        editLabel: {
+            type: String,
+            default: 'Alterar',
+        },
+        /**
          * Repassa pro `<ArcanaSettingsListItem>` interno — aplica indent + bg muted
          * + marcador `╲╱` quando este campo é subordinado a um item principal acima
          * (ex: "Tempo Médio" como sub-config de um tipo de entrega ativo).
@@ -222,7 +232,7 @@ export default {
             return classes.join(' ')
         },
         resolvedModalTitle(): string {
-            return this.modalTitle || `Alterar ${this.label}`
+            return this.modalTitle || `${this.editLabel} ${this.label}`
         },
         resolvedInputLabel(): string {
             return this.inputLabel || this.label
