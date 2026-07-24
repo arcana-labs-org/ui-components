@@ -1,5 +1,3 @@
-@import "../../src/assets/ArcanaGrid.css";
-
 :root {
   --bg: #ffffff;
   --ink: #0f172a;
@@ -1272,3 +1270,17 @@ table.ref-table td .t-type {
     animation: none !important;
   }
 }
+
+/* ─── Live Vue component demos (batch 1) ─────────────────────────────── */
+.vue-demo { width: 100%; }
+.demo-stack { display: flex; flex-direction: column; gap: 12px; }
+.demo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+.demo-note { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
+.demo-note strong { color: var(--ink); }
+.demo-panel { padding: 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: #3f3f46; background: #fafafa; }
+.demo-switch-row { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #3f3f46; cursor: pointer; }
+.demo-chip { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); cursor: pointer; }
+.demo-chip.is-on { background: #18181b; border-color: #18181b; color: #fff; }
+.events-block { margin-top: 16px; }
+.events-block .doc-list code { font-size: 12px; }
+.stub-note { color: var(--muted); font-size: 14px; line-height: 1.6; }

@@ -58,7 +58,7 @@
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run typecheck && npm test && npm run build",
+    "check": "npm run typecheck && npm test && npm run build && npm run docs:build",
     "prepublishOnly": "npm run check",
     "release:dry": "npm pack --dry-run"
   },

@@ -79,9 +79,20 @@ const RICH_TAG: Record<string, { tag: string; className?: string }> = {
   i: { tag: "em" }
 };
 
+/** Decodes the handful of HTML entities the message catalog is allowed to use. */
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
+}
+
 /**
  * Mini renderer for the inline markup allowed in messages:
  * <c>code</c>, <b>strong</b> and <i>emphasis</i>. Anything else is plain text.
+ * The escaped angle brackets `&lt;`/`&gt;` are decoded so prose can safely
+ * reference tags like `<c>&lt;input&gt;</c>` without tripping the tag matcher.
  */
 export function rich(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
@@ -90,11 +101,11 @@ export function rich(text: string): ReactNode[] {
   RICH_RE.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = RICH_RE.exec(text)) !== null) {
-    if (match.index > last) nodes.push(text.slice(last, match.index));
+    if (match.index > last) nodes.push(decodeEntities(text.slice(last, match.index)));
     const meta = RICH_TAG[match[1]];
-    nodes.push(createElement(meta.tag, { key: key++, className: meta.className }, match[2]));
+    nodes.push(createElement(meta.tag, { key: key++, className: meta.className }, decodeEntities(match[2])));
     last = RICH_RE.lastIndex;
   }
-  if (last < text.length) nodes.push(text.slice(last));
+  if (last < text.length) nodes.push(decodeEntities(text.slice(last)));
   return nodes;
 }

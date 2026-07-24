@@ -1,7 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { CodeBlock } from "./CodeBlock";
 import { LangSwitcher } from "./LangSwitcher";
-import { Playground } from "./Playground";
 import { fmt, useLang } from "../i18n";
 import arcanaLogo from "../assets/arcana-logo-light.png";
 
@@ -18,7 +17,8 @@ export interface DocsSection {
   body: ReactNode;
   preview?: ReactNode;
   previewLabel?: string;
-  code: Record<Framework, SectionCode>;
+  /** Optional per-framework code. Omitted for stub ("coming soon") sections. */
+  code?: Record<Framework, SectionCode>;
 }
 
 export interface DocsGroup {
@@ -27,7 +27,7 @@ export interface DocsGroup {
 }
 
 const FW_KEY = "arcana-docs-framework";
-const GITHUB_URL = "https://github.com/arcana-labs-org/datatable";
+const GITHUB_URL = "https://github.com/arcana-labs-org/ui-components";
 
 function ReactLogo() {
   return <svg className="fw-logo" viewBox="-11.5 -10.23 23 20.46" aria-hidden="true">
@@ -63,8 +63,6 @@ function SvelteLogo() {
   </svg>;
 }
 
-const FRAMEWORKS: Framework[] = ["react", "vue", "angular", "svelte"];
-
 export const FW_BADGE: Record<Framework, string> = {
   react: "React",
   vue: "Vue 3",
@@ -72,19 +70,14 @@ export const FW_BADGE: Record<Framework, string> = {
   svelte: "Svelte"
 };
 
-type DocsView = "docs" | "playground";
-
-/** `#/playground` é a rota do playground; qualquer outro hash (âncoras de seção) é docs. */
-function readView(): DocsView {
-  return window.location.hash.startsWith("#/playground") ? "playground" : "docs";
-}
-
 function readStoredFramework(): Framework {
   try {
     const stored = localStorage.getItem(FW_KEY);
-    return FRAMEWORKS.includes(stored as Framework) ? (stored as Framework) : "react";
+    return (["react", "vue", "angular", "svelte"] as Framework[]).includes(stored as Framework)
+      ? (stored as Framework)
+      : "vue";
   } catch {
-    return "react";
+    return "vue";
   }
 }
 
@@ -97,11 +90,9 @@ function formatStars(n: number): string {
 }
 
 /**
- * GitHub star count next to the topbar link. Cache-first: reads a cached
- * `{count, ts}` from localStorage and only calls the GitHub API when it's
- * stale (TTL 6h), so each visitor makes at most one request per window —
- * avoiding the unauthenticated 60 req/h/IP rate limit. Any failure keeps the
- * cached value (or renders nothing); the link itself never breaks.
+ * GitHub star count next to the topbar link. Cache-first (localStorage, TTL 6h)
+ * so each visitor makes at most one unauthenticated request per window. Any
+ * failure keeps the cached value; the link itself never breaks.
  */
 function GithubStars() {
   const { msg } = useLang();
@@ -121,7 +112,7 @@ function GithubStars() {
     } catch { /* ignore */ }
     if (fresh) return;
     const controller = new AbortController();
-    fetch("https://api.github.com/repos/arcana-labs-org/datatable", { signal: controller.signal, headers: { Accept: "application/vnd.github+json" } })
+    fetch("https://api.github.com/repos/arcana-labs-org/ui-components", { signal: controller.signal, headers: { Accept: "application/vnd.github+json" } })
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error("gh"))))
       .then((data) => {
         if (typeof data.stargazers_count === "number") {
@@ -144,38 +135,41 @@ function SectionWorkbench({ section, framework }: { section: DocsSection; framew
   const { msg } = useLang();
   const [tab, setTab] = useState<"preview" | "code">("preview");
   const id = useId();
-  const activeCode = section.code[framework];
 
-  if (!section.preview) {
+  // Stub sections carry neither preview nor code.
+  if (!section.preview && !section.code) return null;
+
+  // Code-only sections (e.g. installation) — no preview tab.
+  if (!section.preview && section.code) {
+    const activeCode = section.code[framework];
     return <div className="section-code-only">
-      <div className="section-code-label">{msg.shell.codeOnlyLabel}</div>
+      <div className="section-code-label">{msg.shell.codeOnlyLabel}<span className="seg-fw-badge">{FW_BADGE[framework]}</span></div>
       <CodeBlock key={`${section.id}-${framework}`} file={activeCode.file} code={activeCode.code} />
     </div>;
   }
 
+  // Preview-only sections — no code to toggle.
+  if (section.preview && !section.code) {
+    return <div className="section-workbench">
+      <div className="section-workbench-header">
+        <span className="section-preview-caption">{section.previewLabel ?? msg.shell.defaultPreviewCaption}</span>
+      </div>
+      <div className="section-panel section-panel--preview">
+        <div className="section-preview-body">{section.preview}</div>
+      </div>
+    </div>;
+  }
+
+  const activeCode = section.code![framework];
   return <div className="section-workbench">
     <div className="section-workbench-header">
       <span className="section-preview-caption">{section.previewLabel ?? msg.shell.defaultPreviewCaption}</span>
       <div className="section-seg" role="tablist" aria-label={fmt(msg.shell.sectionExampleAria, { title: section.title })}>
-        <button
-          id={`${id}-preview-tab`}
-          type="button"
-          role="tab"
-          aria-selected={tab === "preview"}
-          aria-controls={`${id}-panel`}
-          onClick={() => setTab("preview")}
-        >
+        <button id={`${id}-preview-tab`} type="button" role="tab" aria-selected={tab === "preview"} aria-controls={`${id}-panel`} onClick={() => setTab("preview")}>
           <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
           {msg.shell.previewTab}
         </button>
-        <button
-          id={`${id}-code-tab`}
-          type="button"
-          role="tab"
-          aria-selected={tab === "code"}
-          aria-controls={`${id}-panel`}
-          onClick={() => setTab("code")}
-        >
+        <button id={`${id}-code-tab`} type="button" role="tab" aria-selected={tab === "code"} aria-controls={`${id}-panel`} onClick={() => setTab("code")}>
           <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
           {msg.shell.codeTab}
           <span className="seg-fw-badge">{FW_BADGE[framework]}</span>
@@ -194,7 +188,6 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
   const { msg } = useLang();
   const allSections = useMemo(() => groups.flatMap((group) => group.sections), [groups]);
   const [framework, setFramework] = useState<Framework>(readStoredFramework);
-  const [view, setView] = useState<DocsView>(readView);
   const [activeId, setActiveId] = useState<string>(() => {
     const hash = window.location.hash.replace("#", "");
     return allSections.some((section) => section.id === hash) ? hash : allSections[0]?.id ?? "";
@@ -203,44 +196,24 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // Hash routing: `#/playground` ⇄ âncoras de seção; back/forward do browser funcionam.
   useEffect(() => {
     const onHashChange = () => {
-      const nextView = readView();
-      setView(nextView);
       setNavOpen(false);
-      if (nextView === "docs") {
-        const hash = window.location.hash.replace("#", "");
-        if (allSections.some((section) => section.id === hash)) setActiveId(hash);
-      }
+      const hash = window.location.hash.replace("#", "");
+      if (allSections.some((section) => section.id === hash)) setActiveId(hash);
     };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, [allSections]);
 
-  // Vindo do playground, a âncora do hash ainda não existia no DOM — rola após o render.
   useEffect(() => {
-    if (view !== "docs") return;
-    const hash = window.location.hash.replace("#", "");
-    if (allSections.some((section) => section.id === hash)) document.getElementById(hash)?.scrollIntoView();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(FW_KEY, framework);
-    } catch {
-      /* modo privado */
-    }
+    try { localStorage.setItem(FW_KEY, framework); } catch { /* private mode */ }
   }, [framework]);
 
   useEffect(() => {
-    if (view !== "docs") return;
     const sections = Array.from(document.querySelectorAll<HTMLElement>(".doc-section"));
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActiveId(entry.target.id);
-      });
+      entries.forEach((entry) => { if (entry.isIntersecting) setActiveId(entry.target.id); });
     }, { rootMargin: "-80px 0px -62% 0px", threshold: 0 });
     sections.forEach((section) => observer.observe(section));
 
@@ -250,11 +223,8 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [allSections, view]);
+    return () => { observer.disconnect(); window.removeEventListener("scroll", onScroll); };
+  }, [allSections]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -279,24 +249,20 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
 
   return <>
     <header className="topbar">
-      <button className="menu-btn" type="button" aria-label={navOpen ? (view === "playground" ? msg.shell.closeSettings : msg.shell.closeNav) : (view === "playground" ? msg.shell.openSettings : msg.shell.openNav)} aria-expanded={navOpen} aria-controls={view === "playground" ? "playground-panel" : "docs-sidebar"} onClick={() => setNavOpen((open) => !open)}>
+      <button className="menu-btn" type="button" aria-label={navOpen ? msg.shell.closeNav : msg.shell.openNav} aria-expanded={navOpen} aria-controls="docs-sidebar" onClick={() => setNavOpen((open) => !open)}>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" /></svg>
       </button>
-      <a className="brand" href="#instalacao">
+      <a className="brand" href={`#${groups[0]?.sections[0]?.id ?? ""}`}>
         <img className="brand-logo" src={arcanaLogo} alt="Arcana" />
-        <span className="brand-lib">DataTable</span>
+        <span className="brand-lib">{msg.shell.brandLib}</span>
       </a>
-      <nav className="top-nav" aria-label={msg.shell.topNavAria}>
-        <a className={view === "docs" ? "top-nav-link is-active" : "top-nav-link"} aria-current={view === "docs" ? "page" : undefined} href="#instalacao">{msg.shell.navDocs}</a>
-        <a className={view === "playground" ? "top-nav-link is-active" : "top-nav-link"} aria-current={view === "playground" ? "page" : undefined} href="#/playground">{msg.shell.navPlayground}</a>
-      </nav>
-      {view === "docs" ? <div className="topbar-search" role="search">
+      <div className="topbar-search" role="search">
         <input ref={searchRef} type="search" placeholder={msg.shell.searchPlaceholder} aria-label={msg.shell.searchAria} value={query} onChange={(event) => setQuery(event.target.value)} />
-      </div> : null}
+      </div>
       <div className="topbar-right">
         <div className="fw-toggle" role="group" aria-label={msg.shell.chooseFramework}>
-          <button type="button" className={framework === "react" ? "fw-btn is-active" : "fw-btn"} aria-pressed={framework === "react"} onClick={() => setFramework("react")}><ReactLogo />React</button>
           <button type="button" className={framework === "vue" ? "fw-btn is-active" : "fw-btn"} aria-pressed={framework === "vue"} onClick={() => setFramework("vue")}><VueLogo />Vue</button>
+          <button type="button" className={framework === "react" ? "fw-btn is-active" : "fw-btn"} aria-pressed={framework === "react"} onClick={() => setFramework("react")}><ReactLogo />React</button>
           <button type="button" className={framework === "angular" ? "fw-btn is-active" : "fw-btn"} aria-pressed={framework === "angular"} onClick={() => setFramework("angular")}><AngularLogo />Angular</button>
           <button type="button" className={framework === "svelte" ? "fw-btn is-active" : "fw-btn"} aria-pressed={framework === "svelte"} onClick={() => setFramework("svelte")}><SvelteLogo />Svelte</button>
         </div>
@@ -309,9 +275,9 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
       </div>
     </header>
 
-    {navOpen ? <button className="nav-scrim" type="button" aria-label={view === "playground" ? msg.shell.closeSettings : msg.shell.closeNav} onClick={closeNav} /> : null}
+    {navOpen ? <button className="nav-scrim" type="button" aria-label={msg.shell.closeNav} onClick={closeNav} /> : null}
 
-    {view === "playground" ? <Playground framework={framework} panelOpen={navOpen} /> : <div className="layout">
+    <div className="layout">
       <nav className={navOpen ? "sidebar is-open" : "sidebar"} id="docs-sidebar" aria-label={msg.shell.sidebarAria}>
         {visibleGroups.length === 0 ? <p className="nav-empty">{msg.shell.noSectionsFound}</p> : null}
         {visibleGroups.map((group) => <div className="nav-group" key={group.label}>
@@ -332,7 +298,7 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
       <main className="content">
         <div className="content-inner">
           <div className="doc-kicker">{msg.shell.kicker}</div>
-          <h1 className="doc-title">Arcana DataTable</h1>
+          <h1 className="doc-title">{msg.shell.docTitle}</h1>
           <p className="doc-lead">{msg.shell.lead}</p>
 
           {groups.map((group) => <div key={group.label}>
@@ -345,11 +311,10 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
           </div>)}
 
           <footer className="doc-footer">
-            Arcana DataTable · MIT · <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">github.com/arcana-labs-org/datatable</a>
+            {msg.shell.footer} · <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">github.com/arcana-labs-org/ui-components</a>
           </footer>
         </div>
       </main>
-
-    </div>}
+    </div>
   </>;
 }
