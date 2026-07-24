@@ -15,15 +15,28 @@ import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import {
   ArcanaTabPanelDirective,
+  InputCurrencyComponent,
+  MultiSelectPopoverComponent,
   ShadcnAccordionComponent,
   ShadcnAccordionItemComponent,
   ShadcnBadgeComponent,
   ShadcnButtonComponent,
   ShadcnCheckboxComponent,
+  ShadcnDatePickerComponent,
+  ShadcnInputBooleanComponent,
   ShadcnInputComponent,
+  ShadcnInputMaskComponent,
+  ShadcnLoadingOverlayComponent,
   ShadcnNoticeComponent,
+  ShadcnNumberStepperComponent,
+  ShadcnRadioCardGroupComponent,
   ShadcnSegmentedOptionsComponent,
+  ShadcnSelectComponent,
+  ShadcnSummaryTileComponent,
+  ShadcnSummaryTilesComponent,
   ShadcnSwitchComponent,
+  ShadcnSwitchSegmentedComponent,
+  ShadcnTableComponent,
   ShadcnTabsComponent
 } from "../src/angular";
 
@@ -277,5 +290,296 @@ describe("Angular adapter", () => {
     fixture.detectChanges();
     expect(items[1].classList.contains("open")).toBe(true);
     expect(items[0].classList.contains("open")).toBe(false);
+  });
+
+  // ── Lote 2 ─────────────────────────────────────────────────────────────────
+
+  it("ShadcnSelect: abre painel no body, seleciona item e emite valueChange", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnSelectComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnSelectComponent);
+    fixture.componentRef.setInput("value", "a");
+    fixture.componentRef.setInput("options", [
+      { label: "Opção A", value: "a" },
+      { label: "Opção B", value: "b" }
+    ]);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-select")).toBe(true);
+    expect(el.querySelector(".shadcn-select__label")?.textContent).toContain("Opção A");
+    // Abre: painel é teleportado pro document.body.
+    click(el.querySelector(".shadcn-select__trigger"));
+    fixture.detectChanges();
+    const panel = document.body.querySelector(".shadcn-select__panel");
+    expect(panel).toBeTruthy();
+    const items = panel!.querySelectorAll(".shadcn-select__item");
+    expect(items).toHaveLength(2);
+    expect(items[0].classList.contains("is-selected")).toBe(true);
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    click(items[1]);
+    fixture.detectChanges();
+    expect(onValue).toHaveBeenCalledWith("b");
+    // Fechou: painel removido do body.
+    expect(document.body.querySelector(".shadcn-select__panel")).toBeFalsy();
+  });
+
+  it("ShadcnInputBoolean: monta Sim/Não/Todos no Select interno", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnInputBooleanComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnInputBooleanComponent);
+    fixture.componentRef.setInput("value", true);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const select = el.querySelector(".shadcn-select");
+    expect(select).toBeTruthy();
+    expect(select!.querySelector(".shadcn-select__label")?.textContent).toContain("Sim");
+    click(el.querySelector(".shadcn-select__trigger"));
+    fixture.detectChanges();
+    const labels = Array.from(
+      document.body.querySelectorAll(".shadcn-select__item-label")
+    ).map((n) => n.textContent?.trim());
+    expect(labels).toEqual(["Todos", "Sim", "Não"]);
+    document.body.querySelectorAll(".shadcn-select__panel").forEach((p) => p.remove());
+  });
+
+  it("ShadcnNumberStepper: incrementa/decrementa e respeita min/max", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnNumberStepperComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnNumberStepperComponent);
+    fixture.componentRef.setInput("value", 1);
+    fixture.componentRef.setInput("min", 1);
+    fixture.componentRef.setInput("max", 2);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-number-stepper")).toBe(true);
+    const dec = el.querySelector<HTMLButtonElement>(".shadcn-number-stepper__btn--decrement")!;
+    const inc = el.querySelector<HTMLButtonElement>(".shadcn-number-stepper__btn--increment")!;
+    expect(dec.disabled).toBe(true); // value === min
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    click(inc);
+    expect(onValue).toHaveBeenCalledWith(2);
+  });
+
+  it("ShadcnRadioCardGroup: renderiza cards e seleciona via input nativo", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnRadioCardGroupComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnRadioCardGroupComponent);
+    fixture.componentRef.setInput("value", "x");
+    fixture.componentRef.setInput("options", [
+      { label: "X", value: "x" },
+      { label: "Y", value: "y" }
+    ]);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-radio-card-group")).toBe(true);
+    const cards = el.querySelectorAll(".shadcn-radio-card");
+    expect(cards).toHaveLength(2);
+    expect(cards[0].classList.contains("is-selected")).toBe(true);
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    const input = cards[1].querySelector<HTMLInputElement>("input.shadcn-radio-card__input")!;
+    input.checked = true;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    expect(onValue).toHaveBeenCalledWith("y");
+  });
+
+  it("ShadcnSwitchSegmented: toggla e emite valueChange", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnSwitchSegmentedComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnSwitchSegmentedComponent);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-switch-segmented")).toBe(true);
+    expect(el.getAttribute("role")).toBe("switch");
+    expect(el.querySelector(".shadcn-switch-segmented__option--on")?.textContent).toContain("Ativo");
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    el.click();
+    expect(onValue).toHaveBeenCalledWith(true);
+  });
+
+  it("ShadcnInputMask: formata display e emite raw sem separadores", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnInputMaskComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnInputMaskComponent);
+    fixture.componentRef.setInput("mask", "##.##");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLInputElement;
+    expect(el.classList.contains("shadcn-input")).toBe(true);
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    el.value = "1234";
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    fixture.detectChanges();
+    // raw emitido sem o ponto; display mascarado com o ponto.
+    expect(onValue).toHaveBeenCalledWith("1234");
+    expect(el.value).toBe("12.34");
+  });
+
+  it("InputCurrency: máscara BRL right-to-left, emite string formatada", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [InputCurrencyComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(InputCurrencyComponent);
+    fixture.componentRef.setInput("shadcn", true);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("icur-shadcn-field")).toBe(true);
+    const input = el.querySelector<HTMLInputElement>(".icur-shadcn-input")!;
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    input.value = "123456";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    fixture.detectChanges();
+    expect(onValue).toHaveBeenCalledWith("1.234,56");
+    expect(input.value).toBe("1.234,56");
+  });
+
+  it("ShadcnDatePicker: máscara DD/MM/AAAA emite YYYY-MM-DD", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnDatePickerComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnDatePickerComponent);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-date-picker")).toBe(true);
+    const text = el.querySelector<HTMLInputElement>(".shadcn-date-picker__text")!;
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    text.value = "25/12/2026";
+    text.dispatchEvent(new Event("input", { bubbles: true }));
+    fixture.detectChanges();
+    expect(onValue).toHaveBeenCalledWith("2026-12-25");
+    expect(text.value).toBe("25/12/2026");
+  });
+
+  it("ShadcnTable: renderiza colunas, linhas e empty", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnTableComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnTableComponent);
+    fixture.componentRef.setInput("columns", [
+      { key: "name", label: "Nome" },
+      { key: "total", label: "Total", align: "right" }
+    ]);
+    fixture.componentRef.setInput("rows", [{ name: "Ana", total: 10 }]);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-table-wrap")).toBe(true);
+    const ths = el.querySelectorAll("thead th");
+    expect(ths).toHaveLength(2);
+    expect(ths[1].classList.contains("shadcn-table__th--right")).toBe(true);
+    const cells = el.querySelectorAll("tbody td");
+    expect(cells[0].textContent).toContain("Ana");
+    expect(cells[1].textContent).toContain("10");
+    // rows vazio → __empty
+    fixture.componentRef.setInput("rows", []);
+    fixture.detectChanges();
+    expect(el.querySelector(".shadcn-table__empty")?.textContent).toContain("Nenhum registro.");
+  });
+
+  it("ShadcnSummaryTiles + Tile: grid var + tone/label/value", () => {
+    @Component({
+      standalone: true,
+      imports: [ShadcnSummaryTilesComponent, ShadcnSummaryTileComponent],
+      template: `
+        <div arcanaShadcnSummaryTiles [columns]="4">
+          <div arcanaShadcnSummaryTile label="Vendas" [value]="42" tone="positive"></div>
+        </div>
+      `
+    })
+    class TilesHost {}
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [TilesHost],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(TilesHost);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const grid = el.querySelector<HTMLElement>(".shadcn-summary-tiles")!;
+    expect(grid.style.getPropertyValue("--shadcn-summary-tiles-cols")).toBe("4");
+    const tile = el.querySelector(".shadcn-summary-tile")!;
+    expect(tile.classList.contains("shadcn-summary-tile--positive")).toBe(true);
+    expect(tile.querySelector(".shadcn-summary-tile__label")?.textContent).toContain("Vendas");
+    expect(tile.querySelector(".shadcn-summary-tile__value")?.textContent).toContain("42");
+  });
+
+  it("ShadcnLoadingOverlay: mostra/esconde box conforme visible", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ShadcnLoadingOverlayComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ShadcnLoadingOverlayComponent);
+    fixture.componentRef.setInput("visible", true);
+    fixture.componentRef.setInput("text", "Aguarde…");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("shadcn-loading-overlay")).toBe(true);
+    expect(el.querySelector(".shadcn-loading-overlay__text")?.textContent).toContain("Aguarde…");
+    fixture.componentRef.setInput("visible", false);
+    fixture.detectChanges();
+    expect(el.style.display).toBe("none");
+    expect(el.querySelector(".shadcn-loading-overlay__box")).toBeFalsy();
+  });
+
+  it("MultiSelectPopover: abre painel, carrega tab e alterna seleção", async () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [MultiSelectPopoverComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(MultiSelectPopoverComponent);
+    fixture.componentRef.setInput("tabs", [
+      {
+        key: "cities",
+        label: "Cidades",
+        fetch: () => Promise.resolve([{ id: 1, name: "Recife" }, { id: 2, name: "Olinda" }])
+      }
+    ]);
+    fixture.componentRef.setInput("value", {});
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("msp")).toBe(true);
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    await fixture.componentInstance.open();
+    fixture.detectChanges();
+    const panel = document.body.querySelector(".msp-panel");
+    expect(panel).toBeTruthy();
+    const rows = panel!.querySelectorAll(".msp-item");
+    expect(rows).toHaveLength(2);
+    click(rows[0]);
+    expect(onValue).toHaveBeenCalledWith({ cities: [1] });
+    fixture.componentInstance.close();
+    fixture.detectChanges();
+    expect(document.body.querySelector(".msp-panel")).toBeFalsy();
   });
 });

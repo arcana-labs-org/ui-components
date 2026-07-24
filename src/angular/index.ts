@@ -41,3 +41,36 @@ export { ArcanaTabPanelDirective } from "./tab-panel.directive";
 
 export { ShadcnAccordionComponent } from "./shadcn-accordion.component";
 export { ShadcnAccordionItemComponent } from "./shadcn-accordion-item.component";
+
+// ── Lote 2: form / deps / estrutura ─────────────────────────────────────────
+
+export { ShadcnSelectComponent } from "./shadcn-select.component";
+export type { SelectOption } from "./shadcn-select.component";
+
+export { ShadcnInputBooleanComponent } from "./shadcn-input-boolean.component";
+
+export { ShadcnNumberStepperComponent } from "./shadcn-number-stepper.component";
+
+export { ShadcnRadioCardGroupComponent } from "./shadcn-radio-card-group.component";
+export type { RadioCardOption } from "./shadcn-radio-card-group.component";
+
+export { ShadcnSwitchSegmentedComponent } from "./shadcn-switch-segmented.component";
+
+export { MultiSelectPopoverComponent } from "./multi-select-popover.component";
+export type { MultiSelectTab, MultiSelectTriggerContext } from "./multi-select-popover.component";
+
+export { ShadcnInputMaskComponent } from "./shadcn-input-mask.component";
+
+export { InputCurrencyComponent } from "./input-currency.component";
+
+export { ShadcnDatePickerComponent } from "./shadcn-date-picker.component";
+
+export { ShadcnTableComponent } from "./shadcn-table.component";
+export type { ShadcnTableColumn } from "./shadcn-table.component";
+
+export { ShadcnSummaryTileComponent } from "./shadcn-summary-tile.component";
+export type { SummaryTileTone } from "./shadcn-summary-tile.component";
+
+export { ShadcnSummaryTilesComponent } from "./shadcn-summary-tiles.component";
+
+export { ShadcnLoadingOverlayComponent } from "./shadcn-loading-overlay.component";
