@@ -65,8 +65,8 @@ const FormGroupStub = defineComponent({
  * components, setup }` object authored in `componentDocs.tsx`). On mount we spin
  * up a dedicated Vue app rooted at a `<div>`, register the shared plugins, and
  * unmount it on cleanup — so each preview is an isolated, genuinely-running Vue
- * instance. The library's SFC styles come along automatically via the Vue plugin
- * (see `docs/vite.config.ts`), so no separate CSS import is needed here.
+ * instance. The library's component styles are the shared, framework-agnostic
+ * stylesheet (`src/styles/components.scss`), imported once in `docs/src/main.tsx`.
  */
 export function VueDemo({ component, className }: { component: VueComponent; className?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);

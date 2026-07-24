@@ -1,12 +1,19 @@
 // @arcanalabs/ui-components — Vue 3 entry.
 //
 // Biblioteca de componentes shadcn-style (palette zinc) para Vue 3.
-// Todos os componentes são SFCs autocontidos; os nomes mantêm a convenção
-// `Shadcn*` original do ERP de onde foram extraídos.
+// Os SFCs NÃO carregam mais `<style scoped>`: todo o CSS vive num stylesheet
+// compartilhado, agnóstico de framework (`./styles/components.scss`), por
+// seletores de classe puros (sem `[data-v-*]`), pra que os ports React /
+// Angular / Svelte reusem o MESMO visual.
 //
 // Nota: `ShadcnInputMask` e `ShadcnDatePicker` usam a diretiva `v-maska` (lib
 // `maska`), que precisa ser registrada globalmente pelo app consumidor:
 //     import Maska from "maska"; app.use(Maska)
+
+// ── Estilos compartilhados ──────────────────────────────────────────────────
+// Importado como side-effect pra que o build o embuta em `dist/ui-components.css`
+// (exportado como `@arcanalabs/ui-components/styles.css`).
+import "./styles/components.scss";
 
 // ── Componentes shadcn ──────────────────────────────────────────────────────
 export { default as ShadcnAccordion } from "./vue/components/ShadcnAccordion.vue";

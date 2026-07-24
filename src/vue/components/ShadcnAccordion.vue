@@ -42,7 +42,3 @@ export default defineComponent({
     },
 })
 </script>
-
-<style scoped>
-.shadcn-accordion { display: flex; flex-direction: column; gap: 8px; }
-</style>

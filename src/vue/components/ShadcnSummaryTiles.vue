@@ -43,17 +43,3 @@ export default {
     },
 } as Component
 </script>
-
-<style scoped>
-.shadcn-summary-tiles {
-    display: grid;
-    grid-template-columns: repeat(var(--shadcn-summary-tiles-cols, 3), 1fr);
-    gap: 10px;
-}
-
-@media (max-width: 880px) {
-    .shadcn-summary-tiles {
-        grid-template-columns: 1fr;
-    }
-}
-</style>

@@ -36,17 +36,3 @@ export default defineComponent({
     },
 })
 </script>
-
-<style scoped>
-.shadcn-accordion-item { border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; overflow: hidden; }
-.shadcn-accordion-trigger {
-    width: 100%; display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 16px; background: #fafafa; border: 0; cursor: pointer;
-    font-weight: 600; color: #18181b; font-size: 14px; text-align: left;
-}
-.shadcn-accordion-trigger:hover:not(:disabled) { background: #f4f4f5; }
-.shadcn-accordion-trigger:disabled { cursor: not-allowed; opacity: .6; }
-.shadcn-accordion-chevron { transition: transform .2s ease; color: #71717a; }
-.shadcn-accordion-item.open .shadcn-accordion-chevron { transform: rotate(180deg); }
-.shadcn-accordion-content { padding: 16px; border-top: 1px solid #e4e4e7; }
-</style>
