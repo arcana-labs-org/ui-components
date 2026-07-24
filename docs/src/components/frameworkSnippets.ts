@@ -913,14 +913,15 @@ export function OrgSheet() {
   return (
     <ArcanaSpecSheet
       docNum="Cadastro Nº 042"
-      title="Popgás Distribuidora"
+      title="Arcana Labs"
       metaLabel="Status"
       meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>}
       footer={<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>}
     >
-      <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-        <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
+      <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+        <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} />
         <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+        <ArcanaSpecSheetField label="Inscrição Estadual" value={form.state_registration} />
       </ArcanaSpecSheetSection>
     </ArcanaSpecSheet>
   )
@@ -933,10 +934,11 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
   standalone: true,
   imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <article arcanaSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
-      <section arcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-        <div arcanaSpecSheetField label="Razão Social" [value]="form.trading_name" [span]="2"></div>
+    <article arcanaSpecSheet docNum="Cadastro Nº 042" title="Arcana Labs" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
+      <section arcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" [columns]="3">
+        <div arcanaSpecSheetField label="Razão Social" [value]="form.trading_name"></div>
         <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
+        <div arcanaSpecSheetField label="Inscrição Estadual" [value]="form.state_registration"></div>
       </section>
     </article>
     <ng-template #meta><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></ng-template>
@@ -944,18 +946,19 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
   \`
 })
 export class OrgSheetComponent {
-  form = { trading_name: 'Popgás Distribuidora de Gás LTDA', document_number: '12.345.678/0001-90' }
+  form = { trading_name: 'Arcana Labs Tecnologia LTDA', document_number: '12.345.678/0001-90', state_registration: '110.042.490.114' }
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
-  const form = { trading_name: 'Popgás Distribuidora de Gás LTDA', document_number: '12.345.678/0001-90' }
+  const form = { trading_name: 'Arcana Labs Tecnologia LTDA', document_number: '12.345.678/0001-90', state_registration: '110.042.490.114' }
 </script>
 
-<ArcanaSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status">
+<ArcanaSpecSheet docNum="Cadastro Nº 042" title="Arcana Labs" metaLabel="Status">
   {#snippet meta()}<span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>{/snippet}
-  <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-    <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
+  <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+    <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} />
     <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+    <ArcanaSpecSheetField label="Inscrição Estadual" value={form.state_registration} />
   </ArcanaSpecSheetSection>
   {#snippet footer()}<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>{/snippet}
 </ArcanaSpecSheet>`
@@ -1119,11 +1122,11 @@ export class ApprovedComponent {}`,
 import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
 export function Settings() {
-  const [popgas, setPopgas] = useState(true)
+  const [enabled, setEnabled] = useState(true)
   return (
     <ArcanaSettingsList>
-      <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-        <ArcanaSwitch value={popgas} onValueChange={setPopgas} ariaLabel="Modo PopGás" />
+      <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
+        <ArcanaSwitch value={enabled} onValueChange={setEnabled} ariaLabel="Recursos avançados" />
       </ArcanaSettingsListItem>
     </ArcanaSettingsList>
   )
@@ -1137,23 +1140,23 @@ import { ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwi
   imports: [ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
     <div arcanaSettingsList>
-      <div arcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-        <button arcanaSwitch [(value)]="popgas" ariaLabel="Modo PopGás"></button>
+      <div arcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
+        <button arcanaSwitch [(value)]="enabled" ariaLabel="Recursos avançados"></button>
       </div>
     </div>
   \`
 })
 export class SettingsComponent {
-  popgas = true
+  enabled = true
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
-  let popgas = $state(true)
+  let enabled = $state(true)
 </script>
 
 <ArcanaSettingsList>
-  <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-    <ArcanaSwitch value={popgas} onValueChange={(v) => (popgas = v)} ariaLabel="Modo PopGás" />
+  <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
+    <ArcanaSwitch value={enabled} onValueChange={(v) => (enabled = v)} ariaLabel="Recursos avançados" />
   </ArcanaSettingsListItem>
 </ArcanaSettingsList>`
   },

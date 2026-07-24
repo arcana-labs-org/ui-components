@@ -509,18 +509,18 @@ const TableDemo: Component = {
 const SpecSheetDemo: Component = {
   components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
-    <ArcanaSpecSheet doc-num="Cadastro Nº 042 · Atualizado 14.Mar.2026" title="Popgás Distribuidora" meta-label="Status">
+    <ArcanaSpecSheet doc-num="Cadastro Nº 042 · Atualizado 14.Mar.2026" title="Arcana Labs" meta-label="Status">
       <template #meta>
         <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
       </template>
-      <ArcanaSpecSheetSection title="Dados Cadastrais" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue">
-        <ArcanaSpecSheetField label="Razão Social" value="Popgás Distribuidora de Gás LTDA" :span="2" />
+      <ArcanaSpecSheetSection title="Dados Cadastrais" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue" :columns="3">
+        <ArcanaSpecSheetField label="Razão Social" value="Arcana Labs Tecnologia LTDA" />
         <ArcanaSpecSheetField label="CNPJ" value="12.345.678/0001-90" />
         <ArcanaSpecSheetField label="Inscrição Estadual" value="" />
       </ArcanaSpecSheetSection>
       <ArcanaSpecSheetSection title="Contato" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
         <ArcanaSpecSheetField label="Telefone" value="(11) 4002-8922" />
-        <ArcanaSpecSheetField label="E-mail" value="contato@popgas.com.br" />
+        <ArcanaSpecSheetField label="E-mail" value="contato@arcanalabs.com" />
       </ArcanaSpecSheetSection>
       <template #footer>
         <ArcanaButton variant="outline">Alterar Dados</ArcanaButton>
@@ -592,11 +592,11 @@ const SummaryTileDemo: Component = {
 
 const SettingsListDemo: Component = {
   components: { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch },
-  data: () => ({ popgas: true, email: false }),
+  data: () => ({ enabled: true, email: false }),
   template: /* html */ `
     <ArcanaSettingsList>
-      <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos da distribuidora.">
-        <ArcanaSwitch v-model="popgas" aria-label="Modo PopGás" />
+      <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
+        <ArcanaSwitch v-model="enabled" aria-label="Recursos avançados" />
       </ArcanaSettingsListItem>
       <ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário das atividades operacionais.">
         <ArcanaSwitch v-model="email" aria-label="E-mail" />
@@ -653,7 +653,7 @@ const SettingsListItemDemo: Component = {
 const SettingsEditableFieldDemo: Component = {
   components: { ArcanaSettingsList, ArcanaSettingsEditableField },
   data: () => ({
-    name: "Popgás Matriz",
+    name: "Arcana Labs Matriz",
     discount: "1500.00",
     plan: "pro" as string,
     planOptions: [
@@ -729,7 +729,7 @@ const NoticeDemo: Component = {
 
 const EditFieldModalDemo: Component = {
   components: { ArcanaEditFieldModal, ArcanaButton, ArcanaInput },
-  data: () => ({ value: "Popgás Matriz", saved: "Popgás Matriz" }),
+  data: () => ({ value: "Arcana Labs Matriz", saved: "Arcana Labs Matriz" }),
   methods: {
     open() {
       (this.$refs.modal as unknown as { show: () => void }).show();
@@ -1533,11 +1533,12 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ArcanaSpecSheet doc-num=\"Cadastro Nº 042\" title=\"Popgás Distribuidora\" meta-label=\"Status\">",
+      "  <ArcanaSpecSheet doc-num=\"Cadastro Nº 042\" title=\"Arcana Labs\" meta-label=\"Status\">",
       "    <template #meta><span class=\"arcana-spec-sheet-badge arcana-spec-sheet-badge--active\">Ativo</span></template>",
-      "    <ArcanaSpecSheetSection title=\"Dados Cadastrais\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\">",
-      "      <ArcanaSpecSheetField label=\"Razão Social\" :value=\"form.trading_name\" :span=\"2\" />",
+      "    <ArcanaSpecSheetSection title=\"Dados Cadastrais\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\" :columns=\"3\">",
+      "      <ArcanaSpecSheetField label=\"Razão Social\" :value=\"form.trading_name\" />",
       "      <ArcanaSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
+      "      <ArcanaSpecSheetField label=\"Inscrição Estadual\" :value=\"form.state_registration\" />",
       "    </ArcanaSpecSheetSection>",
       "    <template #footer><ArcanaButton variant=\"outline\">Alterar Dados</ArcanaButton></template>",
       "  </ArcanaSpecSheet>",
@@ -1648,13 +1649,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/vue'",
       "import { ref } from 'vue'",
       "",
-      "const popgas = ref(true)",
+      "const enabled = ref(true)",
       "</script>",
       "",
       "<template>",
       "  <ArcanaSettingsList>",
-      "    <ArcanaSettingsListItem label=\"Modo PopGás\" caption=\"Habilita recursos internos.\">",
-      "      <ArcanaSwitch v-model=\"popgas\" aria-label=\"Modo PopGás\" />",
+      "    <ArcanaSettingsListItem label=\"Recursos avançados\" caption=\"Habilita funcionalidades internas.\">",
+      "      <ArcanaSwitch v-model=\"enabled\" aria-label=\"Recursos avançados\" />",
       "    </ArcanaSettingsListItem>",
       "  </ArcanaSettingsList>",
       "</template>"

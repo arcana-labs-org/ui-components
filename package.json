@@ -82,6 +82,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
     "@angular/core": ">=17.0.0",
+    "@fortawesome/fontawesome-free": ">=6.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
     "svelte": ">=5.0.0",
@@ -92,6 +93,9 @@
       "optional": true
     },
     "@angular/core": {
+      "optional": true
+    },
+    "@fortawesome/fontawesome-free": {
       "optional": true
     },
     "react": {
@@ -114,6 +118,7 @@
   },
   "devDependencies": {
     "@angular/common": "^21.2.18",
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "@angular/compiler": "^21.2.18",
     "@angular/compiler-cli": "^21.2.18",
     "@angular/core": "^21.2.18",

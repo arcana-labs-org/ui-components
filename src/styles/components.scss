@@ -4688,7 +4688,7 @@
 }
 
 /* Badges da sidebar-soft: empurra pra direita, estiliza com tinta de acento
-   (navy PopGas) quando inativo, branco-translúcido quando ativo. */
+   (navy Arcana) quando inativo, branco-translúcido quando ativo. */
 .arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-badge {
     margin-left: auto;
     background: rgba(54, 92, 134, 0.12);
@@ -4871,7 +4871,7 @@
    ═══════════════════════════════════════════════════════════════════════
    Container `rgba(0,0,0,.04)` com borda fininha e cantos 12px. Tab ativa
    com bg branco + sombra dupla (sutil interna + difusa externa). Ícone
-   ativo recebe cor de acento (default navy PopGas — mesmo `#365c86` do
+   ativo recebe cor de acento (default navy Arcana — mesmo `#365c86` do
    hover dos botões do TopMenu). Boa pra sub-tabs em telas de detalhe
    que precisam de visual leve mas distinto.
 

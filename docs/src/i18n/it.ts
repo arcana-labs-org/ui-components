@@ -45,7 +45,7 @@ export const it: Messages = {
     install: {
       title: "Installazione",
       p1: "La libreria è distribuita come un unico pacchetto npm. Installala con il gestore che preferisci — <c>vue</c> (3.4+) è l'unica peer dependency.",
-      p2: "Ogni componente è pubblicato per tutti e quattro i framework in un subpath dedicato — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> e <c>/svelte</c>; importa solo quelli che usi."
+      p2: "Ogni componente è pubblicato per tutti e quattro i framework in un subpath dedicato — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> e <c>/svelte</c>; importa solo quelli che usi. Le icone usano Font Awesome Free — installa <c>@fortawesome/fontawesome-free</c> e importane il CSS una volta."
     },
     usage: {
       title: "Utilizzo",

@@ -16,8 +16,8 @@ import {
  *                 <span className="arcana-settings-list__current-value">Profissional</span>
  *                 <button className="arcana-settings-list__edit-btn">Alterar</button>
  *             </ArcanaSettingsListItem>
- *             <ArcanaSettingsListItem label="PopGás" caption="...">
- *                 <ArcanaSwitch value={form.isPopgas} onValueChange={...} />
+ *             <ArcanaSettingsListItem label="Arcana" caption="...">
+ *                 <ArcanaSwitch value={form.enabled} onValueChange={...} />
  *             </ArcanaSettingsListItem>
  *         </ArcanaSettingsListGroup>
  *     </ArcanaSettingsList>

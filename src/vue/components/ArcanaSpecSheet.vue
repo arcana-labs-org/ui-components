@@ -82,7 +82,7 @@ import type { Component } from "vue"
  *
  *     <ArcanaSpecSheet
  *         doc-num="Cadastro Nº 042"
- *         title="Popgás Distribuidora"
+ *         title="Arcana Labs"
  *         meta-label="Status"
  *     >
  *         <template #meta>

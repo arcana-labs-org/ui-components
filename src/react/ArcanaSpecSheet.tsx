@@ -6,7 +6,7 @@ import type { CSSProperties, ReactNode } from "react";
  *
  * Uso combinado (espelha os SFCs):
  *
- *     <ArcanaSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status"
+ *     <ArcanaSpecSheet docNum="Cadastro Nº 042" title="Arcana Labs" metaLabel="Status"
  *         meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>}
  *         footer={<button className="btn">Alterar Dados</button>}
  *     >

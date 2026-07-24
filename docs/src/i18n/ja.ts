@@ -45,7 +45,7 @@ export const ja: Messages = {
     install: {
       title: "インストール",
       p1: "このライブラリは単一の npm パッケージとして提供されます。お好みのパッケージマネージャーでインストールしてください — <c>vue</c>（3.4+）が唯一の peer dependency です。",
-      p2: "各コンポーネントは 4 つのフレームワーク向けに、対応するサブパスで公開されています — <c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c>、<c>/svelte</c>。使うものだけをインポートしてください。"
+      p2: "各コンポーネントは 4 つのフレームワーク向けに、対応するサブパスで公開されています — <c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c>、<c>/svelte</c>。使うものだけをインポートしてください。 アイコンは Font Awesome Free を使用します。<c>@fortawesome/fontawesome-free</c> をインストールし、その CSS を一度読み込んでください。"
     },
     usage: {
       title: "使い方",

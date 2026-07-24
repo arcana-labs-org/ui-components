@@ -34,8 +34,8 @@ import type { Component } from "vue"
  *             <button class="arcana-settings-list__edit-btn" @click="...">Alterar</button>
  *         </ArcanaSettingsListItem>
  *
- *         <ArcanaSettingsListItem label="PopGás" caption="...">
- *             <ArcanaSwitch v-model="form.is_popgas" />
+ *         <ArcanaSettingsListItem label="Arcana" caption="...">
+ *             <ArcanaSwitch v-model="form.enabled" />
  *         </ArcanaSettingsListItem>
  *     </ArcanaSettingsList>
  */

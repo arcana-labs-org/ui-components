@@ -45,7 +45,7 @@ export const zh: Messages = {
     install: {
       title: "安装",
       p1: "该库以单个 npm 包的形式发布。用你喜欢的包管理器安装即可——<c>vue</c>（3.4+）是唯一的 peer dependency。",
-      p2: "每个组件都为四个框架发布在相应的子路径下——<c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c> 和 <c>/svelte</c>；只导入你需要的即可。"
+      p2: "每个组件都为四个框架发布在相应的子路径下——<c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c> 和 <c>/svelte</c>；只导入你需要的即可。 图标使用 Font Awesome Free —— 安装 <c>@fortawesome/fontawesome-free</c> 并引入一次其 CSS。"
     },
     usage: {
       title: "用法",
