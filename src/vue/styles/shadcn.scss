@@ -1,0 +1,575 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   spark-grid-shadcn.scss
+   ─────────────────────────────────────────────────────────────────────────
+
+   Tema shadcn-style (palette zinc) para o `spark-grid-vue3`.
+
+   Como usar:
+   ─────────
+   Envolva qualquer `<SparkGrid>` com um container que tenha a classe
+   `.spark-grid-shadcn` — isso ativa o tema. Funciona em qualquer lugar do
+   sistema, dentro ou fora de modal.
+
+       <div class="spark-grid-shadcn">
+           <SparkGrid :config="grid" />
+       </div>
+
+   Por que via classe wrapper (e não scoped no componente)?
+   ────────────────────────────────────────────────────────
+   - O `spark-grid-vue3` é uma lib externa: estilos `<style scoped>` no
+     componente caller não atingem os elementos internos da lib (data-v
+     mismatch). Wrapper class evita esse problema.
+   - Tema é opt-in: o resto do sistema usa o estilo Bootstrap-style que
+     a lib já traz por default. Adoção gradual.
+   - Reaproveitamento: qualquer tela pode pintar seu grid no padrão
+     shadcn aplicando `.spark-grid-shadcn` no container.
+
+   ─────────────────────────────────────────────────────────────────────────
+   FILOSOFIA VISUAL
+   ─────────────────────────────────────────────────────────────────────────
+
+   Estilo shadcn/Linear/Vercel: **bordas só horizontais**, divisórias verticais
+   entre colunas são removidas pra produzir um visual mais limpo (não-grid).
+
+   Hierarquia de cinzas:
+   - `#fafafa` = camada "muted" (header, search row, footer, hover row)
+   - `#ffffff` = camada base (body, search inputs)
+   - `#f4f4f5` = bg da linha selecionada (mais escuro que hover, distinguível)
+   - `#e4e4e7` = bordas estruturais (entre header→search→body→footer)
+   - `#f4f4f5` = bordas sutis entre linhas do body (lê-se como spacing, não estrutura)
+
+   Selected row ganha uma `box-shadow inset 3px 0 0 #18181b` na primeira cell
+   — marca lateral preta sem deslocar o layout, dá feedback claro de "esta
+   é a linha selecionada" mesmo que o bg fique parecido com hover.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.spark-grid-shadcn {
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Container raiz
+       ─────────────────────────────────────────────────────────────────────
+       Estrutura real do spark-grid-vue3 (DataTableContentWrapper.vue):
+
+           .spark-grid.grid-wrapper          ← raiz: envolve TUDO (body + footer)
+               .spark-grid-body              ← envolve header + search + body + summarizer
+                   (style="background: #fafafa" inline! precisa override)
+                   ...
+               <footer>                      ← FORA do .spark-grid-body, dentro do .grid-wrapper
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    }
+
+    /* Borda externa + radius + overflow vão NO `.grid-wrapper` (raiz),
+       que é o que de fato envolve tudo. */
+    .spark-grid.grid-wrapper {
+        border: 1px solid #e4e4e7 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+    }
+
+    /* `.spark-grid-body` tem `background: #fafafa` inline na lib — anulamos pra ficar
+       coerente com nosso layout (header/search têm bg explícito #fafafa, body tem #ffffff). */
+    .spark-grid-body {
+        background: #ffffff !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Header (cabeçalho da tabela)
+       Sem bordas verticais entre cells. Border-bottom estrutural.
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-header,
+    .grid-header {
+        border: none !important;
+    }
+
+    .spark-grid-datatable-header .spark-grid-datatable-header-cell,
+    .grid-header .grid-header-cell {
+        background: #f4f4f5 !important;
+        /* zinc-100 — mais escuro que o body, ancora a hierarquia */
+        color: #18181b !important;
+        /* zinc-900 — alto contraste, lê como heading, não label */
+        border-top: none !important;
+        border-left: 1px solid transparent !important;
+        border-right: 1px solid transparent !important;
+        border-bottom: 1px solid #e4e4e7 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        /* 600 → 700 pra reforçar peso visual */
+        text-transform: uppercase !important;
+        padding: 6px 14px !important;
+    }
+
+    .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order,
+    .grid-header .grid-header-cell.grid-header-order {
+        cursor: pointer !important;
+        transition: background-color 150ms ease, color 150ms ease !important;
+    }
+
+    .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order:hover,
+    .grid-header .grid-header-cell.grid-header-order:hover {
+        background: #e1eaf3 !important;
+        color: #09090b !important;
+    }
+
+    .spark-grid-datatable-header .spark-grid-datatable-header-cell .fa-solid.fa-sort,
+    .grid-header .grid-header-cell .fa-solid.fa-sort {
+        color: #396693 !important;
+        /* mais visível que #d4d4d8 (era invisível antes) */
+        font-size: 10px !important;
+        margin-left: 6px !important;
+    }
+
+    .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order:hover .fa-solid.fa-sort,
+    .grid-header .grid-header-cell.grid-header-order:hover .fa-solid.fa-sort {
+        color: #5e8fbf !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Search row (linha de filtros por coluna)
+       Mesmo bg do header pra continuidade visual; inputs em branco.
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-search-row,
+    .grid-search-row {
+        border: none !important;
+    }
+
+    .spark-grid-datatable-search-row .spark-grid-datatable-search-row-cell,
+    .grid-search-row .grid-search-row-cell,
+    .spark-grid .grid-search-row .spark-grid-datatable-header-cell {
+        background: #fafafa !important;
+        border-top: none !important;
+        border-left: 1px solid transparent !important;
+        border-right: 1px solid transparent !important;
+        border-bottom: 1px solid #e4e4e7 !important;
+        padding: 8px 14px !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
+    }
+
+    /*
+     * IMPORTANTE: a lib `spark-grid-vue3` renderiza search inputs via `<ElInput>`
+     * do Element Plus — NÃO `<input>` HTML nativo. A "borda" visível é o
+     * `box-shadow: inset 0 0 0 1px ...` do `.el-input__wrapper`.
+     *
+     * Esse inset-shadow do Element Plus pode renderizar com espessura aparente
+     * desigual em lados verticais vs horizontais (sub-pixel anti-aliasing em
+     * telas Retina). Substituímos por `border` real pra garantir 1px sólido
+     * uniforme em todos os lados, mais consistente visualmente.
+     */
+    .spark-grid-datatable-search-row .el-input .el-input__wrapper,
+    .grid-search-row .el-input .el-input__wrapper,
+    .spark-grid-datatable-search-row .el-select .el-select__wrapper,
+    .grid-search-row .el-select .el-select__wrapper {
+        border: 1px solid #e4e4e7 !important;
+        border-radius: 6px !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+        padding: 0 10px !important;
+        transition: border-color 150ms ease !important;
+    }
+
+    /* Hover sutil */
+    .spark-grid-datatable-search-row .el-input:not(.is-disabled) .el-input__wrapper:hover,
+    .grid-search-row .el-input:not(.is-disabled) .el-input__wrapper:hover,
+    .spark-grid-datatable-search-row .el-select:not(.is-disabled) .el-select__wrapper:hover,
+    .grid-search-row .el-select:not(.is-disabled) .el-select__wrapper:hover {
+        border-color: #d4d4d8 !important;
+        box-shadow: none !important;
+    }
+
+    /*
+     * Focus state — Element Plus usa `.is-focus` na div `.el-input` quando o
+     * input interno está focado. Mira o WRAPPER pra mudar a borda.
+     */
+    .spark-grid-datatable-search-row .el-input.is-focus .el-input__wrapper,
+    .grid-search-row .el-input.is-focus .el-input__wrapper,
+    .spark-grid-datatable-search-row .el-select.is-focused .el-select__wrapper,
+    .grid-search-row .el-select.is-focused .el-select__wrapper,
+    .spark-grid-datatable-search-row .el-input__wrapper.is-focus,
+    .grid-search-row .el-input__wrapper.is-focus {
+        border-color: #18181b !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* Input interno (`.el-input__inner`) — texto, padding, placeholder */
+    .spark-grid-datatable-search-row .el-input__inner,
+    .grid-search-row .el-input__inner,
+    .spark-grid-datatable-search-row .el-select__placeholder,
+    .grid-search-row .el-select__placeholder {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 12px !important;
+        color: #09090b !important;
+        height: 28px !important;
+        line-height: 28px !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .spark-grid-datatable-search-row .el-input__inner::placeholder,
+    .grid-search-row .el-input__inner::placeholder {
+        color: #a1a1aa !important;
+    }
+
+    /*
+     * Inputs HTML nativos (caso a lib renderize alguns inputs raw em outros lugares
+     * — fallback) — mesmo tratamento de borda real, sem box-shadow nem outline.
+     */
+    .spark-grid-datatable-search-row>input,
+    .spark-grid-datatable-search-row>select,
+    .grid-search-row>input,
+    .grid-search-row>select {
+        border: 1px solid #e4e4e7 !important;
+        border-radius: 6px !important;
+        background: #ffffff !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 12px !important;
+        color: #09090b !important;
+        padding: 6px 10px !important;
+        outline: none !important;
+        box-shadow: none !important;
+        transition: border-color 150ms ease !important;
+        height: auto !important;
+        line-height: 1.4 !important;
+    }
+
+    /*
+     * Search inputs com ícone à esquerda (.has-feedback-left).
+     *
+     * Problema: o CSS da lib aplica `padding-left: 33px` no SELETOR `input` —
+     * que com Element Plus atinge o `.el-input__inner` (input interno do
+     * wrapper). Resultado: padding 33px no `__inner` + padding adicional no
+     * `__wrapper` = texto empurrado demais pra direita.
+     *
+     * Fix: zera o padding-left do `__inner` (lib não previu Element Plus),
+     * e o `__wrapper` ganha o padding-left pra acomodar o ícone.
+     */
+    .spark-grid-datatable-search-row .has-feedback.has-feedback-left .el-input__wrapper,
+    .grid-search-row .has-feedback.has-feedback-left .el-input__wrapper {
+        padding-left: 30px !important;
+    }
+
+    .spark-grid-datatable-search-row .has-feedback.has-feedback-left .el-input__inner,
+    .grid-search-row .has-feedback.has-feedback-left .el-input__inner {
+        padding-left: 0 !important;
+    }
+
+    /* Inputs HTML nativos (fallback) — usam padding direto no input */
+    .spark-grid-datatable-search-row .has-feedback.has-feedback-left>input,
+    .grid-search-row .has-feedback.has-feedback-left>input {
+        padding-left: 30px !important;
+    }
+
+    /* Foco em inputs HTML nativos (fallback) */
+    .spark-grid-datatable-search-row>input:focus,
+    .spark-grid-datatable-search-row>input:focus-visible,
+    .grid-search-row>input:focus,
+    .grid-search-row>input:focus-visible {
+        border-color: #18181b !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* Ícone de busca dentro do search input (`form-control-feedback` Bootstrap) */
+    .spark-grid-datatable-search-row .form-control-feedback,
+    .grid-search-row .form-control-feedback {
+        color: #a1a1aa !important;
+        font-size: 11px !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Body (linhas + células)
+       Sem bordas verticais. Border-top sutil entre linhas (como spacing).
+       Última linha sem border-bottom (já tem o footer separando).
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-body,
+    .grid-body {
+        background: #ffffff !important;
+    }
+
+    .spark-grid-datatable-body .spark-grid-datatable-cell,
+    .grid-body .grid-cell {
+        background: #ffffff !important;
+        color: #09090b !important;
+        border-top: 1px solid #e5e7eb !important;
+        border-left: 1px solid transparent !important;
+        border-right: 1px solid transparent !important;
+        border-bottom: 1px solid transparent !important;
+        font-size: 12px !important;
+        padding: 12px 14px !important;
+    }
+
+    /* Modifier: densidade compacta — reduz padding vertical das células do body
+       de `12px → 6px`, mantendo o horizontal. Útil em grids embarcados em
+       cards/abas onde economizar altura é importante (ex: Acerto de Contas).
+       Uso: `<div class="spark-grid-shadcn spark-grid-shadcn--compact">`. */
+    &.spark-grid-shadcn--compact .spark-grid-datatable-body .spark-grid-datatable-cell,
+    &.spark-grid-shadcn--compact .grid-body .grid-cell {
+        padding: 8px 14px !important;
+    }
+
+    /* Primeira linha — remove o border-top pra não duplicar com a search row */
+    .spark-grid-datatable-body .spark-grid-datatable-row:first-child .spark-grid-datatable-cell,
+    .grid-body .grid-row:first-child .grid-cell {
+        border-top-color: transparent !important;
+    }
+
+    /* Última linha — fica sem border-bottom (o footer separa) */
+    .spark-grid-datatable-body .spark-grid-datatable-row:last-child .spark-grid-datatable-cell,
+    .grid-body .grid-row:last-child .grid-cell {
+        border-bottom-color: transparent !important;
+    }
+
+    // /* Zebra striping — linhas pares com bg sutil pra facilitar leitura horizontal */
+    // .spark-grid-datatable-body .spark-grid-datatable-row:nth-child(even) .spark-grid-datatable-cell,
+    // .grid-body .grid-row:nth-child(even) .grid-cell {
+    //     background: #f8fafc !important;
+    // }
+
+    /* Hover row — bg `#fafafa` (camada muted) */
+    .spark-grid-datatable-body .spark-grid-datatable-row:hover .spark-grid-datatable-cell,
+    .grid-body .grid-row:hover .grid-cell {
+        background: #fafafa !important;
+    }
+
+    /* Selected row (radio/checked/focused) — bg `#f4f4f5` + marca lateral preta na primeira cell.
+       A marca lateral usa `box-shadow inset` pra não deslocar o layout (border-left mudaria o width).
+       Mais explícita visualmente que só mudar bg, mantém legibilidade do row inteiro. */
+    .spark-grid-datatable-row-focused .spark-grid-datatable-cell,
+    .grid-row-focused .grid-cell,
+    .spark-grid-datatable-row-checked .spark-grid-datatable-cell,
+    .grid-row-checked .grid-cell {
+        background: #f4f4f5 !important;
+    }
+
+    .spark-grid-datatable-row-focused .spark-grid-datatable-cell:first-child,
+    .grid-row-focused .grid-cell:first-child,
+    .spark-grid-datatable-row-checked .spark-grid-datatable-cell:first-child,
+    .grid-row-checked .grid-cell:first-child {
+        box-shadow: inset 3px 0 0 0 #18181b !important;
+    }
+
+    /* Cell focused (border preto na lib) — usa box-shadow pra não deslocar layout */
+    .spark-grid-datatable-cell-focused {
+        border: 1px solid transparent !important;
+        box-shadow: inset 0 0 0 1px #18181b !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Footer (paginação + "Por página" + contador)
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-footer,
+    .grid-footer {
+        background: #f4f4f5 !important;
+        border-top: 1px solid #e4e4e7 !important;
+        border-bottom: none !important;
+        font-size: 12px !important;
+        color: #111 !important;
+        padding: 12px 14px !important;
+    }
+
+    /* Botões de paginação (números + setas) */
+    .spark-grid-datatable-footer ul li>button,
+    .grid-footer ul li>button {
+        padding: 6px 10px !important;
+        min-width: 32px !important;
+        margin-left: 2px !important;
+        border-radius: 6px !important;
+        border: 1px solid transparent !important;
+        background: transparent !important;
+        color: #71717a !important;
+        font-size: 12px !important;
+        font-family: inherit !important;
+        cursor: pointer !important;
+        transition: background-color 150ms ease, color 150ms ease !important;
+    }
+
+    .spark-grid-datatable-footer ul li:not(.current):hover>button:not([disabled]),
+    .grid-footer ul li:not(.current):hover>button:not([disabled]) {
+        background: #f4f4f5 !important;
+        color: #18181b !important;
+    }
+
+    .spark-grid-datatable-footer ul li.current>button,
+    .grid-footer ul li.current>button {
+        background: #18181b !important;
+        color: #ffffff !important;
+        cursor: default !important;
+    }
+
+    .spark-grid-datatable-footer ul li>button[disabled],
+    .grid-footer ul li>button[disabled] {
+        color: #d4d4d8 !important;
+        cursor: not-allowed !important;
+    }
+
+    /* Select "Por página" + outros selects do footer */
+    .spark-grid-datatable-select {
+        border: 1px solid #e4e4e7 !important;
+        border-radius: 6px !important;
+        background: #ffffff !important;
+        color: #09090b !important;
+        font-size: 12px !important;
+        font-family: inherit !important;
+        padding: 5px 28px 5px 10px !important;
+        cursor: pointer !important;
+        transition: border-color 150ms ease, box-shadow 150ms ease !important;
+    }
+
+    .spark-grid-datatable-select:hover {
+        border-color: #d4d4d8 !important;
+    }
+
+    .spark-grid-datatable-select:focus {
+        outline: none !important;
+        border-color: #18181b !important;
+        box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.08) !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Radio button (seletor de linha — modo radio)
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-body input[type="radio"],
+    .grid-body input[type="radio"] {
+        accent-color: #18181b !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Checkbox (seletor de linha — modo multi)
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-body input[type="checkbox"],
+    .grid-body input[type="checkbox"] {
+        accent-color: #18181b !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Summarizer (linha de totais entre body e footer)
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-datatable-summarizer-cell,
+    .grid-summarizer-cell {
+        background: #fafafa !important;
+        color: #18181b !important;
+        border-top: 1px solid #e4e4e7 !important;
+        border-left: 1px solid transparent !important;
+        border-right: 1px solid transparent !important;
+        border-bottom: 1px solid #e4e4e7 !important;
+        font-weight: 600 !important;
+        font-size: 12px !important;
+        padding: 10px 14px !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Empty state (quando `loading` ou sem dados)
+       ───────────────────────────────────────────────────────────────────── */
+    .spark-grid-empty,
+    .grid-empty {
+        color: #71717a !important;
+        font-size: 13px !important;
+        padding: 32px 16px !important;
+        text-align: center !important;
+        background: #ffffff !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Payment status badge (pílula colorida na coluna "Status" do
+       histórico de pagamentos)
+       ─────────────────────────────────────────────────────────────────────
+       Renderizado via HTML inline pelo helper `paymentStatusBadge` em
+       `formatters.ts`. Visual de pílula compacta (vs texto puro) ajuda o
+       admin a varrer rapidamente status críticos (vencido/expirado) entre
+       linhas — economiza tempo em telas com dezenas de pagamentos.
+       ───────────────────────────────────────────────────────────────────── */
+    .payment-status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        line-height: 1.4;
+        white-space: nowrap;
+    }
+
+    /* Variantes — palette inspirada em emerald/amber/zinc/red do Tailwind shadcn */
+    .payment-status-badge--paid {
+        background: #d1fae5;
+        /* emerald-100 */
+        color: #047857;
+        /* emerald-700 — alto contraste com bg, lê como "OK" */
+    }
+
+    .payment-status-badge--pending {
+        background: #fef3c7;
+        /* amber-100 */
+        color: #92400e;
+        /* amber-800 — quente, comunica "ação necessária" sem alarmar */
+    }
+
+    .payment-status-badge--refunded {
+        background: #e4e4e7;
+        /* zinc-200 */
+        color: #3f3f46;
+        /* zinc-700 — neutro, transação encerrada sem juízo positivo/negativo */
+    }
+
+    .payment-status-badge--expired {
+        background: #fee2e2;
+        /* red-100 */
+        color: #991b1b;
+        /* red-800 — alarma, "chance perdida de pagar" */
+    }
+
+    .payment-status-badge--default {
+        background: #f4f4f5;
+        /* zinc-100 — fallback genérico, não chama atenção */
+        color: #52525b;
+        /* zinc-600 */
+    }
+
+    .spark-grid__page-details {
+        width: 120px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Cell stack — célula com duas linhas (primária + secundária).
+       ─────────────────────────────────────────────────────────────────────
+       Usado em valueGetters que retornam HTML pra mesclar duas infos
+       relacionadas numa só coluna (ex: Razão Social/CNPJ, Usuário/Data).
+       Primária dominante (peso 500, texto base), secundária muted (tabular
+       numérica pra documentos/datas). Aproxima informações que o admin lê
+       em conjunto e reduz scroll horizontal.
+
+           <div class="cell-stack">
+               <span class="cell-stack__primary">João da Silva</span>
+               <span class="cell-stack__secondary">13/06/2026 14:23</span>
+           </div>
+       ─────────────────────────────────────────────────────────────────── */
+    .cell-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+        line-height: 1.3;
+    }
+
+    .cell-stack__primary {
+        font-size: 13px;
+        font-weight: 500;
+        color: #18181b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .cell-stack__secondary {
+        font-size: 11.5px;
+        color: #71717a;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
