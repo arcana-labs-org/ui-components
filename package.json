@@ -47,6 +47,11 @@
       "import": "./dist/vue.js",
       "require": "./dist/vue.cjs"
     },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
     "./styles.css": "./dist/ui-components.css",
     "./package.json": "./package.json"
   },
@@ -63,7 +68,20 @@
     "release:dry": "npm pack --dry-run"
   },
   "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
     "vue": ">=3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   },
   "dependencies": {
     "maska": "^1.5.0",
