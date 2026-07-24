@@ -12,7 +12,7 @@ import {
 import { ArcanaButton } from "./ArcanaButton";
 
 /**
- * `<ArcanaEditFieldModal>` — React port do SFC Vue. Wrapper genérico pra modais de
+ * `<ArcanaEditFieldDialog>` — React port do SFC Vue. Wrapper genérico pra modais de
  * "Alterar X": recebe o input via `children` e fornece o chrome (header/footer com
  * Cancelar/Salvar). Reusa o `<ArcanaDialog>` React já portado.
  *
@@ -23,12 +23,12 @@ import { ArcanaButton } from "./ArcanaButton";
  * - slot default → `children`
  * - footer com `<ArcanaButton>` (Cancelar/Salvar), idêntico ao SFC
  */
-export interface ArcanaEditFieldModalHandle {
+export interface ArcanaEditFieldDialogHandle {
     show: () => void;
     hide: () => void;
 }
 
-export interface ArcanaEditFieldModalProps {
+export interface ArcanaEditFieldDialogProps {
     title: string;
     description?: string;
     cancelLabel?: string;
@@ -42,10 +42,10 @@ export interface ArcanaEditFieldModalProps {
     onSave?: () => void;
 }
 
-export const ArcanaEditFieldModal = forwardRef<
-    ArcanaEditFieldModalHandle,
-    ArcanaEditFieldModalProps
->(function ArcanaEditFieldModal(
+export const ArcanaEditFieldDialog = forwardRef<
+    ArcanaEditFieldDialogHandle,
+    ArcanaEditFieldDialogProps
+>(function ArcanaEditFieldDialog(
     {
         title,
         description = "",
@@ -81,18 +81,18 @@ export const ArcanaEditFieldModal = forwardRef<
             footer={(hide) => (
                 <>
                     <ArcanaButton
-                        variant="ghost"
+                        variant="outline-danger"
                         className={cancelClass}
                         onClick={hide}
                     >
-                        {cancelLabel}
+                        <><i className="fa-solid fa-xmark" /> {cancelLabel}</>
                     </ArcanaButton>
                     <ArcanaButton
-                        variant="primary"
+                        variant="success"
                         className={saveClass}
                         onClick={() => onSave?.()}
                     >
-                        {saveLabel}
+                        <><i className="fa-solid fa-check" /> {saveLabel}</>
                     </ArcanaButton>
                 </>
             )}

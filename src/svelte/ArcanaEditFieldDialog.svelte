@@ -1,6 +1,6 @@
 <script lang="ts">
   /**
-   * `<ArcanaEditFieldModal>` — Svelte 5 port do SFC Vue. Wrapper genérico pra modais de
+   * `<ArcanaEditFieldDialog>` — Svelte 5 port do SFC Vue. Wrapper genérico pra modais de
    * "Alterar X" em listas de configurações. Reusa o `<ArcanaDialog>` (que por sua vez usa
    * o `dialog-stack` compartilhado — `acquireZIndex`/`releaseZIndex`).
    *
@@ -20,8 +20,8 @@
     description = "",
     cancelLabel = "Cancelar",
     saveLabel = "Salvar Alterações",
-    cancelColor = "ghost",
-    saveColor = "primary",
+    cancelColor = "outline-danger",
+    saveColor = "success",
     cancelClass = "",
     saveClass = "",
     size = "md",
@@ -55,7 +55,7 @@
   {@render children?.()}
 
   {#snippet footer(hide)}
-    <ArcanaButton variant={cancelColor} class={cancelClass} onClick={hide}>{cancelLabel}</ArcanaButton>
-    <ArcanaButton variant={saveColor} class={saveClass} onClick={() => onSave?.()}>{saveLabel}</ArcanaButton>
+    <ArcanaButton variant={cancelColor} class={cancelClass} onClick={hide}><i class="fa-solid fa-xmark"></i> {cancelLabel}</ArcanaButton>
+    <ArcanaButton variant={saveColor} class={saveClass} onClick={() => onSave?.()}><i class="fa-solid fa-check"></i> {saveLabel}</ArcanaButton>
   {/snippet}
 </ArcanaDialog>

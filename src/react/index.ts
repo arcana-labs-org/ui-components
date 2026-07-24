@@ -120,11 +120,11 @@ export type {
     ArcanaDropdownSize,
 } from "./ArcanaDropdown";
 
-export { ArcanaEditFieldModal } from "./ArcanaEditFieldModal";
+export { ArcanaEditFieldDialog } from "./ArcanaEditFieldDialog";
 export type {
-    ArcanaEditFieldModalProps,
-    ArcanaEditFieldModalHandle,
-} from "./ArcanaEditFieldModal";
+    ArcanaEditFieldDialogProps,
+    ArcanaEditFieldDialogHandle,
+} from "./ArcanaEditFieldDialog";
 
 export { ArcanaRequiredFieldsDialog } from "./ArcanaRequiredFieldsDialog";
 export type {

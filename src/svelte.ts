@@ -44,7 +44,7 @@ import ArcanaLoadingOverlayComponent from "./svelte/ArcanaLoadingOverlay.svelte"
 import ArcanaDialogComponent from "./svelte/ArcanaDialog.svelte";
 import ArcanaDropdownComponent from "./svelte/ArcanaDropdown.svelte";
 import ArcanaDropdownItemComponent from "./svelte/ArcanaDropdownItem.svelte";
-import ArcanaEditFieldModalComponent from "./svelte/ArcanaEditFieldModal.svelte";
+import ArcanaEditFieldDialogComponent from "./svelte/ArcanaEditFieldDialog.svelte";
 import ArcanaRequiredFieldsDialogComponent from "./svelte/ArcanaRequiredFieldsDialog.svelte";
 import ArcanaOnboardingPanelComponent from "./svelte/ArcanaOnboardingPanel.svelte";
 import ArcanaSettingsListComponent from "./svelte/ArcanaSettingsList.svelte";
@@ -577,8 +577,8 @@ export interface ArcanaDropdownItemProps {
 }
 export const ArcanaDropdownItem = ArcanaDropdownItemComponent as unknown as Component<ArcanaDropdownItemProps>;
 
-/* ── ArcanaEditFieldModal ─────────────────────────────────────────────────── */
-export interface ArcanaEditFieldModalProps {
+/* ── ArcanaEditFieldDialog ────────────────────────────────────────────────── */
+export interface ArcanaEditFieldDialogProps {
   title: string;
   description?: string;
   cancelLabel?: string;
@@ -592,11 +592,11 @@ export interface ArcanaEditFieldModalProps {
   onSave?: () => void;
 }
 /** API imperativa `show()`/`hide()` via `bind:this` (delega pro ArcanaDialog interno). */
-export interface ArcanaEditFieldModalHandle {
+export interface ArcanaEditFieldDialogHandle {
   show: () => void;
   hide: () => void;
 }
-export const ArcanaEditFieldModal = ArcanaEditFieldModalComponent as unknown as Component<ArcanaEditFieldModalProps>;
+export const ArcanaEditFieldDialog = ArcanaEditFieldDialogComponent as unknown as Component<ArcanaEditFieldDialogProps>;
 
 /* ── ArcanaRequiredFieldsDialog ───────────────────────────────────────────── */
 export interface RequiredField {

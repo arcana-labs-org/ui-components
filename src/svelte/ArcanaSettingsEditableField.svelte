@@ -9,13 +9,13 @@
   /**
    * `<ArcanaSettingsEditableField>` — Svelte 5 port do SFC Vue. Item smart de
    * `<ArcanaSettingsList>` que combina display read-only + botão "Alterar" + modal de
-   * edição (`<ArcanaEditFieldModal>`) numa única tag.
+   * edição (`<ArcanaEditFieldDialog>`) numa única tag.
    *
    * Equivalências Vue → Svelte 5:
    * - `v-model` (`modelValue`) → prop `value` + `onValueChange`; `emit('save')` → `onSave`
    * - buffer (`bufferValue`) snapshotado ao abrir; cancelar descarta; salvar emite
    *   `onValueChange(buffer)` + `onSave(buffer)` e fecha (idêntico ao SFC)
-   * - `<Teleport>` do modal → o próprio `<ArcanaEditFieldModal>` já usa portal
+   * - `<Teleport>` do modal → o próprio `<ArcanaEditFieldDialog>` já usa portal
    *
    * FormGroup: o SFC referencia um `<FormGroup>` GLOBAL do app host (não portável). No
    * Svelte, o campo do modal é envolvido por um wrapper mínimo (`demo-form-group`, label +
@@ -25,7 +25,7 @@
    */
   import type { Snippet } from "svelte";
   import ArcanaSettingsListItem from "./ArcanaSettingsListItem.svelte";
-  import ArcanaEditFieldModal from "./ArcanaEditFieldModal.svelte";
+  import ArcanaEditFieldDialog from "./ArcanaEditFieldDialog.svelte";
   import ArcanaInput from "./ArcanaInput.svelte";
   import ArcanaSelect from "./ArcanaSelect.svelte";
   import ArcanaInputCurrency from "./ArcanaInputCurrency.svelte";
@@ -75,7 +75,7 @@
     onSave?: (value: string | number | boolean | null) => void;
   } = $props();
 
-  let modal: ArcanaEditFieldModal;
+  let modal: ArcanaEditFieldDialog;
   let bufferValue = $state<string | number | boolean | null>(null);
 
   const isEmpty = $derived(value === null || value === undefined || value === "");
@@ -160,7 +160,7 @@
     Alterar
   </button>
 
-  <ArcanaEditFieldModal
+  <ArcanaEditFieldDialog
     bind:this={modal}
     title={resolvedModalTitle}
     description={modalDescription}
@@ -176,5 +176,5 @@
         {@render inputSnippet()}
       </div>
     {/if}
-  </ArcanaEditFieldModal>
+  </ArcanaEditFieldDialog>
 </ArcanaSettingsListItem>

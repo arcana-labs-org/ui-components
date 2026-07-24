@@ -34,7 +34,7 @@ import ArcanaSettingsListGroup from "../../../src/vue/components/ArcanaSettingsL
 import ArcanaSettingsListItem from "../../../src/vue/components/ArcanaSettingsListItem.vue";
 import ArcanaSettingsEditableField from "../../../src/vue/components/ArcanaSettingsEditableField.vue";
 import ArcanaNotice from "../../../src/vue/components/ArcanaNotice.vue";
-import ArcanaEditFieldModal from "../../../src/vue/components/ArcanaEditFieldModal.vue";
+import ArcanaEditFieldDialog from "../../../src/vue/components/ArcanaEditFieldDialog.vue";
 import ArcanaRequiredFieldsDialog from "../../../src/vue/components/ArcanaRequiredFieldsDialog.vue";
 import ArcanaOnboardingPanel from "../../../src/vue/components/ArcanaOnboardingPanel.vue";
 import ArcanaLoadingOverlay from "../../../src/vue/components/ArcanaLoadingOverlay.vue";
@@ -726,10 +726,10 @@ const NoticeDemo: Component = {
   `
 };
 
-/* ──────────────────────── ArcanaEditFieldModal ─────────────────────── */
+/* ──────────────────────── ArcanaEditFieldDialog ─────────────────────── */
 
-const EditFieldModalDemo: Component = {
-  components: { ArcanaEditFieldModal, ArcanaButton, ArcanaInput },
+const EditFieldDialogDemo: Component = {
+  components: { ArcanaEditFieldDialog, ArcanaButton, ArcanaInput },
   data: () => ({ value: "Arcana Labs Matriz", saved: "Arcana Labs Matriz" }),
   methods: {
     open() {
@@ -743,11 +743,11 @@ const EditFieldModalDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaButton @click="open">Alterar nome</ArcanaButton>
+      <ArcanaButton style="align-self: flex-start" @click="open">Alterar nome</ArcanaButton>
       <p class="demo-note">{{ $dt.savedValue }}: <strong>{{ saved }}</strong></p>
-      <ArcanaEditFieldModal ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
+      <ArcanaEditFieldDialog ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
         <ArcanaInput v-model="value" placeholder="Nome da unidade" />
-      </ArcanaEditFieldModal>
+      </ArcanaEditFieldDialog>
     </div>
   `
 };
@@ -788,14 +788,14 @@ const OnboardingPanelDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaOnboardingPanel
-        icon="fa-solid fa-file-shield"
-        title="Configure seu certificado digital"
-        description="O certificado A1 é necessário para emitir NF-e e demais documentos fiscais."
-        action-label="Configurar Certificado"
-        secondary-action-label="Saiba mais"
+        icon="fa-solid fa-folder-open"
+        title="Nenhum projeto por aqui"
+        description="Crie seu primeiro projeto para começar a organizar seu trabalho."
+        action-label="Criar projeto"
+        secondary-action-label="Ver exemplos"
         secondary-action-icon="fa-solid fa-circle-info"
-        sub-hint="O arquivo é encriptado antes de ser armazenado."
-        sub-hint-icon="fa-solid fa-lock"
+        sub-hint="Você pode convidar sua equipe depois."
+        sub-hint-icon="fa-solid fa-users"
         @action="last = $dt.onboardingPrimary"
         @secondary-action="last = $dt.onboardingSecondary"
       />
@@ -1790,7 +1790,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   },
 
   editFieldModal: {
-    demo: EditFieldModalDemo,
+    demo: EditFieldDialogDemo,
     props: [
       { name: "title", type: "string", default: "— (required)", description: "Modal header title." },
       { name: "description", type: "string", default: "''", description: "Sub-title under the header title." },
@@ -1806,7 +1806,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaEditFieldDialog, ArcanaSelect, ArcanaButton } from '@arcanalabs/ui-components/vue'",
       "",
       "const modal = ref()",
       "const plan = ref('pro')",
@@ -1815,9 +1815,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <ArcanaButton @click=\"modal.show()\">Alterar Plano</ArcanaButton>",
-      "  <ArcanaEditFieldModal ref=\"modal\" title=\"Alterar Plano\" @save=\"savePlan\">",
+      "  <ArcanaEditFieldDialog ref=\"modal\" title=\"Alterar Plano\" @save=\"savePlan\">",
       "    <ArcanaSelect v-model=\"plan\" :options=\"planOptions\" />",
-      "  </ArcanaEditFieldModal>",
+      "  </ArcanaEditFieldDialog>",
       "</template>"
     ].join("\n")
   },

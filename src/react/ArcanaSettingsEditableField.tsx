@@ -1,9 +1,9 @@
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { ArcanaSettingsListItem } from "./ArcanaSettingsList";
 import {
-    ArcanaEditFieldModal,
-    type ArcanaEditFieldModalHandle,
-} from "./ArcanaEditFieldModal";
+    ArcanaEditFieldDialog,
+    type ArcanaEditFieldDialogHandle,
+} from "./ArcanaEditFieldDialog";
 import { ArcanaInput } from "./ArcanaInput";
 import { ArcanaSelect } from "./ArcanaSelect";
 import { ArcanaInputCurrency } from "./ArcanaInputCurrency";
@@ -12,13 +12,13 @@ import { CurrencyFormatter } from "../core/currency";
 /**
  * `<ArcanaSettingsEditableField>` — React port do SFC Vue. Item smart de
  * `<ArcanaSettingsList>` que combina display read-only + botão "Alterar" + modal de
- * edição (`<ArcanaEditFieldModal>`) numa única tag.
+ * edição (`<ArcanaEditFieldDialog>`) numa única tag.
  *
  * Equivalências Vue → React:
  * - `v-model` (`modelValue`) → `value` + `onValueChange`; `emit('save')` → `onSave`
  * - buffer (`bufferValue`) snapshotado ao abrir; cancelar descarta; salvar emite
  *   `onValueChange(buffer)` + `onSave(buffer)` e fecha (idêntico ao SFC)
- * - `<Teleport>` do modal → o próprio `<ArcanaEditFieldModal>` React já usa portal
+ * - `<Teleport>` do modal → o próprio `<ArcanaEditFieldDialog>` React já usa portal
  *
  * FormGroup: o SFC referencia um `<FormGroup>` GLOBAL do app host (não importado
  * localmente). No port, o wrapper de campo é REIMPLEMENTADO minimamente (label + input,
@@ -84,7 +84,7 @@ export function ArcanaSettingsEditableField({
     onValueChange,
     onSave,
 }: ArcanaSettingsEditableFieldProps) {
-    const modalRef = useRef<ArcanaEditFieldModalHandle | null>(null);
+    const modalRef = useRef<ArcanaEditFieldDialogHandle | null>(null);
     const [bufferValue, setBufferValue] = useState<string | number | boolean | null>(null);
 
     const isEmpty = value === null || value === undefined || value === "";
@@ -181,14 +181,14 @@ export function ArcanaSettingsEditableField({
                 Alterar
             </button>
 
-            <ArcanaEditFieldModal
+            <ArcanaEditFieldDialog
                 ref={modalRef}
                 title={resolvedModalTitle}
                 description={modalDescription}
                 onSave={handleSave}
             >
                 {formGroup({ label: resolvedInputLabel, children: input })}
-            </ArcanaEditFieldModal>
+            </ArcanaEditFieldDialog>
         </ArcanaSettingsListItem>
     );
 }

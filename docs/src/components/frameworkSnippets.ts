@@ -1359,10 +1359,10 @@ export class NoticesComponent {
 
   editFieldModal: {
     react: `import { useRef, useState } from 'react'
-import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton, type ArcanaEditFieldModalHandle } from '@arcanalabs/ui-components/react'
+import { ArcanaEditFieldDialog, ArcanaSelect, ArcanaButton, type ArcanaEditFieldDialogHandle } from '@arcanalabs/ui-components/react'
 
 export function PlanRow({ planOptions }) {
-  const modal = useRef<ArcanaEditFieldModalHandle>(null)
+  const modal = useRef<ArcanaEditFieldDialogHandle>(null)
   const [plan, setPlan] = useState('pro')
   function savePlan() {
     // …persist
@@ -1371,22 +1371,22 @@ export function PlanRow({ planOptions }) {
   return (
     <>
       <ArcanaButton onClick={() => modal.current?.show()}>Alterar Plano</ArcanaButton>
-      <ArcanaEditFieldModal ref={modal} title="Alterar Plano" onSave={savePlan}>
+      <ArcanaEditFieldDialog ref={modal} title="Alterar Plano" onSave={savePlan}>
         <ArcanaSelect value={plan} onValueChange={(v) => setPlan(v as string)} options={planOptions} />
-      </ArcanaEditFieldModal>
+      </ArcanaEditFieldDialog>
     </>
   )
 }`,
     angular: `import { Component, Input } from '@angular/core'
-import { ArcanaEditFieldModalComponent, ArcanaSelectComponent, ArcanaButtonComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaEditFieldDialogComponent, ArcanaSelectComponent, ArcanaButtonComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-plan-row',
   standalone: true,
-  imports: [ArcanaEditFieldModalComponent, ArcanaSelectComponent, ArcanaButtonComponent],
+  imports: [ArcanaEditFieldDialogComponent, ArcanaSelectComponent, ArcanaButtonComponent],
   template: \`
     <button arcanaButton (click)="m.show()">Alterar Plano</button>
-    <div arcanaEditFieldModal #m title="Alterar Plano" (save)="savePlan(m)">
+    <div arcanaEditFieldDialog #m title="Alterar Plano" (save)="savePlan(m)">
       <div arcanaSelect [(value)]="plan" [options]="planOptions"></div>
     </div>
   \`
@@ -1394,16 +1394,16 @@ import { ArcanaEditFieldModalComponent, ArcanaSelectComponent, ArcanaButtonCompo
 export class PlanRowComponent {
   @Input() planOptions: SelectOption[] = []
   plan = 'pro'
-  savePlan(m: ArcanaEditFieldModalComponent) {
+  savePlan(m: ArcanaEditFieldDialogComponent) {
     // …persist
     m.hide()
   }
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton, type SelectOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaEditFieldDialog, ArcanaSelect, ArcanaButton, type SelectOption } from '@arcanalabs/ui-components/svelte'
 
   let { planOptions }: { planOptions: SelectOption[] } = $props()
-  let modal: ArcanaEditFieldModal
+  let modal: ArcanaEditFieldDialog
   let plan = $state('pro')
   function savePlan() {
     // …persist
@@ -1412,9 +1412,9 @@ export class PlanRowComponent {
 </script>
 
 <ArcanaButton onClick={() => modal.show()}>Alterar Plano</ArcanaButton>
-<ArcanaEditFieldModal bind:this={modal} title="Alterar Plano" onSave={savePlan}>
+<ArcanaEditFieldDialog bind:this={modal} title="Alterar Plano" onSave={savePlan}>
   <ArcanaSelect value={plan} onValueChange={(v) => (plan = v as string)} options={planOptions} />
-</ArcanaEditFieldModal>`
+</ArcanaEditFieldDialog>`
   },
 
   requiredFieldsDialog: {
@@ -1466,13 +1466,13 @@ export class CustomerFormComponent {
   onboardingPanel: {
     react: `import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/react'
 
-export function CertificateSetup({ openCreate }) {
+export function EmptyProjects({ openCreate }) {
   return (
     <ArcanaOnboardingPanel
-      icon="fa-solid fa-file-shield"
-      title="Configure seu certificado"
-      description="O certificado A1 é necessário para emitir NF-e."
-      actionLabel="Configurar Certificado"
+      icon="fa-solid fa-folder-open"
+      title="No projects yet"
+      description="Create your first project to get started."
+      actionLabel="Create project"
       onAction={openCreate}
     />
   )
@@ -1481,19 +1481,19 @@ export function CertificateSetup({ openCreate }) {
 import { ArcanaOnboardingPanelComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-certificate-setup',
+  selector: 'app-empty-projects',
   standalone: true,
   imports: [ArcanaOnboardingPanelComponent],
   template: \`
     <div arcanaOnboardingPanel
-      icon="fa-solid fa-file-shield"
-      title="Configure seu certificado"
-      description="O certificado A1 é necessário para emitir NF-e."
-      actionLabel="Configurar Certificado"
+      icon="fa-solid fa-folder-open"
+      title="No projects yet"
+      description="Create your first project to get started."
+      actionLabel="Create project"
       (action)="openCreate()"></div>
   \`
 })
-export class CertificateSetupComponent {
+export class EmptyProjectsComponent {
   openCreate() {}
 }`,
     svelte: `<script lang="ts">
@@ -1502,10 +1502,10 @@ export class CertificateSetupComponent {
 </script>
 
 <ArcanaOnboardingPanel
-  icon="fa-solid fa-file-shield"
-  title="Configure seu certificado"
-  description="O certificado A1 é necessário para emitir NF-e."
-  actionLabel="Configurar Certificado"
+  icon="fa-solid fa-folder-open"
+  title="No projects yet"
+  description="Create your first project to get started."
+  actionLabel="Create project"
   onAction={openCreate}
 />`
   },

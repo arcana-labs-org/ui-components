@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import { NgTemplateOutlet } from "@angular/common";
 import { ArcanaSettingsListItemComponent } from "./arcana-settings-list-item.component";
-import { ArcanaEditFieldModalComponent } from "./arcana-edit-field-modal.component";
+import { ArcanaEditFieldDialogComponent } from "./arcana-edit-field-dialog.component";
 import { ArcanaInputComponent } from "./arcana-input.component";
 import { ArcanaSelectComponent } from "./arcana-select.component";
 import { ArcanaInputCurrencyComponent } from "./arcana-input-currency.component";
@@ -19,7 +19,7 @@ interface SelectOption {
  *
  * Attribute selector (`<div arcanaSettingsEditableField>`): item smart de
  * `ArcanaSettingsList` que combina display read-only + botão "Alterar" + modal de edição
- * (`ArcanaEditFieldModal`) numa única tag. Suporta 4 tipos de input (text/currency/number/
+ * (`ArcanaEditFieldDialog`) numa única tag. Suporta 4 tipos de input (text/currency/number/
  * select). Reproduz `__current-value`(+`--empty`)/`__edit-btn`, idêntico ao Vue/React.
  *
  * FormGroup (decisão de port): o SFC referencia um `<FormGroup>` GLOBAL do app host. No
@@ -39,7 +39,7 @@ interface SelectOption {
   imports: [
     NgTemplateOutlet,
     ArcanaSettingsListItemComponent,
-    ArcanaEditFieldModalComponent,
+    ArcanaEditFieldDialogComponent,
     ArcanaInputComponent,
     ArcanaSelectComponent,
     ArcanaInputCurrencyComponent
@@ -69,7 +69,7 @@ interface SelectOption {
     </div>
 
     <div
-      arcanaEditFieldModal
+      arcanaEditFieldDialog
       #modal
       [title]="resolvedModalTitle"
       [description]="modalDescription"
@@ -102,7 +102,7 @@ interface SelectOption {
   `
 })
 export class ArcanaSettingsEditableFieldComponent {
-  @ViewChild("modal") private modal?: ArcanaEditFieldModalComponent;
+  @ViewChild("modal") private modal?: ArcanaEditFieldDialogComponent;
 
   @Input() value: unknown = null;
   @Input({ required: true }) label!: string;

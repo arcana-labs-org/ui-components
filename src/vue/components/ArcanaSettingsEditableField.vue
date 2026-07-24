@@ -21,7 +21,7 @@
             a lógica de edição com o display.
         -->
         <Teleport to="body">
-            <ArcanaEditFieldModal
+            <ArcanaEditFieldDialog
                 ref="modal"
                 :title="resolvedModalTitle"
                 :description="modalDescription"
@@ -51,7 +51,7 @@
                         :options="options"
                     />
                 </FormGroup>
-            </ArcanaEditFieldModal>
+            </ArcanaEditFieldDialog>
         </Teleport>
     </ArcanaSettingsListItem>
 </template>
@@ -59,7 +59,7 @@
 <script lang="ts">
 import type { Component, PropType } from "vue"
 import ArcanaSettingsListItem from "./ArcanaSettingsListItem.vue"
-import ArcanaEditFieldModal from "./ArcanaEditFieldModal.vue"
+import ArcanaEditFieldDialog from "./ArcanaEditFieldDialog.vue"
 import ArcanaInput from "./ArcanaInput.vue"
 import ArcanaSelect from "./ArcanaSelect.vue"
 // EXTERNAL DEPENDENCIES: ArcanaInputCurrency + CurrencyFormatter live outside ui/ —
@@ -77,7 +77,7 @@ interface SelectOption {
  * display read-only do valor + botão "Alterar" + modal de edição num único componente.
  *
  * Em vez de declarar 3 elementos separados pra cada campo editável (item +
- * `current-value` + `<ArcanaEditFieldModal>` com input específico), esse wrapper
+ * `current-value` + `<ArcanaEditFieldDialog>` com input específico), esse wrapper
  * reduz a uma única tag:
  *
  *     <ArcanaSettingsEditableField
@@ -113,7 +113,7 @@ export default {
 
     components: {
         ArcanaSettingsListItem,
-        ArcanaEditFieldModal,
+        ArcanaEditFieldDialog,
         ArcanaInput,
         ArcanaSelect,
         ArcanaInputCurrency,

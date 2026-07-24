@@ -25,7 +25,7 @@ export { default as ArcanaDatePicker } from "./vue/components/ArcanaDatePicker.v
 export { default as ArcanaDialog } from "./vue/components/ArcanaDialog.vue";
 export { default as ArcanaDropdown } from "./vue/components/ArcanaDropdown.vue";
 export { default as ArcanaDropdownItem } from "./vue/components/ArcanaDropdownItem.vue";
-export { default as ArcanaEditFieldModal } from "./vue/components/ArcanaEditFieldModal.vue";
+export { default as ArcanaEditFieldDialog } from "./vue/components/ArcanaEditFieldDialog.vue";
 export { default as ArcanaInput } from "./vue/components/ArcanaInput.vue";
 export { default as ArcanaInputBoolean } from "./vue/components/ArcanaInputBoolean.vue";
 export { default as ArcanaInputMask } from "./vue/components/ArcanaInputMask.vue";

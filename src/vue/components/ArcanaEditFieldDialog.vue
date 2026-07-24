@@ -13,8 +13,8 @@
         <slot />
 
         <template #footer="{ hide }">
-            <ArcanaButton variant="ghost" :class="cancelClass" @click="hide">{{ cancelLabel }}</ArcanaButton>
-            <ArcanaButton variant="primary" :class="saveClass" @click="onSave">{{ saveLabel }}</ArcanaButton>
+            <ArcanaButton variant="outline-danger" :class="cancelClass" @click="hide"><i class="fa-solid fa-xmark"></i> {{ cancelLabel }}</ArcanaButton>
+            <ArcanaButton variant="success" :class="saveClass" @click="onSave"><i class="fa-solid fa-check"></i> {{ saveLabel }}</ArcanaButton>
         </template>
     </ArcanaDialog>
 </template>
@@ -25,7 +25,7 @@ import ArcanaDialog from "./ArcanaDialog.vue"
 import ArcanaButton from "./ArcanaButton.vue"
 
 /**
- * `<ArcanaEditFieldModal>` — wrapper genérico pra modais de "Alterar X" em listas
+ * `<ArcanaEditFieldDialog>` — wrapper genérico pra modais de "Alterar X" em listas
  * de configurações.
  *
  * Em telas como "Configurações Gerais" muitas linhas têm o padrão "valor + botão
@@ -53,7 +53,7 @@ import ArcanaButton from "./ArcanaButton.vue"
  *
  * Exemplo:
  *
- *     <ArcanaEditFieldModal
+ *     <ArcanaEditFieldDialog
  *         ref="planModal"
  *         title="Alterar Plano"
  *         description="Define funcionalidades habilitadas para a organização."
@@ -63,10 +63,10 @@ import ArcanaButton from "./ArcanaButton.vue"
  *             v-model="parameters.subscription_plan"
  *             :options="planOptions"
  *         />
- *     </ArcanaEditFieldModal>
+ *     </ArcanaEditFieldDialog>
  */
 export default {
-    name: 'ArcanaEditFieldModal',
+    name: 'ArcanaEditFieldDialog',
 
     components: { ArcanaDialog, ArcanaButton },
 

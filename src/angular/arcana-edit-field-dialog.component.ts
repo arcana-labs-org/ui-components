@@ -5,9 +5,9 @@ import { ArcanaDialogComponent, type ArcanaDialogSize } from "./arcana-dialog.co
 import { ArcanaButtonComponent } from "./arcana-button.component";
 
 /**
- * `ArcanaEditFieldModalComponent` — Angular port do SFC Vue `ArcanaEditFieldModal`.
+ * `ArcanaEditFieldDialogComponent` — Angular port do SFC Vue de edição de campo.
  *
- * Attribute selector (`<div arcanaEditFieldModal>`): wrapper genérico pra modais de
+ * Attribute selector (`<div arcanaEditFieldDialog>`): wrapper genérico pra modais de
  * "Alterar X". Recebe o input via `<ng-content>` e fornece o chrome (header + footer com
  * Cancelar/Salvar). Reusa o `ArcanaDialogComponent` já portado (portal pro body).
  *
@@ -17,7 +17,7 @@ import { ArcanaButtonComponent } from "./arcana-button.component";
  * - slot default → `<ng-content>`; footer com dois `ArcanaButton`, contexto `{ hide }`.
  */
 @Component({
-  selector: "div[arcanaEditFieldModal]",
+  selector: "div[arcanaEditFieldDialog]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ArcanaDialogComponent, ArcanaButtonComponent],
@@ -36,20 +36,20 @@ import { ArcanaButtonComponent } from "./arcana-button.component";
     <ng-template #footerTpl let-hide>
       <button
         arcanaButton
-        variant="ghost"
+        variant="outline-danger"
         [className]="cancelClass"
         (click)="hide()"
-      >{{ cancelLabel }}</button>
+      ><i class="fa-solid fa-xmark"></i> {{ cancelLabel }}</button>
       <button
         arcanaButton
-        variant="primary"
+        variant="success"
         [className]="saveClass"
         (click)="onSave()"
-      >{{ saveLabel }}</button>
+      ><i class="fa-solid fa-check"></i> {{ saveLabel }}</button>
     </ng-template>
   `
 })
-export class ArcanaEditFieldModalComponent {
+export class ArcanaEditFieldDialogComponent {
   @ViewChild("dialog") private dialog?: ArcanaDialogComponent;
 
   @Input({ required: true }) title!: string;

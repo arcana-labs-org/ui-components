@@ -83,7 +83,7 @@ export type { ArcanaDropdownPlacement, ArcanaDropdownSize } from "./arcana-dropd
 
 export { ArcanaDropdownItemComponent } from "./arcana-dropdown-item.component";
 
-export { ArcanaEditFieldModalComponent } from "./arcana-edit-field-modal.component";
+export { ArcanaEditFieldDialogComponent } from "./arcana-edit-field-dialog.component";
 
 export { ArcanaRequiredFieldsDialogComponent } from "./arcana-required-fields-dialog.component";
 export type { RequiredField } from "./arcana-required-fields-dialog.component";

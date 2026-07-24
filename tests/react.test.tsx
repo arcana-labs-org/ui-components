@@ -6,8 +6,8 @@ import {
     type ArcanaDialogHandle,
     ArcanaDropdown,
     ArcanaDropdownItem,
-    ArcanaEditFieldModal,
-    type ArcanaEditFieldModalHandle,
+    ArcanaEditFieldDialog,
+    type ArcanaEditFieldDialogHandle,
     ArcanaRequiredFieldsDialog,
     type ArcanaRequiredFieldsDialogHandle,
     ArcanaOnboardingPanel,
@@ -413,16 +413,16 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(document.querySelector(".arcana-dropdown__menu")).toBeNull();
     });
 
-    it("ArcanaEditFieldModal abre via ref e dispara onSave", () => {
+    it("ArcanaEditFieldDialog abre via ref e dispara onSave", () => {
         const onSave = vi.fn();
         function Harness() {
-            const ref = useRef<ArcanaEditFieldModalHandle>(null);
+            const ref = useRef<ArcanaEditFieldDialogHandle>(null);
             return (
                 <>
                     <button onClick={() => ref.current?.show()}>editar</button>
-                    <ArcanaEditFieldModal ref={ref} title="Alterar Plano" onSave={onSave}>
+                    <ArcanaEditFieldDialog ref={ref} title="Alterar Plano" onSave={onSave}>
                         <input aria-label="campo" />
-                    </ArcanaEditFieldModal>
+                    </ArcanaEditFieldDialog>
                 </>
             );
         }
