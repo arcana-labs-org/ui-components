@@ -55,7 +55,6 @@ export type DocumentedKey =
   | "settingsListGroup"
   | "settingsListItem"
   | "settingsEditableField"
-  | "sparkGridEmptyState"
   | "notice"
   | "editFieldModal"
   | "requiredFieldsDialog"

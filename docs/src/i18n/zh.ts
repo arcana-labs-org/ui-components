@@ -168,9 +168,6 @@ export const zh: Messages = {
     settingsEditableField: {
       blurb: "将只读值、\"Alterar\"按钮及其编辑模态框折叠进一个标签的智能行（<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>）。"
     },
-    sparkGridEmptyState: {
-      blurb: "一个包装器，仅当 <c>total</c> 为 0 且无筛选激活时，将网格内容替换为引导面板。"
-    },
     notice: {
       blurb: "六种语义变体的内联横幅，配对应图标，可选 <c>dismissible</c>，用于提示和非阻断性错误。"
     },

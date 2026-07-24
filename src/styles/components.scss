@@ -3710,6 +3710,12 @@
     gap: 10px;
 }
 
+/* Formato "rows": cada tile ocupa uma linha inteira (lista vertical), ignorando
+   a contagem de colunas. */
+.arcana-summary-tiles--rows {
+    grid-template-columns: 1fr;
+}
+
 @media (max-width: 880px) {
     .arcana-summary-tiles {
         grid-template-columns: 1fr;

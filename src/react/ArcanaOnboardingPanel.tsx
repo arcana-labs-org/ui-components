@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ArcanaButton } from "./ArcanaButton";
 
 /**
  * `<ArcanaOnboardingPanel>` — React port do SFC Vue. Empty state / CTA panel para
@@ -73,27 +74,27 @@ export function ArcanaOnboardingPanel({
                     {action ?? (
                         <>
                             {actionLabel && (
-                                <button
-                                    className="arcana-onboarding__cta"
+                                <ArcanaButton
+                                    variant="primary"
                                     disabled={actionLoading}
-                                    onClick={() => onAction?.()}
+                                    onClick={onAction}
                                 >
                                     {actionLoading ? (
                                         <i className="fa-solid fa-spinner fa-spin" />
                                     ) : actionIcon ? (
                                         <i className={actionIcon} />
-                                    ) : null}
-                                    <span>{actionLabel}</span>
-                                </button>
+                                    ) : null}{" "}
+                                    {actionLabel}
+                                </ArcanaButton>
                             )}
                             {secondaryActionLabel && (
-                                <button
-                                    className="arcana-onboarding__cta arcana-onboarding__cta--secondary"
-                                    onClick={() => onSecondaryAction?.()}
+                                <ArcanaButton
+                                    variant="outline"
+                                    onClick={onSecondaryAction}
                                 >
-                                    {secondaryActionIcon && <i className={secondaryActionIcon} />}
-                                    <span>{secondaryActionLabel}</span>
-                                </button>
+                                    {secondaryActionIcon && <i className={secondaryActionIcon} />}{" "}
+                                    {secondaryActionLabel}
+                                </ArcanaButton>
                             )}
                         </>
                     )}

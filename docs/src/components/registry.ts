@@ -42,12 +42,11 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-spec-sheet-section", name: "ArcanaSpecSheetSection", label: "Spec Sheet Section", category: "dataDisplay", docKey: "specSheetSection" },
   { id: "arcana-spec-sheet-field", name: "ArcanaSpecSheetField", label: "Spec Sheet Field", category: "dataDisplay", docKey: "specSheetField" },
   { id: "arcana-summary-tile", name: "ArcanaSummaryTile", label: "Summary Tile", category: "dataDisplay", docKey: "summaryTile" },
-  { id: "arcana-summary-tiles", name: "ArcanaSummaryTiles", label: "Summary Tiles", category: "dataDisplay", docKey: "summaryTiles" },
+  { id: "arcana-summary-tiles", name: "ArcanaSummaryTilesGroup", label: "Summary Tiles Group", category: "dataDisplay", docKey: "summaryTiles" },
   { id: "arcana-settings-list", name: "ArcanaSettingsList", label: "Settings List", category: "dataDisplay", docKey: "settingsList" },
   { id: "arcana-settings-list-group", name: "ArcanaSettingsListGroup", label: "Settings List Group", category: "dataDisplay", docKey: "settingsListGroup" },
   { id: "arcana-settings-list-item", name: "ArcanaSettingsListItem", label: "Settings List Item", category: "dataDisplay", docKey: "settingsListItem" },
   { id: "arcana-settings-editable-field", name: "ArcanaSettingsEditableField", label: "Settings Editable Field", category: "dataDisplay", docKey: "settingsEditableField" },
-  { id: "spark-grid-empty-state", name: "ArcanaGridEmptyState", label: "Grid Empty State", category: "dataDisplay", docKey: "sparkGridEmptyState" },
 
   // ── Overlay ────────────────────────────────────────────────────────────
   { id: "arcana-dialog", name: "ArcanaDialog", label: "Dialog", category: "overlay", docKey: "dialog" },

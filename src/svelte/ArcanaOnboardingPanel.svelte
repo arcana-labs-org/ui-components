@@ -10,6 +10,7 @@
    * - `emit('action'|'secondary-action')` → `onAction` / `onSecondaryAction`
    */
   import type { Snippet } from "svelte";
+  import ArcanaButton from "./ArcanaButton.svelte";
 
   let {
     icon,
@@ -73,10 +74,10 @@
         {@render action()}
       {:else}
         {#if actionLabel}
-          <button
-            class="arcana-onboarding__cta"
+          <ArcanaButton
+            variant="primary"
             disabled={actionLoading}
-            onclick={() => onAction?.()}
+            onClick={() => onAction?.()}
           >
             {#if actionLoading}
               <i class="fa-solid fa-spinner fa-spin"></i>
@@ -84,18 +85,18 @@
               <i class={actionIcon}></i>
             {/if}
             <span>{actionLabel}</span>
-          </button>
+          </ArcanaButton>
         {/if}
         {#if secondaryActionLabel}
-          <button
-            class="arcana-onboarding__cta arcana-onboarding__cta--secondary"
-            onclick={() => onSecondaryAction?.()}
+          <ArcanaButton
+            variant="outline"
+            onClick={() => onSecondaryAction?.()}
           >
             {#if secondaryActionIcon}
               <i class={secondaryActionIcon}></i>
             {/if}
             <span>{secondaryActionLabel}</span>
-          </button>
+          </ArcanaButton>
         {/if}
       {/if}
     </div>

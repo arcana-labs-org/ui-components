@@ -97,8 +97,8 @@ export type {
     SummaryTileTone,
 } from "./ArcanaSummaryTile";
 
-export { ArcanaSummaryTiles } from "./ArcanaSummaryTiles";
-export type { ArcanaSummaryTilesProps } from "./ArcanaSummaryTiles";
+export { ArcanaSummaryTilesGroup } from "./ArcanaSummaryTilesGroup";
+export type { ArcanaSummaryTilesGroupProps } from "./ArcanaSummaryTilesGroup";
 
 export { ArcanaLoadingOverlay } from "./ArcanaLoadingOverlay";
 export type { ArcanaLoadingOverlayProps } from "./ArcanaLoadingOverlay";
@@ -135,9 +135,6 @@ export type {
 
 export { ArcanaOnboardingPanel } from "./ArcanaOnboardingPanel";
 export type { ArcanaOnboardingPanelProps } from "./ArcanaOnboardingPanel";
-
-export { ArcanaGridEmptyState } from "./ArcanaGridEmptyState";
-export type { ArcanaGridEmptyStateProps } from "./ArcanaGridEmptyState";
 
 export {
     ArcanaSettingsList,

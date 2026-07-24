@@ -69,7 +69,7 @@ export type { ArcanaTableColumn } from "./arcana-table.component";
 export { ArcanaSummaryTileComponent } from "./arcana-summary-tile.component";
 export type { SummaryTileTone } from "./arcana-summary-tile.component";
 
-export { ArcanaSummaryTilesComponent } from "./arcana-summary-tiles.component";
+export { ArcanaSummaryTilesGroupComponent } from "./arcana-summary-tiles-group.component";
 
 export { ArcanaLoadingOverlayComponent } from "./arcana-loading-overlay.component";
 
@@ -89,8 +89,6 @@ export { ArcanaRequiredFieldsDialogComponent } from "./arcana-required-fields-di
 export type { RequiredField } from "./arcana-required-fields-dialog.component";
 
 export { ArcanaOnboardingPanelComponent } from "./arcana-onboarding-panel.component";
-
-export { ArcanaGridEmptyStateComponent } from "./arcana-grid-empty-state.component";
 
 export {
   ArcanaSettingsListComponent,

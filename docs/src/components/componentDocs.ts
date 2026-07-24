@@ -28,12 +28,11 @@ import ArcanaSpecSheet from "../../../src/vue/components/ArcanaSpecSheet.vue";
 import ArcanaSpecSheetSection from "../../../src/vue/components/ArcanaSpecSheetSection.vue";
 import ArcanaSpecSheetField from "../../../src/vue/components/ArcanaSpecSheetField.vue";
 import ArcanaSummaryTile from "../../../src/vue/components/ArcanaSummaryTile.vue";
-import ArcanaSummaryTiles from "../../../src/vue/components/ArcanaSummaryTiles.vue";
+import ArcanaSummaryTilesGroup from "../../../src/vue/components/ArcanaSummaryTilesGroup.vue";
 import ArcanaSettingsList from "../../../src/vue/components/ArcanaSettingsList.vue";
 import ArcanaSettingsListGroup from "../../../src/vue/components/ArcanaSettingsListGroup.vue";
 import ArcanaSettingsListItem from "../../../src/vue/components/ArcanaSettingsListItem.vue";
 import ArcanaSettingsEditableField from "../../../src/vue/components/ArcanaSettingsEditableField.vue";
-import ArcanaGridEmptyState from "../../../src/vue/components/ArcanaGridEmptyState.vue";
 import ArcanaNotice from "../../../src/vue/components/ArcanaNotice.vue";
 import ArcanaEditFieldModal from "../../../src/vue/components/ArcanaEditFieldModal.vue";
 import ArcanaRequiredFieldsDialog from "../../../src/vue/components/ArcanaRequiredFieldsDialog.vue";
@@ -79,6 +78,18 @@ const ButtonDemo: Component = {
         <ArcanaButton variant="destructive">Destructive</ArcanaButton>
         <ArcanaButton variant="outline-danger">Outline danger</ArcanaButton>
         <ArcanaButton :disabled="true">Disabled</ArcanaButton>
+      </div>
+      <div class="demo-row">
+        <ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> Novo</ArcanaButton>
+        <ArcanaButton variant="outline"><i class="fa-solid fa-download"></i> Exportar</ArcanaButton>
+        <ArcanaButton variant="destructive"><i class="fa-solid fa-trash"></i> Excluir</ArcanaButton>
+        <ArcanaButton variant="success">Salvar <i class="fa-solid fa-arrow-right"></i></ArcanaButton>
+      </div>
+      <div class="demo-row">
+        <ArcanaButton variant="outline" aria-label="Configurações"><i class="fa-solid fa-gear"></i></ArcanaButton>
+        <ArcanaButton variant="ghost" aria-label="Mais opções"><i class="fa-solid fa-ellipsis"></i></ArcanaButton>
+        <ArcanaButton variant="primary" aria-label="Adicionar"><i class="fa-solid fa-plus"></i></ArcanaButton>
+        <ArcanaButton variant="destructive" aria-label="Excluir"><i class="fa-solid fa-trash"></i></ArcanaButton>
       </div>
       <p class="demo-note">Primary clicked <strong>{{ clicks }}</strong> time(s)</p>
     </div>
@@ -561,16 +572,22 @@ const SpecSheetFieldDemo: Component = {
   `
 };
 
-/* ─────────────── ArcanaSummaryTiles + SummaryTile (composite) ──────── */
+/* ──────────── ArcanaSummaryTilesGroup + SummaryTile (composite) ─────── */
 
 const SummaryTilesDemo: Component = {
-  components: { ArcanaSummaryTiles, ArcanaSummaryTile },
+  components: { ArcanaSummaryTilesGroup, ArcanaSummaryTile },
   template: /* html */ `
-    <ArcanaSummaryTiles :columns="3">
-      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
-      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-    </ArcanaSummaryTiles>
+    <div class="demo-stack">
+      <ArcanaSummaryTilesGroup :columns="3">
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
+        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+      </ArcanaSummaryTilesGroup>
+      <ArcanaSummaryTilesGroup format="rows">
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
+      </ArcanaSummaryTilesGroup>
+    </div>
   `
 };
 
@@ -670,39 +687,6 @@ const SettingsEditableFieldDemo: Component = {
         <ArcanaSettingsEditableField label="Plano" caption="Recursos habilitados." type="select" :options="planOptions" v-model="plan" />
       </ArcanaSettingsList>
       <p class="demo-note">Click <strong>Alterar</strong> on any row to open its edit modal.</p>
-    </div>
-  `
-};
-
-/* ───────────────────────── ArcanaGridEmptyState ─────────────────────── */
-
-const ArcanaGridEmptyStateDemo: Component = {
-  components: { ArcanaGridEmptyState },
-  data: () => ({ loading: true, last: "—" }),
-  mounted() {
-    // The panel only appears after loading transitions true → false (mirrors a real
-    // fetch settling). Flip it shortly after mount so the preview shows the empty state.
-    setTimeout(() => { (this as unknown as { loading: boolean }).loading = false; }, 500);
-  },
-  template: /* html */ `
-    <div class="demo-stack">
-      <ArcanaGridEmptyState
-        :total="0"
-        :loading="loading"
-        :filtered="false"
-        icon="fa-solid fa-box-open"
-        title="Nenhum produto cadastrado"
-        description="Cadastre seu primeiro produto para começar a vender."
-        action-label="Adicionar Produto"
-        secondary-action-label="Ver Recomendados"
-        secondary-action-icon="fa-solid fa-wand-magic-sparkles"
-        sub-hint="Você pode importar em massa depois."
-        @action="last = 'primary'"
-        @secondary-action="last = 'secondary'"
-      >
-        <div class="demo-note">Grid rows would render here while data loads…</div>
-      </ArcanaGridEmptyState>
-      <p class="demo-note">last action: <strong>{{ last }}</strong></p>
     </div>
   `
 };
@@ -915,6 +899,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  <ArcanaButton variant=\"primary\" @click=\"save\">Save</ArcanaButton>",
       "  <ArcanaButton variant=\"outline\">Cancel</ArcanaButton>",
       "  <ArcanaButton variant=\"destructive\" :disabled=\"busy\">Delete</ArcanaButton>",
+      "",
+      "  <!-- Icon + label: drop a FontAwesome <i> inside the default slot -->",
+      "  <ArcanaButton variant=\"primary\"><i class=\"fa-solid fa-plus\" /> New</ArcanaButton>",
+      "  <ArcanaButton variant=\"success\">Save <i class=\"fa-solid fa-arrow-right\" /></ArcanaButton>",
+      "",
+      "  <!-- Icon only: pass aria-label for accessibility -->",
+      "  <ArcanaButton variant=\"outline\" aria-label=\"Settings\"><i class=\"fa-solid fa-gear\" /></ArcanaButton>",
       "</template>"
     ].join("\n")
   },
@@ -1601,20 +1592,24 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   summaryTiles: {
     demo: SummaryTilesDemo,
     props: [
-      { name: "columns", type: "number | string", default: "3", description: "Grid columns (collapses to 1 below 880px width regardless)." }
+      { name: "format", type: "columns | rows", default: "columns", description: "Layout: 'columns' = responsive grid; 'rows' = one tile per full-width row." },
+      { name: "columns", type: "number | string", default: "3", description: "Grid columns in 'columns' format (collapses to 1 below 880px width regardless)." }
     ],
     events: ["Slots: default — one or more <ArcanaSummaryTile>"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSummaryTilesGroup, ArcanaSummaryTile } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaSummaryTiles :columns=\"3\">",
+      "  <ArcanaSummaryTilesGroup :columns=\"3\">",
       "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Entradas\" value=\"R$ 1.250,00\" sub=\"4 formas\" />",
       "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Despesas\" value=\"R$ 85,00\" />",
       "    <ArcanaSummaryTile tone=\"indigo\" icon=\"fa-solid fa-sack-dollar\" label=\"Total\" value=\"R$ 1.165,00\" />",
-      "  </ArcanaSummaryTiles>",
+      "  </ArcanaSummaryTilesGroup>",
+      "",
+      "  <!-- format=\"rows\": one tile per full-width row -->",
+      "  <ArcanaSummaryTilesGroup format=\"rows\"> … </ArcanaSummaryTilesGroup>",
       "</template>"
     ].join("\n")
   },
@@ -1752,45 +1747,6 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ].join("\n")
   },
 
-  sparkGridEmptyState: {
-    demo: ArcanaGridEmptyStateDemo,
-    props: [
-      { name: "total", type: "number", default: "— (required)", description: "Row count; the panel only shows when total is 0." },
-      { name: "loading", type: "boolean", default: "— (required)", description: "Fetch state. The panel arms after loading goes true → false." },
-      { name: "filtered", type: "boolean", default: "— (required)", description: "When true (a filter is active) the panel is suppressed." },
-      { name: "icon", type: "string", default: "— (required)", description: "FontAwesome class for the panel icon." },
-      { name: "title", type: "string", default: "— (required)", description: "Panel title." },
-      { name: "description", type: "string", default: "''", description: "Panel description." },
-      { name: "actionLabel", type: "string", default: "— (required)", description: "Primary CTA label." },
-      { name: "secondaryActionLabel", type: "string", default: "''", description: "Optional secondary CTA label." },
-      { name: "secondaryActionIcon", type: "string", default: "''", description: "Icon for the secondary CTA." },
-      { name: "subHint", type: "string", default: "''", description: "Discreet footer hint." }
-    ],
-    events: [
-      "action / secondary-action — CTA clicks",
-      "panel-visible(visible) — fires when the empty-state panel shows/hides",
-      "Slots: default — the real grid content, shown while the panel is hidden"
-    ],
-    vueSnippet: [
-      "<script setup lang=\"ts\">",
-      "import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/vue'",
-      "</script>",
-      "",
-      "<template>",
-      "  <ArcanaGridEmptyState",
-      "    :total=\"rows.length\"",
-      "    :loading=\"loading\"",
-      "    :filtered=\"hasActiveFilter\"",
-      "    icon=\"fa-solid fa-box-open\"",
-      "    title=\"Nenhum produto cadastrado\"",
-      "    action-label=\"Adicionar Produto\"",
-      "    @action=\"openCreate\"",
-      "  >",
-      "    <MyGrid :rows=\"rows\" />",
-      "  </ArcanaGridEmptyState>",
-      "</template>"
-    ].join("\n")
-  },
 
   notice: {
     demo: NoticeDemo,

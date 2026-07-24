@@ -19,7 +19,7 @@ import {
   ArcanaSelect,
   ArcanaSettingsEditableField,
   ArcanaSummaryTile,
-  ArcanaSummaryTiles,
+  ArcanaSummaryTilesGroup,
   ArcanaSwitch,
   ArcanaSwitchSegmented,
   ArcanaTable,
@@ -29,7 +29,6 @@ import DropdownFixture from "./fixtures/DropdownFixture.svelte";
 import DialogFixture from "./fixtures/DialogFixture.svelte";
 import SettingsFixture from "./fixtures/SettingsFixture.svelte";
 import SpecSheetFixture from "./fixtures/SpecSheetFixture.svelte";
-import SparkFixture from "./fixtures/SparkFixture.svelte";
 
 let cleanups: Array<() => void> = [];
 
@@ -295,7 +294,7 @@ describe("Svelte adapter — lote 2", () => {
     expect(tile.querySelector(".arcana-summary-tile__value")?.textContent).toContain("R$ 10");
     expect(tile.querySelector(".arcana-summary-tile__icon")).toBeTruthy();
 
-    const { target: tilesTarget } = render(ArcanaSummaryTiles, { columns: 4 });
+    const { target: tilesTarget } = render(ArcanaSummaryTilesGroup, { columns: 4 });
     const tiles = tilesTarget.querySelector<HTMLElement>(".arcana-summary-tiles")!;
     expect(tiles.style.getPropertyValue("--arcana-summary-tiles-cols")).toBe("4");
   });
@@ -426,24 +425,9 @@ describe("Svelte adapter — lote 3 (overlay/composição)", () => {
     expect(panel.querySelector(".arcana-onboarding__title")?.textContent).toBe("Configure horários");
     expect(panel.querySelector(".arcana-onboarding__desc")?.textContent).toContain("Cadastre");
     expect(panel.querySelectorAll(".arcana-onboarding__ring")).toHaveLength(2);
-    const cta = panel.querySelector(".arcana-onboarding__cta")!;
+    const cta = panel.querySelector(".arcana-onboarding__action .arcana-button")!;
     click(cta);
     expect(onAction).toHaveBeenCalledOnce();
-  });
-
-  it("ArcanaGridEmptyState shows children until loaded, then the panel", () => {
-    const onPanelVisible = vi.fn();
-    const { target, component } = render(SparkFixture, { onPanelVisible });
-    // Ainda carregando → children visíveis, sem painel.
-    expect(target.querySelector(".spark-children")).toBeTruthy();
-    expect(target.querySelector(".arcana-onboarding")).toBeNull();
-    expect(onPanelVisible).toHaveBeenLastCalledWith(false);
-
-    (component as unknown as { finish: () => void }).finish();
-    flushSync();
-    // loading true→false com total 0 e sem filtro → painel de onboarding aparece.
-    expect(target.querySelector(".arcana-onboarding")).toBeTruthy();
-    expect(onPanelVisible).toHaveBeenLastCalledWith(true);
   });
 
   it("ArcanaSettingsList família emite as classes e o edit button dispara callback", () => {

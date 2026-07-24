@@ -3,27 +3,30 @@ import {
 } from "@angular/core";
 
 /**
- * `ArcanaSummaryTilesComponent` — Angular port do SFC Vue `ArcanaSummaryTiles`.
+ * `ArcanaSummaryTilesGroupComponent` — Angular port do SFC Vue `ArcanaSummaryTilesGroup`.
  * Container grid pros tiles de resumo.
  *
- * Attribute selector num `<div>` (`<div arcanaSummaryTiles>`): reproduz
+ * Attribute selector num `<div>` (`<div arcanaSummaryTilesGroup>`): reproduz
  * `.arcana-summary-tiles` com `style="--arcana-summary-tiles-cols: N"`, idêntico ao Vue/React.
+ * Quando `format === 'rows'`, acrescenta `.arcana-summary-tiles--rows`.
  *
  * Vue → Angular:
  * - slot default → `<ng-content>`
  */
 @Component({
-  selector: "div[arcanaSummaryTiles]",
+  selector: "div[arcanaSummaryTilesGroup]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     "[class]": "rootClass",
+    "[class.arcana-summary-tiles--rows]": "format === 'rows'",
     "[style.--arcana-summary-tiles-cols]": "columnsVar"
   },
   template: `<ng-content></ng-content>`
 })
-export class ArcanaSummaryTilesComponent {
+export class ArcanaSummaryTilesGroupComponent {
   @Input() columns: number | string = 3;
+  @Input() format: "columns" | "rows" = "columns";
   @Input() className = "";
 
   get columnsVar(): string {

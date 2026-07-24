@@ -168,9 +168,6 @@ export const it: Messages = {
     settingsEditableField: {
       blurb: "Una riga smart che unisce un valore read-only, un pulsante \"Alterar\" e il suo modal di modifica in un unico tag (<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>)."
     },
-    sparkGridEmptyState: {
-      blurb: "Un wrapper che sostituisce il contenuto di una griglia con un pannello di onboarding solo quando <c>total</c> è 0 e nessun filtro è attivo."
-    },
     notice: {
       blurb: "Un banner inline in sei varianti semantiche con icone coerenti, opzionalmente <c>dismissible</c>, per avvisi ed errori non bloccanti."
     },

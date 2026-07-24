@@ -45,12 +45,11 @@ import {
   ArcanaSpecSheetFieldComponent,
   ArcanaSpecSheetSectionComponent,
   ArcanaSummaryTileComponent,
-  ArcanaSummaryTilesComponent,
+  ArcanaSummaryTilesGroupComponent,
   ArcanaSwitchComponent,
   ArcanaSwitchSegmentedComponent,
   ArcanaTableComponent,
-  ArcanaTabsComponent,
-  ArcanaGridEmptyStateComponent
+  ArcanaTabsComponent
 } from "../src/angular";
 
 beforeAll(() => {
@@ -517,12 +516,12 @@ describe("Angular adapter", () => {
     expect(el.querySelector(".arcana-table__empty")?.textContent).toContain("Nenhum registro.");
   });
 
-  it("ArcanaSummaryTiles + Tile: grid var + tone/label/value", () => {
+  it("ArcanaSummaryTilesGroup + Tile: grid var + tone/label/value", () => {
     @Component({
       standalone: true,
-      imports: [ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent],
+      imports: [ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent],
       template: `
-        <div arcanaSummaryTiles [columns]="4">
+        <div arcanaSummaryTilesGroup [columns]="4">
           <div arcanaSummaryTile label="Vendas" [value]="42" tone="positive"></div>
         </div>
       `
@@ -705,35 +704,8 @@ describe("Angular adapter", () => {
     expect(el.querySelector(".arcana-onboarding__title")?.textContent).toContain("Configure horários");
     const onAction = vi.fn();
     fixture.componentInstance.action.subscribe(onAction);
-    click(el.querySelector(".arcana-onboarding__cta"));
+    click(el.querySelector(".arcana-button"));
     expect(onAction).toHaveBeenCalledOnce();
-  });
-
-  it("ArcanaGridEmptyState: mostra o painel só após carregar e vazio sem filtro", () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [ArcanaGridEmptyStateComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
-    const fixture = TestBed.createComponent(ArcanaGridEmptyStateComponent);
-    fixture.componentRef.setInput("total", 0);
-    fixture.componentRef.setInput("loading", true);
-    fixture.componentRef.setInput("filtered", false);
-    fixture.componentRef.setInput("icon", "fa-solid fa-box");
-    fixture.componentRef.setInput("title", "Nada aqui");
-    fixture.componentRef.setInput("actionLabel", "Criar");
-    fixture.detectChanges();
-    const el = fixture.nativeElement as HTMLElement;
-    expect(el.classList.contains("spark-grid-empty-state")).toBe(true);
-    // Ainda carregando → sem painel.
-    expect(el.querySelector(".arcana-onboarding")).toBeFalsy();
-
-    // Primeiro flip loading true → false arma o `loaded`.
-    fixture.componentRef.setInput("loading", false);
-    fixture.detectChanges();
-    // Terminou de carregar, total 0, sem filtro → painel de onboarding aparece.
-    expect(el.querySelector(".arcana-onboarding")).toBeTruthy();
-    expect(el.querySelector(".arcana-onboarding__title")?.textContent).toContain("Nada aqui");
   });
 
   it("ArcanaSettingsList família: list > group (collapsible) > item com ação", () => {

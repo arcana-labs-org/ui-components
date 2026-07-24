@@ -24,24 +24,24 @@
         -->
         <div v-if="$slots.action || actionLabel || secondaryActionLabel" class="arcana-onboarding__action">
             <slot name="action">
-                <button
+                <ArcanaButton
                     v-if="actionLabel"
-                    class="arcana-onboarding__cta"
+                    variant="primary"
                     :disabled="actionLoading"
                     @click="$emit('action')"
                 >
                     <i v-if="actionLoading" class="fa-solid fa-spinner fa-spin"></i>
                     <i v-else-if="actionIcon" :class="actionIcon"></i>
-                    <span>{{ actionLabel }}</span>
-                </button>
-                <button
+                    {{ actionLabel }}
+                </ArcanaButton>
+                <ArcanaButton
                     v-if="secondaryActionLabel"
-                    class="arcana-onboarding__cta arcana-onboarding__cta--secondary"
+                    variant="outline"
                     @click="$emit('secondary-action')"
                 >
                     <i v-if="secondaryActionIcon" :class="secondaryActionIcon"></i>
-                    <span>{{ secondaryActionLabel }}</span>
-                </button>
+                    {{ secondaryActionLabel }}
+                </ArcanaButton>
             </slot>
         </div>
 
@@ -60,6 +60,7 @@
 
 <script lang="ts">
 import { type Component } from "vue"
+import ArcanaButton from "./ArcanaButton.vue"
 
 /**
  * `<ArcanaOnboardingPanel>` — empty state/CTA panel pra primeiras configurações.
@@ -104,6 +105,8 @@ import { type Component } from "vue"
  */
 export default {
     name: 'ArcanaOnboardingPanel',
+
+    components: { ArcanaButton },
 
     emits: ['action', 'secondary-action'],
 

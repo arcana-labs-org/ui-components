@@ -46,7 +46,7 @@ export { default as ArcanaSpecSheet } from "./vue/components/ArcanaSpecSheet.vue
 export { default as ArcanaSpecSheetField } from "./vue/components/ArcanaSpecSheetField.vue";
 export { default as ArcanaSpecSheetSection } from "./vue/components/ArcanaSpecSheetSection.vue";
 export { default as ArcanaSummaryTile } from "./vue/components/ArcanaSummaryTile.vue";
-export { default as ArcanaSummaryTiles } from "./vue/components/ArcanaSummaryTiles.vue";
+export { default as ArcanaSummaryTilesGroup } from "./vue/components/ArcanaSummaryTilesGroup.vue";
 export { default as ArcanaSwitch } from "./vue/components/ArcanaSwitch.vue";
 export { default as ArcanaSwitchCard } from "./vue/components/ArcanaSwitchCard.vue";
 export { default as ArcanaSwitchRow } from "./vue/components/ArcanaSwitchRow.vue";
@@ -54,7 +54,6 @@ export { default as ArcanaSwitchSegmented } from "./vue/components/ArcanaSwitchS
 export { default as ArcanaTable } from "./vue/components/ArcanaTable.vue";
 export { default as ArcanaTabs } from "./vue/components/ArcanaTabs.vue";
 export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
-export { default as ArcanaGridEmptyState } from "./vue/components/ArcanaGridEmptyState.vue";
 
 // ── Form helpers (extraídos junto; usados por alguns Arcana* acima) ──────────
 export { default as ArcanaInputCurrency } from "./vue/components/ArcanaInputCurrency.vue";

@@ -11,7 +11,6 @@ import {
     ArcanaRequiredFieldsDialog,
     type ArcanaRequiredFieldsDialogHandle,
     ArcanaOnboardingPanel,
-    ArcanaGridEmptyState,
     ArcanaSettingsList,
     ArcanaSettingsListGroup,
     ArcanaSettingsListItem,
@@ -36,7 +35,7 @@ import {
     ArcanaDatePicker,
     ArcanaTable,
     ArcanaSummaryTile,
-    ArcanaSummaryTiles,
+    ArcanaSummaryTilesGroup,
     ArcanaLoadingOverlay,
 } from "../src/react";
 
@@ -326,16 +325,16 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(container.querySelector(".arcana-table__empty")).toBeTruthy();
     });
 
-    it("ArcanaSummaryTiles + ArcanaSummaryTile renderizam o grid e o tone", () => {
+    it("ArcanaSummaryTilesGroup + ArcanaSummaryTile renderizam o grid e o tone", () => {
         const { container, getByText } = render(
-            <ArcanaSummaryTiles columns={2}>
+            <ArcanaSummaryTilesGroup columns={2}>
                 <ArcanaSummaryTile
                     tone="positive"
                     label="Entradas"
                     value="R$ 10"
                     sub="4 formas"
                 />
-            </ArcanaSummaryTiles>
+            </ArcanaSummaryTilesGroup>
         );
         const tiles = container.querySelector(".arcana-summary-tiles") as HTMLElement;
         expect(tiles.style.getPropertyValue("--arcana-summary-tiles-cols")).toBe("2");
@@ -475,39 +474,6 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         );
         fireEvent.click(getByText("Adicionar"));
         expect(onAction).toHaveBeenCalledOnce();
-    });
-
-    it("ArcanaGridEmptyState mostra o painel só quando carregou vazio e sem filtro", () => {
-        const { container, rerender, queryByText } = render(
-            <ArcanaGridEmptyState
-                total={0}
-                loading
-                filtered={false}
-                icon="fa-solid fa-box"
-                title="Sem itens"
-                actionLabel="Criar"
-            >
-                <div>conteúdo da grid</div>
-            </ArcanaGridEmptyState>
-        );
-        // Ainda carregando → sem painel, children visível.
-        expect(container.querySelector(".arcana-onboarding")).toBeNull();
-
-        // loading true → false com total 0 e sem filtro → painel aparece.
-        rerender(
-            <ArcanaGridEmptyState
-                total={0}
-                loading={false}
-                filtered={false}
-                icon="fa-solid fa-box"
-                title="Sem itens"
-                actionLabel="Criar"
-            >
-                <div>conteúdo da grid</div>
-            </ArcanaGridEmptyState>
-        );
-        expect(container.querySelector(".arcana-onboarding")).toBeTruthy();
-        expect(queryByText("Sem itens")).toBeTruthy();
     });
 
     it("família ArcanaSettingsList monta com as classes compartilhadas", () => {

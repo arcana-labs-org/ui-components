@@ -168,9 +168,6 @@ export const ja: Messages = {
     settingsEditableField: {
       blurb: "読み取り専用の値・\"Alterar\"ボタン・編集モーダルを 1 つのタグにまとめたスマートな行です（<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>）。"
     },
-    sparkGridEmptyState: {
-      blurb: "<c>total</c> が 0 でフィルタが無効なときだけ、グリッドの内容をオンボーディングパネルに差し替えるラッパーです。"
-    },
     notice: {
       blurb: "対応アイコン付きの 6 種類のセマンティックなバリアントを持つインラインバナーで、任意で <c>dismissible</c> にでき、注意喚起や非ブロッキングのエラーに使います。"
     },

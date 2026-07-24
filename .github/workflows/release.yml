@@ -1,12 +1,16 @@
 name: Release
 
+# Publicação AUTOMÁTICA: sempre que o `package.json` muda em `main`, o job
+# lê a versão declarada e publica no npm SE ela ainda não existir lá (idempotente
+# — commits que não sobem a versão simplesmente não publicam). Também dá pra
+# disparar manualmente pela aba Actions (workflow_dispatch), que republica a
+# versão atual caso ela ainda não esteja no registro.
+
 on:
+  push:
+    branches: [main]
+    paths: ["package.json"]
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Versão exata (ex.: 1.0.0) ou incremento: patch | minor | major"
-        required: true
-        default: "patch"
 
 permissions:
   contents: write
@@ -28,25 +32,50 @@ jobs:
           node-version: 24
           cache: npm
           registry-url: https://registry.npmjs.org
+
       - run: npm ci
-      - name: Checks
-        run: npm run check
-      - name: Bump de versão + tag
+
+      - name: Resolve versão declarada
+        id: v
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Já está publicada no npm?
+        id: pub
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION: ${{ steps.v.outputs.version }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          npm version "${{ github.event.inputs.version }}" --allow-same-version -m "release: v%s"
+          if npm view "@arcanalabs/ui-components@${VERSION}" version > /dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "Versão ${VERSION} já publicada — nada a fazer."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "Versão ${VERSION} é nova — vai publicar."
+          fi
+
+      - name: Checks
+        if: steps.pub.outputs.published == 'false'
+        run: npm run check
+
       - name: Garante visibilidade pública do pacote
+        if: steps.pub.outputs.published == 'false'
         run: npm access set status=public @arcanalabs/ui-components || true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publica no npm (com provenance)
+        if: steps.pub.outputs.published == 'false'
         run: npm publish --ignore-scripts --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Push do commit de versão e da tag
-        run: git push --follow-tags
-      - name: GitHub Release
-        run: gh release create "v$(node -p "require('./package.json').version")" --generate-notes --title "v$(node -p "require('./package.json').version")"
+
+      - name: Tag + GitHub Release
+        if: steps.pub.outputs.published == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.v.outputs.version }}
+        run: |
+          TAG="v${VERSION}"
+          git tag "$TAG"
+          git push origin "$TAG"
+          gh release create "$TAG" --generate-notes --title "$TAG"

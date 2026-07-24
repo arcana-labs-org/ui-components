@@ -31,6 +31,11 @@ export function Toolbar() {
       <ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
       <ArcanaButton variant="outline">Cancel</ArcanaButton>
       <ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>
+
+      {/* Icon + label */}
+      <ArcanaButton variant="primary"><i className="fa-solid fa-plus" /> New</ArcanaButton>
+      {/* Icon only — pass aria-label for accessibility */}
+      <ArcanaButton variant="outline" aria-label="Settings"><i className="fa-solid fa-gear" /></ArcanaButton>
     </>
   )
 }`,
@@ -45,6 +50,11 @@ import { ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
     <button arcanaButton variant="primary" (click)="save()">Save</button>
     <button arcanaButton variant="outline">Cancel</button>
     <button arcanaButton variant="destructive" [disabled]="busy">Delete</button>
+
+    <!-- Icon + label -->
+    <button arcanaButton variant="primary"><i class="fa-solid fa-plus"></i> New</button>
+    <!-- Icon only — pass aria-label for accessibility -->
+    <button arcanaButton variant="outline" aria-label="Settings"><i class="fa-solid fa-gear"></i></button>
   \`
 })
 export class ToolbarComponent {
@@ -62,7 +72,12 @@ export class ToolbarComponent {
 
 <ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
 <ArcanaButton variant="outline">Cancel</ArcanaButton>
-<ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>`
+<ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>
+
+<!-- Icon + label -->
+<ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> New</ArcanaButton>
+<!-- Icon only — pass aria-label for accessibility -->
+<ArcanaButton variant="outline" aria-label="Settings"><i class="fa-solid fa-gear"></i></ArcanaButton>`
   },
 
   badge: {
@@ -1056,26 +1071,26 @@ export class FieldsComponent {
   },
 
   summaryTiles: {
-    react: `import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSummaryTilesGroup, ArcanaSummaryTile } from '@arcanalabs/ui-components/react'
 
 export function Kpis() {
   return (
-    <ArcanaSummaryTiles columns={3}>
+    <ArcanaSummaryTilesGroup columns={3}>
       <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
       <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
       <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-    </ArcanaSummaryTiles>
+    </ArcanaSummaryTilesGroup>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-kpis',
   standalone: true,
-  imports: [ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent],
+  imports: [ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent],
   template: \`
-    <div arcanaSummaryTiles [columns]="3">
+    <div arcanaSummaryTilesGroup [columns]="3">
       <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas"></div>
       <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00"></div>
       <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00"></div>
@@ -1084,14 +1099,14 @@ import { ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent } from '@arcana
 })
 export class KpisComponent {}`,
     svelte: `<script lang="ts">
-  import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSummaryTilesGroup, ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ArcanaSummaryTiles columns={3}>
+<ArcanaSummaryTilesGroup columns={3}>
   <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
   <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
   <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-</ArcanaSummaryTiles>`
+</ArcanaSummaryTilesGroup>`
   },
 
   summaryTile: {
@@ -1291,67 +1306,6 @@ export class DiscountRowComponent {
     onSave={autoSave}
   />
 </ArcanaSettingsList>`
-  },
-
-  sparkGridEmptyState: {
-    react: `import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/react'
-
-export function Products({ rows, loading, hasActiveFilter, openCreate }) {
-  return (
-    <ArcanaGridEmptyState
-      total={rows.length}
-      loading={loading}
-      filtered={hasActiveFilter}
-      icon="fa-solid fa-box-open"
-      title="Nenhum produto cadastrado"
-      actionLabel="Adicionar Produto"
-      onAction={openCreate}
-    >
-      <MyGrid rows={rows} />
-    </ArcanaGridEmptyState>
-  )
-}`,
-    angular: `import { Component } from '@angular/core'
-import { ArcanaGridEmptyStateComponent } from '@arcanalabs/ui-components/angular'
-
-@Component({
-  selector: 'app-products',
-  standalone: true,
-  imports: [ArcanaGridEmptyStateComponent],
-  template: \`
-    <div arcanaGridEmptyState
-      [total]="rows.length" [loading]="loading" [filtered]="hasActiveFilter"
-      icon="fa-solid fa-box-open" title="Nenhum produto cadastrado" actionLabel="Adicionar Produto"
-      (action)="openCreate()">
-      <app-my-grid [rows]="rows"></app-my-grid>
-    </div>
-  \`
-})
-export class ProductsComponent {
-  rows: unknown[] = []
-  loading = false
-  hasActiveFilter = false
-  openCreate() {}
-}`,
-    svelte: `<script lang="ts">
-  import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/svelte'
-  export let rows: unknown[] = []
-  export let loading = false
-  export let hasActiveFilter = false
-  export let openCreate: () => void
-</script>
-
-<ArcanaGridEmptyState
-  total={rows.length}
-  loading={loading}
-  filtered={hasActiveFilter}
-  icon="fa-solid fa-box-open"
-  title="Nenhum produto cadastrado"
-  actionLabel="Adicionar Produto"
-  onAction={openCreate}
->
-  <MyGrid {rows} />
-</ArcanaGridEmptyState>`
   },
 
   notice: {

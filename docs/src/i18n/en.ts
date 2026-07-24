@@ -168,9 +168,6 @@ export const en: Messages = {
     settingsEditableField: {
       blurb: "A smart row folding a read-only value, an \"Alterar\" button and its edit modal into one tag (<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>)."
     },
-    sparkGridEmptyState: {
-      blurb: "A wrapper that swaps a grid's contents for an onboarding panel only when <c>total</c> is 0 and no filter is active."
-    },
     notice: {
       blurb: "An inline banner in six semantic variants with matching icons, optionally <c>dismissible</c>, for advisories and non-blocking errors."
     },

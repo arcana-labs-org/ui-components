@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef
 } from "@angular/core";
 import { NgTemplateOutlet } from "@angular/common";
+import { ArcanaButtonComponent } from "./arcana-button.component";
 
 /**
  * `ArcanaOnboardingPanelComponent` — Angular port do SFC Vue `ArcanaOnboardingPanel`.
@@ -20,7 +21,7 @@ import { NgTemplateOutlet } from "@angular/common";
   selector: "div[arcanaOnboardingPanel]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, ArcanaButtonComponent],
   host: { "class": "arcana-onboarding" },
   template: `
     <div class="arcana-onboarding__visual">
@@ -48,7 +49,8 @@ import { NgTemplateOutlet } from "@angular/common";
         } @else {
           @if (actionLabel) {
             <button
-              class="arcana-onboarding__cta"
+              arcanaButton
+              variant="primary"
               [disabled]="actionLoading"
               (click)="action.emit()"
             >
@@ -62,7 +64,8 @@ import { NgTemplateOutlet } from "@angular/common";
           }
           @if (secondaryActionLabel) {
             <button
-              class="arcana-onboarding__cta arcana-onboarding__cta--secondary"
+              arcanaButton
+              variant="outline"
               (click)="secondaryAction.emit()"
             >
               @if (secondaryActionIcon) {

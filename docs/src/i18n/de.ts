@@ -168,9 +168,6 @@ export const de: Messages = {
     settingsEditableField: {
       blurb: "Eine smarte Zeile, die einen schreibgeschützten Wert, einen \"Alterar\"-Button und sein Bearbeiten-Modal in einem Tag vereint (<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>)."
     },
-    sparkGridEmptyState: {
-      blurb: "Ein Wrapper, der den Inhalt eines Grids nur dann gegen ein Onboarding-Panel tauscht, wenn <c>total</c> 0 ist und kein Filter aktiv ist."
-    },
     notice: {
       blurb: "Ein Inline-Banner in sechs semantischen Varianten mit passenden Icons, optional <c>dismissible</c>, für Hinweise und nicht-blockierende Fehler."
     },

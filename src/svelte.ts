@@ -39,7 +39,7 @@ import ArcanaInputCurrencyComponent from "./svelte/ArcanaInputCurrency.svelte";
 import ArcanaDatePickerComponent from "./svelte/ArcanaDatePicker.svelte";
 import ArcanaTableComponent from "./svelte/ArcanaTable.svelte";
 import ArcanaSummaryTileComponent from "./svelte/ArcanaSummaryTile.svelte";
-import ArcanaSummaryTilesComponent from "./svelte/ArcanaSummaryTiles.svelte";
+import ArcanaSummaryTilesGroupComponent from "./svelte/ArcanaSummaryTilesGroup.svelte";
 import ArcanaLoadingOverlayComponent from "./svelte/ArcanaLoadingOverlay.svelte";
 import ArcanaDialogComponent from "./svelte/ArcanaDialog.svelte";
 import ArcanaDropdownComponent from "./svelte/ArcanaDropdown.svelte";
@@ -47,7 +47,6 @@ import ArcanaDropdownItemComponent from "./svelte/ArcanaDropdownItem.svelte";
 import ArcanaEditFieldModalComponent from "./svelte/ArcanaEditFieldModal.svelte";
 import ArcanaRequiredFieldsDialogComponent from "./svelte/ArcanaRequiredFieldsDialog.svelte";
 import ArcanaOnboardingPanelComponent from "./svelte/ArcanaOnboardingPanel.svelte";
-import ArcanaGridEmptyStateComponent from "./svelte/ArcanaGridEmptyState.svelte";
 import ArcanaSettingsListComponent from "./svelte/ArcanaSettingsList.svelte";
 import ArcanaSettingsListGroupComponent from "./svelte/ArcanaSettingsListGroup.svelte";
 import ArcanaSettingsListItemComponent from "./svelte/ArcanaSettingsListItem.svelte";
@@ -495,12 +494,13 @@ export interface ArcanaSummaryTileProps {
 }
 export const ArcanaSummaryTile = ArcanaSummaryTileComponent as unknown as Component<ArcanaSummaryTileProps>;
 
-export interface ArcanaSummaryTilesProps {
+export interface ArcanaSummaryTilesGroupProps {
   columns?: number | string;
+  format?: "columns" | "rows";
   children?: Snippet;
   class?: string;
 }
-export const ArcanaSummaryTiles = ArcanaSummaryTilesComponent as unknown as Component<ArcanaSummaryTilesProps>;
+export const ArcanaSummaryTilesGroup = ArcanaSummaryTilesGroupComponent as unknown as Component<ArcanaSummaryTilesGroupProps>;
 
 /* ── ArcanaLoadingOverlay ─────────────────────────────────────────────────── */
 export interface ArcanaLoadingOverlayProps {
@@ -637,25 +637,6 @@ export interface ArcanaOnboardingPanelProps {
   onSecondaryAction?: () => void;
 }
 export const ArcanaOnboardingPanel = ArcanaOnboardingPanelComponent as unknown as Component<ArcanaOnboardingPanelProps>;
-
-/* ── ArcanaGridEmptyState ──────────────────────────────────────────────────── */
-export interface ArcanaGridEmptyStateProps {
-  total: number;
-  loading: boolean;
-  filtered: boolean;
-  icon: string;
-  title: string;
-  description?: string;
-  actionLabel: string;
-  secondaryActionLabel?: string;
-  secondaryActionIcon?: string;
-  subHint?: string;
-  children?: Snippet;
-  onAction?: () => void;
-  onSecondaryAction?: () => void;
-  onPanelVisible?: (visible: boolean) => void;
-}
-export const ArcanaGridEmptyState = ArcanaGridEmptyStateComponent as unknown as Component<ArcanaGridEmptyStateProps>;
 
 /* ── ArcanaSettingsList (família) ─────────────────────────────────────────── */
 export type SettingsGroupIconColor =
