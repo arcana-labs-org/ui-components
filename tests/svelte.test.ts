@@ -12,9 +12,12 @@ import {
   ShadcnInputMask,
   ShadcnLoadingOverlay,
   ShadcnNumberStepper,
+  ShadcnOnboardingPanel,
   ShadcnRadioCardGroup,
+  ShadcnRequiredFieldsDialog,
   ShadcnSegmentedOptions,
   ShadcnSelect,
+  ShadcnSettingsEditableField,
   ShadcnSummaryTile,
   ShadcnSummaryTiles,
   ShadcnSwitch,
@@ -22,6 +25,11 @@ import {
   ShadcnTable,
   ShadcnTabs,
 } from "../src/svelte";
+import DropdownFixture from "./fixtures/DropdownFixture.svelte";
+import DialogFixture from "./fixtures/DialogFixture.svelte";
+import SettingsFixture from "./fixtures/SettingsFixture.svelte";
+import SpecSheetFixture from "./fixtures/SpecSheetFixture.svelte";
+import SparkFixture from "./fixtures/SparkFixture.svelte";
 
 let cleanups: Array<() => void> = [];
 
@@ -324,5 +332,179 @@ describe("Svelte adapter — lote 2", () => {
     expect(items).toHaveLength(2);
     click(items[0]);
     expect(onValueChange).toHaveBeenCalledWith({ cities: [1] });
+  });
+});
+
+describe("Svelte adapter — lote 3 (overlay/composição)", () => {
+  it("ShadcnDialog exposes show()/hide() via bind:this and portals to body", () => {
+    const { component } = render(DialogFixture, {});
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeNull();
+
+    (component as unknown as { show: () => void }).show();
+    flushSync();
+    const overlay = document.body.querySelector(".shadcn-dialog-overlay")!;
+    expect(overlay).toBeTruthy();
+    const content = overlay.querySelector(".shadcn-dialog-content")!;
+    expect(content.getAttribute("role")).toBe("dialog");
+    expect(content.querySelector(".shadcn-dialog-title")?.textContent).toBe("Título Teste");
+    expect(content.querySelector(".dialog-body-content")).toBeTruthy();
+
+    // Footer snippet recebe `hide` — o botão fecha o dialog.
+    const cancel = content.querySelector(".dialog-cancel")!;
+    click(cancel);
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeNull();
+  });
+
+  it("ShadcnDialog closeable X button and Escape close it", () => {
+    const { component } = render(DialogFixture, {});
+    (component as unknown as { show: () => void }).show();
+    flushSync();
+    const closeBtn = document.body.querySelector(".shadcn-dialog-close")!;
+    expect(closeBtn).toBeTruthy();
+    click(closeBtn);
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeNull();
+
+    (component as unknown as { show: () => void }).show();
+    flushSync();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeTruthy();
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    flushSync();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeNull();
+  });
+
+  it("ShadcnDropdown opens a portaled menu and item click selects + closes", () => {
+    const onSelect = vi.fn();
+    const { target } = render(DropdownFixture, { onSelect });
+    expect(document.body.querySelector(".shadcn-dropdown__menu")).toBeNull();
+
+    const trigger = target.querySelector("button.trig")!;
+    click(trigger);
+    const menu = document.body.querySelector(".shadcn-dropdown__menu")!;
+    expect(menu).toBeTruthy();
+    expect(menu.classList.contains("shadcn-dropdown__menu--comfortable")).toBe(true);
+
+    const items = menu.querySelectorAll(".shadcn-dropdown-item");
+    expect(items).toHaveLength(2);
+    expect(items[1].classList.contains("shadcn-dropdown-item--danger")).toBe(true);
+
+    click(items[0]);
+    expect(onSelect).toHaveBeenCalledWith("rename");
+    // closeOnClick (default) → menu fecha após seleção.
+    expect(document.body.querySelector(".shadcn-dropdown__menu")).toBeNull();
+  });
+
+  it("ShadcnRequiredFieldsDialog lists fields and shows via bind:this", () => {
+    const { component } = render(ShadcnRequiredFieldsDialog, {
+      description: "Preencha antes de continuar",
+      fields: [
+        { key: "name", label: "Nome", hint: "Passo 1" },
+        { key: "cnpj", label: "CNPJ", hint: "Passo 2" },
+      ],
+    });
+    (component as unknown as { show: () => void }).show();
+    flushSync();
+    const overlay = document.body.querySelector(".shadcn-dialog-overlay")!;
+    expect(overlay.querySelector(".rf-header__title")?.textContent).toBe("Faltam campos obrigatórios");
+    const items = overlay.querySelectorAll(".rf-item");
+    expect(items).toHaveLength(2);
+    expect(items[0].querySelector(".rf-item__label")?.textContent).toBe("Nome");
+    (component as unknown as { hide: () => void }).hide();
+    flushSync();
+    expect(document.body.querySelector(".shadcn-dialog-overlay")).toBeNull();
+  });
+
+  it("ShadcnOnboardingPanel renders visual + CTA and forwards action", () => {
+    const onAction = vi.fn();
+    const { target } = render(ShadcnOnboardingPanel, {
+      icon: "fa-solid fa-clock",
+      title: "Configure horários",
+      description: "Cadastre intervalos.",
+      actionLabel: "Adicionar",
+      onAction,
+    });
+    const panel = target.querySelector(".shadcn-onboarding")!;
+    expect(panel.querySelector(".shadcn-onboarding__title")?.textContent).toBe("Configure horários");
+    expect(panel.querySelector(".shadcn-onboarding__desc")?.textContent).toContain("Cadastre");
+    expect(panel.querySelectorAll(".shadcn-onboarding__ring")).toHaveLength(2);
+    const cta = panel.querySelector(".shadcn-onboarding__cta")!;
+    click(cta);
+    expect(onAction).toHaveBeenCalledOnce();
+  });
+
+  it("SparkGridEmptyState shows children until loaded, then the panel", () => {
+    const onPanelVisible = vi.fn();
+    const { target, component } = render(SparkFixture, { onPanelVisible });
+    // Ainda carregando → children visíveis, sem painel.
+    expect(target.querySelector(".spark-children")).toBeTruthy();
+    expect(target.querySelector(".shadcn-onboarding")).toBeNull();
+    expect(onPanelVisible).toHaveBeenLastCalledWith(false);
+
+    (component as unknown as { finish: () => void }).finish();
+    flushSync();
+    // loading true→false com total 0 e sem filtro → painel de onboarding aparece.
+    expect(target.querySelector(".shadcn-onboarding")).toBeTruthy();
+    expect(onPanelVisible).toHaveBeenLastCalledWith(true);
+  });
+
+  it("ShadcnSettingsList família emite as classes e o edit button dispara callback", () => {
+    const onEdit = vi.fn();
+    const { target } = render(SettingsFixture, { onEdit });
+    expect(target.querySelector(".shadcn-settings-list")).toBeTruthy();
+    const group = target.querySelector(".shadcn-settings-list__group")!;
+    expect(group.querySelector(".shadcn-settings-list__group-icon--indigo")).toBeTruthy();
+    expect(group.querySelector(".shadcn-settings-list__group-title")?.textContent).toContain("Pedidos");
+    const items = target.querySelectorAll(".shadcn-settings-list__item");
+    expect(items).toHaveLength(2);
+    expect(items[0].querySelector(".shadcn-settings-list__label")?.textContent).toContain("Plano");
+    expect(items[1].querySelector('button[role="switch"]')).toBeTruthy();
+    click(target.querySelector(".shadcn-settings-list__edit-btn"));
+    expect(onEdit).toHaveBeenCalledOnce();
+  });
+
+  it("ShadcnSettingsEditableField shows the value and opens the edit modal", () => {
+    const { target } = render(ShadcnSettingsEditableField, {
+      label: "Desconto",
+      value: "R$ 5",
+      type: "text",
+    });
+    const item = target.querySelector(".shadcn-settings-list__item")!;
+    expect(item.querySelector(".shadcn-settings-list__current-value")?.textContent).toBe("R$ 5");
+    click(item.querySelector(".shadcn-settings-list__edit-btn"));
+    const overlay = document.body.querySelector(".shadcn-dialog-overlay")!;
+    expect(overlay).toBeTruthy();
+    expect(overlay.querySelector(".shadcn-dialog-title")?.textContent).toBe("Alterar Desconto");
+    expect(overlay.querySelector(".demo-form-group")).toBeTruthy();
+  });
+
+  it("ShadcnSettingsEditableField renders emptyText for empty value", () => {
+    const { target } = render(ShadcnSettingsEditableField, {
+      label: "Meta",
+      value: null,
+      emptyText: "Não definido",
+    });
+    const val = target.querySelector(".shadcn-settings-list__current-value")!;
+    expect(val.textContent).toBe("Não definido");
+    expect(val.classList.contains("shadcn-settings-list__current-value--empty")).toBe(true);
+  });
+
+  it("ShadcnSpecSheet família emite header/section/field com empty state", () => {
+    const { target } = render(SpecSheetFixture, {});
+    const sheet = target.querySelector(".shadcn-spec-sheet")!;
+    expect(sheet.querySelector(".shadcn-spec-sheet__doc-num")?.textContent).toBe("Cadastro Nº 042");
+    expect(sheet.querySelector(".shadcn-spec-sheet__doc-title")?.textContent).toContain("Popgás");
+    expect(sheet.querySelector(".shadcn-spec-sheet-badge--active")).toBeTruthy();
+
+    const section = sheet.querySelector(".shadcn-spec-sheet__section")!;
+    expect(section.querySelector(".shadcn-spec-sheet__section-num")?.textContent).toBe("§ 01");
+    expect(section.querySelector(".shadcn-spec-sheet__grid--cols-2")).toBeTruthy();
+
+    const fields = section.querySelectorAll(".shadcn-spec-sheet__field");
+    expect(fields).toHaveLength(2);
+    expect(fields[0].querySelector(".shadcn-spec-sheet__value")?.textContent).toBe("Popgás LTDA");
+    const emptyValue = fields[1].querySelector(".shadcn-spec-sheet__value")!;
+    expect(emptyValue.classList.contains("shadcn-spec-sheet__value--empty")).toBe(true);
+    expect(emptyValue.textContent).toBe("Não informado");
+
+    expect(sheet.querySelector(".shadcn-spec-sheet__footer .spec-edit")).toBeTruthy();
   });
 });

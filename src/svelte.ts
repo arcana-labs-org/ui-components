@@ -42,6 +42,21 @@ import ShadcnTableComponent from "./svelte/ShadcnTable.svelte";
 import ShadcnSummaryTileComponent from "./svelte/ShadcnSummaryTile.svelte";
 import ShadcnSummaryTilesComponent from "./svelte/ShadcnSummaryTiles.svelte";
 import ShadcnLoadingOverlayComponent from "./svelte/ShadcnLoadingOverlay.svelte";
+import ShadcnDialogComponent from "./svelte/ShadcnDialog.svelte";
+import ShadcnDropdownComponent from "./svelte/ShadcnDropdown.svelte";
+import ShadcnDropdownItemComponent from "./svelte/ShadcnDropdownItem.svelte";
+import ShadcnEditFieldModalComponent from "./svelte/ShadcnEditFieldModal.svelte";
+import ShadcnRequiredFieldsDialogComponent from "./svelte/ShadcnRequiredFieldsDialog.svelte";
+import ShadcnOnboardingPanelComponent from "./svelte/ShadcnOnboardingPanel.svelte";
+import SparkGridEmptyStateComponent from "./svelte/SparkGridEmptyState.svelte";
+import ShadcnSettingsListComponent from "./svelte/ShadcnSettingsList.svelte";
+import ShadcnSettingsListGroupComponent from "./svelte/ShadcnSettingsListGroup.svelte";
+import ShadcnSettingsListItemComponent from "./svelte/ShadcnSettingsListItem.svelte";
+import ShadcnSettingsEditButtonComponent from "./svelte/ShadcnSettingsEditButton.svelte";
+import ShadcnSettingsEditableFieldComponent from "./svelte/ShadcnSettingsEditableField.svelte";
+import ShadcnSpecSheetComponent from "./svelte/ShadcnSpecSheet.svelte";
+import ShadcnSpecSheetSectionComponent from "./svelte/ShadcnSpecSheetSection.svelte";
+import ShadcnSpecSheetFieldComponent from "./svelte/ShadcnSpecSheetField.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
@@ -511,3 +526,255 @@ export interface ShadcnLoadingOverlayProps {
   class?: string;
 }
 export const ShadcnLoadingOverlay = ShadcnLoadingOverlayComponent as unknown as Component<ShadcnLoadingOverlayProps>;
+
+/* ── ShadcnDialog (overlay imperativo) ────────────────────────────────────── */
+export type ShadcnDialogSize = "sm" | "md" | "lg" | "xl" | "full" | number;
+export interface ShadcnDialogProps {
+  title?: string;
+  description?: string;
+  size?: ShadcnDialogSize;
+  fullHeight?: boolean;
+  closeable?: boolean;
+  contentClass?: string;
+  closeOnOverlayClick?: boolean;
+  closeOnEscape?: boolean;
+  noBodyPadding?: boolean;
+  bodyScrollable?: boolean;
+  flatFooter?: boolean;
+  /** Snippet que substitui o header padrão (title/description). */
+  header?: Snippet;
+  /** Snippet do rodapé — recebe `hide` no primeiro argumento. */
+  footer?: Snippet<[() => void]>;
+  children?: Snippet;
+  onShow?: () => void;
+  onHide?: () => void;
+}
+/**
+ * API imperativa: `show()` / `hide()` acessíveis via `bind:this`.
+ * ```svelte
+ * <script>let dialog; </script>
+ * <ShadcnDialog bind:this={dialog}>...</ShadcnDialog>
+ * <button onclick={() => dialog.show()}>Abrir</button>
+ * ```
+ */
+export interface ShadcnDialogHandle {
+  show: () => void;
+  hide: () => void;
+}
+export const ShadcnDialog = ShadcnDialogComponent as unknown as Component<ShadcnDialogProps>;
+
+/* ── ShadcnDropdown (+Item) ───────────────────────────────────────────────── */
+export type ShadcnDropdownPlacement = "bottom-end" | "bottom-start" | "top-end" | "top-start";
+export type ShadcnDropdownSize = "default" | "comfortable";
+export interface ShadcnDropdownProps {
+  placement?: ShadcnDropdownPlacement;
+  offset?: number;
+  disabled?: boolean;
+  size?: ShadcnDropdownSize;
+  /** Snippet do gatilho — recebe `{ open, toggle }`. */
+  trigger?: Snippet<[{ open: boolean; toggle: () => void }]>;
+  /** Snippet do painel — recebe `{ close }`. */
+  children?: Snippet<[{ close: () => void }]>;
+  onOpen?: () => void;
+  onClose?: () => void;
+}
+export const ShadcnDropdown = ShadcnDropdownComponent as unknown as Component<ShadcnDropdownProps>;
+
+export interface ShadcnDropdownItemProps {
+  icon?: string;
+  iconColor?: string;
+  variant?: "default" | "danger" | "success" | "warning";
+  disabled?: boolean;
+  divided?: boolean;
+  closeOnClick?: boolean;
+  size?: ShadcnDropdownSize | null;
+  suffix?: Snippet;
+  children?: Snippet;
+  onClick?: (e: MouseEvent) => void;
+}
+export const ShadcnDropdownItem = ShadcnDropdownItemComponent as unknown as Component<ShadcnDropdownItemProps>;
+
+/* ── ShadcnEditFieldModal ─────────────────────────────────────────────────── */
+export interface ShadcnEditFieldModalProps {
+  title: string;
+  description?: string;
+  cancelLabel?: string;
+  saveLabel?: string;
+  cancelColor?: string;
+  saveColor?: string;
+  cancelClass?: string;
+  saveClass?: string;
+  size?: "sm" | "md" | "lg" | "xl" | number;
+  children?: Snippet;
+  onSave?: () => void;
+}
+/** API imperativa `show()`/`hide()` via `bind:this` (delega pro ShadcnDialog interno). */
+export interface ShadcnEditFieldModalHandle {
+  show: () => void;
+  hide: () => void;
+}
+export const ShadcnEditFieldModal = ShadcnEditFieldModalComponent as unknown as Component<ShadcnEditFieldModalProps>;
+
+/* ── ShadcnRequiredFieldsDialog ───────────────────────────────────────────── */
+export interface RequiredField {
+  key: string;
+  label: string;
+  hint: string;
+}
+export interface ShadcnRequiredFieldsDialogProps {
+  title?: string;
+  description?: string;
+  fields?: RequiredField[];
+  buttonLabel?: string;
+  size?: number | string;
+}
+/** API imperativa `show()`/`hide()` via `bind:this`. */
+export interface ShadcnRequiredFieldsDialogHandle {
+  show: () => void;
+  hide: () => void;
+}
+export const ShadcnRequiredFieldsDialog = ShadcnRequiredFieldsDialogComponent as unknown as Component<ShadcnRequiredFieldsDialogProps>;
+
+/* ── ShadcnOnboardingPanel ────────────────────────────────────────────────── */
+export interface ShadcnOnboardingPanelProps {
+  icon: string;
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  actionIcon?: string;
+  actionLoading?: boolean;
+  secondaryActionLabel?: string;
+  secondaryActionIcon?: string;
+  subHint?: string;
+  subHintIcon?: string;
+  children?: Snippet;
+  action?: Snippet;
+  subHintSlot?: Snippet;
+  onAction?: () => void;
+  onSecondaryAction?: () => void;
+}
+export const ShadcnOnboardingPanel = ShadcnOnboardingPanelComponent as unknown as Component<ShadcnOnboardingPanelProps>;
+
+/* ── SparkGridEmptyState ──────────────────────────────────────────────────── */
+export interface SparkGridEmptyStateProps {
+  total: number;
+  loading: boolean;
+  filtered: boolean;
+  icon: string;
+  title: string;
+  description?: string;
+  actionLabel: string;
+  secondaryActionLabel?: string;
+  secondaryActionIcon?: string;
+  subHint?: string;
+  children?: Snippet;
+  onAction?: () => void;
+  onSecondaryAction?: () => void;
+  onPanelVisible?: (visible: boolean) => void;
+}
+export const SparkGridEmptyState = SparkGridEmptyStateComponent as unknown as Component<SparkGridEmptyStateProps>;
+
+/* ── ShadcnSettingsList (família) ─────────────────────────────────────────── */
+export type SettingsGroupIconColor =
+  | "blue" | "emerald" | "amber" | "rose" | "violet" | "indigo" | "teal" | "slate";
+
+export interface ShadcnSettingsListProps {
+  children?: Snippet;
+}
+export const ShadcnSettingsList = ShadcnSettingsListComponent as unknown as Component<ShadcnSettingsListProps>;
+
+export interface ShadcnSettingsListGroupProps {
+  title?: string | Snippet;
+  sectionNum?: string;
+  meta?: string | Snippet;
+  icon?: string;
+  iconColor?: SettingsGroupIconColor;
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
+  compact?: boolean;
+  children?: Snippet;
+}
+export const ShadcnSettingsListGroup = ShadcnSettingsListGroupComponent as unknown as Component<ShadcnSettingsListGroupProps>;
+
+export interface ShadcnSettingsListItemProps {
+  label?: string | Snippet;
+  caption?: string | Snippet;
+  disabled?: boolean;
+  nested?: boolean;
+  children?: Snippet;
+}
+export const ShadcnSettingsListItem = ShadcnSettingsListItemComponent as unknown as Component<ShadcnSettingsListItemProps>;
+
+/** Helper aditivo (parity React/Angular): botão "Alterar" pro slot de ação do item. */
+export interface ShadcnSettingsEditButtonProps {
+  disabled?: boolean;
+  label?: string;
+  onClick?: (e: MouseEvent) => void;
+}
+export const ShadcnSettingsEditButton = ShadcnSettingsEditButtonComponent as unknown as Component<ShadcnSettingsEditButtonProps>;
+
+export interface EditableFieldSelectOption {
+  label: string;
+  value: string | number | boolean | null;
+}
+export interface ShadcnSettingsEditableFieldProps {
+  value?: string | number | boolean | null;
+  label: string;
+  caption?: string;
+  type?: "text" | "currency" | "number" | "select";
+  options?: EditableFieldSelectOption[];
+  disabled?: boolean;
+  nested?: boolean;
+  displayFormatter?: (value: unknown) => string;
+  modalTitle?: string;
+  modalDescription?: string;
+  inputLabel?: string;
+  inputPlaceholder?: string;
+  min?: number | string;
+  max?: number | string;
+  emptyText?: string;
+  labelSlot?: Snippet;
+  /** Wrapper do campo no modal (substitui o FormGroup global do host); recebe `{ label, input }`. */
+  formGroup?: Snippet<[{ label: string; input: Snippet }]>;
+  onValueChange?: (value: string | number | boolean | null) => void;
+  onSave?: (value: string | number | boolean | null) => void;
+}
+export const ShadcnSettingsEditableField = ShadcnSettingsEditableFieldComponent as unknown as Component<ShadcnSettingsEditableFieldProps>;
+
+/* ── ShadcnSpecSheet (família) ────────────────────────────────────────────── */
+export type SpecSheetAccentColor =
+  | "blue" | "emerald" | "amber" | "rose" | "violet" | "indigo" | "teal" | "slate";
+
+export interface ShadcnSpecSheetProps {
+  docNum?: string;
+  title?: string | Snippet;
+  metaLabel?: string;
+  flat?: boolean;
+  header?: Snippet;
+  meta?: Snippet;
+  footer?: Snippet;
+  children?: Snippet;
+}
+export const ShadcnSpecSheet = ShadcnSpecSheetComponent as unknown as Component<ShadcnSpecSheetProps>;
+
+export interface ShadcnSpecSheetSectionProps {
+  title?: string | Snippet;
+  sectionNum?: string;
+  icon?: string;
+  iconColor?: SpecSheetAccentColor;
+  columns?: 1 | 2 | 3 | 4 | 5 | 6 | string;
+  noRowDividers?: boolean;
+  compact?: boolean;
+  actions?: Snippet;
+  children?: Snippet;
+}
+export const ShadcnSpecSheetSection = ShadcnSpecSheetSectionComponent as unknown as Component<ShadcnSpecSheetSectionProps>;
+
+export interface ShadcnSpecSheetFieldProps {
+  label: string;
+  value?: string | number | null;
+  emptyText?: string;
+  span?: number | string;
+  children?: Snippet;
+}
+export const ShadcnSpecSheetField = ShadcnSpecSheetFieldComponent as unknown as Component<ShadcnSpecSheetFieldProps>;
