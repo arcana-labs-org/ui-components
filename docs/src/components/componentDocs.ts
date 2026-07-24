@@ -80,16 +80,16 @@ const ButtonDemo: Component = {
         <ArcanaButton :disabled="true">{{ $dt.disabledLabel }}</ArcanaButton>
       </div>
       <div class="demo-row">
-        <ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> Novo</ArcanaButton>
-        <ArcanaButton variant="outline"><i class="fa-solid fa-download"></i> Exportar</ArcanaButton>
-        <ArcanaButton variant="destructive"><i class="fa-solid fa-trash"></i> Excluir</ArcanaButton>
-        <ArcanaButton variant="success">Salvar <i class="fa-solid fa-arrow-right"></i></ArcanaButton>
+        <ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> {{ $dt.btnNew }}</ArcanaButton>
+        <ArcanaButton variant="outline"><i class="fa-solid fa-download"></i> {{ $dt.btnExport }}</ArcanaButton>
+        <ArcanaButton variant="destructive"><i class="fa-solid fa-trash"></i> {{ $dt.btnDelete }}</ArcanaButton>
+        <ArcanaButton variant="success">{{ $dt.btnSave }} <i class="fa-solid fa-arrow-right"></i></ArcanaButton>
       </div>
       <div class="demo-row">
-        <ArcanaButton variant="outline" aria-label="Configurações"><i class="fa-solid fa-gear"></i></ArcanaButton>
-        <ArcanaButton variant="ghost" aria-label="Mais opções"><i class="fa-solid fa-ellipsis"></i></ArcanaButton>
-        <ArcanaButton variant="primary" aria-label="Adicionar"><i class="fa-solid fa-plus"></i></ArcanaButton>
-        <ArcanaButton variant="destructive" aria-label="Excluir"><i class="fa-solid fa-trash"></i></ArcanaButton>
+        <ArcanaButton variant="outline" :aria-label="$dt.btnSettings"><i class="fa-solid fa-gear"></i></ArcanaButton>
+        <ArcanaButton variant="ghost" :aria-label="$dt.btnMoreOptions"><i class="fa-solid fa-ellipsis"></i></ArcanaButton>
+        <ArcanaButton variant="primary" :aria-label="$dt.btnAdd"><i class="fa-solid fa-plus"></i></ArcanaButton>
+        <ArcanaButton variant="destructive" :aria-label="$dt.btnDelete"><i class="fa-solid fa-trash"></i></ArcanaButton>
       </div>
       <p class="demo-note">{{ $dt.primaryClickedPrefix }} <strong>{{ clicks }}</strong> {{ $dt.timesSuffix }}</p>
     </div>
@@ -537,21 +537,21 @@ const TableDemo: Component = {
 const SpecSheetDemo: Component = {
   components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
-    <ArcanaSpecSheet doc-num="Cadastro Nº 042 · Atualizado 14.Mar.2026" title="Arcana Labs" meta-label="Status">
+    <ArcanaSpecSheet :doc-num="$dt.specSheetDocNum" title="Arcana Labs" :meta-label="$dt.statusLabel">
       <template #meta>
-        <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
+        <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">{{ $dt.statusActive }}</span>
       </template>
-      <ArcanaSpecSheetSection title="Dados Cadastrais" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue" :columns="3">
-        <ArcanaSpecSheetField label="Razão Social" value="Arcana Labs Tecnologia LTDA" />
+      <ArcanaSpecSheetSection :title="$dt.specSheetRegistrationData" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue" :columns="3">
+        <ArcanaSpecSheetField :label="$dt.specSheetLegalName" value="Arcana Labs Tecnologia LTDA" />
         <ArcanaSpecSheetField label="CNPJ" value="12.345.678/0001-90" />
-        <ArcanaSpecSheetField label="Inscrição Estadual" value="" />
+        <ArcanaSpecSheetField :label="$dt.specSheetStateRegistration" value="" />
       </ArcanaSpecSheetSection>
-      <ArcanaSpecSheetSection title="Contato" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
-        <ArcanaSpecSheetField label="Telefone" value="(11) 4002-8922" />
-        <ArcanaSpecSheetField label="E-mail" value="contato@arcanalabs.com" />
+      <ArcanaSpecSheetSection :title="$dt.specSheetContact" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
+        <ArcanaSpecSheetField :label="$dt.specSheetPhone" value="(11) 4002-8922" />
+        <ArcanaSpecSheetField :label="$dt.specSheetEmail" value="contato@arcanalabs.com" />
       </ArcanaSpecSheetSection>
       <template #footer>
-        <ArcanaButton variant="outline">Alterar Dados</ArcanaButton>
+        <ArcanaButton variant="outline">{{ $dt.specSheetChangeData }}</ArcanaButton>
       </template>
     </ArcanaSpecSheet>
   `
@@ -561,14 +561,14 @@ const SpecSheetSectionDemo: Component = {
   components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
     <ArcanaSpecSheet flat>
-      <ArcanaSpecSheetSection title="Financeiro" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
-        <template #actions><ArcanaButton variant="ghost">Alterar</ArcanaButton></template>
-        <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
-        <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
-        <ArcanaSpecSheetField label="Vencimento" value="Dia 10" />
+      <ArcanaSpecSheetSection :title="$dt.specSheetFinancial" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
+        <template #actions><ArcanaButton variant="ghost">{{ $dt.actionChange }}</ArcanaButton></template>
+        <ArcanaSpecSheetField :label="$dt.specSheetLimit" value="R$ 5.000,00" />
+        <ArcanaSpecSheetField :label="$dt.specSheetBalance" value="R$ 1.240,00" />
+        <ArcanaSpecSheetField :label="$dt.specSheetDueDate" :value="$dt.specSheetDueDateValue" />
       </ArcanaSpecSheetSection>
-      <ArcanaSpecSheetSection title="Observações" icon="fa-solid fa-note-sticky" icon-color="violet" no-row-dividers>
-        <ArcanaSpecSheetField label="Notas" value="Cliente preferencial desde 2019." :span="2" />
+      <ArcanaSpecSheetSection :title="$dt.specSheetNotes" icon="fa-solid fa-note-sticky" icon-color="violet" no-row-dividers>
+        <ArcanaSpecSheetField :label="$dt.specSheetNotesLabel" :value="$dt.specSheetNotesValue" :span="2" />
       </ArcanaSpecSheetSection>
     </ArcanaSpecSheet>
   `
@@ -579,10 +579,10 @@ const SpecSheetFieldDemo: Component = {
   template: /* html */ `
     <ArcanaSpecSheet flat>
       <ArcanaSpecSheetSection :columns="2">
-        <ArcanaSpecSheetField label="Nome" value="Ana Ribeiro" />
-        <ArcanaSpecSheetField label="Apelido" value="" empty-text="Não informado" />
-        <ArcanaSpecSheetField label="Status" :span="2">
-          <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
+        <ArcanaSpecSheetField :label="$dt.specSheetName" value="Ana Ribeiro" />
+        <ArcanaSpecSheetField :label="$dt.specSheetNickname" value="" :empty-text="$dt.specSheetNotProvided" />
+        <ArcanaSpecSheetField :label="$dt.statusLabel" :span="2">
+          <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">{{ $dt.statusActive }}</span>
         </ArcanaSpecSheetField>
       </ArcanaSpecSheetSection>
     </ArcanaSpecSheet>
@@ -596,13 +596,13 @@ const SummaryTilesDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaSummaryTilesGroup :columns="3">
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
-        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="R$ 1.250,00" :sub="$dt.tileIncomeSub" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="R$ 85,00" :sub="$dt.tileExpensesSub" />
+        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" :label="$dt.tileTotal" value="R$ 1.165,00" />
       </ArcanaSummaryTilesGroup>
       <ArcanaSummaryTilesGroup format="rows">
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="R$ 1.250,00" :sub="$dt.tileIncomeSub" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="R$ 85,00" :sub="$dt.tileExpensesSub" />
       </ArcanaSummaryTilesGroup>
     </div>
   `
@@ -612,10 +612,10 @@ const SummaryTileDemo: Component = {
   components: { ArcanaSummaryTile, ArcanaBadge },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 360px">
-      <ArcanaSummaryTile tone="neutral" icon="fa-solid fa-box" label="Pedidos" value="128" sub="hoje" />
-      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" />
-      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Cancelados" value="16" />
-      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-percent" label="Conversão">
+      <ArcanaSummaryTile tone="neutral" icon="fa-solid fa-box" :label="$dt.tileOrders" value="128" :sub="$dt.tileToday" />
+      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" :label="$dt.tileApproved" value="112" />
+      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" :label="$dt.tileCanceled" value="16" />
+      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-percent" :label="$dt.tileConversion">
         <template #value><ArcanaBadge variant="green">87.5%</ArcanaBadge></template>
       </ArcanaSummaryTile>
     </div>
@@ -629,15 +629,15 @@ const SettingsListDemo: Component = {
   data: () => ({ enabled: true, email: false }),
   template: /* html */ `
     <ArcanaSettingsList>
-      <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
-        <ArcanaSwitch v-model="enabled" aria-label="Recursos avançados" />
+      <ArcanaSettingsListItem :label="$dt.settingsAdvancedFeatures" :caption="$dt.settingsAdvancedFeaturesCaption">
+        <ArcanaSwitch v-model="enabled" :aria-label="$dt.settingsAdvancedFeatures" />
       </ArcanaSettingsListItem>
-      <ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário das atividades operacionais.">
-        <ArcanaSwitch v-model="email" aria-label="E-mail" />
+      <ArcanaSettingsListItem :label="$dt.settingsEmailNotifications" :caption="$dt.settingsEmailNotificationsCaption">
+        <ArcanaSwitch v-model="email" :aria-label="$dt.specSheetEmail" />
       </ArcanaSettingsListItem>
-      <ArcanaSettingsListItem label="Plano" caption="Recursos habilitados para a organização.">
-        <span class="arcana-settings-list__current-value">Profissional</span>
-        <button class="arcana-settings-list__edit-btn" type="button">Alterar</button>
+      <ArcanaSettingsListItem :label="$dt.settingsPlan" :caption="$dt.settingsPlanCaption">
+        <span class="arcana-settings-list__current-value">{{ $dt.planProfessional }}</span>
+        <button class="arcana-settings-list__edit-btn" type="button">{{ $dt.actionChange }}</button>
       </ArcanaSettingsListItem>
     </ArcanaSettingsList>
   `
@@ -648,17 +648,17 @@ const SettingsListGroupDemo: Component = {
   data: () => ({ a: true, b: false, c: true }),
   template: /* html */ `
     <ArcanaSettingsList>
-      <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" icon-color="indigo" section-num="§ 01" meta="2 configs">
-        <ArcanaSettingsListItem label="Aceitar pedidos" caption="Recebe novos pedidos pelo app.">
-          <ArcanaSwitch v-model="a" aria-label="Aceitar" />
+      <ArcanaSettingsListGroup :title="$dt.tileOrders" icon="fa-solid fa-cart-shopping" icon-color="indigo" section-num="§ 01" :meta="$dt.settingsTwoConfigs">
+        <ArcanaSettingsListItem :label="$dt.settingsAcceptOrders" :caption="$dt.settingsAcceptOrdersCaption">
+          <ArcanaSwitch v-model="a" :aria-label="$dt.settingsAcceptOrders" />
         </ArcanaSettingsListItem>
-        <ArcanaSettingsListItem label="Confirmação automática" caption="Confirma sem revisão manual." nested>
-          <ArcanaSwitch v-model="b" aria-label="Confirmação" />
+        <ArcanaSettingsListItem :label="$dt.settingsAutoConfirm" :caption="$dt.settingsAutoConfirmCaption" nested>
+          <ArcanaSwitch v-model="b" :aria-label="$dt.settingsAutoConfirm" />
         </ArcanaSettingsListItem>
       </ArcanaSettingsListGroup>
-      <ArcanaSettingsListGroup title="Entrega" icon="fa-solid fa-truck" icon-color="emerald" collapsible default-collapsed compact>
-        <ArcanaSettingsListItem label="Rastreio em tempo real">
-          <ArcanaSwitch v-model="c" aria-label="Rastreio" />
+      <ArcanaSettingsListGroup :title="$dt.settingsDelivery" icon="fa-solid fa-truck" icon-color="emerald" collapsible default-collapsed compact>
+        <ArcanaSettingsListItem :label="$dt.settingsRealtimeTracking">
+          <ArcanaSwitch v-model="c" :aria-label="$dt.settingsRealtimeTracking" />
         </ArcanaSettingsListItem>
       </ArcanaSettingsListGroup>
     </ArcanaSettingsList>
@@ -670,15 +670,15 @@ const SettingsListItemDemo: Component = {
   data: () => ({ x: true, y: false }),
   template: /* html */ `
     <ArcanaSettingsList>
-      <ArcanaSettingsListItem caption="Sistema SaaS — plano via tabela de assinaturas.">
-        <template #label>Assinatura V2 <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></template>
-        <ArcanaSwitch v-model="x" aria-label="Assinatura" />
+      <ArcanaSettingsListItem :caption="$dt.settingsSaasCaption">
+        <template #label>{{ $dt.settingsSubscriptionV2 }} <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">{{ $dt.statusActive }}</span></template>
+        <ArcanaSwitch v-model="x" :aria-label="$dt.settingsSubscriptionV2" />
       </ArcanaSettingsListItem>
-      <ArcanaSettingsListItem label="Exibir App Web" caption="Sub-config do cartão de crédito." nested>
-        <ArcanaSwitch v-model="y" aria-label="App Web" />
+      <ArcanaSettingsListItem :label="$dt.settingsShowWebApp" :caption="$dt.settingsShowWebAppCaption" nested>
+        <ArcanaSwitch v-model="y" :aria-label="$dt.settingsShowWebApp" />
       </ArcanaSettingsListItem>
-      <ArcanaSettingsListItem label="Recurso indisponível" caption="Requer plano superior." disabled>
-        <ArcanaSwitch :model-value="false" :disabled="true" aria-label="Indisponível" />
+      <ArcanaSettingsListItem :label="$dt.settingsUnavailableFeature" :caption="$dt.settingsUnavailableFeatureCaption" disabled>
+        <ArcanaSwitch :model-value="false" :disabled="true" :aria-label="$dt.settingsUnavailableFeature" />
       </ArcanaSettingsListItem>
     </ArcanaSettingsList>
   `
@@ -686,24 +686,27 @@ const SettingsListItemDemo: Component = {
 
 const SettingsEditableFieldDemo: Component = {
   components: { ArcanaSettingsList, ArcanaSettingsEditableField },
-  data: () => ({
-    name: "Arcana Labs Matriz",
-    discount: "1500.00",
-    plan: "pro" as string,
-    planOptions: [
-      { label: "Básico", value: "basic" },
-      { label: "Profissional", value: "pro" },
-      { label: "Enterprise", value: "enterprise" }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      name: "Arcana Labs Matriz",
+      discount: "1500.00",
+      plan: "pro" as string,
+      planOptions: [
+        { label: $dt.planBasic, value: "basic" },
+        { label: $dt.planProfessional, value: "pro" },
+        { label: $dt.planEnterprise, value: "enterprise" }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaSettingsList>
-        <ArcanaSettingsEditableField label="Nome da unidade" caption="Exibido em relatórios." type="text" v-model="name" />
-        <ArcanaSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" v-model="discount" />
-        <ArcanaSettingsEditableField label="Plano" caption="Recursos habilitados." type="select" :options="planOptions" v-model="plan" />
+        <ArcanaSettingsEditableField :label="$dt.editableUnitName" :caption="$dt.editableUnitNameCaption" type="text" v-model="name" />
+        <ArcanaSettingsEditableField :label="$dt.editableFirstPurchaseDiscount" :caption="$dt.editableFirstPurchaseDiscountCaption" type="currency" v-model="discount" />
+        <ArcanaSettingsEditableField :label="$dt.settingsPlan" :caption="$dt.settingsPlanShortCaption" type="select" :options="planOptions" v-model="plan" />
       </ArcanaSettingsList>
-      <p class="demo-note">{{ $dt.editableFieldHintPrefix }} <strong>Alterar</strong> {{ $dt.editableFieldHintSuffix }}</p>
+      <p class="demo-note">{{ $dt.editableFieldHintPrefix }} <strong>{{ $dt.actionChange }}</strong> {{ $dt.editableFieldHintSuffix }}</p>
     </div>
   `
 };
@@ -715,12 +718,12 @@ const NoticeDemo: Component = {
   data: () => ({ dismissed: false }),
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaNotice variant="info" title="Informação">Configuração salva automaticamente.</ArcanaNotice>
-      <ArcanaNotice variant="blue" title="Novidade">O novo painel de rotas já está disponível.</ArcanaNotice>
-      <ArcanaNotice variant="success" title="Ativado">Integração concluída com sucesso.</ArcanaNotice>
-      <ArcanaNotice variant="warning" title="Pagamento manual">Pix e Boleto geram um link novo de cobrança a cada ciclo.</ArcanaNotice>
-      <ArcanaNotice variant="pending" title="Aguardando ativação no Stripe">Clique em "Sincronizar" para criar a assinatura no gateway.</ArcanaNotice>
-      <ArcanaNotice v-if="!dismissed" variant="destructive" title="Falha ao carregar" :dismissible="true" @dismiss="dismissed = true">Não foi possível buscar os dados.</ArcanaNotice>
+      <ArcanaNotice variant="info" :title="$dt.noticeInfoTitle">{{ $dt.noticeInfoBody }}</ArcanaNotice>
+      <ArcanaNotice variant="blue" :title="$dt.noticeNewTitle">{{ $dt.noticeNewBody }}</ArcanaNotice>
+      <ArcanaNotice variant="success" :title="$dt.noticeActivatedTitle">{{ $dt.noticeActivatedBody }}</ArcanaNotice>
+      <ArcanaNotice variant="warning" :title="$dt.noticeManualPaymentTitle">{{ $dt.noticeManualPaymentBody }}</ArcanaNotice>
+      <ArcanaNotice variant="pending" :title="$dt.noticePendingTitle">{{ $dt.noticePendingBody }}</ArcanaNotice>
+      <ArcanaNotice v-if="!dismissed" variant="destructive" :title="$dt.noticeErrorTitle" :dismissible="true" @dismiss="dismissed = true">{{ $dt.noticeErrorBody }}</ArcanaNotice>
       <p v-else class="demo-note">{{ $dt.noticeDismissedHint }}</p>
     </div>
   `
@@ -743,10 +746,10 @@ const EditFieldDialogDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaButton style="align-self: flex-start" @click="open">Alterar nome</ArcanaButton>
+      <ArcanaButton style="align-self: flex-start" @click="open">{{ $dt.editDialogChangeName }}</ArcanaButton>
       <p class="demo-note">{{ $dt.savedValue }}: <strong>{{ saved }}</strong></p>
-      <ArcanaEditFieldDialog ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
-        <ArcanaInput v-model="value" placeholder="Nome da unidade" />
+      <ArcanaEditFieldDialog ref="modal" :title="$dt.editDialogTitle" :description="$dt.editDialogDescription" @save="save">
+        <ArcanaInput v-model="value" :placeholder="$dt.editDialogPlaceholder" />
       </ArcanaEditFieldDialog>
     </div>
   `
@@ -756,13 +759,16 @@ const EditFieldDialogDemo: Component = {
 
 const RequiredFieldsDialogDemo: Component = {
   components: { ArcanaRequiredFieldsDialog, ArcanaButton },
-  data: () => ({
-    fields: [
-      { key: "cnpj", label: "CNPJ", hint: "Passo 1 · Dados cadastrais" },
-      { key: "phone", label: "Telefone", hint: "Passo 2 · Contato" },
-      { key: "address", label: "Endereço de entrega", hint: "Passo 3 · Logística" }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      fields: [
+        { key: "cnpj", label: "CNPJ", hint: $dt.requiredCnpjHint },
+        { key: "phone", label: $dt.specSheetPhone, hint: $dt.requiredPhoneHint },
+        { key: "address", label: $dt.requiredDeliveryAddress, hint: $dt.requiredDeliveryAddressHint }
+      ]
+    };
+  },
   methods: {
     open() {
       (this.$refs.dialog as unknown as { show: () => void }).show();
@@ -770,10 +776,10 @@ const RequiredFieldsDialogDemo: Component = {
   },
   template: /* html */ `
     <div>
-      <ArcanaButton @click="open">Validar formulário</ArcanaButton>
+      <ArcanaButton @click="open">{{ $dt.requiredValidateForm }}</ArcanaButton>
       <ArcanaRequiredFieldsDialog
         ref="dialog"
-        description="Os campos abaixo precisam ser preenchidos antes de criar o cliente."
+        :description="$dt.requiredDescription"
         :fields="fields"
       />
     </div>
@@ -789,12 +795,12 @@ const OnboardingPanelDemo: Component = {
     <div class="demo-stack">
       <ArcanaOnboardingPanel
         icon="fa-solid fa-folder-open"
-        title="Nenhum projeto por aqui"
-        description="Crie seu primeiro projeto para começar a organizar seu trabalho."
-        action-label="Criar projeto"
-        secondary-action-label="Ver exemplos"
+        :title="$dt.onboardingTitle"
+        :description="$dt.onboardingDescription"
+        :action-label="$dt.onboardingActionLabel"
+        :secondary-action-label="$dt.onboardingSecondaryLabel"
         secondary-action-icon="fa-solid fa-circle-info"
-        sub-hint="Você pode convidar sua equipe depois."
+        :sub-hint="$dt.onboardingSubHint"
         sub-hint-icon="fa-solid fa-users"
         @action="last = $dt.onboardingPrimary"
         @secondary-action="last = $dt.onboardingSecondary"
@@ -819,11 +825,11 @@ const LoadingOverlayDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <div style="position: relative; border: 1px solid #e4e4e7; border-radius: 10px; padding: 22px; min-height: 118px; background: #fff">
-        <p style="font-size: 13px; font-weight: 600; color: #18181b; margin: 0 0 6px">Resumo do pedido</p>
+        <p style="font-size: 13px; font-weight: 600; color: #18181b; margin: 0 0 6px">{{ $dt.loadingOrderSummary }}</p>
         <p class="demo-note" style="margin: 0">{{ $dt.loadingOverlayHint }}</p>
-        <ArcanaLoadingOverlay :visible="loading" text="Salvando…" />
+        <ArcanaLoadingOverlay :visible="loading" :text="$dt.loadingSavingText" />
       </div>
-      <ArcanaButton @click="run" :disabled="loading">Salvar</ArcanaButton>
+      <ArcanaButton @click="run" :disabled="loading">{{ $dt.btnSave }}</ArcanaButton>
     </div>
   `
 };
@@ -857,8 +863,8 @@ const SwitchCardDemo: Component = {
   data: () => ({ twoFa: true, maintenance: false }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaSwitchCard v-model="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" status-on="ATIVO · TOTP" status-off="DESLIGADO" />
-      <ArcanaSwitchCard v-model="maintenance" icon="fa-solid fa-screwdriver-wrench" title="Modo manutenção" />
+      <ArcanaSwitchCard v-model="twoFa" icon="fa-solid fa-shield-halved" :title="$dt.switchCard2faTitle" :status-on="$dt.switchCard2faStatusOn" :status-off="$dt.switchCard2faStatusOff" />
+      <ArcanaSwitchCard v-model="maintenance" icon="fa-solid fa-screwdriver-wrench" :title="$dt.switchCardMaintenanceTitle" />
       <p class="demo-note">{{ $dt.switchCard2faLabel }}: <strong>{{ twoFa }}</strong> · {{ $dt.switchCardMaintenanceLabel }}: <strong>{{ maintenance }}</strong></p>
     </div>
   `
@@ -871,8 +877,8 @@ const SwitchRowDemo: Component = {
   data: () => ({ email: true, push: false }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaSwitchRow v-model="email" label="Notificações por e-mail" description="Resumo diário das atividades da organização." />
-      <ArcanaSwitchRow v-model="push" label="Notificações push" description="Alertas em tempo real no dispositivo." />
+      <ArcanaSwitchRow v-model="email" :label="$dt.settingsEmailNotifications" :description="$dt.switchRowEmailDesc" />
+      <ArcanaSwitchRow v-model="push" :label="$dt.switchRowPushTitle" :description="$dt.switchRowPushDesc" />
       <p class="demo-note">{{ $dt.switchRowEmailLabel }}: <strong>{{ email }}</strong> · {{ $dt.switchRowPushLabel }}: <strong>{{ push }}</strong></p>
     </div>
   `
@@ -885,8 +891,8 @@ const SwitchSegmentedDemo: Component = {
   data: () => ({ yearly: false, env: true }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaSwitchSegmented v-model="yearly" off-label="Mensal" on-label="Anual · −20%" />
-      <ArcanaSwitchSegmented v-model="env" off-label="Sandbox" on-label="Produção" :compact="true" :squared="true" />
+      <ArcanaSwitchSegmented v-model="yearly" :off-label="$dt.switchSegMonthly" :on-label="$dt.switchSegAnnual" />
+      <ArcanaSwitchSegmented v-model="env" :off-label="$dt.switchSegSandbox" :on-label="$dt.switchSegProduction" :compact="true" :squared="true" />
       <p class="demo-note">{{ $dt.switchSegCycleLabel }}: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · {{ $dt.switchSegEnvLabel }}: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
     </div>
   `
