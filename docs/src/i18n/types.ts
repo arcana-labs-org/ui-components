@@ -40,7 +40,6 @@ export type DocumentedKey =
   | "segmentedOptions"
   | "datePicker"
   | "inputCurrency"
-  | "labeledButton"
   | "accordion"
   | "accordionItem"
   | "dropdown"

@@ -6,7 +6,7 @@ export const en: Messages = {
 
   shell: {
     kicker: "Documentation · v0.x",
-    lead: "A typed, shadcn-style component library — Vue 3, React, Angular and Svelte, with the same API and the same look in every framework.",
+    lead: "A typed, arcana-style component library — Vue 3, React, Angular and Svelte, with the same API and the same look in every framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
     searchPlaceholder: "Search components… (⌘K)",
@@ -59,7 +59,7 @@ export const en: Messages = {
     },
     maska: {
       title: "Registering v-maska",
-      p1: "A few components (<c>ShadcnInputMask</c>, <c>ShadcnDatePicker</c>) rely on the <c>v-maska</c> directive from the <c>maska</c> package. Register it globally once when you create the app.",
+      p1: "A few components (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) rely on the <c>v-maska</c> directive from the <c>maska</c> package. Register it globally once when you create the app.",
       p2: "Components that don't use masking need no extra setup — this step is only required if you render a masked input."
     }
   },
@@ -91,7 +91,7 @@ export const en: Messages = {
       blurb: "A fully custom select (no Element Plus) teleported to <c>&lt;body&gt;</c>, with single/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> and keyboard navigation."
     },
     checkbox: {
-      blurb: "A binary checkbox wrapping a real native <c>&lt;input type=\"checkbox\"&gt;</c> with an <c>indeterminate</c> state; use <c>ShadcnSwitch</c> to toggle a setting."
+      blurb: "A binary checkbox wrapping a real native <c>&lt;input type=\"checkbox\"&gt;</c> with an <c>indeterminate</c> state; use <c>ArcanaSwitch</c> to toggle a setting."
     },
     switch: {
       blurb: "A binary on/off toggle (WAI-ARIA switch), colour-coded red/green, with an optional hidden checkbox for native forms."
@@ -126,20 +126,17 @@ export const en: Messages = {
     inputCurrency: {
       blurb: "A currency input (on <c>v-money3</c>) that formats as you type, with configurable decimals and <c>min</c>/<c>max</c> clamping; BRL by default."
     },
-    labeledButton: {
-      blurb: "The base button with a <c>label</c>, optional <c>icon</c> and a <c>loading</c> spinner state; the <c>shadcn</c> flag maps legacy colours to semantic variants."
-    },
     accordion: {
-      blurb: "The container for collapsible <c>ShadcnAccordionItem</c>s, binding a <c>v-model</c> for single- or multiple-open mode."
+      blurb: "The container for collapsible <c>ArcanaAccordionItem</c>s, binding a <c>v-model</c> for single- or multiple-open mode."
     },
     accordionItem: {
-      blurb: "A single collapsible panel inside a <c>ShadcnAccordion</c>, identified by a <c>name</c>, with a <c>title</c> header and slot body."
+      blurb: "A single collapsible panel inside a <c>ArcanaAccordion</c>, identified by a <c>name</c>, with a <c>title</c> header and slot body."
     },
     dropdown: {
       blurb: "A shadcn dropdown menu that teleports to <c>&lt;body&gt;</c>, auto-positions and closes on outside click, Escape or selection."
     },
     dropdownItem: {
-      blurb: "A row inside a <c>ShadcnDropdown</c> — optional <c>icon</c>, label and <c>suffix</c> — colourable, with a <c>divided</c> separator for destructive actions."
+      blurb: "A row inside a <c>ArcanaDropdown</c> — optional <c>icon</c>, label and <c>suffix</c> — colourable, with a <c>divided</c> separator for destructive actions."
     },
     table: {
       blurb: "A static shadcn table for in-memory arrays; columns declare <c>{ key, label, width?, align?, valueGetter? }</c>, with cell and footer slots."
@@ -148,7 +145,7 @@ export const en: Messages = {
       blurb: "A read-only, editorial \"spec sheet\" for formal records, with a <c>docNum</c> eyebrow, a <c>title</c> and section children."
     },
     specSheetSection: {
-      blurb: "A section inside a <c>ShadcnSpecSheet</c> — accent <c>icon</c>, <c>title</c> and <c>sectionNum</c> over a <c>columns</c> grid of fields."
+      blurb: "A section inside a <c>ArcanaSpecSheet</c> — accent <c>icon</c>, <c>title</c> and <c>sectionNum</c> over a <c>columns</c> grid of fields."
     },
     specSheetField: {
       blurb: "A single label/value pair; an empty value shows <c>emptyText</c> so gaps read as intentional, and <c>span</c> widens it."
@@ -163,7 +160,7 @@ export const en: Messages = {
       blurb: "An iOS-Settings-style container of hairline-separated rows, each with a label + caption and a right-aligned control."
     },
     settingsListGroup: {
-      blurb: "A titled, optionally <c>collapsible</c> section inside a <c>ShadcnSettingsList</c>, with an icon, <c>sectionNum</c> and <c>meta</c>."
+      blurb: "A titled, optionally <c>collapsible</c> section inside a <c>ArcanaSettingsList</c>, with an icon, <c>sectionNum</c> and <c>meta</c>."
     },
     settingsListItem: {
       blurb: "A single settings row — <c>label</c> + <c>caption</c> on the left, your control on the right."

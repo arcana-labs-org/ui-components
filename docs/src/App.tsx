@@ -82,7 +82,7 @@ function buildGroups(msg: Messages): DocsGroup[] {
         const prose = msg.components[entry.docKey];
         const section: DocsSection = {
           id: entry.id,
-          title: entry.name,
+          title: entry.label,
           body: <P>{prose.blurb}</P>,
           preview: <VueDemo component={doc.demo} />,
           previewLabel: msg.demoCaption,
@@ -94,7 +94,7 @@ function buildGroups(msg: Messages): DocsGroup[] {
       // Stub — registered but not yet documented.
       return {
         id: entry.id,
-        title: entry.name,
+        title: entry.label,
         body: <p className="stub-note">{rich(msg.comingSoon)}</p>
       } satisfies DocsSection;
     });

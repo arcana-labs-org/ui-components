@@ -1,12 +1,12 @@
 // @arcanalabs/ui-components — Vue 3 entry.
 //
-// Biblioteca de componentes shadcn-style (palette zinc) para Vue 3.
+// Biblioteca de componentes arcana-style (palette zinc) para Vue 3.
 // Os SFCs NÃO carregam mais `<style scoped>`: todo o CSS vive num stylesheet
 // compartilhado, agnóstico de framework (`./styles/components.scss`), por
 // seletores de classe puros (sem `[data-v-*]`), pra que os ports React /
 // Angular / Svelte reusem o MESMO visual.
 //
-// Nota: `ShadcnInputMask` e `ShadcnDatePicker` usam a diretiva `v-maska` (lib
+// Nota: `ArcanaInputMask` e `ArcanaDatePicker` usam a diretiva `v-maska` (lib
 // `maska`), que precisa ser registrada globalmente pelo app consumidor:
 //     import Maska from "maska"; app.use(Maska)
 
@@ -16,49 +16,48 @@
 import "./styles/components.scss";
 
 // ── Componentes shadcn ──────────────────────────────────────────────────────
-export { default as ShadcnAccordion } from "./vue/components/ShadcnAccordion.vue";
-export { default as ShadcnAccordionItem } from "./vue/components/ShadcnAccordionItem.vue";
-export { default as ShadcnBadge } from "./vue/components/ShadcnBadge.vue";
-export { default as ShadcnButton } from "./vue/components/ShadcnButton.vue";
-export { default as ShadcnCheckbox } from "./vue/components/ShadcnCheckbox.vue";
-export { default as ShadcnDatePicker } from "./vue/components/ShadcnDatePicker.vue";
-export { default as ShadcnDialog } from "./vue/components/ShadcnDialog.vue";
-export { default as ShadcnDropdown } from "./vue/components/ShadcnDropdown.vue";
-export { default as ShadcnDropdownItem } from "./vue/components/ShadcnDropdownItem.vue";
-export { default as ShadcnEditFieldModal } from "./vue/components/ShadcnEditFieldModal.vue";
-export { default as ShadcnInput } from "./vue/components/ShadcnInput.vue";
-export { default as ShadcnInputBoolean } from "./vue/components/ShadcnInputBoolean.vue";
-export { default as ShadcnInputMask } from "./vue/components/ShadcnInputMask.vue";
-export { default as ShadcnLoadingOverlay } from "./vue/components/ShadcnLoadingOverlay.vue";
-export { default as ShadcnNotice } from "./vue/components/ShadcnNotice.vue";
-export { default as ShadcnNumberStepper } from "./vue/components/ShadcnNumberStepper.vue";
-export { default as ShadcnOnboardingPanel } from "./vue/components/ShadcnOnboardingPanel.vue";
-export { default as ShadcnRadioCardGroup } from "./vue/components/ShadcnRadioCardGroup.vue";
-export { default as ShadcnRequiredFieldsDialog } from "./vue/components/ShadcnRequiredFieldsDialog.vue";
-export { default as ShadcnSegmentedOptions } from "./vue/components/ShadcnSegmentedOptions.vue";
-export { default as ShadcnSelect } from "./vue/components/ShadcnSelect.vue";
-export { default as ShadcnSettingsEditableField } from "./vue/components/ShadcnSettingsEditableField.vue";
-export { default as ShadcnSettingsList } from "./vue/components/ShadcnSettingsList.vue";
-export { default as ShadcnSettingsListGroup } from "./vue/components/ShadcnSettingsListGroup.vue";
-export { default as ShadcnSettingsListItem } from "./vue/components/ShadcnSettingsListItem.vue";
-export { default as ShadcnSkeleton } from "./vue/components/ShadcnSkeleton.vue";
-export { default as ShadcnSpecSheet } from "./vue/components/ShadcnSpecSheet.vue";
-export { default as ShadcnSpecSheetField } from "./vue/components/ShadcnSpecSheetField.vue";
-export { default as ShadcnSpecSheetSection } from "./vue/components/ShadcnSpecSheetSection.vue";
-export { default as ShadcnSummaryTile } from "./vue/components/ShadcnSummaryTile.vue";
-export { default as ShadcnSummaryTiles } from "./vue/components/ShadcnSummaryTiles.vue";
-export { default as ShadcnSwitch } from "./vue/components/ShadcnSwitch.vue";
-export { default as ShadcnSwitchCard } from "./vue/components/ShadcnSwitchCard.vue";
-export { default as ShadcnSwitchRow } from "./vue/components/ShadcnSwitchRow.vue";
-export { default as ShadcnSwitchSegmented } from "./vue/components/ShadcnSwitchSegmented.vue";
-export { default as ShadcnTable } from "./vue/components/ShadcnTable.vue";
-export { default as ShadcnTabs } from "./vue/components/ShadcnTabs.vue";
-export { default as MultiSelectPopover } from "./vue/components/MultiSelectPopover.vue";
-export { default as SparkGridEmptyState } from "./vue/components/SparkGridEmptyState.vue";
+export { default as ArcanaAccordion } from "./vue/components/ArcanaAccordion.vue";
+export { default as ArcanaAccordionItem } from "./vue/components/ArcanaAccordionItem.vue";
+export { default as ArcanaBadge } from "./vue/components/ArcanaBadge.vue";
+export { default as ArcanaButton } from "./vue/components/ArcanaButton.vue";
+export { default as ArcanaCheckbox } from "./vue/components/ArcanaCheckbox.vue";
+export { default as ArcanaDatePicker } from "./vue/components/ArcanaDatePicker.vue";
+export { default as ArcanaDialog } from "./vue/components/ArcanaDialog.vue";
+export { default as ArcanaDropdown } from "./vue/components/ArcanaDropdown.vue";
+export { default as ArcanaDropdownItem } from "./vue/components/ArcanaDropdownItem.vue";
+export { default as ArcanaEditFieldModal } from "./vue/components/ArcanaEditFieldModal.vue";
+export { default as ArcanaInput } from "./vue/components/ArcanaInput.vue";
+export { default as ArcanaInputBoolean } from "./vue/components/ArcanaInputBoolean.vue";
+export { default as ArcanaInputMask } from "./vue/components/ArcanaInputMask.vue";
+export { default as ArcanaLoadingOverlay } from "./vue/components/ArcanaLoadingOverlay.vue";
+export { default as ArcanaNotice } from "./vue/components/ArcanaNotice.vue";
+export { default as ArcanaNumberStepper } from "./vue/components/ArcanaNumberStepper.vue";
+export { default as ArcanaOnboardingPanel } from "./vue/components/ArcanaOnboardingPanel.vue";
+export { default as ArcanaRadioCardGroup } from "./vue/components/ArcanaRadioCardGroup.vue";
+export { default as ArcanaRequiredFieldsDialog } from "./vue/components/ArcanaRequiredFieldsDialog.vue";
+export { default as ArcanaSegmentedOptions } from "./vue/components/ArcanaSegmentedOptions.vue";
+export { default as ArcanaSelect } from "./vue/components/ArcanaSelect.vue";
+export { default as ArcanaSettingsEditableField } from "./vue/components/ArcanaSettingsEditableField.vue";
+export { default as ArcanaSettingsList } from "./vue/components/ArcanaSettingsList.vue";
+export { default as ArcanaSettingsListGroup } from "./vue/components/ArcanaSettingsListGroup.vue";
+export { default as ArcanaSettingsListItem } from "./vue/components/ArcanaSettingsListItem.vue";
+export { default as ArcanaSkeleton } from "./vue/components/ArcanaSkeleton.vue";
+export { default as ArcanaSpecSheet } from "./vue/components/ArcanaSpecSheet.vue";
+export { default as ArcanaSpecSheetField } from "./vue/components/ArcanaSpecSheetField.vue";
+export { default as ArcanaSpecSheetSection } from "./vue/components/ArcanaSpecSheetSection.vue";
+export { default as ArcanaSummaryTile } from "./vue/components/ArcanaSummaryTile.vue";
+export { default as ArcanaSummaryTiles } from "./vue/components/ArcanaSummaryTiles.vue";
+export { default as ArcanaSwitch } from "./vue/components/ArcanaSwitch.vue";
+export { default as ArcanaSwitchCard } from "./vue/components/ArcanaSwitchCard.vue";
+export { default as ArcanaSwitchRow } from "./vue/components/ArcanaSwitchRow.vue";
+export { default as ArcanaSwitchSegmented } from "./vue/components/ArcanaSwitchSegmented.vue";
+export { default as ArcanaTable } from "./vue/components/ArcanaTable.vue";
+export { default as ArcanaTabs } from "./vue/components/ArcanaTabs.vue";
+export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
+export { default as ArcanaGridEmptyState } from "./vue/components/ArcanaGridEmptyState.vue";
 
-// ── Form helpers (extraídos junto; usados por alguns Shadcn* acima) ──────────
-export { default as LabeledButton } from "./vue/components/LabeledButton.vue";
-export { default as InputCurrency } from "./vue/components/InputCurrency.vue";
+// ── Form helpers (extraídos junto; usados por alguns Arcana* acima) ──────────
+export { default as ArcanaInputCurrency } from "./vue/components/ArcanaInputCurrency.vue";
 
 // ── Utilitários ─────────────────────────────────────────────────────────────
 export { CurrencyFormatter } from "./core/currency";

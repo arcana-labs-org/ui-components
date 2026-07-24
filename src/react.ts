@@ -1,6 +1,6 @@
 // @arcanalabs/ui-components — React 18/19 entry.
 //
-// Ports React (lote 1) dos SFCs Vue shadcn-style. Emitem o MESMO markup/classes que os
+// Ports React (lote 1) dos SFCs Vue arcana-style. Emitem o MESMO markup/classes que os
 // componentes Vue, reusando o CSS compartilhado, agnóstico de framework
 // (`./styles/components.scss` → `@arcanalabs/ui-components/styles.css`).
 

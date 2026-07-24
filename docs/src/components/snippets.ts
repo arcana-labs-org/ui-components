@@ -1,6 +1,6 @@
 import type { Framework, SectionCode } from "./DocsShell";
 
-/** `ShadcnButton` → `shadcn-button` (Angular file-name convention). */
+/** `ArcanaButton` → `arcana-button` (Angular file-name convention). */
 function kebab(name: string): string {
   return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 }
@@ -37,25 +37,25 @@ export const usageSnippets: Record<Framework, SectionCode> = {
     file: "App.vue",
     code: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaButton, ArcanaBadge } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnButton variant=\"primary\">Save</ShadcnButton>",
-      "  <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
+      "  <ArcanaButton variant=\"primary\">Save</ArcanaButton>",
+      "  <ArcanaBadge variant=\"green\" dot>Active</ArcanaBadge>",
       "</template>"
     ].join("\n")
   },
   react: {
     file: "Toolbar.tsx",
     code: [
-      "import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/react'",
+      "import { ArcanaButton, ArcanaBadge } from '@arcanalabs/ui-components/react'",
       "",
       "export function Toolbar() {",
       "  return (",
       "    <>",
-      "      <ShadcnButton variant=\"primary\">Save</ShadcnButton>",
-      "      <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
+      "      <ArcanaButton variant=\"primary\">Save</ArcanaButton>",
+      "      <ArcanaBadge variant=\"green\" dot>Active</ArcanaBadge>",
       "    </>",
       "  )",
       "}"
@@ -65,16 +65,16 @@ export const usageSnippets: Record<Framework, SectionCode> = {
     file: "toolbar.component.ts",
     code: [
       "import { Component } from '@angular/core'",
-      "import { ShadcnButtonComponent, ShadcnBadgeComponent } from '@arcanalabs/ui-components/angular'",
+      "import { ArcanaButtonComponent, ArcanaBadgeComponent } from '@arcanalabs/ui-components/angular'",
       "",
       "// Every component is standalone — add it to the host component's `imports`.",
       "@Component({",
       "  selector: 'app-toolbar',",
       "  standalone: true,",
-      "  imports: [ShadcnButtonComponent, ShadcnBadgeComponent],",
+      "  imports: [ArcanaButtonComponent, ArcanaBadgeComponent],",
       "  template: `",
-      "    <button arcanaShadcnButton variant=\"primary\">Save</button>",
-      "    <span arcanaShadcnBadge variant=\"green\" [dot]=\"true\">Active</span>",
+      "    <button arcanaButton variant=\"primary\">Save</button>",
+      "    <span arcanaBadge variant=\"green\" [dot]=\"true\">Active</span>",
       "  `",
       "})",
       "export class ToolbarComponent {}"
@@ -84,11 +84,11 @@ export const usageSnippets: Record<Framework, SectionCode> = {
     file: "Toolbar.svelte",
     code: [
       "<script lang=\"ts\">",
-      "  import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/svelte'",
+      "  import { ArcanaButton, ArcanaBadge } from '@arcanalabs/ui-components/svelte'",
       "</script>",
       "",
-      "<ShadcnButton variant=\"primary\">Save</ShadcnButton>",
-      "<ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>"
+      "<ArcanaButton variant=\"primary\">Save</ArcanaButton>",
+      "<ArcanaBadge variant=\"green\" dot>Active</ArcanaBadge>"
     ].join("\n")
   }
 };
@@ -165,28 +165,28 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
   react: {
     file: "CpfField.tsx",
     code: [
-      "// No global setup in React — masking is built into ShadcnInputMask.",
+      "// No global setup in React — masking is built into ArcanaInputMask.",
       "import { useState } from 'react'",
-      "import { ShadcnInputMask } from '@arcanalabs/ui-components/react'",
+      "import { ArcanaInputMask } from '@arcanalabs/ui-components/react'",
       "",
       "export function CpfField() {",
       "  const [cpf, setCpf] = useState('')",
-      "  return <ShadcnInputMask value={cpf} onValueChange={setCpf} mask=\"###.###.###-##\" />",
+      "  return <ArcanaInputMask value={cpf} onValueChange={setCpf} mask=\"###.###.###-##\" />",
       "}"
     ].join("\n")
   },
   angular: {
     file: "cpf-field.component.ts",
     code: [
-      "// No global setup in Angular — masking is built into ShadcnInputMask.",
+      "// No global setup in Angular — masking is built into ArcanaInputMask.",
       "import { Component } from '@angular/core'",
-      "import { ShadcnInputMaskComponent } from '@arcanalabs/ui-components/angular'",
+      "import { ArcanaInputMaskComponent } from '@arcanalabs/ui-components/angular'",
       "",
       "@Component({",
       "  selector: 'app-cpf-field',",
       "  standalone: true,",
-      "  imports: [ShadcnInputMaskComponent],",
-      "  template: `<input arcanaShadcnInputMask [(value)]=\"cpf\" mask=\"###.###.###-##\" />`",
+      "  imports: [ArcanaInputMaskComponent],",
+      "  template: `<input arcanaInputMask [(value)]=\"cpf\" mask=\"###.###.###-##\" />`",
       "})",
       "export class CpfFieldComponent {",
       "  cpf = ''",
@@ -197,12 +197,12 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
     file: "CpfField.svelte",
     code: [
       "<script lang=\"ts\">",
-      "  // No global setup in Svelte — masking is built into ShadcnInputMask.",
-      "  import { ShadcnInputMask } from '@arcanalabs/ui-components/svelte'",
+      "  // No global setup in Svelte — masking is built into ArcanaInputMask.",
+      "  import { ArcanaInputMask } from '@arcanalabs/ui-components/svelte'",
       "  let cpf = $state('')",
       "</script>",
       "",
-      "<ShadcnInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask=\"###.###.###-##\" />"
+      "<ArcanaInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask=\"###.###.###-##\" />"
     ].join("\n")
   }
 };

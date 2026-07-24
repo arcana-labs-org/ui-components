@@ -1,49 +1,48 @@
 import type { Component } from "vue";
 import type { DocumentedKey } from "../i18n/types";
 
-import ShadcnButton from "../../../src/vue/components/ShadcnButton.vue";
-import ShadcnBadge from "../../../src/vue/components/ShadcnBadge.vue";
-import ShadcnInput from "../../../src/vue/components/ShadcnInput.vue";
-import ShadcnSelect from "../../../src/vue/components/ShadcnSelect.vue";
-import ShadcnCheckbox from "../../../src/vue/components/ShadcnCheckbox.vue";
-import ShadcnSwitch from "../../../src/vue/components/ShadcnSwitch.vue";
-import ShadcnTabs from "../../../src/vue/components/ShadcnTabs.vue";
-import ShadcnDialog from "../../../src/vue/components/ShadcnDialog.vue";
+import ArcanaButton from "../../../src/vue/components/ArcanaButton.vue";
+import ArcanaBadge from "../../../src/vue/components/ArcanaBadge.vue";
+import ArcanaInput from "../../../src/vue/components/ArcanaInput.vue";
+import ArcanaSelect from "../../../src/vue/components/ArcanaSelect.vue";
+import ArcanaCheckbox from "../../../src/vue/components/ArcanaCheckbox.vue";
+import ArcanaSwitch from "../../../src/vue/components/ArcanaSwitch.vue";
+import ArcanaTabs from "../../../src/vue/components/ArcanaTabs.vue";
+import ArcanaDialog from "../../../src/vue/components/ArcanaDialog.vue";
 // ── Batch 2 ──
-import ShadcnInputMask from "../../../src/vue/components/ShadcnInputMask.vue";
-import ShadcnInputBoolean from "../../../src/vue/components/ShadcnInputBoolean.vue";
-import ShadcnNumberStepper from "../../../src/vue/components/ShadcnNumberStepper.vue";
-import MultiSelectPopover from "../../../src/vue/components/MultiSelectPopover.vue";
-import ShadcnRadioCardGroup from "../../../src/vue/components/ShadcnRadioCardGroup.vue";
-import ShadcnSegmentedOptions from "../../../src/vue/components/ShadcnSegmentedOptions.vue";
-import ShadcnDatePicker from "../../../src/vue/components/ShadcnDatePicker.vue";
-import InputCurrency from "../../../src/vue/components/InputCurrency.vue";
-import LabeledButton from "../../../src/vue/components/LabeledButton.vue";
-import ShadcnAccordion from "../../../src/vue/components/ShadcnAccordion.vue";
-import ShadcnAccordionItem from "../../../src/vue/components/ShadcnAccordionItem.vue";
-import ShadcnDropdown from "../../../src/vue/components/ShadcnDropdown.vue";
-import ShadcnDropdownItem from "../../../src/vue/components/ShadcnDropdownItem.vue";
+import ArcanaInputMask from "../../../src/vue/components/ArcanaInputMask.vue";
+import ArcanaInputBoolean from "../../../src/vue/components/ArcanaInputBoolean.vue";
+import ArcanaNumberStepper from "../../../src/vue/components/ArcanaNumberStepper.vue";
+import ArcanaMultiSelectPopover from "../../../src/vue/components/ArcanaMultiSelectPopover.vue";
+import ArcanaRadioCardGroup from "../../../src/vue/components/ArcanaRadioCardGroup.vue";
+import ArcanaSegmentedOptions from "../../../src/vue/components/ArcanaSegmentedOptions.vue";
+import ArcanaDatePicker from "../../../src/vue/components/ArcanaDatePicker.vue";
+import ArcanaInputCurrency from "../../../src/vue/components/ArcanaInputCurrency.vue";
+import ArcanaAccordion from "../../../src/vue/components/ArcanaAccordion.vue";
+import ArcanaAccordionItem from "../../../src/vue/components/ArcanaAccordionItem.vue";
+import ArcanaDropdown from "../../../src/vue/components/ArcanaDropdown.vue";
+import ArcanaDropdownItem from "../../../src/vue/components/ArcanaDropdownItem.vue";
 // ── Batch 3 ──
-import ShadcnTable from "../../../src/vue/components/ShadcnTable.vue";
-import ShadcnSpecSheet from "../../../src/vue/components/ShadcnSpecSheet.vue";
-import ShadcnSpecSheetSection from "../../../src/vue/components/ShadcnSpecSheetSection.vue";
-import ShadcnSpecSheetField from "../../../src/vue/components/ShadcnSpecSheetField.vue";
-import ShadcnSummaryTile from "../../../src/vue/components/ShadcnSummaryTile.vue";
-import ShadcnSummaryTiles from "../../../src/vue/components/ShadcnSummaryTiles.vue";
-import ShadcnSettingsList from "../../../src/vue/components/ShadcnSettingsList.vue";
-import ShadcnSettingsListGroup from "../../../src/vue/components/ShadcnSettingsListGroup.vue";
-import ShadcnSettingsListItem from "../../../src/vue/components/ShadcnSettingsListItem.vue";
-import ShadcnSettingsEditableField from "../../../src/vue/components/ShadcnSettingsEditableField.vue";
-import SparkGridEmptyState from "../../../src/vue/components/SparkGridEmptyState.vue";
-import ShadcnNotice from "../../../src/vue/components/ShadcnNotice.vue";
-import ShadcnEditFieldModal from "../../../src/vue/components/ShadcnEditFieldModal.vue";
-import ShadcnRequiredFieldsDialog from "../../../src/vue/components/ShadcnRequiredFieldsDialog.vue";
-import ShadcnOnboardingPanel from "../../../src/vue/components/ShadcnOnboardingPanel.vue";
-import ShadcnLoadingOverlay from "../../../src/vue/components/ShadcnLoadingOverlay.vue";
-import ShadcnSkeleton from "../../../src/vue/components/ShadcnSkeleton.vue";
-import ShadcnSwitchCard from "../../../src/vue/components/ShadcnSwitchCard.vue";
-import ShadcnSwitchRow from "../../../src/vue/components/ShadcnSwitchRow.vue";
-import ShadcnSwitchSegmented from "../../../src/vue/components/ShadcnSwitchSegmented.vue";
+import ArcanaTable from "../../../src/vue/components/ArcanaTable.vue";
+import ArcanaSpecSheet from "../../../src/vue/components/ArcanaSpecSheet.vue";
+import ArcanaSpecSheetSection from "../../../src/vue/components/ArcanaSpecSheetSection.vue";
+import ArcanaSpecSheetField from "../../../src/vue/components/ArcanaSpecSheetField.vue";
+import ArcanaSummaryTile from "../../../src/vue/components/ArcanaSummaryTile.vue";
+import ArcanaSummaryTiles from "../../../src/vue/components/ArcanaSummaryTiles.vue";
+import ArcanaSettingsList from "../../../src/vue/components/ArcanaSettingsList.vue";
+import ArcanaSettingsListGroup from "../../../src/vue/components/ArcanaSettingsListGroup.vue";
+import ArcanaSettingsListItem from "../../../src/vue/components/ArcanaSettingsListItem.vue";
+import ArcanaSettingsEditableField from "../../../src/vue/components/ArcanaSettingsEditableField.vue";
+import ArcanaGridEmptyState from "../../../src/vue/components/ArcanaGridEmptyState.vue";
+import ArcanaNotice from "../../../src/vue/components/ArcanaNotice.vue";
+import ArcanaEditFieldModal from "../../../src/vue/components/ArcanaEditFieldModal.vue";
+import ArcanaRequiredFieldsDialog from "../../../src/vue/components/ArcanaRequiredFieldsDialog.vue";
+import ArcanaOnboardingPanel from "../../../src/vue/components/ArcanaOnboardingPanel.vue";
+import ArcanaLoadingOverlay from "../../../src/vue/components/ArcanaLoadingOverlay.vue";
+import ArcanaSkeleton from "../../../src/vue/components/ArcanaSkeleton.vue";
+import ArcanaSwitchCard from "../../../src/vue/components/ArcanaSwitchCard.vue";
+import ArcanaSwitchRow from "../../../src/vue/components/ArcanaSwitchRow.vue";
+import ArcanaSwitchSegmented from "../../../src/vue/components/ArcanaSwitchSegmented.vue";
 
 export interface PropRow {
   name: string;
@@ -63,72 +62,72 @@ export interface ComponentDoc {
   vueSnippet: string;
 }
 
-/* ─────────────────────────── ShadcnButton ─────────────────────────── */
+/* ─────────────────────────── ArcanaButton ─────────────────────────── */
 
 const ButtonDemo: Component = {
-  components: { ShadcnButton },
+  components: { ArcanaButton },
   data: () => ({ clicks: 0 }),
   template: /* html */ `
     <div class="demo-stack">
       <div class="demo-row">
-        <ShadcnButton @click="clicks++">Primary</ShadcnButton>
-        <ShadcnButton variant="secondary">Secondary</ShadcnButton>
-        <ShadcnButton variant="outline">Outline</ShadcnButton>
-        <ShadcnButton variant="ghost">Ghost</ShadcnButton>
-        <ShadcnButton variant="success">Success</ShadcnButton>
-        <ShadcnButton variant="indigo">Indigo</ShadcnButton>
-        <ShadcnButton variant="destructive">Destructive</ShadcnButton>
-        <ShadcnButton variant="outline-danger">Outline danger</ShadcnButton>
-        <ShadcnButton :disabled="true">Disabled</ShadcnButton>
+        <ArcanaButton @click="clicks++">Primary</ArcanaButton>
+        <ArcanaButton variant="secondary">Secondary</ArcanaButton>
+        <ArcanaButton variant="outline">Outline</ArcanaButton>
+        <ArcanaButton variant="ghost">Ghost</ArcanaButton>
+        <ArcanaButton variant="success">Success</ArcanaButton>
+        <ArcanaButton variant="indigo">Indigo</ArcanaButton>
+        <ArcanaButton variant="destructive">Destructive</ArcanaButton>
+        <ArcanaButton variant="outline-danger">Outline danger</ArcanaButton>
+        <ArcanaButton :disabled="true">Disabled</ArcanaButton>
       </div>
       <p class="demo-note">Primary clicked <strong>{{ clicks }}</strong> time(s)</p>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnBadge ──────────────────────────── */
+/* ─────────────────────────── ArcanaBadge ──────────────────────────── */
 
 const BadgeDemo: Component = {
-  components: { ShadcnBadge },
+  components: { ArcanaBadge },
   template: /* html */ `
     <div class="demo-stack">
       <div class="demo-row">
-        <ShadcnBadge>neutral</ShadcnBadge>
-        <ShadcnBadge variant="blue">blue</ShadcnBadge>
-        <ShadcnBadge variant="green">green</ShadcnBadge>
-        <ShadcnBadge variant="red">red</ShadcnBadge>
-        <ShadcnBadge variant="amber">amber</ShadcnBadge>
-        <ShadcnBadge variant="violet">violet</ShadcnBadge>
+        <ArcanaBadge>neutral</ArcanaBadge>
+        <ArcanaBadge variant="blue">blue</ArcanaBadge>
+        <ArcanaBadge variant="green">green</ArcanaBadge>
+        <ArcanaBadge variant="red">red</ArcanaBadge>
+        <ArcanaBadge variant="amber">amber</ArcanaBadge>
+        <ArcanaBadge variant="violet">violet</ArcanaBadge>
       </div>
       <div class="demo-row">
-        <ShadcnBadge variant="green" :dot="true">Active</ShadcnBadge>
-        <ShadcnBadge variant="red" :dot="true">Offline</ShadcnBadge>
-        <ShadcnBadge variant="blue" size="sm">sm size</ShadcnBadge>
-        <ShadcnBadge variant="violet" :clickable="true">clickable</ShadcnBadge>
+        <ArcanaBadge variant="green" :dot="true">Active</ArcanaBadge>
+        <ArcanaBadge variant="red" :dot="true">Offline</ArcanaBadge>
+        <ArcanaBadge variant="blue" size="sm">sm size</ArcanaBadge>
+        <ArcanaBadge variant="violet" :clickable="true">clickable</ArcanaBadge>
       </div>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnInput ──────────────────────────── */
+/* ─────────────────────────── ArcanaInput ──────────────────────────── */
 
 const InputDemo: Component = {
-  components: { ShadcnInput },
+  components: { ArcanaInput },
   data: () => ({ email: "", qty: null as number | null }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ShadcnInput v-model="email" type="email" placeholder="email@company.com" />
-      <ShadcnInput v-model="qty" type="number" placeholder="Quantity" :min="0" :max="99" />
-      <ShadcnInput placeholder="Read-only" model-value="Locked value" :readonly="true" />
+      <ArcanaInput v-model="email" type="email" placeholder="email@company.com" />
+      <ArcanaInput v-model="qty" type="number" placeholder="Quantity" :min="0" :max="99" />
+      <ArcanaInput placeholder="Read-only" model-value="Locked value" :readonly="true" />
       <p class="demo-note">email: <strong>{{ email || "—" }}</strong> · qty: <strong>{{ qty === null ? "null" : qty }}</strong> ({{ qty === null ? "empty" : typeof qty }})</p>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnSelect ─────────────────────────── */
+/* ─────────────────────────── ArcanaSelect ─────────────────────────── */
 
 const SelectDemo: Component = {
-  components: { ShadcnSelect },
+  components: { ArcanaSelect },
   data: () => ({
     single: null as string | null,
     many: [] as string[],
@@ -142,17 +141,17 @@ const SelectDemo: Component = {
   }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ShadcnSelect v-model="single" :options="fruits" placeholder="Pick a fruit" searchable />
-      <ShadcnSelect v-model="many" :options="fruits" placeholder="Pick several" multiple />
+      <ArcanaSelect v-model="single" :options="fruits" placeholder="Pick a fruit" searchable />
+      <ArcanaSelect v-model="many" :options="fruits" placeholder="Pick several" multiple />
       <p class="demo-note">single: <strong>{{ single ?? "null" }}</strong> · multiple: <strong>[{{ many.join(", ") }}]</strong></p>
     </div>
   `
 };
 
-/* ────────────────────────── ShadcnCheckbox ────────────────────────── */
+/* ────────────────────────── ArcanaCheckbox ────────────────────────── */
 
 const CheckboxDemo: Component = {
-  components: { ShadcnCheckbox },
+  components: { ArcanaCheckbox },
   data: () => ({ items: { a: true, b: false, c: false } as Record<string, boolean> }),
   computed: {
     allChecked(): boolean {
@@ -172,45 +171,45 @@ const CheckboxDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnCheckbox
+      <ArcanaCheckbox
         :model-value="allChecked"
         :indeterminate="someChecked"
         label="Select all"
         @update:modelValue="toggleAll"
       />
       <div class="demo-stack" style="padding-left: 22px; gap: 6px">
-        <ShadcnCheckbox v-model="items.a" label="Invoices" />
-        <ShadcnCheckbox v-model="items.b" label="Receipts" />
-        <ShadcnCheckbox v-model="items.c" label="Statements" />
-        <ShadcnCheckbox :model-value="false" :disabled="true" label="Archived (disabled)" />
+        <ArcanaCheckbox v-model="items.a" label="Invoices" />
+        <ArcanaCheckbox v-model="items.b" label="Receipts" />
+        <ArcanaCheckbox v-model="items.c" label="Statements" />
+        <ArcanaCheckbox :model-value="false" :disabled="true" label="Archived (disabled)" />
       </div>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnSwitch ─────────────────────────── */
+/* ─────────────────────────── ArcanaSwitch ─────────────────────────── */
 
 const SwitchDemo: Component = {
-  components: { ShadcnSwitch },
+  components: { ArcanaSwitch },
   data: () => ({ on: true, off: false }),
   template: /* html */ `
     <div class="demo-stack">
-      <label class="demo-switch-row"><ShadcnSwitch v-model="on" aria-label="Notifications" /> <span>Notifications ({{ on ? "on" : "off" }})</span></label>
-      <label class="demo-switch-row"><ShadcnSwitch v-model="off" aria-label="Beta features" /> <span>Beta features ({{ off ? "on" : "off" }})</span></label>
+      <label class="demo-switch-row"><ArcanaSwitch v-model="on" aria-label="Notifications" /> <span>Notifications ({{ on ? "on" : "off" }})</span></label>
+      <label class="demo-switch-row"><ArcanaSwitch v-model="off" aria-label="Beta features" /> <span>Beta features ({{ off ? "on" : "off" }})</span></label>
       <div class="demo-row" style="align-items: center">
-        <ShadcnSwitch v-model="on" size="sm" aria-label="small" />
-        <ShadcnSwitch v-model="on" size="md" aria-label="medium" />
-        <ShadcnSwitch v-model="on" size="lg" aria-label="large" />
-        <ShadcnSwitch :model-value="true" :disabled="true" aria-label="disabled" />
+        <ArcanaSwitch v-model="on" size="sm" aria-label="small" />
+        <ArcanaSwitch v-model="on" size="md" aria-label="medium" />
+        <ArcanaSwitch v-model="on" size="lg" aria-label="large" />
+        <ArcanaSwitch :model-value="true" :disabled="true" aria-label="disabled" />
       </div>
     </div>
   `
 };
 
-/* ──────────────────────────── ShadcnTabs ──────────────────────────── */
+/* ──────────────────────────── ArcanaTabs ──────────────────────────── */
 
 const TabsDemo: Component = {
-  components: { ShadcnTabs },
+  components: { ArcanaTabs },
   data: () => ({
     active: "overview",
     variant: "pills" as string,
@@ -232,19 +231,19 @@ const TabsDemo: Component = {
           @click="variant = v"
         >{{ v }}</button>
       </div>
-      <ShadcnTabs v-model="active" :tabs="tabs" :variant="variant" aria-label="Demo tabs">
+      <ArcanaTabs v-model="active" :tabs="tabs" :variant="variant" aria-label="Demo tabs">
         <template #overview><div class="demo-panel">The <strong>Overview</strong> panel is active.</div></template>
         <template #activity><div class="demo-panel">3 new items in <strong>Activity</strong>.</div></template>
         <template #settings><div class="demo-panel">Adjust your <strong>Settings</strong> here.</div></template>
-      </ShadcnTabs>
+      </ArcanaTabs>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnDialog ─────────────────────────── */
+/* ─────────────────────────── ArcanaDialog ─────────────────────────── */
 
 const DialogDemo: Component = {
-  components: { ShadcnButton, ShadcnDialog },
+  components: { ArcanaButton, ArcanaDialog },
   methods: {
     open() {
       (this.$refs.dialog as unknown as { show: () => void }).show();
@@ -252,69 +251,69 @@ const DialogDemo: Component = {
   },
   template: /* html */ `
     <div>
-      <ShadcnButton @click="open">Open dialog</ShadcnButton>
-      <ShadcnDialog ref="dialog" title="Delete workspace" description="This action cannot be undone.">
+      <ArcanaButton @click="open">Open dialog</ArcanaButton>
+      <ArcanaDialog ref="dialog" title="Delete workspace" description="This action cannot be undone.">
         <p style="font-size: 13px; color: #52525b; line-height: 1.6">
           Removing this workspace deletes every project and invite inside it.
           Type the name to confirm in a real form — here, just close the dialog.
         </p>
         <template #footer="{ hide }">
-          <ShadcnButton variant="outline" @click="hide">Cancel</ShadcnButton>
-          <ShadcnButton variant="destructive" @click="hide">Delete</ShadcnButton>
+          <ArcanaButton variant="outline" @click="hide">Cancel</ArcanaButton>
+          <ArcanaButton variant="destructive" @click="hide">Delete</ArcanaButton>
         </template>
-      </ShadcnDialog>
+      </ArcanaDialog>
     </div>
   `
 };
 
-/* ──────────────────────── ShadcnInputMask ─────────────────────────── */
+/* ──────────────────────── ArcanaInputMask ─────────────────────────── */
 
 const InputMaskDemo: Component = {
-  components: { ShadcnInputMask },
+  components: { ArcanaInputMask },
   data: () => ({ cpf: "", phone: "" }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ShadcnInputMask v-model="cpf" mask="###.###.###-##" placeholder="CPF" />
-      <ShadcnInputMask v-model="phone" :mask="['(##) ####-####', '(##) #####-####']" placeholder="Phone" />
+      <ArcanaInputMask v-model="cpf" mask="###.###.###-##" placeholder="CPF" />
+      <ArcanaInputMask v-model="phone" :mask="['(##) ####-####', '(##) #####-####']" placeholder="Phone" />
       <p class="demo-note">cpf (raw): <strong>{{ cpf || "—" }}</strong> · phone (raw): <strong>{{ phone || "—" }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnInputBoolean ─────────────────────────── */
+/* ────────────────────── ArcanaInputBoolean ─────────────────────────── */
 
 const InputBooleanDemo: Component = {
-  components: { ShadcnInputBoolean },
+  components: { ArcanaInputBoolean },
   data: () => ({ answer: null as unknown, status: 1 as unknown, filter: null as unknown }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ShadcnInputBoolean v-model="answer" placeholder="Yes / No" />
-      <ShadcnInputBoolean v-model="status" variation="status" />
-      <ShadcnInputBoolean v-model="filter" variation="nullable" placeholder="Has value?" />
+      <ArcanaInputBoolean v-model="answer" placeholder="Yes / No" />
+      <ArcanaInputBoolean v-model="status" variation="status" />
+      <ArcanaInputBoolean v-model="filter" variation="nullable" placeholder="Has value?" />
       <p class="demo-note">yes/no: <strong>{{ answer ?? "null" }}</strong> · status: <strong>{{ status ?? "null" }}</strong> · nullable: <strong>{{ filter ?? "null" }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnNumberStepper ────────────────────────── */
+/* ────────────────────── ArcanaNumberStepper ────────────────────────── */
 
 const NumberStepperDemo: Component = {
-  components: { ShadcnNumberStepper },
+  components: { ArcanaNumberStepper },
   data: () => ({ qty: 2, weight: 10 }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnNumberStepper v-model="qty" :min="0" :max="10" aria-label="Quantity" />
-      <ShadcnNumberStepper v-model="weight" :min="0" :max="100" :step="5" aria-label="Weight" />
-      <ShadcnNumberStepper :model-value="5" :disabled="true" aria-label="Disabled" />
+      <ArcanaNumberStepper v-model="qty" :min="0" :max="10" aria-label="Quantity" />
+      <ArcanaNumberStepper v-model="weight" :min="0" :max="100" :step="5" aria-label="Weight" />
+      <ArcanaNumberStepper :model-value="5" :disabled="true" aria-label="Disabled" />
       <p class="demo-note">qty (0–10): <strong>{{ qty }}</strong> · weight (step 5): <strong>{{ weight }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────── MultiSelectPopover ─────────────────────────── */
+/* ────────────────────── ArcanaMultiSelectPopover ─────────────────────────── */
 
-const MultiSelectPopoverDemo: Component = {
-  components: { MultiSelectPopover },
+const ArcanaMultiSelectPopoverDemo: Component = {
+  components: { ArcanaMultiSelectPopover },
   data: () => ({
     selections: { USER: [] as number[], DEPARTMENT: [] as number[] } as Record<string, number[]>,
     tabs: [
@@ -324,16 +323,16 @@ const MultiSelectPopoverDemo: Component = {
   }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <MultiSelectPopover v-model="selections" :tabs="tabs" empty-label="Select people or departments" />
+      <ArcanaMultiSelectPopover v-model="selections" :tabs="tabs" empty-label="Select people or departments" />
       <p class="demo-note">users: [{{ selections.USER.join(", ") }}] · departments: [{{ selections.DEPARTMENT.join(", ") }}]</p>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnRadioCardGroup ───────────────────────── */
+/* ────────────────────── ArcanaRadioCardGroup ───────────────────────── */
 
 const RadioCardGroupDemo: Component = {
-  components: { ShadcnRadioCardGroup },
+  components: { ArcanaRadioCardGroup },
   data: () => ({
     method: "pix",
     options: [
@@ -345,16 +344,16 @@ const RadioCardGroupDemo: Component = {
   }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ShadcnRadioCardGroup v-model="method" :options="options" aria-label="Payment method" />
+      <ArcanaRadioCardGroup v-model="method" :options="options" aria-label="Payment method" />
       <p class="demo-note">selected: <strong>{{ method }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnSegmentedOptions ─────────────────────── */
+/* ────────────────────── ArcanaSegmentedOptions ─────────────────────── */
 
 const SegmentedOptionsDemo: Component = {
-  components: { ShadcnSegmentedOptions },
+  components: { ArcanaSegmentedOptions },
   data: () => ({
     view: "list",
     options: [
@@ -365,139 +364,120 @@ const SegmentedOptionsDemo: Component = {
   }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ShadcnSegmentedOptions v-model="view" :options="options" aria-label="View mode" />
-      <ShadcnSegmentedOptions v-model="view" :options="options" :compact="true" :squared="true" />
+      <ArcanaSegmentedOptions v-model="view" :options="options" aria-label="View mode" />
+      <ArcanaSegmentedOptions v-model="view" :options="options" :compact="true" :squared="true" />
       <p class="demo-note">view: <strong>{{ view }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnDatePicker ───────────────────────────── */
+/* ────────────────────── ArcanaDatePicker ───────────────────────────── */
 
 const DatePickerDemo: Component = {
-  components: { ShadcnDatePicker },
+  components: { ArcanaDatePicker },
   data: () => ({ date: "2026-07-24" as string | null }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ShadcnDatePicker v-model="date" />
+      <ArcanaDatePicker v-model="date" />
       <p class="demo-note">value (YYYY-MM-DD): <strong>{{ date ?? "null" }}</strong> · type DD/MM/AAAA</p>
     </div>
   `
 };
 
-/* ────────────────────────── InputCurrency ──────────────────────────── */
+/* ────────────────────────── ArcanaInputCurrency ──────────────────────────── */
 
-const InputCurrencyDemo: Component = {
-  components: { InputCurrency },
+const ArcanaInputCurrencyDemo: Component = {
+  components: { ArcanaInputCurrency },
   data: () => ({ price: "1500.00", cost: "0" }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <InputCurrency v-model="price" :shadcn="true" />
-      <InputCurrency v-model="cost" :shadcn="true" :disabled="true" />
+      <ArcanaInputCurrency v-model="price" :shadcn="true" />
+      <ArcanaInputCurrency v-model="cost" :shadcn="true" :disabled="true" />
       <p class="demo-note">price (raw): <strong>{{ price }}</strong></p>
     </div>
   `
 };
 
-/* ────────────────────────── LabeledButton ──────────────────────────── */
-
-const LabeledButtonDemo: Component = {
-  components: { LabeledButton },
-  data: () => ({ clicks: 0 }),
-  template: /* html */ `
-    <div class="demo-stack">
-      <div class="demo-row">
-        <LabeledButton :shadcn="true" label="Save" color="green-600" @click="clicks++" />
-        <LabeledButton :shadcn="true" label="Cancel" color="grey-500" />
-        <LabeledButton :shadcn="true" label="Delete" color="danger-600" />
-        <LabeledButton :shadcn="true" label="Sync" color="blue-500" />
-        <LabeledButton :shadcn="true" label="Saving…" color="green-600" :loading="true" />
-      </div>
-      <p class="demo-note">Save clicked <strong>{{ clicks }}</strong> time(s)</p>
-    </div>
-  `
-};
-
-/* ─────────────────── ShadcnAccordion + AccordionItem ───────────────── */
+/* ─────────────────── ArcanaAccordion + AccordionItem ───────────────── */
 
 const AccordionDemo: Component = {
-  components: { ShadcnAccordion, ShadcnAccordionItem },
+  components: { ArcanaAccordion, ArcanaAccordionItem },
   data: () => ({ open: "shipping" as string | null }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnAccordion v-model="open">
-        <ShadcnAccordionItem name="shipping" title="Shipping">Ships in 2–3 business days.</ShadcnAccordionItem>
-        <ShadcnAccordionItem name="returns" title="Returns">30-day free returns, no questions asked.</ShadcnAccordionItem>
-        <ShadcnAccordionItem name="warranty" title="Warranty (disabled)" :disabled="true">Coming soon.</ShadcnAccordionItem>
-      </ShadcnAccordion>
+      <ArcanaAccordion v-model="open">
+        <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 business days.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="returns" title="Returns">30-day free returns, no questions asked.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="warranty" title="Warranty (disabled)" :disabled="true">Coming soon.</ArcanaAccordionItem>
+      </ArcanaAccordion>
       <p class="demo-note">open (single mode): <strong>{{ open ?? "null" }}</strong></p>
     </div>
   `
 };
 
 const AccordionItemDemo: Component = {
-  components: { ShadcnAccordion, ShadcnAccordionItem },
+  components: { ArcanaAccordion, ArcanaAccordionItem },
   data: () => ({ open: ["specs"] as string[] }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnAccordion v-model="open" :accordion="false">
-        <ShadcnAccordionItem name="specs" title="Specifications">Weight, dimensions and materials.</ShadcnAccordionItem>
-        <ShadcnAccordionItem name="care">
+      <ArcanaAccordion v-model="open" :accordion="false">
+        <ArcanaAccordionItem name="specs" title="Specifications">Weight, dimensions and materials.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="care">
           <template #title><span>Care <strong>instructions</strong></span></template>
           Hand wash cold, do not tumble dry.
-        </ShadcnAccordionItem>
-      </ShadcnAccordion>
+        </ArcanaAccordionItem>
+      </ArcanaAccordion>
       <p class="demo-note">open (multiple mode): [{{ open.join(", ") }}]</p>
     </div>
   `
 };
 
-/* ──────────────────── ShadcnDropdown + DropdownItem ────────────────── */
+/* ──────────────────── ArcanaDropdown + DropdownItem ────────────────── */
 
 const DropdownDemo: Component = {
-  components: { ShadcnDropdown, ShadcnDropdownItem, ShadcnButton },
+  components: { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton },
   data: () => ({ last: "—" }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnDropdown placement="bottom-start">
+      <ArcanaDropdown placement="bottom-start">
         <template #trigger>
-          <ShadcnButton variant="outline">Actions ▾</ShadcnButton>
+          <ArcanaButton variant="outline">Actions ▾</ArcanaButton>
         </template>
-        <ShadcnDropdownItem icon="fa-solid fa-pen" @click="last = 'Rename'">Rename</ShadcnDropdownItem>
-        <ShadcnDropdownItem icon="fa-solid fa-copy" @click="last = 'Duplicate'">Duplicate</ShadcnDropdownItem>
-        <ShadcnDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ShadcnDropdownItem>
-      </ShadcnDropdown>
+        <ArcanaDropdownItem icon="fa-solid fa-pen" @click="last = 'Rename'">Rename</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-copy" @click="last = 'Duplicate'">Duplicate</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ArcanaDropdownItem>
+      </ArcanaDropdown>
       <p class="demo-note">last action: <strong>{{ last }}</strong></p>
     </div>
   `
 };
 
 const DropdownItemDemo: Component = {
-  components: { ShadcnDropdown, ShadcnDropdownItem, ShadcnButton },
+  components: { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton },
   data: () => ({ last: "—" }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnDropdown placement="bottom-start" size="comfortable">
+      <ArcanaDropdown placement="bottom-start" size="comfortable">
         <template #trigger>
-          <ShadcnButton variant="outline">Open menu ▾</ShadcnButton>
+          <ArcanaButton variant="outline">Open menu ▾</ArcanaButton>
         </template>
-        <ShadcnDropdownItem icon="fa-solid fa-user" @click="last = 'Profile'">
+        <ArcanaDropdownItem icon="fa-solid fa-user" @click="last = 'Profile'">
           Profile
           <template #suffix>⌘P</template>
-        </ShadcnDropdownItem>
-        <ShadcnDropdownItem icon="fa-solid fa-check" variant="success" @click="last = 'Approve'">Approve</ShadcnDropdownItem>
-        <ShadcnDropdownItem icon="fa-solid fa-flag" variant="warning" @click="last = 'Flag'">Flag for review</ShadcnDropdownItem>
-        <ShadcnDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ShadcnDropdownItem>
-      </ShadcnDropdown>
+        </ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-check" variant="success" @click="last = 'Approve'">Approve</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-flag" variant="warning" @click="last = 'Flag'">Flag for review</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ArcanaDropdownItem>
+      </ArcanaDropdown>
       <p class="demo-note">last action: <strong>{{ last }}</strong></p>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnTable ──────────────────────────── */
+/* ─────────────────────────── ArcanaTable ──────────────────────────── */
 
 const TableDemo: Component = {
-  components: { ShadcnTable, ShadcnBadge },
+  components: { ArcanaTable, ArcanaBadge },
   data: () => ({
     columns: [
       { key: "sku", label: "SKU", width: "96px" },
@@ -512,166 +492,166 @@ const TableDemo: Component = {
     ]
   }),
   template: /* html */ `
-    <ShadcnTable :columns="columns" :rows="rows">
+    <ArcanaTable :columns="columns" :rows="rows">
       <template #cell-name="{ row }">
         <strong>{{ row.name }}</strong>
-        <ShadcnBadge :variant="row.status === 'low' ? 'amber' : 'green'" size="sm" style="margin-left: 6px">{{ row.status === 'low' ? 'low' : 'in stock' }}</ShadcnBadge>
+        <ArcanaBadge :variant="row.status === 'low' ? 'amber' : 'green'" size="sm" style="margin-left: 6px">{{ row.status === 'low' ? 'low' : 'in stock' }}</ArcanaBadge>
       </template>
       <template #footer>
-        <tr><td colspan="3">Total (3 items)</td><td class="shadcn-table__td--right">R$ 785,00</td></tr>
+        <tr><td colspan="3">Total (3 items)</td><td class="arcana-table__td--right">R$ 785,00</td></tr>
       </template>
-    </ShadcnTable>
+    </ArcanaTable>
   `
 };
 
-/* ────────────── ShadcnSpecSheet + Section + Field (composite) ──────── */
+/* ────────────── ArcanaSpecSheet + Section + Field (composite) ──────── */
 
 const SpecSheetDemo: Component = {
-  components: { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton },
+  components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
-    <ShadcnSpecSheet doc-num="Cadastro Nº 042 · Atualizado 14.Mar.2026" title="Popgás Distribuidora" meta-label="Status">
+    <ArcanaSpecSheet doc-num="Cadastro Nº 042 · Atualizado 14.Mar.2026" title="Popgás Distribuidora" meta-label="Status">
       <template #meta>
-        <span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>
+        <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
       </template>
-      <ShadcnSpecSheetSection title="Dados Cadastrais" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue">
-        <ShadcnSpecSheetField label="Razão Social" value="Popgás Distribuidora de Gás LTDA" :span="2" />
-        <ShadcnSpecSheetField label="CNPJ" value="12.345.678/0001-90" />
-        <ShadcnSpecSheetField label="Inscrição Estadual" value="" />
-      </ShadcnSpecSheetSection>
-      <ShadcnSpecSheetSection title="Contato" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
-        <ShadcnSpecSheetField label="Telefone" value="(11) 4002-8922" />
-        <ShadcnSpecSheetField label="E-mail" value="contato@popgas.com.br" />
-      </ShadcnSpecSheetSection>
+      <ArcanaSpecSheetSection title="Dados Cadastrais" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue">
+        <ArcanaSpecSheetField label="Razão Social" value="Popgás Distribuidora de Gás LTDA" :span="2" />
+        <ArcanaSpecSheetField label="CNPJ" value="12.345.678/0001-90" />
+        <ArcanaSpecSheetField label="Inscrição Estadual" value="" />
+      </ArcanaSpecSheetSection>
+      <ArcanaSpecSheetSection title="Contato" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
+        <ArcanaSpecSheetField label="Telefone" value="(11) 4002-8922" />
+        <ArcanaSpecSheetField label="E-mail" value="contato@popgas.com.br" />
+      </ArcanaSpecSheetSection>
       <template #footer>
-        <ShadcnButton variant="outline">Alterar Dados</ShadcnButton>
+        <ArcanaButton variant="outline">Alterar Dados</ArcanaButton>
       </template>
-    </ShadcnSpecSheet>
+    </ArcanaSpecSheet>
   `
 };
 
 const SpecSheetSectionDemo: Component = {
-  components: { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton },
+  components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
-    <ShadcnSpecSheet flat>
-      <ShadcnSpecSheetSection title="Financeiro" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
-        <template #actions><ShadcnButton variant="ghost">Alterar</ShadcnButton></template>
-        <ShadcnSpecSheetField label="Limite" value="R$ 5.000,00" />
-        <ShadcnSpecSheetField label="Saldo" value="R$ 1.240,00" />
-        <ShadcnSpecSheetField label="Vencimento" value="Dia 10" />
-      </ShadcnSpecSheetSection>
-      <ShadcnSpecSheetSection title="Observações" icon="fa-solid fa-note-sticky" icon-color="violet" no-row-dividers>
-        <ShadcnSpecSheetField label="Notas" value="Cliente preferencial desde 2019." :span="2" />
-      </ShadcnSpecSheetSection>
-    </ShadcnSpecSheet>
+    <ArcanaSpecSheet flat>
+      <ArcanaSpecSheetSection title="Financeiro" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
+        <template #actions><ArcanaButton variant="ghost">Alterar</ArcanaButton></template>
+        <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
+        <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
+        <ArcanaSpecSheetField label="Vencimento" value="Dia 10" />
+      </ArcanaSpecSheetSection>
+      <ArcanaSpecSheetSection title="Observações" icon="fa-solid fa-note-sticky" icon-color="violet" no-row-dividers>
+        <ArcanaSpecSheetField label="Notas" value="Cliente preferencial desde 2019." :span="2" />
+      </ArcanaSpecSheetSection>
+    </ArcanaSpecSheet>
   `
 };
 
 const SpecSheetFieldDemo: Component = {
-  components: { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField },
+  components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField },
   template: /* html */ `
-    <ShadcnSpecSheet flat>
-      <ShadcnSpecSheetSection :columns="2">
-        <ShadcnSpecSheetField label="Nome" value="Ana Ribeiro" />
-        <ShadcnSpecSheetField label="Apelido" value="" empty-text="Não informado" />
-        <ShadcnSpecSheetField label="Status" :span="2">
-          <span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>
-        </ShadcnSpecSheetField>
-      </ShadcnSpecSheetSection>
-    </ShadcnSpecSheet>
+    <ArcanaSpecSheet flat>
+      <ArcanaSpecSheetSection :columns="2">
+        <ArcanaSpecSheetField label="Nome" value="Ana Ribeiro" />
+        <ArcanaSpecSheetField label="Apelido" value="" empty-text="Não informado" />
+        <ArcanaSpecSheetField label="Status" :span="2">
+          <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
+        </ArcanaSpecSheetField>
+      </ArcanaSpecSheetSection>
+    </ArcanaSpecSheet>
   `
 };
 
-/* ─────────────── ShadcnSummaryTiles + SummaryTile (composite) ──────── */
+/* ─────────────── ArcanaSummaryTiles + SummaryTile (composite) ──────── */
 
 const SummaryTilesDemo: Component = {
-  components: { ShadcnSummaryTiles, ShadcnSummaryTile },
+  components: { ArcanaSummaryTiles, ArcanaSummaryTile },
   template: /* html */ `
-    <ShadcnSummaryTiles :columns="3">
-      <ShadcnSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-      <ShadcnSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
-      <ShadcnSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-    </ShadcnSummaryTiles>
+    <ArcanaSummaryTiles :columns="3">
+      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
+      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" sub="3 lançamentos" />
+      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+    </ArcanaSummaryTiles>
   `
 };
 
 const SummaryTileDemo: Component = {
-  components: { ShadcnSummaryTile, ShadcnBadge },
+  components: { ArcanaSummaryTile, ArcanaBadge },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 360px">
-      <ShadcnSummaryTile tone="neutral" icon="fa-solid fa-box" label="Pedidos" value="128" sub="hoje" />
-      <ShadcnSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" />
-      <ShadcnSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Cancelados" value="16" />
-      <ShadcnSummaryTile tone="indigo" icon="fa-solid fa-percent" label="Conversão">
-        <template #value><ShadcnBadge variant="green">87.5%</ShadcnBadge></template>
-      </ShadcnSummaryTile>
+      <ArcanaSummaryTile tone="neutral" icon="fa-solid fa-box" label="Pedidos" value="128" sub="hoje" />
+      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" />
+      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Cancelados" value="16" />
+      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-percent" label="Conversão">
+        <template #value><ArcanaBadge variant="green">87.5%</ArcanaBadge></template>
+      </ArcanaSummaryTile>
     </div>
   `
 };
 
-/* ─── ShadcnSettingsList + Group + Item + EditableField (composite) ─── */
+/* ─── ArcanaSettingsList + Group + Item + EditableField (composite) ─── */
 
 const SettingsListDemo: Component = {
-  components: { ShadcnSettingsList, ShadcnSettingsListItem, ShadcnSwitch },
+  components: { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch },
   data: () => ({ popgas: true, email: false }),
   template: /* html */ `
-    <ShadcnSettingsList>
-      <ShadcnSettingsListItem label="Modo PopGás" caption="Habilita recursos internos da distribuidora.">
-        <ShadcnSwitch v-model="popgas" aria-label="Modo PopGás" />
-      </ShadcnSettingsListItem>
-      <ShadcnSettingsListItem label="Notificações por e-mail" caption="Resumo diário das atividades operacionais.">
-        <ShadcnSwitch v-model="email" aria-label="E-mail" />
-      </ShadcnSettingsListItem>
-      <ShadcnSettingsListItem label="Plano" caption="Recursos habilitados para a organização.">
-        <span class="shadcn-settings-list__current-value">Profissional</span>
-        <button class="shadcn-settings-list__edit-btn" type="button">Alterar</button>
-      </ShadcnSettingsListItem>
-    </ShadcnSettingsList>
+    <ArcanaSettingsList>
+      <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos da distribuidora.">
+        <ArcanaSwitch v-model="popgas" aria-label="Modo PopGás" />
+      </ArcanaSettingsListItem>
+      <ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário das atividades operacionais.">
+        <ArcanaSwitch v-model="email" aria-label="E-mail" />
+      </ArcanaSettingsListItem>
+      <ArcanaSettingsListItem label="Plano" caption="Recursos habilitados para a organização.">
+        <span class="arcana-settings-list__current-value">Profissional</span>
+        <button class="arcana-settings-list__edit-btn" type="button">Alterar</button>
+      </ArcanaSettingsListItem>
+    </ArcanaSettingsList>
   `
 };
 
 const SettingsListGroupDemo: Component = {
-  components: { ShadcnSettingsList, ShadcnSettingsListGroup, ShadcnSettingsListItem, ShadcnSwitch },
+  components: { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem, ArcanaSwitch },
   data: () => ({ a: true, b: false, c: true }),
   template: /* html */ `
-    <ShadcnSettingsList>
-      <ShadcnSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" icon-color="indigo" section-num="§ 01" meta="2 configs">
-        <ShadcnSettingsListItem label="Aceitar pedidos" caption="Recebe novos pedidos pelo app.">
-          <ShadcnSwitch v-model="a" aria-label="Aceitar" />
-        </ShadcnSettingsListItem>
-        <ShadcnSettingsListItem label="Confirmação automática" caption="Confirma sem revisão manual." nested>
-          <ShadcnSwitch v-model="b" aria-label="Confirmação" />
-        </ShadcnSettingsListItem>
-      </ShadcnSettingsListGroup>
-      <ShadcnSettingsListGroup title="Entrega" icon="fa-solid fa-truck" icon-color="emerald" collapsible default-collapsed compact>
-        <ShadcnSettingsListItem label="Rastreio em tempo real">
-          <ShadcnSwitch v-model="c" aria-label="Rastreio" />
-        </ShadcnSettingsListItem>
-      </ShadcnSettingsListGroup>
-    </ShadcnSettingsList>
+    <ArcanaSettingsList>
+      <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" icon-color="indigo" section-num="§ 01" meta="2 configs">
+        <ArcanaSettingsListItem label="Aceitar pedidos" caption="Recebe novos pedidos pelo app.">
+          <ArcanaSwitch v-model="a" aria-label="Aceitar" />
+        </ArcanaSettingsListItem>
+        <ArcanaSettingsListItem label="Confirmação automática" caption="Confirma sem revisão manual." nested>
+          <ArcanaSwitch v-model="b" aria-label="Confirmação" />
+        </ArcanaSettingsListItem>
+      </ArcanaSettingsListGroup>
+      <ArcanaSettingsListGroup title="Entrega" icon="fa-solid fa-truck" icon-color="emerald" collapsible default-collapsed compact>
+        <ArcanaSettingsListItem label="Rastreio em tempo real">
+          <ArcanaSwitch v-model="c" aria-label="Rastreio" />
+        </ArcanaSettingsListItem>
+      </ArcanaSettingsListGroup>
+    </ArcanaSettingsList>
   `
 };
 
 const SettingsListItemDemo: Component = {
-  components: { ShadcnSettingsList, ShadcnSettingsListItem, ShadcnSwitch },
+  components: { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch },
   data: () => ({ x: true, y: false }),
   template: /* html */ `
-    <ShadcnSettingsList>
-      <ShadcnSettingsListItem caption="Sistema SaaS — plano via tabela de assinaturas.">
-        <template #label>Assinatura V2 <span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span></template>
-        <ShadcnSwitch v-model="x" aria-label="Assinatura" />
-      </ShadcnSettingsListItem>
-      <ShadcnSettingsListItem label="Exibir App Web" caption="Sub-config do cartão de crédito." nested>
-        <ShadcnSwitch v-model="y" aria-label="App Web" />
-      </ShadcnSettingsListItem>
-      <ShadcnSettingsListItem label="Recurso indisponível" caption="Requer plano superior." disabled>
-        <ShadcnSwitch :model-value="false" :disabled="true" aria-label="Indisponível" />
-      </ShadcnSettingsListItem>
-    </ShadcnSettingsList>
+    <ArcanaSettingsList>
+      <ArcanaSettingsListItem caption="Sistema SaaS — plano via tabela de assinaturas.">
+        <template #label>Assinatura V2 <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></template>
+        <ArcanaSwitch v-model="x" aria-label="Assinatura" />
+      </ArcanaSettingsListItem>
+      <ArcanaSettingsListItem label="Exibir App Web" caption="Sub-config do cartão de crédito." nested>
+        <ArcanaSwitch v-model="y" aria-label="App Web" />
+      </ArcanaSettingsListItem>
+      <ArcanaSettingsListItem label="Recurso indisponível" caption="Requer plano superior." disabled>
+        <ArcanaSwitch :model-value="false" :disabled="true" aria-label="Indisponível" />
+      </ArcanaSettingsListItem>
+    </ArcanaSettingsList>
   `
 };
 
 const SettingsEditableFieldDemo: Component = {
-  components: { ShadcnSettingsList, ShadcnSettingsEditableField },
+  components: { ArcanaSettingsList, ArcanaSettingsEditableField },
   data: () => ({
     name: "Popgás Matriz",
     discount: "1500.00",
@@ -684,20 +664,20 @@ const SettingsEditableFieldDemo: Component = {
   }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnSettingsList>
-        <ShadcnSettingsEditableField label="Nome da unidade" caption="Exibido em relatórios." type="text" v-model="name" />
-        <ShadcnSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" v-model="discount" />
-        <ShadcnSettingsEditableField label="Plano" caption="Recursos habilitados." type="select" :options="planOptions" v-model="plan" />
-      </ShadcnSettingsList>
+      <ArcanaSettingsList>
+        <ArcanaSettingsEditableField label="Nome da unidade" caption="Exibido em relatórios." type="text" v-model="name" />
+        <ArcanaSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" v-model="discount" />
+        <ArcanaSettingsEditableField label="Plano" caption="Recursos habilitados." type="select" :options="planOptions" v-model="plan" />
+      </ArcanaSettingsList>
       <p class="demo-note">Click <strong>Alterar</strong> on any row to open its edit modal.</p>
     </div>
   `
 };
 
-/* ───────────────────────── SparkGridEmptyState ─────────────────────── */
+/* ───────────────────────── ArcanaGridEmptyState ─────────────────────── */
 
-const SparkGridEmptyStateDemo: Component = {
-  components: { SparkGridEmptyState },
+const ArcanaGridEmptyStateDemo: Component = {
+  components: { ArcanaGridEmptyState },
   data: () => ({ loading: true, last: "—" }),
   mounted() {
     // The panel only appears after loading transitions true → false (mirrors a real
@@ -706,7 +686,7 @@ const SparkGridEmptyStateDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack">
-      <SparkGridEmptyState
+      <ArcanaGridEmptyState
         :total="0"
         :loading="loading"
         :filtered="false"
@@ -721,34 +701,34 @@ const SparkGridEmptyStateDemo: Component = {
         @secondary-action="last = 'secondary'"
       >
         <div class="demo-note">Grid rows would render here while data loads…</div>
-      </SparkGridEmptyState>
+      </ArcanaGridEmptyState>
       <p class="demo-note">last action: <strong>{{ last }}</strong></p>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnNotice ──────────────────────────── */
+/* ─────────────────────────── ArcanaNotice ──────────────────────────── */
 
 const NoticeDemo: Component = {
-  components: { ShadcnNotice },
+  components: { ArcanaNotice },
   data: () => ({ dismissed: false }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnNotice variant="info" title="Informação">Configuração salva automaticamente.</ShadcnNotice>
-      <ShadcnNotice variant="blue" title="Novidade">O novo painel de rotas já está disponível.</ShadcnNotice>
-      <ShadcnNotice variant="success" title="Ativado">Integração concluída com sucesso.</ShadcnNotice>
-      <ShadcnNotice variant="warning" title="Pagamento manual">Pix e Boleto geram um link novo de cobrança a cada ciclo.</ShadcnNotice>
-      <ShadcnNotice variant="pending" title="Aguardando ativação no Stripe">Clique em "Sincronizar" para criar a assinatura no gateway.</ShadcnNotice>
-      <ShadcnNotice v-if="!dismissed" variant="destructive" title="Falha ao carregar" :dismissible="true" @dismiss="dismissed = true">Não foi possível buscar os dados.</ShadcnNotice>
+      <ArcanaNotice variant="info" title="Informação">Configuração salva automaticamente.</ArcanaNotice>
+      <ArcanaNotice variant="blue" title="Novidade">O novo painel de rotas já está disponível.</ArcanaNotice>
+      <ArcanaNotice variant="success" title="Ativado">Integração concluída com sucesso.</ArcanaNotice>
+      <ArcanaNotice variant="warning" title="Pagamento manual">Pix e Boleto geram um link novo de cobrança a cada ciclo.</ArcanaNotice>
+      <ArcanaNotice variant="pending" title="Aguardando ativação no Stripe">Clique em "Sincronizar" para criar a assinatura no gateway.</ArcanaNotice>
+      <ArcanaNotice v-if="!dismissed" variant="destructive" title="Falha ao carregar" :dismissible="true" @dismiss="dismissed = true">Não foi possível buscar os dados.</ArcanaNotice>
       <p v-else class="demo-note">The destructive notice was dismissed — reload the preview to bring it back.</p>
     </div>
   `
 };
 
-/* ──────────────────────── ShadcnEditFieldModal ─────────────────────── */
+/* ──────────────────────── ArcanaEditFieldModal ─────────────────────── */
 
 const EditFieldModalDemo: Component = {
-  components: { ShadcnEditFieldModal, ShadcnButton, ShadcnInput },
+  components: { ArcanaEditFieldModal, ArcanaButton, ArcanaInput },
   data: () => ({ value: "Popgás Matriz", saved: "Popgás Matriz" }),
   methods: {
     open() {
@@ -762,19 +742,19 @@ const EditFieldModalDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnButton @click="open">Alterar nome</ShadcnButton>
+      <ArcanaButton @click="open">Alterar nome</ArcanaButton>
       <p class="demo-note">saved value: <strong>{{ saved }}</strong></p>
-      <ShadcnEditFieldModal ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
-        <ShadcnInput v-model="value" placeholder="Nome da unidade" />
-      </ShadcnEditFieldModal>
+      <ArcanaEditFieldModal ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
+        <ArcanaInput v-model="value" placeholder="Nome da unidade" />
+      </ArcanaEditFieldModal>
     </div>
   `
 };
 
-/* ────────────────────── ShadcnRequiredFieldsDialog ─────────────────── */
+/* ────────────────────── ArcanaRequiredFieldsDialog ─────────────────── */
 
 const RequiredFieldsDialogDemo: Component = {
-  components: { ShadcnRequiredFieldsDialog, ShadcnButton },
+  components: { ArcanaRequiredFieldsDialog, ArcanaButton },
   data: () => ({
     fields: [
       { key: "cnpj", label: "CNPJ", hint: "Passo 1 · Dados cadastrais" },
@@ -789,8 +769,8 @@ const RequiredFieldsDialogDemo: Component = {
   },
   template: /* html */ `
     <div>
-      <ShadcnButton @click="open">Validar formulário</ShadcnButton>
-      <ShadcnRequiredFieldsDialog
+      <ArcanaButton @click="open">Validar formulário</ArcanaButton>
+      <ArcanaRequiredFieldsDialog
         ref="dialog"
         description="Os campos abaixo precisam ser preenchidos antes de criar o cliente."
         :fields="fields"
@@ -799,14 +779,14 @@ const RequiredFieldsDialogDemo: Component = {
   `
 };
 
-/* ──────────────────────── ShadcnOnboardingPanel ────────────────────── */
+/* ──────────────────────── ArcanaOnboardingPanel ────────────────────── */
 
 const OnboardingPanelDemo: Component = {
-  components: { ShadcnOnboardingPanel },
+  components: { ArcanaOnboardingPanel },
   data: () => ({ last: "—" }),
   template: /* html */ `
     <div class="demo-stack">
-      <ShadcnOnboardingPanel
+      <ArcanaOnboardingPanel
         icon="fa-solid fa-file-shield"
         title="Configure seu certificado digital"
         description="O certificado A1 é necessário para emitir NF-e e demais documentos fiscais."
@@ -823,10 +803,10 @@ const OnboardingPanelDemo: Component = {
   `
 };
 
-/* ──────────────────────── ShadcnLoadingOverlay ─────────────────────── */
+/* ──────────────────────── ArcanaLoadingOverlay ─────────────────────── */
 
 const LoadingOverlayDemo: Component = {
-  components: { ShadcnLoadingOverlay, ShadcnButton },
+  components: { ArcanaLoadingOverlay, ArcanaButton },
   data: () => ({ loading: false }),
   methods: {
     run() {
@@ -840,72 +820,72 @@ const LoadingOverlayDemo: Component = {
       <div style="position: relative; border: 1px solid #e4e4e7; border-radius: 10px; padding: 22px; min-height: 118px; background: #fff">
         <p style="font-size: 13px; font-weight: 600; color: #18181b; margin: 0 0 6px">Resumo do pedido</p>
         <p class="demo-note" style="margin: 0">Click "Salvar" to cover this card with the overlay for ~1.6s.</p>
-        <ShadcnLoadingOverlay :visible="loading" text="Salvando…" />
+        <ArcanaLoadingOverlay :visible="loading" text="Salvando…" />
       </div>
-      <ShadcnButton @click="run" :disabled="loading">Salvar</ShadcnButton>
+      <ArcanaButton @click="run" :disabled="loading">Salvar</ArcanaButton>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnSkeleton ────────────────────────── */
+/* ─────────────────────────── ArcanaSkeleton ────────────────────────── */
 
 const SkeletonDemo: Component = {
-  components: { ShadcnSkeleton },
+  components: { ArcanaSkeleton },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
       <div class="demo-row" style="align-items: center; gap: 12px">
-        <ShadcnSkeleton width="40px" height="40px" rounded="full" />
+        <ArcanaSkeleton width="40px" height="40px" rounded="full" />
         <div class="demo-stack" style="gap: 8px; flex: 1">
-          <ShadcnSkeleton width="70%" height="12px" />
-          <ShadcnSkeleton width="45%" height="10px" />
+          <ArcanaSkeleton width="70%" height="12px" />
+          <ArcanaSkeleton width="45%" height="10px" />
         </div>
       </div>
-      <ShadcnSkeleton height="80px" rounded="lg" />
+      <ArcanaSkeleton height="80px" rounded="lg" />
       <div class="demo-row" style="gap: 8px">
-        <ShadcnSkeleton width="84px" height="28px" rounded="md" />
-        <ShadcnSkeleton width="84px" height="28px" rounded="md" />
+        <ArcanaSkeleton width="84px" height="28px" rounded="md" />
+        <ArcanaSkeleton width="84px" height="28px" rounded="md" />
       </div>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnSwitchCard ──────────────────────── */
+/* ─────────────────────────── ArcanaSwitchCard ──────────────────────── */
 
 const SwitchCardDemo: Component = {
-  components: { ShadcnSwitchCard },
+  components: { ArcanaSwitchCard },
   data: () => ({ twoFa: true, maintenance: false }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ShadcnSwitchCard v-model="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" status-on="ATIVO · TOTP" status-off="DESLIGADO" />
-      <ShadcnSwitchCard v-model="maintenance" icon="fa-solid fa-screwdriver-wrench" title="Modo manutenção" />
+      <ArcanaSwitchCard v-model="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" status-on="ATIVO · TOTP" status-off="DESLIGADO" />
+      <ArcanaSwitchCard v-model="maintenance" icon="fa-solid fa-screwdriver-wrench" title="Modo manutenção" />
       <p class="demo-note">2FA: <strong>{{ twoFa }}</strong> · maintenance: <strong>{{ maintenance }}</strong></p>
     </div>
   `
 };
 
-/* ─────────────────────────── ShadcnSwitchRow ───────────────────────── */
+/* ─────────────────────────── ArcanaSwitchRow ───────────────────────── */
 
 const SwitchRowDemo: Component = {
-  components: { ShadcnSwitchRow },
+  components: { ArcanaSwitchRow },
   data: () => ({ email: true, push: false }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ShadcnSwitchRow v-model="email" label="Notificações por e-mail" description="Resumo diário das atividades da organização." />
-      <ShadcnSwitchRow v-model="push" label="Notificações push" description="Alertas em tempo real no dispositivo." />
+      <ArcanaSwitchRow v-model="email" label="Notificações por e-mail" description="Resumo diário das atividades da organização." />
+      <ArcanaSwitchRow v-model="push" label="Notificações push" description="Alertas em tempo real no dispositivo." />
       <p class="demo-note">e-mail: <strong>{{ email }}</strong> · push: <strong>{{ push }}</strong></p>
     </div>
   `
 };
 
-/* ───────────────────────── ShadcnSwitchSegmented ───────────────────── */
+/* ───────────────────────── ArcanaSwitchSegmented ───────────────────── */
 
 const SwitchSegmentedDemo: Component = {
-  components: { ShadcnSwitchSegmented },
+  components: { ArcanaSwitchSegmented },
   data: () => ({ yearly: false, env: true }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ShadcnSwitchSegmented v-model="yearly" off-label="Mensal" on-label="Anual · −20%" />
-      <ShadcnSwitchSegmented v-model="env" off-label="Sandbox" on-label="Produção" :compact="true" :squared="true" />
+      <ArcanaSwitchSegmented v-model="yearly" off-label="Mensal" on-label="Anual · −20%" />
+      <ArcanaSwitchSegmented v-model="env" off-label="Sandbox" on-label="Produção" :compact="true" :squared="true" />
       <p class="demo-note">cycle: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · env: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
     </div>
   `
@@ -924,7 +904,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["click(ev: MouseEvent) — emitted on click"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnButton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaButton } from '@arcanalabs/ui-components/vue'",
       "",
       "function save() {",
       "  // …persist changes",
@@ -932,9 +912,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnButton variant=\"primary\" @click=\"save\">Save</ShadcnButton>",
-      "  <ShadcnButton variant=\"outline\">Cancel</ShadcnButton>",
-      "  <ShadcnButton variant=\"destructive\" :disabled=\"busy\">Delete</ShadcnButton>",
+      "  <ArcanaButton variant=\"primary\" @click=\"save\">Save</ArcanaButton>",
+      "  <ArcanaButton variant=\"outline\">Cancel</ArcanaButton>",
+      "  <ArcanaButton variant=\"destructive\" :disabled=\"busy\">Delete</ArcanaButton>",
       "</template>"
     ].join("\n")
   },
@@ -949,13 +929,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnBadge } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaBadge } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
-      "  <ShadcnBadge variant=\"blue\">12 records</ShadcnBadge>",
-      "  <ShadcnBadge variant=\"red\" size=\"sm\">Overdue</ShadcnBadge>",
+      "  <ArcanaBadge variant=\"green\" dot>Active</ArcanaBadge>",
+      "  <ArcanaBadge variant=\"blue\">12 records</ArcanaBadge>",
+      "  <ArcanaBadge variant=\"red\" size=\"sm\">Overdue</ArcanaBadge>",
       "</template>"
     ].join("\n")
   },
@@ -977,15 +957,15 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnInput } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaInput } from '@arcanalabs/ui-components/vue'",
       "",
       "const email = ref('')",
       "const qty = ref<number | null>(null)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnInput v-model=\"email\" type=\"email\" placeholder=\"email@company.com\" />",
-      "  <ShadcnInput v-model=\"qty\" type=\"number\" :min=\"0\" :max=\"99\" />",
+      "  <ArcanaInput v-model=\"email\" type=\"email\" placeholder=\"email@company.com\" />",
+      "  <ArcanaInput v-model=\"qty\" type=\"number\" :min=\"0\" :max=\"99\" />",
       "</template>"
     ].join("\n")
   },
@@ -1006,7 +986,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSelect } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSelect } from '@arcanalabs/ui-components/vue'",
       "",
       "const fruit = ref<string | null>(null)",
       "const options = [",
@@ -1017,7 +997,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSelect v-model=\"fruit\" :options=\"options\" searchable placeholder=\"Pick a fruit\" />",
+      "  <ArcanaSelect v-model=\"fruit\" :options=\"options\" searchable placeholder=\"Pick a fruit\" />",
       "</template>"
     ].join("\n")
   },
@@ -1036,13 +1016,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnCheckbox } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaCheckbox } from '@arcanalabs/ui-components/vue'",
       "",
       "const accepted = ref(false)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnCheckbox v-model=\"accepted\" label=\"I accept the terms\" />",
+      "  <ArcanaCheckbox v-model=\"accepted\" label=\"I accept the terms\" />",
       "</template>"
     ].join("\n")
   },
@@ -1060,7 +1040,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSwitch } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSwitch } from '@arcanalabs/ui-components/vue'",
       "",
       "const autoRenew = ref(true)",
       "</script>",
@@ -1068,7 +1048,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "<template>",
       "  <label class=\"form-row\">",
       "    <span>Auto-renew</span>",
-      "    <ShadcnSwitch v-model=\"autoRenew\" aria-label=\"Auto-renew\" />",
+      "    <ArcanaSwitch v-model=\"autoRenew\" aria-label=\"Auto-renew\" />",
       "  </label>",
       "</template>"
     ].join("\n")
@@ -1088,7 +1068,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnTabs } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaTabs } from '@arcanalabs/ui-components/vue'",
       "",
       "const active = ref('overview')",
       "const tabs = [",
@@ -1099,11 +1079,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnTabs v-model=\"active\" :tabs=\"tabs\" variant=\"pills\">",
+      "  <ArcanaTabs v-model=\"active\" :tabs=\"tabs\" variant=\"pills\">",
       "    <template #overview>…</template>",
       "    <template #activity>…</template>",
       "    <template #settings>…</template>",
-      "  </ShadcnTabs>",
+      "  </ArcanaTabs>",
       "</template>"
     ].join("\n")
   },
@@ -1126,21 +1106,21 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnDialog, ShadcnButton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaDialog, ArcanaButton } from '@arcanalabs/ui-components/vue'",
       "",
       "const dialog = ref()",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnButton @click=\"dialog.show()\">Open</ShadcnButton>",
+      "  <ArcanaButton @click=\"dialog.show()\">Open</ArcanaButton>",
       "",
-      "  <ShadcnDialog ref=\"dialog\" title=\"Delete workspace\" description=\"This cannot be undone.\">",
+      "  <ArcanaDialog ref=\"dialog\" title=\"Delete workspace\" description=\"This cannot be undone.\">",
       "    <p>Body content…</p>",
       "    <template #footer=\"{ hide }\">",
-      "      <ShadcnButton variant=\"outline\" @click=\"hide\">Cancel</ShadcnButton>",
-      "      <ShadcnButton variant=\"destructive\" @click=\"hide\">Delete</ShadcnButton>",
+      "      <ArcanaButton variant=\"outline\" @click=\"hide\">Cancel</ArcanaButton>",
+      "      <ArcanaButton variant=\"destructive\" @click=\"hide\">Delete</ArcanaButton>",
       "    </template>",
-      "  </ShadcnDialog>",
+      "  </ArcanaDialog>",
       "</template>"
     ].join("\n")
   },
@@ -1163,7 +1143,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnInputMask } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaInputMask } from '@arcanalabs/ui-components/vue'",
       "// Requires Maska registered globally — see \"Registering v-maska\".",
       "",
       "const cpf = ref('')",
@@ -1171,8 +1151,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnInputMask v-model=\"cpf\" mask=\"###.###.###-##\" placeholder=\"CPF\" />",
-      "  <ShadcnInputMask v-model=\"phone\" :mask=\"['(##) ####-####', '(##) #####-####']\" />",
+      "  <ArcanaInputMask v-model=\"cpf\" mask=\"###.###.###-##\" placeholder=\"CPF\" />",
+      "  <ArcanaInputMask v-model=\"phone\" :mask=\"['(##) ####-####', '(##) #####-####']\" />",
       "</template>"
     ].join("\n")
   },
@@ -1190,13 +1170,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnInputBoolean } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaInputBoolean } from '@arcanalabs/ui-components/vue'",
       "",
       "const active = ref<number | null>(1)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnInputBoolean v-model=\"active\" variation=\"status\" :clearable=\"false\" />",
+      "  <ArcanaInputBoolean v-model=\"active\" variation=\"status\" :clearable=\"false\" />",
       "</template>"
     ].join("\n")
   },
@@ -1215,19 +1195,19 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnNumberStepper } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaNumberStepper } from '@arcanalabs/ui-components/vue'",
       "",
       "const qty = ref(1)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnNumberStepper v-model=\"qty\" :min=\"0\" :max=\"10\" aria-label=\"Quantity\" />",
+      "  <ArcanaNumberStepper v-model=\"qty\" :min=\"0\" :max=\"10\" aria-label=\"Quantity\" />",
       "</template>"
     ].join("\n")
   },
 
   multiSelectPopover: {
-    demo: MultiSelectPopoverDemo,
+    demo: ArcanaMultiSelectPopoverDemo,
     props: [
       { name: "modelValue", type: "Record<string, number[]>", default: "{}", description: "Map of tab key → selected id array (one bucket per tab)." },
       { name: "tabs", type: "Array<{ key, label, icon?, placeholder?, fetch, searchFields?, countLabel? }>", default: "— (required)", description: "Tab definitions; each fetch() is async and cached for the component's lifetime." },
@@ -1244,7 +1224,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { MultiSelectPopover } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaMultiSelectPopover } from '@arcanalabs/ui-components/vue'",
       "",
       "const selections = ref<Record<string, number[]>>({ USER: [], DEPARTMENT: [] })",
       "const tabs = [",
@@ -1254,7 +1234,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <MultiSelectPopover v-model=\"selections\" :tabs=\"tabs\" empty-label=\"Select people\" />",
+      "  <ArcanaMultiSelectPopover v-model=\"selections\" :tabs=\"tabs\" empty-label=\"Select people\" />",
       "</template>"
     ].join("\n")
   },
@@ -1275,7 +1255,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnRadioCardGroup } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaRadioCardGroup } from '@arcanalabs/ui-components/vue'",
       "",
       "const method = ref('pix')",
       "const options = [",
@@ -1285,7 +1265,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnRadioCardGroup v-model=\"method\" :options=\"options\" aria-label=\"Payment method\" />",
+      "  <ArcanaRadioCardGroup v-model=\"method\" :options=\"options\" aria-label=\"Payment method\" />",
       "</template>"
     ].join("\n")
   },
@@ -1308,7 +1288,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSegmentedOptions } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSegmentedOptions } from '@arcanalabs/ui-components/vue'",
       "",
       "const view = ref('list')",
       "const options = [",
@@ -1318,7 +1298,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSegmentedOptions v-model=\"view\" :options=\"options\" aria-label=\"View mode\" />",
+      "  <ArcanaSegmentedOptions v-model=\"view\" :options=\"options\" aria-label=\"View mode\" />",
       "</template>"
     ].join("\n")
   },
@@ -1338,20 +1318,20 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnDatePicker } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaDatePicker } from '@arcanalabs/ui-components/vue'",
       "// Requires Maska registered globally — see \"Registering v-maska\".",
       "",
       "const date = ref('2026-07-24')",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnDatePicker v-model=\"date\" />",
+      "  <ArcanaDatePicker v-model=\"date\" />",
       "</template>"
     ].join("\n")
   },
 
   inputCurrency: {
-    demo: InputCurrencyDemo,
+    demo: ArcanaInputCurrencyDemo,
     props: [
       { name: "modelValue", type: "string | number", default: "—", description: "The bound amount (v-model); carries the formatted string." },
       { name: "shadcn", type: "boolean", default: "false", description: "Renders the zinc-styled field; without it the legacy Bootstrap look is kept." },
@@ -1373,38 +1353,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { InputCurrency } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaInputCurrency } from '@arcanalabs/ui-components/vue'",
       "",
       "const price = ref('1500.00')",
       "</script>",
       "",
       "<template>",
-      "  <InputCurrency v-model=\"price\" :shadcn=\"true\" />",
-      "</template>"
-    ].join("\n")
-  },
-
-  labeledButton: {
-    demo: LabeledButtonDemo,
-    props: [
-      { name: "label", type: "string", default: "— (required)", description: "Button text." },
-      { name: "icon", type: "string", default: "''", description: "Leading icon class (FontAwesome)." },
-      { name: "color", type: "string", default: "'info-700'", description: "Legacy colour; mapped to a shadcn variant when shadcn is set." },
-      { name: "shadcn", type: "boolean", default: "false", description: "Maps color onto a semantic shadcn variant (danger→destructive, grey→ghost, blue→info, …)." },
-      { name: "loading", type: "boolean", default: "false", description: "Swaps the icon for a spinner and disables the button." },
-      { name: "disabled", type: "boolean", default: "false", description: "Disables the button." },
-      { name: "centerLabel", type: "boolean", default: "false", description: "(shadcn) Anchors the icon left and centres the label." },
-      { name: "centerContent", type: "boolean", default: "false", description: "(shadcn) Centres icon + label together as a group." }
-    ],
-    events: ["click(ev: MouseEvent) — emitted on click"],
-    vueSnippet: [
-      "<script setup lang=\"ts\">",
-      "import { LabeledButton } from '@arcanalabs/ui-components/vue'",
-      "</script>",
-      "",
-      "<template>",
-      "  <LabeledButton :shadcn=\"true\" label=\"Save\" color=\"green-600\" icon=\"fa-solid fa-check\" @click=\"save\" />",
-      "  <LabeledButton :shadcn=\"true\" label=\"Saving…\" color=\"green-600\" :loading=\"busy\" />",
+      "  <ArcanaInputCurrency v-model=\"price\" :shadcn=\"true\" />",
       "</template>"
     ].join("\n")
   },
@@ -1415,20 +1370,20 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "modelValue", type: "string | string[] | null", default: "null", description: "Open item name (single mode) or array of open names (multiple mode)." },
       { name: "accordion", type: "boolean", default: "true", description: "true → one panel open at a time; false → multiple panels can be open." }
     ],
-    events: ["update:modelValue(value) — v-model update", "Provides accordionApi to child <ShadcnAccordionItem> via provide/inject"],
+    events: ["update:modelValue(value) — v-model update", "Provides accordionApi to child <ArcanaAccordionItem> via provide/inject"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/vue'",
       "",
       "const open = ref('shipping')",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnAccordion v-model=\"open\">",
-      "    <ShadcnAccordionItem name=\"shipping\" title=\"Shipping\">Ships in 2–3 days.</ShadcnAccordionItem>",
-      "    <ShadcnAccordionItem name=\"returns\" title=\"Returns\">30-day free returns.</ShadcnAccordionItem>",
-      "  </ShadcnAccordion>",
+      "  <ArcanaAccordion v-model=\"open\">",
+      "    <ArcanaAccordionItem name=\"shipping\" title=\"Shipping\">Ships in 2–3 days.</ArcanaAccordionItem>",
+      "    <ArcanaAccordionItem name=\"returns\" title=\"Returns\">30-day free returns.</ArcanaAccordionItem>",
+      "  </ArcanaAccordion>",
       "</template>"
     ].join("\n")
   },
@@ -1441,26 +1396,26 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "disabled", type: "boolean", default: "false", description: "Blocks toggling this panel." }
     ],
     events: [
-      "Reads open state from the parent <ShadcnAccordion> (inject) — must be nested inside one",
+      "Reads open state from the parent <ArcanaAccordion> (inject) — must be nested inside one",
       "Slots: #title (header), default (collapsible body)"
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/vue'",
       "",
       "// Multiple-open mode: v-model is an array of open names.",
       "const open = ref<string[]>(['specs'])",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnAccordion v-model=\"open\" :accordion=\"false\">",
-      "    <ShadcnAccordionItem name=\"specs\" title=\"Specifications\">…</ShadcnAccordionItem>",
-      "    <ShadcnAccordionItem name=\"care\">",
+      "  <ArcanaAccordion v-model=\"open\" :accordion=\"false\">",
+      "    <ArcanaAccordionItem name=\"specs\" title=\"Specifications\">…</ArcanaAccordionItem>",
+      "    <ArcanaAccordionItem name=\"care\">",
       "      <template #title>Care <strong>instructions</strong></template>",
       "      Hand wash cold.",
-      "    </ShadcnAccordionItem>",
-      "  </ShadcnAccordion>",
+      "    </ArcanaAccordionItem>",
+      "  </ArcanaAccordion>",
       "</template>"
     ].join("\n")
   },
@@ -1475,21 +1430,21 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     events: [
       "open / close — menu visibility",
-      "Slots: #trigger { open, toggle }, default { close } — holds <ShadcnDropdownItem>s"
+      "Slots: #trigger { open, toggle }, default { close } — holds <ArcanaDropdownItem>s"
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnDropdown, ShadcnDropdownItem, ShadcnButton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnDropdown placement=\"bottom-start\">",
+      "  <ArcanaDropdown placement=\"bottom-start\">",
       "    <template #trigger>",
-      "      <ShadcnButton variant=\"outline\">Actions ▾</ShadcnButton>",
+      "      <ArcanaButton variant=\"outline\">Actions ▾</ArcanaButton>",
       "    </template>",
-      "    <ShadcnDropdownItem icon=\"fa-solid fa-pen\" @click=\"rename\">Rename</ShadcnDropdownItem>",
-      "    <ShadcnDropdownItem icon=\"fa-solid fa-trash\" variant=\"danger\" divided @click=\"del\">Delete</ShadcnDropdownItem>",
-      "  </ShadcnDropdown>",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-pen\" @click=\"rename\">Rename</ArcanaDropdownItem>",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-trash\" variant=\"danger\" divided @click=\"del\">Delete</ArcanaDropdownItem>",
+      "  </ArcanaDropdown>",
       "</template>"
     ].join("\n")
   },
@@ -1503,27 +1458,27 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "disabled", type: "boolean", default: "false", description: "Disables the item." },
       { name: "divided", type: "boolean", default: "false", description: "Draws a separator line above this item." },
       { name: "closeOnClick", type: "boolean", default: "true", description: "Closes the parent dropdown after the click handler runs." },
-      { name: "size", type: "default | comfortable | null", default: "null", description: "Overrides the density inherited from <ShadcnDropdown>." }
+      { name: "size", type: "default | comfortable | null", default: "null", description: "Overrides the density inherited from <ArcanaDropdown>." }
     ],
     events: [
       "click(ev: MouseEvent) — emitted on click",
-      "Dispatches a bubbling shadcn-dropdown-close event unless closeOnClick is false",
+      "Dispatches a bubbling arcana-dropdown-close event unless closeOnClick is false",
       "Slots: default (label), #suffix (right-aligned hint)"
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnDropdown, ShadcnDropdownItem } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaDropdown, ArcanaDropdownItem } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnDropdown size=\"comfortable\">",
+      "  <ArcanaDropdown size=\"comfortable\">",
       "    <template #trigger><button>Menu ▾</button></template>",
-      "    <ShadcnDropdownItem icon=\"fa-solid fa-user\">",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-user\">",
       "      Profile",
       "      <template #suffix>⌘P</template>",
-      "    </ShadcnDropdownItem>",
-      "    <ShadcnDropdownItem variant=\"danger\" divided @click=\"del\">Delete</ShadcnDropdownItem>",
-      "  </ShadcnDropdown>",
+      "    </ArcanaDropdownItem>",
+      "    <ArcanaDropdownItem variant=\"danger\" divided @click=\"del\">Delete</ArcanaDropdownItem>",
+      "  </ArcanaDropdown>",
       "</template>"
     ].join("\n")
   },
@@ -1540,7 +1495,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnTable } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaTable } from '@arcanalabs/ui-components/vue'",
       "",
       "const columns = [",
       "  { key: 'sku', label: 'SKU', width: '96px' },",
@@ -1553,10 +1508,10 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnTable :columns=\"columns\" :rows=\"rows\">",
+      "  <ArcanaTable :columns=\"columns\" :rows=\"rows\">",
       "    <template #cell-name=\"{ row }\"><strong>{{ row.name }}</strong></template>",
-      "    <template #footer><tr><td colspan=\"2\">Total</td><td class=\"shadcn-table__td--right\">R$ 260,00</td></tr></template>",
-      "  </ShadcnTable>",
+      "    <template #footer><tr><td colspan=\"2\">Total</td><td class=\"arcana-table__td--right\">R$ 260,00</td></tr></template>",
+      "  </ArcanaTable>",
       "</template>"
     ].join("\n")
   },
@@ -1574,18 +1529,18 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSpecSheet doc-num=\"Cadastro Nº 042\" title=\"Popgás Distribuidora\" meta-label=\"Status\">",
-      "    <template #meta><span class=\"shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active\">Ativo</span></template>",
-      "    <ShadcnSpecSheetSection title=\"Dados Cadastrais\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\">",
-      "      <ShadcnSpecSheetField label=\"Razão Social\" :value=\"form.trading_name\" :span=\"2\" />",
-      "      <ShadcnSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
-      "    </ShadcnSpecSheetSection>",
-      "    <template #footer><ShadcnButton variant=\"outline\">Alterar Dados</ShadcnButton></template>",
-      "  </ShadcnSpecSheet>",
+      "  <ArcanaSpecSheet doc-num=\"Cadastro Nº 042\" title=\"Popgás Distribuidora\" meta-label=\"Status\">",
+      "    <template #meta><span class=\"arcana-spec-sheet-badge arcana-spec-sheet-badge--active\">Ativo</span></template>",
+      "    <ArcanaSpecSheetSection title=\"Dados Cadastrais\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\">",
+      "      <ArcanaSpecSheetField label=\"Razão Social\" :value=\"form.trading_name\" :span=\"2\" />",
+      "      <ArcanaSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
+      "    </ArcanaSpecSheetSection>",
+      "    <template #footer><ArcanaButton variant=\"outline\">Alterar Dados</ArcanaButton></template>",
+      "  </ArcanaSpecSheet>",
       "</template>"
     ].join("\n")
   },
@@ -1601,19 +1556,19 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "noRowDividers", type: "boolean", default: "false", description: "Removes the dashed horizontal lines between field rows." },
       { name: "compact", type: "boolean", default: "false", description: "Removes vertical padding for a tight, header-less layout." }
     ],
-    events: ["Slots: default (<ShadcnSpecSheetField>s), #title, #actions (right-side header actions)"],
+    events: ["Slots: default (<ArcanaSpecSheetField>s), #title, #actions (right-side header actions)"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSpecSheetSection, ShadcnSpecSheetField } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSpecSheetSection, ArcanaSpecSheetField } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <!-- Nested inside a <ShadcnSpecSheet> -->",
-      "  <ShadcnSpecSheetSection title=\"Financeiro\" section-num=\"§ 03\" icon=\"fa-solid fa-dollar-sign\" icon-color=\"amber\" :columns=\"3\">",
-      "    <template #actions><ShadcnButton variant=\"ghost\">Alterar</ShadcnButton></template>",
-      "    <ShadcnSpecSheetField label=\"Limite\" value=\"R$ 5.000,00\" />",
-      "    <ShadcnSpecSheetField label=\"Saldo\" value=\"R$ 1.240,00\" />",
-      "  </ShadcnSpecSheetSection>",
+      "  <!-- Nested inside a <ArcanaSpecSheet> -->",
+      "  <ArcanaSpecSheetSection title=\"Financeiro\" section-num=\"§ 03\" icon=\"fa-solid fa-dollar-sign\" icon-color=\"amber\" :columns=\"3\">",
+      "    <template #actions><ArcanaButton variant=\"ghost\">Alterar</ArcanaButton></template>",
+      "    <ArcanaSpecSheetField label=\"Limite\" value=\"R$ 5.000,00\" />",
+      "    <ArcanaSpecSheetField label=\"Saldo\" value=\"R$ 1.240,00\" />",
+      "  </ArcanaSpecSheetSection>",
       "</template>"
     ].join("\n")
   },
@@ -1629,15 +1584,15 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["Slots: default — replaces the rendered value (use for badges/links/HTML)"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSpecSheetField } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSpecSheetField } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
-      "  <ShadcnSpecSheetField label=\"Observações\" value=\"\" empty-text=\"Não informado\" />",
-      "  <ShadcnSpecSheetField label=\"Status\" :span=\"2\">",
-      "    <span class=\"shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active\">Ativo</span>",
-      "  </ShadcnSpecSheetField>",
+      "  <ArcanaSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
+      "  <ArcanaSpecSheetField label=\"Observações\" value=\"\" empty-text=\"Não informado\" />",
+      "  <ArcanaSpecSheetField label=\"Status\" :span=\"2\">",
+      "    <span class=\"arcana-spec-sheet-badge arcana-spec-sheet-badge--active\">Ativo</span>",
+      "  </ArcanaSpecSheetField>",
       "</template>"
     ].join("\n")
   },
@@ -1647,18 +1602,18 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     props: [
       { name: "columns", type: "number | string", default: "3", description: "Grid columns (collapses to 1 below 880px width regardless)." }
     ],
-    events: ["Slots: default — one or more <ShadcnSummaryTile>"],
+    events: ["Slots: default — one or more <ArcanaSummaryTile>"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSummaryTiles, ShadcnSummaryTile } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSummaryTiles :columns=\"3\">",
-      "    <ShadcnSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Entradas\" value=\"R$ 1.250,00\" sub=\"4 formas\" />",
-      "    <ShadcnSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Despesas\" value=\"R$ 85,00\" />",
-      "    <ShadcnSummaryTile tone=\"indigo\" icon=\"fa-solid fa-sack-dollar\" label=\"Total\" value=\"R$ 1.165,00\" />",
-      "  </ShadcnSummaryTiles>",
+      "  <ArcanaSummaryTiles :columns=\"3\">",
+      "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Entradas\" value=\"R$ 1.250,00\" sub=\"4 formas\" />",
+      "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Despesas\" value=\"R$ 85,00\" />",
+      "    <ArcanaSummaryTile tone=\"indigo\" icon=\"fa-solid fa-sack-dollar\" label=\"Total\" value=\"R$ 1.165,00\" />",
+      "  </ArcanaSummaryTiles>",
       "</template>"
     ].join("\n")
   },
@@ -1675,11 +1630,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["Slots: #value (replaces the value), #sub (replaces the sub text)"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSummaryTile } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSummaryTile } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSummaryTile tone=\"positive\" icon=\"fa-solid fa-check\" label=\"Aprovados\" value=\"112\" sub=\"hoje\" />",
+      "  <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-check\" label=\"Aprovados\" value=\"112\" sub=\"hoje\" />",
       "</template>"
     ].join("\n")
   },
@@ -1687,21 +1642,21 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   settingsList: {
     demo: SettingsListDemo,
     props: [],
-    events: ["Slots: default — <ShadcnSettingsListItem>, <ShadcnSettingsListGroup> or <ShadcnSettingsEditableField>"],
+    events: ["Slots: default — <ArcanaSettingsListItem>, <ArcanaSettingsListGroup> or <ArcanaSettingsEditableField>"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSettingsList, ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/vue'",
       "import { ref } from 'vue'",
       "",
       "const popgas = ref(true)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSettingsList>",
-      "    <ShadcnSettingsListItem label=\"Modo PopGás\" caption=\"Habilita recursos internos.\">",
-      "      <ShadcnSwitch v-model=\"popgas\" aria-label=\"Modo PopGás\" />",
-      "    </ShadcnSettingsListItem>",
-      "  </ShadcnSettingsList>",
+      "  <ArcanaSettingsList>",
+      "    <ArcanaSettingsListItem label=\"Modo PopGás\" caption=\"Habilita recursos internos.\">",
+      "      <ArcanaSwitch v-model=\"popgas\" aria-label=\"Modo PopGás\" />",
+      "    </ArcanaSettingsListItem>",
+      "  </ArcanaSettingsList>",
       "</template>"
     ].join("\n")
   },
@@ -1721,15 +1676,15 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["Slots: default (items), #title, #meta"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSettingsList, ShadcnSettingsListGroup, ShadcnSettingsListItem } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSettingsList>",
-      "    <ShadcnSettingsListGroup title=\"Pedidos\" icon=\"fa-solid fa-cart-shopping\" icon-color=\"indigo\" meta=\"2 configs\">",
-      "      <ShadcnSettingsListItem label=\"Aceitar pedidos\">…</ShadcnSettingsListItem>",
-      "    </ShadcnSettingsListGroup>",
-      "  </ShadcnSettingsList>",
+      "  <ArcanaSettingsList>",
+      "    <ArcanaSettingsListGroup title=\"Pedidos\" icon=\"fa-solid fa-cart-shopping\" icon-color=\"indigo\" meta=\"2 configs\">",
+      "      <ArcanaSettingsListItem label=\"Aceitar pedidos\">…</ArcanaSettingsListItem>",
+      "    </ArcanaSettingsListGroup>",
+      "  </ArcanaSettingsList>",
       "</template>"
     ].join("\n")
   },
@@ -1745,13 +1700,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["Slots: default (right-side control), #label, #caption"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSettingsListItem label=\"Notificações por e-mail\" caption=\"Resumo diário.\">",
-      "    <ShadcnSwitch v-model=\"form.notify_email\" aria-label=\"E-mail\" />",
-      "  </ShadcnSettingsListItem>",
+      "  <ArcanaSettingsListItem label=\"Notificações por e-mail\" caption=\"Resumo diário.\">",
+      "    <ArcanaSwitch v-model=\"form.notify_email\" aria-label=\"E-mail\" />",
+      "  </ArcanaSettingsListItem>",
       "</template>"
     ].join("\n")
   },
@@ -1777,27 +1732,27 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSettingsList, ShadcnSettingsEditableField } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSettingsList, ArcanaSettingsEditableField } from '@arcanalabs/ui-components/vue'",
       "",
       "const discount = ref('1500.00')",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSettingsList>",
-      "    <ShadcnSettingsEditableField",
+      "  <ArcanaSettingsList>",
+      "    <ArcanaSettingsEditableField",
       "      label=\"Desconto 1ª compra\"",
       "      caption=\"Valor unitário aplicado.\"",
       "      type=\"currency\"",
       "      v-model=\"discount\"",
       "      @save=\"autoSave\"",
       "    />",
-      "  </ShadcnSettingsList>",
+      "  </ArcanaSettingsList>",
       "</template>"
     ].join("\n")
   },
 
   sparkGridEmptyState: {
-    demo: SparkGridEmptyStateDemo,
+    demo: ArcanaGridEmptyStateDemo,
     props: [
       { name: "total", type: "number", default: "— (required)", description: "Row count; the panel only shows when total is 0." },
       { name: "loading", type: "boolean", default: "— (required)", description: "Fetch state. The panel arms after loading goes true → false." },
@@ -1817,11 +1772,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { SparkGridEmptyState } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <SparkGridEmptyState",
+      "  <ArcanaGridEmptyState",
       "    :total=\"rows.length\"",
       "    :loading=\"loading\"",
       "    :filtered=\"hasActiveFilter\"",
@@ -1831,7 +1786,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "    @action=\"openCreate\"",
       "  >",
       "    <MyGrid :rows=\"rows\" />",
-      "  </SparkGridEmptyState>",
+      "  </ArcanaGridEmptyState>",
       "</template>"
     ].join("\n")
   },
@@ -1848,14 +1803,14 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["dismiss — emitted when the close button is clicked", "Slots: default (body), #title, #icon"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnNotice } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaNotice } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnNotice variant=\"warning\" title=\"Pagamento manual\">",
+      "  <ArcanaNotice variant=\"warning\" title=\"Pagamento manual\">",
       "    Pix e Boleto geram um link novo de cobrança a cada ciclo.",
-      "  </ShadcnNotice>",
-      "  <ShadcnNotice variant=\"destructive\" title=\"Falha\" dismissible @dismiss=\"hide\">Tente novamente.</ShadcnNotice>",
+      "  </ArcanaNotice>",
+      "  <ArcanaNotice variant=\"destructive\" title=\"Falha\" dismissible @dismiss=\"hide\">Tente novamente.</ArcanaNotice>",
       "</template>"
     ].join("\n")
   },
@@ -1867,7 +1822,6 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "description", type: "string", default: "''", description: "Sub-title under the header title." },
       { name: "cancelLabel", type: "string", default: "'Cancelar'", description: "Cancel button label." },
       { name: "saveLabel", type: "string", default: "'Salvar Alterações'", description: "Save button label." },
-      { name: "cancelColor / saveColor", type: "string", default: "'white' / 'primary-700'", description: "LabeledButton colours for the footer buttons." },
       { name: "size", type: "sm | md | lg | xl | number", default: "md", description: "Modal width preset or px number." }
     ],
     events: [
@@ -1878,7 +1832,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnEditFieldModal, ShadcnSelect, ShadcnButton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton } from '@arcanalabs/ui-components/vue'",
       "",
       "const modal = ref()",
       "const plan = ref('pro')",
@@ -1886,10 +1840,10 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnButton @click=\"modal.show()\">Alterar Plano</ShadcnButton>",
-      "  <ShadcnEditFieldModal ref=\"modal\" title=\"Alterar Plano\" @save=\"savePlan\">",
-      "    <ShadcnSelect v-model=\"plan\" :options=\"planOptions\" />",
-      "  </ShadcnEditFieldModal>",
+      "  <ArcanaButton @click=\"modal.show()\">Alterar Plano</ArcanaButton>",
+      "  <ArcanaEditFieldModal ref=\"modal\" title=\"Alterar Plano\" @save=\"savePlan\">",
+      "    <ArcanaSelect v-model=\"plan\" :options=\"planOptions\" />",
+      "  </ArcanaEditFieldModal>",
       "</template>"
     ].join("\n")
   },
@@ -1907,7 +1861,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref, computed } from 'vue'",
-      "import { ShadcnRequiredFieldsDialog } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaRequiredFieldsDialog } from '@arcanalabs/ui-components/vue'",
       "",
       "const dialog = ref()",
       "const missing = computed(() => REQUIRED.filter(f => !f.check(form)))",
@@ -1915,7 +1869,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ShadcnRequiredFieldsDialog ref=\"dialog\" :fields=\"missing\" description=\"…antes de criar o cliente.\" />",
+      "  <ArcanaRequiredFieldsDialog ref=\"dialog\" :fields=\"missing\" description=\"…antes de criar o cliente.\" />",
       "</template>"
     ].join("\n")
   },
@@ -1940,11 +1894,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnOnboardingPanel } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnOnboardingPanel",
+      "  <ArcanaOnboardingPanel",
       "    icon=\"fa-solid fa-file-shield\"",
       "    title=\"Configure seu certificado\"",
       "    description=\"O certificado A1 é necessário para emitir NF-e.\"",
@@ -1965,7 +1919,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnLoadingOverlay } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaLoadingOverlay } from '@arcanalabs/ui-components/vue'",
       "",
       "const saving = ref(false)",
       "</script>",
@@ -1973,7 +1927,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "<template>",
       "  <div style=\"position: relative\">",
       "    <!-- card content -->",
-      "    <ShadcnLoadingOverlay :visible=\"saving\" text=\"Salvando…\" />",
+      "    <ArcanaLoadingOverlay :visible=\"saving\" text=\"Salvando…\" />",
       "  </div>",
       "</template>"
     ].join("\n")
@@ -1989,13 +1943,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     events: ["aria-hidden — decorative only; pair with an aria-live \"Carregando…\" for screen readers"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ShadcnSkeleton } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSkeleton } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSkeleton width=\"40px\" height=\"40px\" rounded=\"full\" />",
-      "  <ShadcnSkeleton width=\"200px\" height=\"14px\" />",
-      "  <ShadcnSkeleton width=\"60%\" height=\"12px\" />",
+      "  <ArcanaSkeleton width=\"40px\" height=\"40px\" rounded=\"full\" />",
+      "  <ArcanaSkeleton width=\"200px\" height=\"14px\" />",
+      "  <ArcanaSkeleton width=\"60%\" height=\"12px\" />",
       "</template>"
     ].join("\n")
   },
@@ -2015,13 +1969,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSwitchCard } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSwitchCard } from '@arcanalabs/ui-components/vue'",
       "",
       "const twoFa = ref(true)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSwitchCard v-model=\"twoFa\" icon=\"fa-solid fa-shield-halved\" title=\"Autenticação 2FA\" status-on=\"ATIVO · TOTP\" />",
+      "  <ArcanaSwitchCard v-model=\"twoFa\" icon=\"fa-solid fa-shield-halved\" title=\"Autenticação 2FA\" status-on=\"ATIVO · TOTP\" />",
       "</template>"
     ].join("\n")
   },
@@ -2039,13 +1993,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSwitchRow } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSwitchRow } from '@arcanalabs/ui-components/vue'",
       "",
       "const email = ref(true)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSwitchRow v-model=\"email\" label=\"Notificações por e-mail\" description=\"Resumo diário das atividades.\" />",
+      "  <ArcanaSwitchRow v-model=\"email\" label=\"Notificações por e-mail\" description=\"Resumo diário das atividades.\" />",
       "</template>"
     ].join("\n")
   },
@@ -2067,13 +2021,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ShadcnSwitchSegmented } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/vue'",
       "",
       "const yearly = ref(false)",
       "</script>",
       "",
       "<template>",
-      "  <ShadcnSwitchSegmented v-model=\"yearly\" off-label=\"Mensal\" on-label=\"Anual · −20%\" />",
+      "  <ArcanaSwitchSegmented v-model=\"yearly\" off-label=\"Mensal\" on-label=\"Anual · −20%\" />",
       "</template>"
     ].join("\n")
   }

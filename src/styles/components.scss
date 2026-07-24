@@ -8,8 +8,8 @@
    Built into dist/ui-components.css and exported as
    "@arcanalabs/ui-components/styles.css". Consumers import it once.
 
-   All selectors are already namespaced by component: shadcn-*, msp-*, icur-*,
-   rf-* and btn-* (LabeledButton). Vue :deep()/::v-deep() wrappers were unwrapped
+   All selectors are already namespaced by component: arcana-*, msp-*, icur-*,
+   rf-* and btn-* (ArcanaButton). Vue :deep()/::v-deep() wrappers were unwrapped
    to plain descendant selectors.
    ============================================================================ */
 
@@ -18,7 +18,7 @@
    ───────────────────────────────────────────────────────────────────────── */
 /* Wrapper carrega a borda (foco via :focus-within) — assim o ícone-prefixo fica
    integrado ao mesmo "campo" do input, no padrão shadcn. */
-.icur-shadcn-field {
+.icur-arcana-field {
     display: flex;
     align-items: center;
     border: 1px solid #e4e4e7;
@@ -31,7 +31,7 @@
     &.is-disabled { background: #f4f4f5; opacity: 0.8; }
 }
 
-.icur-shadcn-field__icon {
+.icur-arcana-field__icon {
     display: flex;
     align-items: center;
     padding-left: 12px;
@@ -42,7 +42,7 @@
 }
 
 /* Input por dentro: sem borda própria (a borda vive no wrapper) */
-.icur-shadcn-input {
+.icur-arcana-input {
     flex: 1 1 auto;
     width: 100%;
     min-width: 0;
@@ -62,9 +62,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   LabeledButton.vue
+   ArcanaButton.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-btn {
+.arcana-btn {
     font-family: inherit;
     font-size: 13px;
     font-weight: 500;
@@ -81,24 +81,24 @@
     border: 1px solid transparent;
 }
 
-.shadcn-btn:focus-visible {
+.arcana-btn:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-btn:disabled {
+.arcana-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 /*
- * IMPORTANTE: o seletor descendente `.shadcn-btn .shadcn-btn__icon` (especificidade 0,0,2,0)
+ * IMPORTANTE: o seletor descendente `.arcana-btn .arcana-btn__icon` (especificidade 0,0,2,0)
  * sobrescreve o `[class^="icon-"]` do IcoMoon (especificidade 0,0,1,0) — sem isso, ícones
  * `icon-plus2`/`icon-cross2`/`icon-sync` etc. herdam `font-size: 16px` + `min-width: 1em`
  * + `top: -1px` do CSS global do IcoMoon, ficando visivelmente maiores que ícones FontAwesome
  * dentro do mesmo botão shadcn.
  */
-.shadcn-btn .shadcn-btn__icon {
+.arcana-btn .arcana-btn__icon {
     font-size: 13px;
     line-height: 1;
     flex-shrink: 0;
@@ -110,13 +110,13 @@
 /* Modifier: center-label — ícone ancorado à esquerda (absoluto), label centralizado no
    eixo do botão. O padding lateral simétrico garante que o texto fique visualmente no
    centro sem colidir com o ícone. */
-.shadcn-btn--center-label {
+.arcana-btn--center-label {
     position: relative;
     justify-content: center;
     padding-left: 34px;
     padding-right: 34px;
 }
-.shadcn-btn--center-label .shadcn-btn__icon {
+.arcana-btn--center-label .arcana-btn__icon {
     position: absolute;
     left: 14px;
     top: 50%;
@@ -124,38 +124,38 @@
 }
 
 /* Modifier: center-content — ícone + label centralizados juntos, como um grupo. */
-.shadcn-btn--center-content {
+.arcana-btn--center-content {
     justify-content: center;
 }
 
 /* Variant: primary (default) — preto sólido */
-.shadcn-btn--primary {
+.arcana-btn--primary {
     background-color: #18181b;
     color: #ffffff;
 }
-.shadcn-btn--primary:hover:not(:disabled) { background-color: #27272a; }
-.shadcn-btn--primary:active:not(:disabled) { background-color: #09090b; }
+.arcana-btn--primary:hover:not(:disabled) { background-color: #27272a; }
+.arcana-btn--primary:active:not(:disabled) { background-color: #09090b; }
 
 /* Variant: destructive — vermelho */
-.shadcn-btn--destructive {
+.arcana-btn--destructive {
     background-color: #dc2626;
     color: #ffffff;
 }
-.shadcn-btn--destructive:hover:not(:disabled) { background-color: #b91c1c; }
-.shadcn-btn--destructive:active:not(:disabled) { background-color: #991b1b; }
+.arcana-btn--destructive:hover:not(:disabled) { background-color: #b91c1c; }
+.arcana-btn--destructive:active:not(:disabled) { background-color: #991b1b; }
 
 /* Variant: destructive-outline — vermelho com borda, fundo transparente (ação destrutiva secundária) */
-.shadcn-btn--destructive-outline {
+.arcana-btn--destructive-outline {
     background-color: transparent;
     color: #dc2626;
     border-color: #dc2626;
 }
-.shadcn-btn--destructive-outline:hover:not(:disabled) {
+.arcana-btn--destructive-outline:hover:not(:disabled) {
     background-color: #fef2f2;
     border-color: #b91c1c;
     color: #b91c1c;
 }
-.shadcn-btn--destructive-outline:active:not(:disabled) {
+.arcana-btn--destructive-outline:active:not(:disabled) {
     background-color: #fee2e2;
     border-color: #991b1b;
     color: #991b1b;
@@ -164,94 +164,94 @@
 /* Variant: ghost — outline sutil (white com border) */
 /* Variant: ghost — cinza escuro preenchido (zinc-500), texto branco. Usado por Cancelar/Voltar
    como secundária com peso visual real, contrastando claramente com o primary preto ao lado. */
-.shadcn-btn--ghost {
+.arcana-btn--ghost {
     background-color: #71717a;
     color: #ffffff;
     border-color: #71717a;
 }
-.shadcn-btn--ghost:hover:not(:disabled) {
+.arcana-btn--ghost:hover:not(:disabled) {
     background-color: #52525b;
     border-color: #52525b;
 }
-.shadcn-btn--ghost:active:not(:disabled) {
+.arcana-btn--ghost:active:not(:disabled) {
     background-color: #3f3f46;
     border-color: #3f3f46;
 }
 
 /* Variant: success — verde sólido */
-.shadcn-btn--success {
+.arcana-btn--success {
     background-color: #16a34a;
     color: #ffffff;
 }
-.shadcn-btn--success:hover:not(:disabled) { background-color: #15803d; }
-.shadcn-btn--success:active:not(:disabled) { background-color: #166534; }
+.arcana-btn--success:hover:not(:disabled) { background-color: #15803d; }
+.arcana-btn--success:active:not(:disabled) { background-color: #166534; }
 
 /* Variant: teal — teal sólido (teal-700) */
-.shadcn-btn--teal {
+.arcana-btn--teal {
     background-color: #0f766e;
     color: #ffffff;
 }
-.shadcn-btn--teal:hover:not(:disabled) { background-color: #115e59; }
-.shadcn-btn--teal:active:not(:disabled) { background-color: #134e4a; }
+.arcana-btn--teal:hover:not(:disabled) { background-color: #115e59; }
+.arcana-btn--teal:active:not(:disabled) { background-color: #134e4a; }
 
 /* Variant: info — azul claro sólido (sky-500) */
-.shadcn-btn--info {
+.arcana-btn--info {
     background-color: #0ea5e9;
     color: #ffffff;
 }
-.shadcn-btn--info:hover:not(:disabled) { background-color: #0284c7; }
-.shadcn-btn--info:active:not(:disabled) { background-color: #0369a1; }
+.arcana-btn--info:hover:not(:disabled) { background-color: #0284c7; }
+.arcana-btn--info:active:not(:disabled) { background-color: #0369a1; }
 
 /* Variant: warning — amber sólido (amber-500). Pareado com cards `--warning` da DangerZone
    (icon bg #fef3c7 amber-100, icon color #b45309 amber-700). Usado em ações de risco
    baixo-médio (duplicar, gerar token novo) — sinal amarelo, não vermelho. */
-.shadcn-btn--warning {
+.arcana-btn--warning {
     background-color: #f59e0b;
     color: #ffffff;
 }
-.shadcn-btn--warning:hover:not(:disabled) { background-color: #d97706; }
-.shadcn-btn--warning:active:not(:disabled) { background-color: #b45309; }
+.arcana-btn--warning:hover:not(:disabled) { background-color: #d97706; }
+.arcana-btn--warning:active:not(:disabled) { background-color: #b45309; }
 
 /* Variant: alert — indigo sólido (indigo-600). Pareado com cards `--alert` da DangerZone
    (icon bg #e0e7ff indigo-100, icon color #4338ca indigo-700). Usado em ações sensíveis
    distintas de delete (alterar código, transferir) — pesa mais que `info` mas menos que
    `destructive`. */
-.shadcn-btn--alert {
+.arcana-btn--alert {
     background-color: #4f46e5;
     color: #ffffff;
 }
-.shadcn-btn--alert:hover:not(:disabled) { background-color: #4338ca; }
-.shadcn-btn--alert:active:not(:disabled) { background-color: #3730a3; }
+.arcana-btn--alert:hover:not(:disabled) { background-color: #4338ca; }
+.arcana-btn--alert:active:not(:disabled) { background-color: #3730a3; }
 
 /* Modifier: cancel-outline — outline vermelho. Aplicado em conjunto com `color="danger-*"`
    pra Cancelar de diálogos: filled vermelho é forte demais pra ação secundária, mas a cor
    ainda sinaliza "saída/abandono". Override do `--destructive` filled.
    Antes ficava redefinido localmente em cada dialog (~10 arquivos com SCSS duplicado);
    agora centralizado aqui. */
-.shadcn-btn.btn-cancel-outline {
+.arcana-btn.btn-cancel-outline {
     background-color: transparent;
     color: #dc2626;
     border-color: #dc2626;
 }
-.shadcn-btn.btn-cancel-outline:hover:not(:disabled) {
+.arcana-btn.btn-cancel-outline:hover:not(:disabled) {
     background-color: #fef2f2; color: #b91c1c; border-color: #b91c1c;
 }
-.shadcn-btn.btn-cancel-outline:active:not(:disabled) {
+.arcana-btn.btn-cancel-outline:active:not(:disabled) {
     background-color: #fee2e2; color: #991b1b; border-color: #991b1b;
 }
 
 /* Modifier: back-outline — outline cinza neutro. Aplicado em conjunto com `color="grey-*"` pra
    "Voltar" / navegação secundária quando o ghost filled (zinc-500 sólido) pesa visualmente demais
    ao lado de um Cancelar outlined. Override do `--ghost` filled. */
-.shadcn-btn.btn-back-outline {
+.arcana-btn.btn-back-outline {
     background-color: transparent;
     color: #52525b;
     border-color: #d4d4d8;
 }
-.shadcn-btn.btn-back-outline:hover:not(:disabled) {
+.arcana-btn.btn-back-outline:hover:not(:disabled) {
     background-color: #f4f4f5; color: #27272a; border-color: #a1a1aa;
 }
-.shadcn-btn.btn-back-outline:active:not(:disabled) {
+.arcana-btn.btn-back-outline:active:not(:disabled) {
     background-color: #e4e4e7; color: #18181b; border-color: #71717a;
 }
 
@@ -513,29 +513,29 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnAccordion.vue
+   ArcanaAccordion.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-accordion { display: flex; flex-direction: column; gap: 8px; }
+.arcana-accordion { display: flex; flex-direction: column; gap: 8px; }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnAccordionItem.vue
+   ArcanaAccordionItem.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-accordion-item { border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; overflow: hidden; }
-.shadcn-accordion-trigger {
+.arcana-accordion-item { border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; overflow: hidden; }
+.arcana-accordion-trigger {
     width: 100%; display: flex; align-items: center; justify-content: space-between;
     padding: 12px 16px; background: #fafafa; border: 0; cursor: pointer;
     font-weight: 600; color: #18181b; font-size: 14px; text-align: left;
 }
-.shadcn-accordion-trigger:hover:not(:disabled) { background: #f4f4f5; }
-.shadcn-accordion-trigger:disabled { cursor: not-allowed; opacity: .6; }
-.shadcn-accordion-chevron { transition: transform .2s ease; color: #71717a; }
-.shadcn-accordion-item.open .shadcn-accordion-chevron { transform: rotate(180deg); }
-.shadcn-accordion-content { padding: 16px; border-top: 1px solid #e4e4e7; }
+.arcana-accordion-trigger:hover:not(:disabled) { background: #f4f4f5; }
+.arcana-accordion-trigger:disabled { cursor: not-allowed; opacity: .6; }
+.arcana-accordion-chevron { transition: transform .2s ease; color: #71717a; }
+.arcana-accordion-item.open .arcana-accordion-chevron { transform: rotate(180deg); }
+.arcana-accordion-content { padding: 16px; border-top: 1px solid #e4e4e7; }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnBadge.vue
+   ArcanaBadge.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-badge {
+.arcana-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -549,22 +549,22 @@
     white-space: nowrap;
 }
 
-.shadcn-badge--sm {
+.arcana-badge--sm {
     font-size: 10.5px;
     padding: 2px 8px;
 }
 
-.shadcn-badge--clickable {
+.arcana-badge--clickable {
     cursor: pointer;
     transition: filter 0.15s ease, box-shadow 0.15s ease;
 }
 
-.shadcn-badge--clickable:hover {
+.arcana-badge--clickable:hover {
     filter: brightness(0.96);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
 }
 
-.shadcn-badge__dot {
+.arcana-badge__dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
@@ -572,52 +572,52 @@
     flex-shrink: 0;
 }
 
-/* Variantes — tokens espelhados do `.shadcn-spec-sheet-badge` pra consistência. */
-.shadcn-badge--neutral {
+/* Variantes — tokens espelhados do `.arcana-spec-sheet-badge` pra consistência. */
+.arcana-badge--neutral {
     background: #f4f4f5;
     color: #52525b;
     border-color: #e4e4e7;
 }
 
-.shadcn-badge--blue {
+.arcana-badge--blue {
     background: #eff6ff;
     color: #1e40af;
     border-color: #bfdbfe;
 }
 
-.shadcn-badge--green {
+.arcana-badge--green {
     background: #ecfdf5;
     color: #047857;
     border-color: #a7f3d0;
 }
 
-.shadcn-badge--red {
+.arcana-badge--red {
     background: #fef2f2;
     color: #b91c1c;
     border-color: #fecaca;
 }
 
-.shadcn-badge--amber {
+.arcana-badge--amber {
     background: #fffbeb;
     color: #b45309;
     border-color: #fde68a;
 }
 
-.shadcn-badge--violet {
+.arcana-badge--violet {
     background: #ede9fe;
     color: #5b21b6;
     border-color: #ddd6fe;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnButton.vue
+   ArcanaButton.vue
    ───────────────────────────────────────────────────────────────────────── */
 /*
- * Geometria/tipografia espelham EXATAMENTE o `.shadcn-btn` do LabeledButton (shadcn prop) —
+ * Geometria/tipografia espelham EXATAMENTE o `.arcana-btn` do ArcanaButton (shadcn prop) —
  * mesmo tamanho/peso/radius/focus, pra que os dois componentes sejam visualmente
  * intercambiáveis (font 13px / weight 500 / padding 9px 16px / radius 6px / focus ring zinc).
  */
-.shadcn-button {
+.arcana-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -635,147 +635,147 @@
     white-space: nowrap;
 }
 
-.shadcn-button:focus-visible {
+.arcana-button:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-button.is-disabled, .shadcn-button:disabled {
+.arcana-button.is-disabled, .arcana-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 /*
- * Paleta espelha EXATAMENTE as variantes shadcn do LabeledButton (`.shadcn-btn--*`).
- * Nomes legados do ShadcnButton viram aliases do semântico equivalente:
+ * Paleta espelha EXATAMENTE as variantes shadcn do ArcanaButton (`.arcana-btn--*`).
+ * Nomes legados do ArcanaButton viram aliases do semântico equivalente:
  * - primary/dark → primary preto · danger/destructive → vermelho sólido
  * - outline-danger/destructive-outline → vermelho outline · indigo/alert → indigo sólido
  * - outline → outline cinza neutro (back-outline) · ghost → zinc-500 preenchido
- * `secondary` é o único sem par no LabeledButton (mantido cinza claro).
+ * `secondary` é o único sem par no ArcanaButton (mantido cinza claro).
  */
 
 /* primary / dark — preto sólido */
-.shadcn-button--primary,
-.shadcn-button--dark {
+.arcana-button--primary,
+.arcana-button--dark {
     background: #18181b;
     color: #ffffff;
 }
-.shadcn-button--primary:hover:not(:disabled),
-.shadcn-button--dark:hover:not(:disabled) { background: #27272a; }
-.shadcn-button--primary:active:not(:disabled),
-.shadcn-button--dark:active:not(:disabled) { background: #09090b; }
+.arcana-button--primary:hover:not(:disabled),
+.arcana-button--dark:hover:not(:disabled) { background: #27272a; }
+.arcana-button--primary:active:not(:disabled),
+.arcana-button--dark:active:not(:disabled) { background: #09090b; }
 
 /* danger / destructive — vermelho sólido */
-.shadcn-button--danger,
-.shadcn-button--destructive {
+.arcana-button--danger,
+.arcana-button--destructive {
     background: #dc2626;
     color: #ffffff;
 }
-.shadcn-button--danger:hover:not(:disabled),
-.shadcn-button--destructive:hover:not(:disabled) { background: #b91c1c; }
-.shadcn-button--danger:active:not(:disabled),
-.shadcn-button--destructive:active:not(:disabled) { background: #991b1b; }
+.arcana-button--danger:hover:not(:disabled),
+.arcana-button--destructive:hover:not(:disabled) { background: #b91c1c; }
+.arcana-button--danger:active:not(:disabled),
+.arcana-button--destructive:active:not(:disabled) { background: #991b1b; }
 
 /* outline-danger / destructive-outline — vermelho com borda, fundo transparente */
-.shadcn-button--outline-danger,
-.shadcn-button--destructive-outline {
+.arcana-button--outline-danger,
+.arcana-button--destructive-outline {
     background: transparent;
     color: #dc2626;
     border-color: #dc2626;
 }
-.shadcn-button--outline-danger:hover:not(:disabled),
-.shadcn-button--destructive-outline:hover:not(:disabled) {
+.arcana-button--outline-danger:hover:not(:disabled),
+.arcana-button--destructive-outline:hover:not(:disabled) {
     background: #fef2f2;
     border-color: #b91c1c;
     color: #b91c1c;
 }
-.shadcn-button--outline-danger:active:not(:disabled),
-.shadcn-button--destructive-outline:active:not(:disabled) {
+.arcana-button--outline-danger:active:not(:disabled),
+.arcana-button--destructive-outline:active:not(:disabled) {
     background: #fee2e2;
     border-color: #991b1b;
     color: #991b1b;
 }
 
 /* outline — cinza neutro com borda (back-outline) */
-.shadcn-button--outline {
+.arcana-button--outline {
     background: transparent;
     color: #52525b;
     border-color: #d4d4d8;
 }
-.shadcn-button--outline:hover:not(:disabled) {
+.arcana-button--outline:hover:not(:disabled) {
     background: #f4f4f5;
     color: #27272a;
     border-color: #a1a1aa;
 }
-.shadcn-button--outline:active:not(:disabled) {
+.arcana-button--outline:active:not(:disabled) {
     background: #e4e4e7;
     color: #18181b;
     border-color: #71717a;
 }
 
 /* ghost — zinc-500 preenchido, texto branco */
-.shadcn-button--ghost {
+.arcana-button--ghost {
     background: #71717a;
     color: #ffffff;
     border-color: #71717a;
 }
-.shadcn-button--ghost:hover:not(:disabled) { background: #52525b; border-color: #52525b; }
-.shadcn-button--ghost:active:not(:disabled) { background: #3f3f46; border-color: #3f3f46; }
+.arcana-button--ghost:hover:not(:disabled) { background: #52525b; border-color: #52525b; }
+.arcana-button--ghost:active:not(:disabled) { background: #3f3f46; border-color: #3f3f46; }
 
 /* success — verde sólido */
-.shadcn-button--success {
+.arcana-button--success {
     background: #16a34a;
     color: #ffffff;
 }
-.shadcn-button--success:hover:not(:disabled) { background: #15803d; }
-.shadcn-button--success:active:not(:disabled) { background: #166534; }
+.arcana-button--success:hover:not(:disabled) { background: #15803d; }
+.arcana-button--success:active:not(:disabled) { background: #166534; }
 
 /* teal — teal sólido (teal-700) */
-.shadcn-button--teal {
+.arcana-button--teal {
     background: #0f766e;
     color: #ffffff;
 }
-.shadcn-button--teal:hover:not(:disabled) { background: #115e59; }
-.shadcn-button--teal:active:not(:disabled) { background: #134e4a; }
+.arcana-button--teal:hover:not(:disabled) { background: #115e59; }
+.arcana-button--teal:active:not(:disabled) { background: #134e4a; }
 
 /* info — azul claro sólido (sky-500) */
-.shadcn-button--info {
+.arcana-button--info {
     background: #0ea5e9;
     color: #ffffff;
 }
-.shadcn-button--info:hover:not(:disabled) { background: #0284c7; }
-.shadcn-button--info:active:not(:disabled) { background: #0369a1; }
+.arcana-button--info:hover:not(:disabled) { background: #0284c7; }
+.arcana-button--info:active:not(:disabled) { background: #0369a1; }
 
 /* warning — amber sólido */
-.shadcn-button--warning {
+.arcana-button--warning {
     background: #f59e0b;
     color: #ffffff;
 }
-.shadcn-button--warning:hover:not(:disabled) { background: #d97706; }
-.shadcn-button--warning:active:not(:disabled) { background: #b45309; }
+.arcana-button--warning:hover:not(:disabled) { background: #d97706; }
+.arcana-button--warning:active:not(:disabled) { background: #b45309; }
 
 /* indigo / alert — indigo sólido (indigo-600) */
-.shadcn-button--indigo,
-.shadcn-button--alert {
+.arcana-button--indigo,
+.arcana-button--alert {
     background: #4f46e5;
     color: #ffffff;
 }
-.shadcn-button--indigo:hover:not(:disabled),
-.shadcn-button--alert:hover:not(:disabled) { background: #4338ca; }
-.shadcn-button--indigo:active:not(:disabled),
-.shadcn-button--alert:active:not(:disabled) { background: #3730a3; }
+.arcana-button--indigo:hover:not(:disabled),
+.arcana-button--alert:hover:not(:disabled) { background: #4338ca; }
+.arcana-button--indigo:active:not(:disabled),
+.arcana-button--alert:active:not(:disabled) { background: #3730a3; }
 
-/* secondary — cinza claro (sem par no LabeledButton) */
-.shadcn-button--secondary {
+/* secondary — cinza claro (sem par no ArcanaButton) */
+.arcana-button--secondary {
     background: #e4e4e7;
     color: #18181b;
 }
-.shadcn-button--secondary:hover:not(:disabled) { background: #d4d4d8; }
+.arcana-button--secondary:hover:not(:disabled) { background: #d4d4d8; }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnCheckbox.vue
+   ArcanaCheckbox.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-checkbox {
+.arcana-checkbox {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -786,7 +786,7 @@
     line-height: 1.3;
 }
 
-.shadcn-checkbox--disabled {
+.arcana-checkbox--disabled {
     cursor: not-allowed;
     opacity: 0.5;
 }
@@ -795,7 +795,7 @@
     O input some visualmente mas continua existindo e focável — é ele que o Dusk e o teclado
     operam. `opacity: 0` em cima da caixa (em vez de display:none) mantém o clique nativo.
 */
-.shadcn-checkbox__input {
+.arcana-checkbox__input {
     position: absolute;
     width: 16px;
     height: 16px;
@@ -804,7 +804,7 @@
     cursor: inherit;
 }
 
-.shadcn-checkbox__box {
+.arcana-checkbox__box {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -817,47 +817,47 @@
     transition: background-color 150ms ease, border-color 150ms ease;
 }
 
-.shadcn-checkbox--checked .shadcn-checkbox__box {
+.arcana-checkbox--checked .arcana-checkbox__box {
     background: #18181b;
     border-color: #18181b;
 }
 
-.shadcn-checkbox:hover:not(.shadcn-checkbox--disabled) .shadcn-checkbox__box {
+.arcana-checkbox:hover:not(.arcana-checkbox--disabled) .arcana-checkbox__box {
     border-color: #a1a1aa;
 }
 
-.shadcn-checkbox--checked:hover:not(.shadcn-checkbox--disabled) .shadcn-checkbox__box {
+.arcana-checkbox--checked:hover:not(.arcana-checkbox--disabled) .arcana-checkbox__box {
     background: #27272a;
     border-color: #27272a;
 }
 
 /* Foco visível no quadrado, já que o input real é invisível. */
-.shadcn-checkbox__input:focus-visible + .shadcn-checkbox__box {
+.arcana-checkbox__input:focus-visible + .arcana-checkbox__box {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-checkbox__icon {
+.arcana-checkbox__icon {
     font-size: 9px;
     color: #ffffff;
     line-height: 1;
 }
 
-.shadcn-checkbox__label {
+.arcana-checkbox__label {
     font-size: 13px;
     color: #3f3f46;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnDatePicker.vue
+   ArcanaDatePicker.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-date-picker {
+.arcana-date-picker {
     width: 100%;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ───────────────────────── Composite (type=date) ───────────────────────── */
-.shadcn-date-picker__box {
+.arcana-date-picker__box {
     position: relative;
     display: flex;
     align-items: center;
@@ -869,14 +869,14 @@
     box-sizing: border-box;
     transition: border-color 150ms ease;
 }
-.shadcn-date-picker__box:hover { border-color: #d4d4d8; }
-.shadcn-date-picker__box:focus-within { border-color: #18181b; }
-.shadcn-date-picker.is-disabled .shadcn-date-picker__box {
+.arcana-date-picker__box:hover { border-color: #d4d4d8; }
+.arcana-date-picker__box:focus-within { border-color: #18181b; }
+.arcana-date-picker.is-disabled .arcana-date-picker__box {
     background: #fafafa;
     opacity: 0.7;
 }
 
-.shadcn-date-picker__text {
+.arcana-date-picker__text {
     position: relative;
     z-index: 1;
     flex: 1 1 auto;
@@ -891,10 +891,10 @@
     line-height: 1.4;
     color: #09090b;
 }
-.shadcn-date-picker__text::placeholder { color: #a1a1aa; }
-.shadcn-date-picker__text:disabled { color: #a1a1aa; cursor: not-allowed; }
+.arcana-date-picker__text::placeholder { color: #a1a1aa; }
+.arcana-date-picker__text:disabled { color: #a1a1aa; cursor: not-allowed; }
 
-.shadcn-date-picker__icon-btn {
+.arcana-date-picker__icon-btn {
     position: absolute;
     z-index: 2;
     right: 0;
@@ -910,12 +910,12 @@
     cursor: pointer;
     transition: color 150ms ease;
 }
-.shadcn-date-picker__box:focus-within .shadcn-date-picker__icon-btn { color: #18181b; }
-.shadcn-date-picker__icon-btn:hover:not(:disabled) { color: #18181b; }
-.shadcn-date-picker__icon-btn:disabled { color: #a1a1aa; cursor: not-allowed; }
+.arcana-date-picker__box:focus-within .arcana-date-picker__icon-btn { color: #18181b; }
+.arcana-date-picker__icon-btn:hover:not(:disabled) { color: #18181b; }
+.arcana-date-picker__icon-btn:disabled { color: #a1a1aa; cursor: not-allowed; }
 
 /* el-date-picker invisível atrás do campo — só fornece o popover (âncora), nunca visível. */
-.shadcn-date-picker__picker-anchor {
+.arcana-date-picker__picker-anchor {
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -923,26 +923,26 @@
     pointer-events: none;
     overflow: hidden;
 }
-.shadcn-date-picker__picker-anchor .el-date-editor {
+.arcana-date-picker__picker-anchor .el-date-editor {
     width: 100%;
     height: 100%;
 }
 
 /* Sizes (composite) */
-.shadcn-date-picker--sm .shadcn-date-picker__box { height: 30px; }
-.shadcn-date-picker--sm .shadcn-date-picker__text { font-size: 12px; padding: 0 32px 0 10px; }
-.shadcn-date-picker--lg .shadcn-date-picker__box { height: 42px; }
-.shadcn-date-picker--lg .shadcn-date-picker__text { font-size: 14px; padding: 0 40px 0 14px; }
+.arcana-date-picker--sm .arcana-date-picker__box { height: 30px; }
+.arcana-date-picker--sm .arcana-date-picker__text { font-size: 12px; padding: 0 32px 0 10px; }
+.arcana-date-picker--lg .arcana-date-picker__box { height: 42px; }
+.arcana-date-picker--lg .arcana-date-picker__text { font-size: 14px; padding: 0 40px 0 14px; }
 
 /* ───────────────────── Fallback el-date-picker (ranges/month/year) ──────────────────────
     porque o <el-date-picker> renderiza um .el-input__wrapper interno. */
-.shadcn-date-picker .el-date-editor.el-input,
-.shadcn-date-picker .el-date-editor.el-input__wrapper,
-.shadcn-date-picker .el-date-editor {
+.arcana-date-picker .el-date-editor.el-input,
+.arcana-date-picker .el-date-editor.el-input__wrapper,
+.arcana-date-picker .el-date-editor {
     width: 100%;
 }
 
-.shadcn-date-picker .el-input__wrapper {
+.arcana-date-picker .el-input__wrapper {
     height: 36px;
     border: 1px solid #e4e4e7;
     border-radius: 6px;
@@ -952,18 +952,18 @@
     transition: border-color 150ms ease;
 }
 
-.shadcn-date-picker .el-input__wrapper:hover {
+.arcana-date-picker .el-input__wrapper:hover {
     border-color: #d4d4d8;
     box-shadow: none;
 }
 
-.shadcn-date-picker .el-input__wrapper.is-focus,
-.shadcn-date-picker .el-input.is-focus .el-input__wrapper {
+.arcana-date-picker .el-input__wrapper.is-focus,
+.arcana-date-picker .el-input.is-focus .el-input__wrapper {
     border-color: #18181b;
     box-shadow: none;
 }
 
-.shadcn-date-picker .el-input__inner {
+.arcana-date-picker .el-input__inner {
     color: #09090b;
     font-size: 13px;
     font-family: inherit;
@@ -972,56 +972,56 @@
     cursor: pointer;
 }
 
-.shadcn-date-picker .el-input__inner::placeholder {
+.arcana-date-picker .el-input__inner::placeholder {
     color: #a1a1aa;
 }
 
-.shadcn-date-picker .el-input__prefix,
-.shadcn-date-picker .el-input__suffix {
+.arcana-date-picker .el-input__prefix,
+.arcana-date-picker .el-input__suffix {
     color: #71717a;
     transition: color 150ms ease;
 }
 
-.shadcn-date-picker .el-input.is-focus .el-input__prefix,
-.shadcn-date-picker .el-input.is-focus .el-input__suffix {
+.arcana-date-picker .el-input.is-focus .el-input__prefix,
+.arcana-date-picker .el-input.is-focus .el-input__suffix {
     color: #18181b;
 }
 
-.shadcn-date-picker .el-input__icon {
+.arcana-date-picker .el-input__icon {
     font-size: 14px;
 }
 
-.shadcn-date-picker.is-disabled .el-input__wrapper {
+.arcana-date-picker.is-disabled .el-input__wrapper {
     background: #fafafa;
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-.shadcn-date-picker.is-disabled .el-input__inner {
+.arcana-date-picker.is-disabled .el-input__inner {
     color: #a1a1aa;
     cursor: not-allowed;
 }
 
-.shadcn-date-picker--sm .el-input__wrapper {
+.arcana-date-picker--sm .el-input__wrapper {
     height: 30px;
     padding: 0 10px;
 }
 
-.shadcn-date-picker--sm .el-input__inner {
+.arcana-date-picker--sm .el-input__inner {
     font-size: 12px;
 }
 
-.shadcn-date-picker--lg .el-input__wrapper {
+.arcana-date-picker--lg .el-input__wrapper {
     height: 42px;
     padding: 0 14px;
 }
 
-.shadcn-date-picker--lg .el-input__inner {
+.arcana-date-picker--lg .el-input__inner {
     font-size: 14px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnDialog.vue
+   ArcanaDialog.vue
    ───────────────────────────────────────────────────────────────────────── */
 /*
  * Estilos NÃO escopados de propósito — variáveis e tokens espelham o ConfirmDialog.vue. Mantemos
@@ -1067,7 +1067,7 @@
     z-index: var(--el-index-popper) !important;
 }
 
-.shadcn-dialog-overlay {
+.arcana-dialog-overlay {
     /*
      * z-index é setado INLINE via :style (currentZIndex), não aqui — permite stacking dinâmico
      * de múltiplos dialogs (ver counter em dialog-stack.ts). Default fica 'auto'
@@ -1083,8 +1083,8 @@
     padding: 16px;
 }
 
-.shadcn-dialog-content {
-    /* z-index inline via :style (currentZIndex + 1) — ver comentário do .shadcn-dialog-overlay */
+.arcana-dialog-content {
+    /* z-index inline via :style (currentZIndex + 1) — ver comentário do .arcana-dialog-overlay */
     position: relative;
     width: 100%;
     background-color: #ffffff;
@@ -1108,19 +1108,19 @@
  * têm `flex-shrink: 0`). Conteúdo do body (`.email-preview-iframe` etc) que precisa de altura
  * total deve usar `height: 100%` no descendente direto.
  */
-.shadcn-dialog-content--full-height {
+.arcana-dialog-content--full-height {
     height: 90vh;
 }
 
 /* Header */
-.shadcn-dialog-header {
+.arcana-dialog-header {
     position: relative;
     padding: 20px 48px 16px 24px;
     border-bottom: 1px solid #f4f4f5;
     flex-shrink: 0;
 }
 
-.shadcn-dialog-title {
+.arcana-dialog-title {
     font-size: 18px;
     font-weight: 600;
     line-height: 1.4;
@@ -1129,14 +1129,14 @@
     letter-spacing: -0.01em;
 }
 
-.shadcn-dialog-description {
+.arcana-dialog-description {
     font-size: 13px;
     line-height: 1.5;
     color: #71717a;
     margin: 4px 0 0;
 }
 
-.shadcn-dialog-close {
+.arcana-dialog-close {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -1153,18 +1153,18 @@
     transition: background-color 150ms ease, color 150ms ease;
 }
 
-.shadcn-dialog-close:hover {
+.arcana-dialog-close:hover {
     background: #f4f4f5;
     color: #09090b;
 }
 
-.shadcn-dialog-close:focus-visible {
+.arcana-dialog-close:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
 /* Body */
-.shadcn-dialog-body {
+.arcana-dialog-body {
     padding: 20px 24px;
     overflow-y: auto;
     flex: 1 1 auto;
@@ -1178,7 +1178,7 @@
     min-height: 0;
 }
 
-.shadcn-dialog-body--no-padding {
+.arcana-dialog-body--no-padding {
     padding: 0;
 }
 
@@ -1187,14 +1187,14 @@
  * é o filho direto (que precisa de `flex: 1; min-height: 0; overflow-y: auto;` num descendente).
  * Útil pra wizards com stepper/footer fixos internos.
  */
-.shadcn-dialog-body--no-scroll {
+.arcana-dialog-body--no-scroll {
     overflow: visible;
     display: flex;
     flex-direction: column;
 }
 
 /* Footer */
-.shadcn-dialog-footer {
+.arcana-dialog-footer {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
@@ -1205,38 +1205,38 @@
 }
 
 /* Variant `flat`: sem bg cinza, footer "transparente" (vira branco do body) */
-.shadcn-dialog-footer--flat {
+.arcana-dialog-footer--flat {
     background: transparent;
 }
 
 /* Animations — espelho do ConfirmDialog */
-.shadcn-dialog-enter-active {
-    animation: shadcn-dialog-fade-in 200ms ease;
+.arcana-dialog-enter-active {
+    animation: arcana-dialog-fade-in 200ms ease;
 }
 
-.shadcn-dialog-leave-active {
-    animation: shadcn-dialog-fade-out 150ms ease;
+.arcana-dialog-leave-active {
+    animation: arcana-dialog-fade-out 150ms ease;
 }
 
-.shadcn-dialog-enter-active .shadcn-dialog-content {
-    animation: shadcn-dialog-zoom-in 200ms ease;
+.arcana-dialog-enter-active .arcana-dialog-content {
+    animation: arcana-dialog-zoom-in 200ms ease;
 }
 
-.shadcn-dialog-leave-active .shadcn-dialog-content {
-    animation: shadcn-dialog-zoom-out 150ms ease;
+.arcana-dialog-leave-active .arcana-dialog-content {
+    animation: arcana-dialog-zoom-out 150ms ease;
 }
 
-@keyframes shadcn-dialog-fade-in {
+@keyframes arcana-dialog-fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-@keyframes shadcn-dialog-fade-out {
+@keyframes arcana-dialog-fade-out {
     from { opacity: 1; }
     to { opacity: 0; }
 }
 
-@keyframes shadcn-dialog-zoom-in {
+@keyframes arcana-dialog-zoom-in {
     from {
         opacity: 0;
         transform: scale(0.95);
@@ -1247,7 +1247,7 @@
     }
 }
 
-@keyframes shadcn-dialog-zoom-out {
+@keyframes arcana-dialog-zoom-out {
     from {
         opacity: 1;
         transform: scale(1);
@@ -1259,18 +1259,18 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnDropdown.vue
+   ArcanaDropdown.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-dropdown {
+.arcana-dropdown {
     display: inline-block;
     position: relative;
 }
-.shadcn-dropdown__trigger {
+.arcana-dropdown__trigger {
     display: inline-block;
 }
 /* NÃO escopado de propósito: o menu é teleportado pro body, fora do escopo
-   do componente. Use namespace `.shadcn-dropdown__*` pra evitar colisão. */
-.shadcn-dropdown__menu {
+   do componente. Use namespace `.arcana-dropdown__*` pra evitar colisão. */
+.arcana-dropdown__menu {
     position: fixed;
     min-width: 180px;
     max-width: 320px;
@@ -1287,32 +1287,32 @@
 }
 
 /* Densidade folgada (size="comfortable"): mais respiro no menu. O padding
-   dos próprios itens é tratado no ShadcnDropdownItem via inject. */
-.shadcn-dropdown__menu--comfortable {
+   dos próprios itens é tratado no ArcanaDropdownItem via inject. */
+.arcana-dropdown__menu--comfortable {
     min-width: 200px;
     padding: 6px;
 }
 
-/* Transição fade + slide-down — espelha animação de dropdowns shadcn-ui */
-.shadcn-dropdown-enter-active,
-.shadcn-dropdown-leave-active {
+/* Transição fade + slide-down — espelha animação de dropdowns arcana-ui */
+.arcana-dropdown-enter-active,
+.arcana-dropdown-leave-active {
     transition: opacity 0.12s ease, transform 0.12s ease;
 }
-.shadcn-dropdown-enter-from,
-.shadcn-dropdown-leave-to {
+.arcana-dropdown-enter-from,
+.arcana-dropdown-leave-to {
     opacity: 0;
     transform: translateY(-4px) scale(0.98);
 }
-.shadcn-dropdown-enter-to,
-.shadcn-dropdown-leave-from {
+.arcana-dropdown-enter-to,
+.arcana-dropdown-leave-from {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnDropdownItem.vue
+   ArcanaDropdownItem.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-dropdown-item {
+.arcana-dropdown-item {
     display: flex;
     width: 100%;
     align-items: center;
@@ -1329,23 +1329,23 @@
     cursor: pointer;
     transition: background 0.10s, color 0.10s;
 }
-.shadcn-dropdown-item:hover:not(.is-disabled),
-.shadcn-dropdown-item:focus-visible:not(.is-disabled) {
+.arcana-dropdown-item:hover:not(.is-disabled),
+.arcana-dropdown-item:focus-visible:not(.is-disabled) {
     background: #f4f4f5;
     outline: none;
 }
 
-/* Densidade folgada (size="comfortable"): herdada do <ShadcnDropdown size>. */
-.shadcn-dropdown-item--comfortable {
+/* Densidade folgada (size="comfortable"): herdada do <ArcanaDropdown size>. */
+.arcana-dropdown-item--comfortable {
     gap: 11px;
     padding: 10px 14px;
 }
-.shadcn-dropdown-item.is-disabled {
+.arcana-dropdown-item.is-disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-.shadcn-dropdown-item__icon {
+.arcana-dropdown-item__icon {
     font-size: 11px;
     color: #71717a;
     width: 14px;
@@ -1353,7 +1353,7 @@
     flex-shrink: 0;
 }
 
-.shadcn-dropdown-item__label {
+.arcana-dropdown-item__label {
     flex: 1;
     min-width: 0;
     overflow: hidden;
@@ -1361,7 +1361,7 @@
     white-space: nowrap;
 }
 
-.shadcn-dropdown-item__suffix {
+.arcana-dropdown-item__suffix {
     color: #a1a1aa;
     font-size: 11.5px;
     font-family: 'JetBrains Mono', 'SF Mono', monospace;
@@ -1369,34 +1369,34 @@
 }
 
 /* DANGER */
-.shadcn-dropdown-item--danger { color: #b91c1c; }
-.shadcn-dropdown-item--danger:hover:not(.is-disabled),
-.shadcn-dropdown-item--danger:focus-visible:not(.is-disabled) {
+.arcana-dropdown-item--danger { color: #b91c1c; }
+.arcana-dropdown-item--danger:hover:not(.is-disabled),
+.arcana-dropdown-item--danger:focus-visible:not(.is-disabled) {
     background: #fef2f2;
     color: #991b1b;
 }
-.shadcn-dropdown-item--danger .shadcn-dropdown-item__icon { color: #dc2626; }
+.arcana-dropdown-item--danger .arcana-dropdown-item__icon { color: #dc2626; }
 
 /* SUCCESS */
-.shadcn-dropdown-item--success { color: #15803d; }
-.shadcn-dropdown-item--success:hover:not(.is-disabled) { background: #f0fdf4; }
-.shadcn-dropdown-item--success .shadcn-dropdown-item__icon { color: #16a34a; }
+.arcana-dropdown-item--success { color: #15803d; }
+.arcana-dropdown-item--success:hover:not(.is-disabled) { background: #f0fdf4; }
+.arcana-dropdown-item--success .arcana-dropdown-item__icon { color: #16a34a; }
 
 /* WARNING */
-.shadcn-dropdown-item--warning { color: #b45309; }
-.shadcn-dropdown-item--warning:hover:not(.is-disabled) { background: #fffbeb; }
-.shadcn-dropdown-item--warning .shadcn-dropdown-item__icon { color: #d97706; }
+.arcana-dropdown-item--warning { color: #b45309; }
+.arcana-dropdown-item--warning:hover:not(.is-disabled) { background: #fffbeb; }
+.arcana-dropdown-item--warning .arcana-dropdown-item__icon { color: #d97706; }
 
-.shadcn-dropdown-item__separator {
+.arcana-dropdown-item__separator {
     height: 1px;
     background: #f4f4f5;
     margin: 4px 6px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnInput.vue
+   ArcanaInput.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-input {
+.arcana-input {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid #e4e4e7;
@@ -1411,41 +1411,41 @@
     transition: border-color 150ms ease;
 }
 
-.shadcn-input::placeholder {
+.arcana-input::placeholder {
     color: #a1a1aa;
 }
 
-.shadcn-input:hover:not(:disabled):not(:read-only) {
+.arcana-input:hover:not(:disabled):not(:read-only) {
     border-color: #d4d4d8;
 }
 
-.shadcn-input:focus,
-.shadcn-input:focus-visible {
+.arcana-input:focus,
+.arcana-input:focus-visible {
     border-color: #18181b;
     outline: none;
     box-shadow: none;
 }
 
-.shadcn-input:disabled,
-.shadcn-input--disabled {
+.arcana-input:disabled,
+.arcana-input--disabled {
     background: #fafafa;
     color: #a1a1aa;
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-.shadcn-input:read-only {
+.arcana-input:read-only {
     background: #fafafa;
     cursor: default;
 }
 
 /* Sizes */
-.shadcn-input--sm {
+.arcana-input--sm {
     padding: 6px 10px;
     font-size: 12px;
 }
 
-.shadcn-input--lg {
+.arcana-input--lg {
     padding: 11px 14px;
     font-size: 14px;
 }
@@ -1453,24 +1453,24 @@
 /* Esconde os spinners do `type="number"` em browsers WebKit/Firefox.
    Pra os addons (CNPJs/WhatsApps Extras) o user digita ou ajusta com setas — não precisa
    das setinhas pequenas que ficam horríveis com nosso visual minimalista. */
-.shadcn-input[type="number"]::-webkit-outer-spin-button,
-.shadcn-input[type="number"]::-webkit-inner-spin-button {
+.arcana-input[type="number"]::-webkit-outer-spin-button,
+.arcana-input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.shadcn-input[type="number"] {
+.arcana-input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
 
-/* ── ShadcnInputMask.vue: uses the canonical .shadcn-input rules from
-   ShadcnInput.vue (its documented in-file duplicate block is folded here). ── */
+/* ── ArcanaInputMask.vue: uses the canonical .arcana-input rules from
+   ArcanaInput.vue (its documented in-file duplicate block is folded here). ── */
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnLoadingOverlay.vue
+   ArcanaLoadingOverlay.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-loading-overlay {
+.arcana-loading-overlay {
     position: absolute;
     inset: 0;
     z-index: 20;
@@ -1482,7 +1482,7 @@
     border-radius: inherit;
 }
 
-.shadcn-loading-overlay__box {
+.arcana-loading-overlay__box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1490,39 +1490,39 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.shadcn-loading-overlay__spinner {
+.arcana-loading-overlay__spinner {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     border: 3px solid #e4e4e7;
     border-top-color: #18181b;
-    animation: shadcn-loading-spin 0.7s linear infinite;
+    animation: arcana-loading-spin 0.7s linear infinite;
 }
 
-@keyframes shadcn-loading-spin {
+@keyframes arcana-loading-spin {
     to { transform: rotate(360deg); }
 }
 
-.shadcn-loading-overlay__text {
+.arcana-loading-overlay__text {
     font-size: 13px;
     font-weight: 500;
     color: #52525b;
 }
 
-.shadcn-loading-fade-enter-active,
-.shadcn-loading-fade-leave-active {
+.arcana-loading-fade-enter-active,
+.arcana-loading-fade-leave-active {
     transition: opacity 0.15s ease;
 }
 
-.shadcn-loading-fade-enter-from,
-.shadcn-loading-fade-leave-to {
+.arcana-loading-fade-enter-from,
+.arcana-loading-fade-leave-to {
     opacity: 0;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnNotice.vue
+   ArcanaNotice.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-notice {
+.arcana-notice {
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -1535,7 +1535,7 @@
     position: relative;
 }
 
-.shadcn-notice__icon {
+.arcana-notice__icon {
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -1545,7 +1545,7 @@
     line-height: 1;
 }
 
-.shadcn-notice__content {
+.arcana-notice__content {
     flex: 1 1 auto;
     min-width: 0;
     display: flex;
@@ -1553,7 +1553,7 @@
     gap: 4px;
 }
 
-.shadcn-notice__title {
+.arcana-notice__title {
     display: block;
     font-size: 13px;
     font-weight: 600;
@@ -1561,21 +1561,21 @@
     letter-spacing: -0.005em;
 }
 
-.shadcn-notice__body {
+.arcana-notice__body {
     font-size: 12.5px;
     line-height: 1.5;
 }
 
-.shadcn-notice__body p {
+.arcana-notice__body p {
     margin: 0;
 }
 
-.shadcn-notice__body p + p {
+.arcana-notice__body p + p {
     margin-top: 6px;
 }
 
 /* Botão dismiss (X) — discreto, herda cor do notice */
-.shadcn-notice__close {
+.arcana-notice__close {
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -1592,7 +1592,7 @@
     margin: -2px -2px 0 4px;
 }
 
-.shadcn-notice__close:hover {
+.arcana-notice__close:hover {
     opacity: 1;
     background: rgba(0, 0, 0, 0.06);
 }
@@ -1603,119 +1603,119 @@
    ════════════════════════════════════════════════════════════════════ */
 
 /* INFO — zinc neutro (default). Pra avisos genéricos sem urgência. */
-.shadcn-notice--info {
+.arcana-notice--info {
     background: #fafafa;
     border-color: #e4e4e7;
     color: #18181b;
 }
 
-.shadcn-notice--info .shadcn-notice__icon {
+.arcana-notice--info .arcana-notice__icon {
     color: #71717a;
 }
 
-.shadcn-notice--info .shadcn-notice__title {
+.arcana-notice--info .arcana-notice__title {
     color: #09090b;
 }
 
 /* BLUE — azul suave. Pra avisos informativos com um pouco mais de destaque. */
-.shadcn-notice--blue {
+.arcana-notice--blue {
     background: #eff6ff;
     border-color: #bfdbfe;
     color: #1e3a8a;
 }
 
-.shadcn-notice--blue .shadcn-notice__icon {
+.arcana-notice--blue .arcana-notice__icon {
     color: #2563eb;
 }
 
-.shadcn-notice--blue .shadcn-notice__title {
+.arcana-notice--blue .arcana-notice__title {
     color: #1e40af;
 }
 
-.shadcn-notice--info .shadcn-notice__body {
+.arcana-notice--info .arcana-notice__body {
     color: #52525b;
 }
 
 /* SUCCESS — verde. Confirmações positivas / ativação concluída. */
-.shadcn-notice--success {
+.arcana-notice--success {
     background: #f0fdf4;
     border-color: #bbf7d0;
     color: #166534;
 }
 
-.shadcn-notice--success .shadcn-notice__icon {
+.arcana-notice--success .arcana-notice__icon {
     color: #16a34a;
 }
 
-.shadcn-notice--success .shadcn-notice__title {
+.arcana-notice--success .arcana-notice__title {
     color: #14532d;
 }
 
-.shadcn-notice--success .shadcn-notice__body {
+.arcana-notice--success .arcana-notice__body {
     color: #166534;
 }
 
 /* WARNING — âmbar. Avisos importantes (sub bloqueada, manual charge, etc). */
-.shadcn-notice--warning {
+.arcana-notice--warning {
     background: #fffbeb;
     border-color: #fcd34d;
     color: #92400e;
 }
 
-.shadcn-notice--warning .shadcn-notice__icon {
+.arcana-notice--warning .arcana-notice__icon {
     color: #d97706;
 }
 
-.shadcn-notice--warning .shadcn-notice__title {
+.arcana-notice--warning .arcana-notice__title {
     color: #78350f;
 }
 
-.shadcn-notice--warning .shadcn-notice__body {
+.arcana-notice--warning .arcana-notice__body {
     color: #92400e;
 }
 
 /* PENDING — âmbar mais claro/sutil. "Aguardando processamento", spinning state. */
-.shadcn-notice--pending {
+.arcana-notice--pending {
     background: #fefce8;
     border-color: #fde68a;
     color: #854d0e;
 }
 
-.shadcn-notice--pending .shadcn-notice__icon {
+.arcana-notice--pending .arcana-notice__icon {
     color: #ca8a04;
 }
 
-.shadcn-notice--pending .shadcn-notice__title {
+.arcana-notice--pending .arcana-notice__title {
     color: #713f12;
 }
 
-.shadcn-notice--pending .shadcn-notice__body {
+.arcana-notice--pending .arcana-notice__body {
     color: #854d0e;
 }
 
 /* DESTRUCTIVE — vermelho. Erros / falhas / ações irreversíveis. */
-.shadcn-notice--destructive {
+.arcana-notice--destructive {
     background: #fef2f2;
     border-color: #fecaca;
     color: #991b1b;
 }
 
-.shadcn-notice--destructive .shadcn-notice__icon {
+.arcana-notice--destructive .arcana-notice__icon {
     color: #dc2626;
 }
 
-.shadcn-notice--destructive .shadcn-notice__title {
+.arcana-notice--destructive .arcana-notice__title {
     color: #7f1d1d;
 }
 
-.shadcn-notice--destructive .shadcn-notice__body {
+.arcana-notice--destructive .arcana-notice__body {
     color: #991b1b;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnNumberStepper.vue
+   ArcanaNumberStepper.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-number-stepper {
+.arcana-number-stepper {
     display: inline-flex;
     align-items: stretch;
     border: 1px solid #e4e4e7;
@@ -1726,21 +1726,21 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     width: 100%;
     max-width: 160px;
-    height: 36px;                /* altura fixa pra alinhar com ShadcnInput/Select (~36px) */
+    height: 36px;                /* altura fixa pra alinhar com ArcanaInput/Select (~36px) */
     box-sizing: border-box;
 }
 
-.shadcn-number-stepper:focus-within {
+.arcana-number-stepper:focus-within {
     border-color: #18181b;
 }
 
-.shadcn-number-stepper.is-disabled {
+.arcana-number-stepper.is-disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
 /* ─── Botões ── / + ──────────────────────────────────── */
-.shadcn-number-stepper__btn {
+.arcana-number-stepper__btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1756,37 +1756,37 @@
     font-family: inherit;
 }
 
-.shadcn-number-stepper__btn:hover:not(:disabled) {
+.arcana-number-stepper__btn:hover:not(:disabled) {
     background: #f4f4f5;
     color: #09090b;
 }
 
-.shadcn-number-stepper__btn:active:not(:disabled) {
+.arcana-number-stepper__btn:active:not(:disabled) {
     background: #e4e4e7;
 }
 
-.shadcn-number-stepper__btn:focus-visible {
+.arcana-number-stepper__btn:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: -2px;
     z-index: 1;
 }
 
-.shadcn-number-stepper__btn:disabled {
+.arcana-number-stepper__btn:disabled {
     color: #d4d4d8;
     cursor: not-allowed;
     background: #fafafa;
 }
 
-.shadcn-number-stepper__btn--decrement {
+.arcana-number-stepper__btn--decrement {
     border-right: 1px solid #e4e4e7;
 }
 
-.shadcn-number-stepper__btn--increment {
+.arcana-number-stepper__btn--increment {
     border-left: 1px solid #e4e4e7;
 }
 
 /* ─── Input central ─────────────────────────────────── */
-.shadcn-number-stepper__input {
+.arcana-number-stepper__input {
     flex: 1 1 auto;
     min-width: 0;
     height: 100%;                /* preenche a altura do container */
@@ -1805,29 +1805,29 @@
     appearance: textfield;
 }
 
-.shadcn-number-stepper__input:disabled {
+.arcana-number-stepper__input:disabled {
     color: #a1a1aa;
     cursor: not-allowed;
     background: transparent;
 }
 
 /* Esconde os spinners nativos — usamos só nossos botões */
-.shadcn-number-stepper__input::-webkit-inner-spin-button,
-.shadcn-number-stepper__input::-webkit-outer-spin-button {
+.arcana-number-stepper__input::-webkit-inner-spin-button,
+.arcana-number-stepper__input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnOnboardingPanel.vue
+   ArcanaOnboardingPanel.vue
    ───────────────────────────────────────────────────────────────────────── */
 /*
- * Estilos GLOBAIS (não-scoped) — segue convenção dos demais `Shadcn*` components, que
- * exportam classes utilitárias estáveis (`.shadcn-onboarding__*`) pra permitir override
+ * Estilos GLOBAIS (não-scoped) — segue convenção dos demais `Arcana*` components, que
+ * exportam classes utilitárias estáveis (`.arcana-onboarding__*`) pra permitir override
  * por callers via `` ou simplesmente reaproveitando os tokens.
  */
 
-.shadcn-onboarding {
+.arcana-onboarding {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1843,7 +1843,7 @@
     isolation: isolate;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
-.shadcn-onboarding::before {
+.arcana-onboarding::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1856,7 +1856,7 @@
 }
 
 /* ─── Visual: ícone + rings ──────────────────────────────────────────── */
-.shadcn-onboarding__visual {
+.arcana-onboarding__visual {
     position: relative;
     width: 96px;
     height: 96px;
@@ -1865,20 +1865,20 @@
     align-items: center;
     justify-content: center;
 }
-.shadcn-onboarding__ring,
-.shadcn-onboarding__ring--2 {
+.arcana-onboarding__ring,
+.arcana-onboarding__ring--2 {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background: rgba(37, 99, 235, 0.10);
-    animation: shadcn-onboarding-pulse 2.4s ease-in-out infinite;
+    animation: arcana-onboarding-pulse 2.4s ease-in-out infinite;
 }
-.shadcn-onboarding__ring--2 {
+.arcana-onboarding__ring--2 {
     inset: 8px;
     background: rgba(37, 99, 235, 0.18);
     animation-delay: 0.6s;
 }
-.shadcn-onboarding__icon {
+.arcana-onboarding__icon {
     position: relative;
     z-index: 1;
     width: 64px;
@@ -1896,7 +1896,7 @@
 }
 
 /* ─── Tipografia ──────────────────────────────────────────────────────── */
-.shadcn-onboarding__title {
+.arcana-onboarding__title {
     font-size: 19px;
     font-weight: 700;
     color: #09090b;
@@ -1904,22 +1904,22 @@
     margin: 0 0 8px;
     line-height: 1.3;
 }
-.shadcn-onboarding__desc {
+.arcana-onboarding__desc {
     font-size: 13.5px;
     color: #52525b;
     line-height: 1.55;
     max-width: 440px;
     margin: 0 0 22px;
 }
-.shadcn-onboarding__desc strong { font-weight: 600; color: #18181b; }
+.arcana-onboarding__desc strong { font-weight: 600; color: #18181b; }
 
 /* ─── Ação principal ──────────────────────────────────────────────────── */
-.shadcn-onboarding__action {
+.arcana-onboarding__action {
     display: inline-flex;
     align-items: center;
     gap: 10px;
 }
-.shadcn-onboarding__cta {
+.arcana-onboarding__cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1930,7 +1930,7 @@
     line-height: 1;
     cursor: pointer;
     color: #ffffff;
-    /* Mesma gradient azul do .shadcn-onboarding__icon */
+    /* Mesma gradient azul do .arcana-onboarding__icon */
     background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
     border: 1px solid #1d4ed8;
     font-family: inherit;
@@ -1939,17 +1939,17 @@
         0 6px 14px -6px rgba(37, 99, 235, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.shadcn-onboarding__cta:hover {
+.arcana-onboarding__cta:hover {
     transform: translateY(-1px);
     background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
     box-shadow:
         0 8px 18px -6px rgba(37, 99, 235, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.shadcn-onboarding__cta:active {
+.arcana-onboarding__cta:active {
     transform: translateY(0);
 }
-.shadcn-onboarding__cta:disabled {
+.arcana-onboarding__cta:disabled {
     cursor: not-allowed;
     opacity: 0.7;
     transform: none;
@@ -1957,7 +1957,7 @@
 }
 
 /* Variante secundária: botão amber — hierarquia abaixo da CTA primária azul. */
-.shadcn-onboarding__cta--secondary {
+.arcana-onboarding__cta--secondary {
     color: #ffffff;
     background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
     border: 1px solid #d97706;
@@ -1965,21 +1965,21 @@
         0 6px 14px -6px rgba(217, 119, 6, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.shadcn-onboarding__cta--secondary:hover {
+.arcana-onboarding__cta--secondary:hover {
     background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
     box-shadow:
         0 8px 18px -6px rgba(217, 119, 6, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.shadcn-onboarding__cta--secondary i {
+.arcana-onboarding__cta--secondary i {
     color: #ffffff;
 }
-.shadcn-onboarding__cta i {
+.arcana-onboarding__cta i {
     font-size: 11px;
 }
 
 /* ─── Sub-hint discreto ───────────────────────────────────────────────── */
-.shadcn-onboarding__sub-hint {
+.arcana-onboarding__sub-hint {
     margin: 16px 0 0;
     font-size: 11.5px;
     color: #71717a;
@@ -1987,42 +1987,42 @@
     align-items: center;
     gap: 5px;
 }
-.shadcn-onboarding__sub-hint i { font-size: 10px; color: #a1a1aa; }
+.arcana-onboarding__sub-hint i { font-size: 10px; color: #a1a1aa; }
 
-@keyframes shadcn-onboarding-pulse {
+@keyframes arcana-onboarding-pulse {
     0%, 100% { transform: scale(1); opacity: 0.7; }
     50%      { transform: scale(1.08); opacity: 1; }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnRadioCardGroup.vue
+   ArcanaRadioCardGroup.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-radio-card-group {
+.arcana-radio-card-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
 /* Inline: 1 linha, cards de larguras iguais (flex: 1) */
-.shadcn-radio-card-group--inline {
+.arcana-radio-card-group--inline {
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 /* Grid: N colunas iguais (controlado por gridTemplateColumns inline via :style) */
-.shadcn-radio-card-group--grid {
+.arcana-radio-card-group--grid {
     display: grid;
     gap: 8px;
 }
 
-.shadcn-radio-card-group--inline > .shadcn-radio-card {
+.arcana-radio-card-group--inline > .arcana-radio-card {
     flex: 1 1 0;
     min-width: 0;
 }
 
 @media (max-width: 480px) {
     /* Em mobile estreito, volta pra coluna pra evitar text-overflow severo */
-    .shadcn-radio-card-group--inline {
+    .arcana-radio-card-group--inline {
         flex-direction: column;
     }
 }
@@ -2030,7 +2030,7 @@
 /* ─────────────────────────────────────────────────────────
    Card individual (cada option)
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card {
+.arcana-radio-card {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -2071,7 +2071,7 @@
    Input radio nativo — escondido VISUALMENTE mas continua
    focável (Tab/Setas/Space funcionam normalmente).
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card__input {
+.arcana-radio-card__input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
@@ -2082,7 +2082,7 @@
 /* ─────────────────────────────────────────────────────────
    Radio circle custom (substitui o visual nativo)
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card__radio {
+.arcana-radio-card__radio {
     flex-shrink: 0;
     width: 18px;
     height: 18px;
@@ -2095,12 +2095,12 @@
     transition: border-color 150ms ease;
 }
 
-.shadcn-radio-card.is-selected .shadcn-radio-card__radio {
+.arcana-radio-card.is-selected .arcana-radio-card__radio {
     border-color: #18181b;
 }
 
 /* Dot interno (animado com scale 0→1) */
-.shadcn-radio-card__dot {
+.arcana-radio-card__dot {
     width: 8px;
     height: 8px;
     border-radius: 9999px;
@@ -2109,14 +2109,14 @@
     transition: transform 150ms ease;
 }
 
-.shadcn-radio-card.is-selected .shadcn-radio-card__dot {
+.arcana-radio-card.is-selected .arcana-radio-card__dot {
     transform: scale(1);
 }
 
 /* ─────────────────────────────────────────────────────────
    Ícone (badge à esquerda) — opcional
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card__icon {
+.arcana-radio-card__icon {
     flex-shrink: 0;
     width: 36px;
     height: 36px;
@@ -2134,7 +2134,7 @@
     }
 }
 
-.shadcn-radio-card.is-selected .shadcn-radio-card__icon {
+.arcana-radio-card.is-selected .arcana-radio-card__icon {
     background: #18181b;
     color: #ffffff;
 }
@@ -2142,7 +2142,7 @@
 /* ─────────────────────────────────────────────────────────
    Conteúdo (label + descrição)
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card__content {
+.arcana-radio-card__content {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -2150,7 +2150,7 @@
     min-width: 0;
 }
 
-.shadcn-radio-card__label {
+.arcana-radio-card__label {
     font-size: 13.5px;
     font-weight: 600;
     color: #09090b;
@@ -2158,7 +2158,7 @@
     letter-spacing: -0.005em;
 }
 
-.shadcn-radio-card__desc {
+.arcana-radio-card__desc {
     font-size: 12px;
     color: #71717a;
     line-height: 1.45;
@@ -2167,7 +2167,7 @@
 /* ─────────────────────────────────────────────────────────
    Badge à direita (opcional — ex: "Recomendado", "Promo")
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card__badge {
+.arcana-radio-card__badge {
     flex-shrink: 0;
     align-self: flex-start;
     font-size: 10.5px;
@@ -2182,7 +2182,7 @@
     line-height: 1;
 }
 
-.shadcn-radio-card.is-selected .shadcn-radio-card__badge {
+.arcana-radio-card.is-selected .arcana-radio-card__badge {
     border-color: #18181b;
     background: #18181b;
     color: #ffffff;
@@ -2191,14 +2191,14 @@
 /* ─────────────────────────────────────────────────────────
    radioPosition='end': empurra o radio circle pra direita
    sem alterar o DOM. CSS `order` reordena visualmente os
-   filhos do .shadcn-radio-card (que é flex).
+   filhos do .arcana-radio-card (que é flex).
    ───────────────────────────────────────────────────────── */
-.shadcn-radio-card-group--radio-end .shadcn-radio-card__radio {
+.arcana-radio-card-group--radio-end .arcana-radio-card__radio {
     order: 1;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnRequiredFieldsDialog.vue
+   ArcanaRequiredFieldsDialog.vue
    ───────────────────────────────────────────────────────────────────────── */
 .rf-header {
     display: flex;
@@ -2280,9 +2280,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSegmentedOptions.vue
+   ArcanaSegmentedOptions.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-segmented-options {
+.arcana-segmented-options {
     --seg-active: #18181b;
     display: inline-flex;
     align-items: center;
@@ -2297,19 +2297,19 @@
     transition: opacity 180ms ease;
 }
 
-.shadcn-segmented-options.is-compact {
+.arcana-segmented-options.is-compact {
     height: 36px;
 }
 
-.shadcn-segmented-options.is-squared {
+.arcana-segmented-options.is-squared {
     border-radius: 8px;
 }
 
-.shadcn-segmented-options.is-disabled {
+.arcana-segmented-options.is-disabled {
     opacity: 0.55;
 }
 
-.shadcn-segmented-options__option {
+.arcana-segmented-options__option {
     flex: 1 1 0;
     min-width: 0;
     height: 100%;
@@ -2332,19 +2332,19 @@
     transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
-.shadcn-segmented-options.is-compact .shadcn-segmented-options__option {
+.arcana-segmented-options.is-compact .arcana-segmented-options__option {
     font-size: 12.5px;
 }
 
-.shadcn-segmented-options.is-squared .shadcn-segmented-options__option {
+.arcana-segmented-options.is-squared .arcana-segmented-options__option {
     border-radius: 6px;
 }
 
-.shadcn-segmented-options__option:hover:not(:disabled):not(.is-active) {
+.arcana-segmented-options__option:hover:not(:disabled):not(.is-active) {
     color: #18181b;
 }
 
-.shadcn-segmented-options__option.is-active {
+.arcana-segmented-options__option.is-active {
     background: var(--seg-active);
     color: #ffffff;
     box-shadow:
@@ -2352,23 +2352,23 @@
         0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
-.shadcn-segmented-options__option:disabled {
+.arcana-segmented-options__option:disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }
 
-.shadcn-segmented-options__option:focus-visible {
+.arcana-segmented-options__option:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-segmented-options__icon {
+.arcana-segmented-options__icon {
     font-size: 11px;
     flex-shrink: 0;
 }
 
 /* Radio indicator (opt-in via prop `radio`) */
-.shadcn-segmented-options__radio {
+.arcana-segmented-options__radio {
     position: relative;
     width: 14px;
     height: 14px;
@@ -2377,7 +2377,7 @@
     flex-shrink: 0;
     transition: border-color .2s ease;
 }
-.shadcn-segmented-options__radio::after {
+.arcana-segmented-options__radio::after {
     content: '';
     position: absolute;
     inset: 3px;
@@ -2385,14 +2385,14 @@
     background: transparent;
     transition: background .2s ease;
 }
-.shadcn-segmented-options__option.is-active .shadcn-segmented-options__radio {
+.arcana-segmented-options__option.is-active .arcana-segmented-options__radio {
     border-color: #ffffff;
 }
-.shadcn-segmented-options__option.is-active .shadcn-segmented-options__radio::after {
+.arcana-segmented-options__option.is-active .arcana-segmented-options__radio::after {
     background: #ffffff;
 }
 
-.shadcn-segmented-options__empty {
+.arcana-segmented-options__empty {
     flex: 1;
     text-align: center;
     font-size: 12.5px;
@@ -2400,15 +2400,15 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSelect.vue
+   ArcanaSelect.vue
    ───────────────────────────────────────────────────────────────────────── */
 /*
- * Estilos GLOBAIS (não-scoped) porque o `.shadcn-select__panel` é teleportado
+ * Estilos GLOBAIS (não-scoped) porque o `.arcana-select__panel` é teleportado
  * pro <body> e ficaria fora do escopo `data-v-*` do componente.
- * Tokens espelham `ShadcnDialog`/`LabeledButton` (palette zinc).
+ * Tokens espelham `ArcanaDialog`/`ArcanaButton` (palette zinc).
  */
 
-.shadcn-select {
+.arcana-select {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -2418,7 +2418,7 @@
 /* ═════════════════════════════════════════════════
    TRIGGER
    ═════════════════════════════════════════════════ */
-.shadcn-select__trigger {
+.arcana-select__trigger {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2440,20 +2440,20 @@
     box-shadow: none;
 }
 
-.shadcn-select__trigger:hover:not(:disabled) {
+.arcana-select__trigger:hover:not(:disabled) {
     border-color: #d4d4d8;
 }
 
-.shadcn-select__trigger:focus-visible {
+.arcana-select__trigger:focus-visible {
     border-color: #18181b;
 }
 
-.shadcn-select__trigger--open,
-.shadcn-select__trigger--open:hover {
+.arcana-select__trigger--open,
+.arcana-select__trigger--open:hover {
     border-color: #18181b;
 }
 
-.shadcn-select__trigger:disabled {
+.arcana-select__trigger:disabled {
     background: #fafafa;
     color: #a1a1aa;
     cursor: not-allowed;
@@ -2461,45 +2461,45 @@
 }
 
 /* Tamanhos */
-.shadcn-select--sm .shadcn-select__trigger {
+.arcana-select--sm .arcana-select__trigger {
     min-height: 30px;
     padding: 4px 10px;
     font-size: 12px;
 }
 
-.shadcn-select--lg .shadcn-select__trigger {
+.arcana-select--lg .arcana-select__trigger {
     min-height: 42px;
     padding: 9px 14px;
     font-size: 14px;
 }
 
 /* Label dentro do trigger */
-.shadcn-select__label {
+.arcana-select__label {
     flex: 1 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.shadcn-select__label--placeholder {
+.arcana-select__label--placeholder {
     color: #a1a1aa;
 }
 
 /* Caret (chevron) */
-.shadcn-select__caret {
+.arcana-select__caret {
     flex-shrink: 0;
     color: #71717a;
     transition: transform 200ms ease, color 150ms ease;
 }
 
-.shadcn-select__trigger--open .shadcn-select__caret,
-.shadcn-select__caret.is-open {
+.arcana-select__trigger--open .arcana-select__caret,
+.arcana-select__caret.is-open {
     transform: rotate(180deg);
     color: #18181b;
 }
 
 /* Clear button (X): só aparece no hover do trigger e oculta o caret enquanto visível */
-.shadcn-select__clear {
+.arcana-select__clear {
     flex-shrink: 0;
     display: none;
     align-items: center;
@@ -2512,25 +2512,25 @@
     transition: color 100ms ease, background-color 100ms ease;
 }
 
-.shadcn-select__clear:hover {
+.arcana-select__clear:hover {
     color: #18181b;
     background: #f4f4f5;
 }
 
-.shadcn-select__trigger--has-clear:hover .shadcn-select__clear {
+.arcana-select__trigger--has-clear:hover .arcana-select__clear {
     display: flex;
 }
 
-.shadcn-select__trigger--has-clear:hover .shadcn-select__caret {
+.arcana-select__trigger--has-clear:hover .arcana-select__caret {
     display: none;
 }
 
 /* ═════════════════════════════════════════════════
    PANEL (dropdown teleportado pro body)
    ═════════════════════════════════════════════════ */
-.shadcn-select__panel {
+.arcana-select__panel {
     /*
-     * z-index 10100 fica ACIMA do ShadcnDialog (10000/10001).
+     * z-index 10100 fica ACIMA do ArcanaDialog (10000/10001).
      * Position: fixed pra escapar de qualquer overflow:hidden ancestor.
      */
     z-index: 10100;
@@ -2547,14 +2547,14 @@
     outline: none;
 }
 
-.shadcn-select__list {
+.arcana-select__list {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 /* ── Search (sticky no topo do panel) ── */
-.shadcn-select__search {
+.arcana-select__search {
     /*
      * `position: sticky; top: -4px` cola no topo do panel respeitando o `padding: 4px`
      * dele (margins negativos esticam o search até a borda do panel, eliminando o
@@ -2569,7 +2569,7 @@
     border-bottom: 1px solid #e4e4e7;
 }
 
-.shadcn-select__search-icon {
+.arcana-select__search-icon {
     position: absolute;
     left: 18px;
     top: 50%;
@@ -2578,7 +2578,7 @@
     pointer-events: none;
 }
 
-.shadcn-select__search-input {
+.arcana-select__search-input {
     width: 100%;
     padding: 6px 10px 6px 32px;
     background: #ffffff;
@@ -2592,16 +2592,16 @@
     transition: border-color 150ms ease;
 }
 
-.shadcn-select__search-input::placeholder {
+.arcana-select__search-input::placeholder {
     color: #a1a1aa;
 }
 
-.shadcn-select__search-input:focus {
+.arcana-select__search-input:focus {
     border-color: #18181b;
 }
 
 /* ── Items ── */
-.shadcn-select__item {
+.arcana-select__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2617,14 +2617,14 @@
 }
 
 /* Item com legenda (title + caption): alinha o check ao topo e empilha o texto. */
-.shadcn-select__item-body {
+.arcana-select__item-body {
     display: flex;
     flex-direction: column;
     gap: 2px;
     min-width: 0;
     flex: 1 1 auto;
 }
-.shadcn-select__item-desc {
+.arcana-select__item-desc {
     font-size: 11.5px;
     font-weight: 400;
     line-height: 1.35;
@@ -2632,46 +2632,46 @@
     white-space: normal;
 }
 
-.shadcn-select__item:hover,
-.shadcn-select__item.is-highlighted {
+.arcana-select__item:hover,
+.arcana-select__item.is-highlighted {
     background: #f4f4f5;
     color: #09090b;
 }
 
-.shadcn-select__item.is-selected {
-    background: transparent;       /* shadcn-style: selected NÃO muda bg, só mostra checkmark */
+.arcana-select__item.is-selected {
+    background: transparent;       /* arcana-style: selected NÃO muda bg, só mostra checkmark */
     color: #09090b;
     font-weight: 500;
 }
 
-.shadcn-select__item.is-selected.is-highlighted,
-.shadcn-select__item.is-selected:hover {
+.arcana-select__item.is-selected.is-highlighted,
+.arcana-select__item.is-selected:hover {
     background: #f4f4f5;
 }
 
-.shadcn-select__item.is-disabled {
+.arcana-select__item.is-disabled {
     color: #a1a1aa;
     cursor: not-allowed;
 }
 
-.shadcn-select__item.is-disabled:hover {
+.arcana-select__item.is-disabled:hover {
     background: transparent;
 }
 
-.shadcn-select__item-label {
+.arcana-select__item-label {
     flex: 1 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.shadcn-select__item-check {
+.arcana-select__item-check {
     flex-shrink: 0;
     color: #09090b;
 }
 
 /* Empty state */
-.shadcn-select__empty {
+.arcana-select__empty {
     padding: 14px 10px;
     text-align: center;
     color: #71717a;
@@ -2682,21 +2682,21 @@
 /* ═════════════════════════════════════════════════
    ANIMAÇÃO — fade + slide-down sutil
    ═════════════════════════════════════════════════ */
-.shadcn-select-fade-enter-active,
-.shadcn-select-fade-leave-active {
+.arcana-select-fade-enter-active,
+.arcana-select-fade-leave-active {
     transition: opacity 150ms ease, transform 150ms ease;
 }
 
-.shadcn-select-fade-enter-from,
-.shadcn-select-fade-leave-to {
+.arcana-select-fade-enter-from,
+.arcana-select-fade-leave-to {
     opacity: 0;
     transform: translateY(-4px);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSettingsList.vue
+   ArcanaSettingsList.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-settings-list {
+.arcana-settings-list {
     background: #ffffff;
     border: 1px solid #e4e4e7;
     border-radius: 12px;
@@ -2705,14 +2705,14 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     /*
      * Sem `margin-top` intrínseca — quem coloca o componente é responsável pelo
-     * espaçamento (ex: `<ShadcnTabs>` já fornece `gap: 16px` entre tablist e
+     * espaçamento (ex: `<ArcanaTabs>` já fornece `gap: 16px` entre tablist e
      * panel; `<Panel>` fornece `padding`). Tinha um `margin-top: 16px` aqui
      * que causava double-spacing quando usado dentro de tabs.
      */
 }
 
 /* Item — label + caption à esquerda, action à direita */
-.shadcn-settings-list__item {
+.arcana-settings-list__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2722,26 +2722,26 @@
     transition: background 120ms ease;
 }
 
-.shadcn-settings-list__item:last-child {
+.arcana-settings-list__item:last-child {
     border-bottom: none;
 }
 
-.shadcn-settings-list__item:hover {
+.arcana-settings-list__item:hover {
     background: #fafafa;
 }
 
-.shadcn-settings-list__item--disabled {
+.arcana-settings-list__item--disabled {
     opacity: 0.55;
     pointer-events: none;
 }
 
-.shadcn-settings-list__item--nested {
+.arcana-settings-list__item--nested {
     padding-left: 56px;
     background: #fafafa;
     position: relative;
 }
 
-.shadcn-settings-list__item--nested::before {
+.arcana-settings-list__item--nested::before {
     content: '';
     position: absolute;
     left: 32px;
@@ -2751,27 +2751,27 @@
     background: #d4d4d8;
 }
 
-.shadcn-settings-list__item--nested:hover {
+.arcana-settings-list__item--nested:hover {
     background: #f4f4f5;
 }
 
-.shadcn-settings-list__item--nested .shadcn-settings-list__label {
+.arcana-settings-list__item--nested .arcana-settings-list__label {
     font-size: 13px;
     font-weight: 500;
     color: #3f3f46;
 }
 
-.shadcn-settings-list__item--nested .shadcn-settings-list__caption {
+.arcana-settings-list__item--nested .arcana-settings-list__caption {
     font-size: 12px;
 }
 
 /* Text (label + caption) */
-.shadcn-settings-list__text {
+.arcana-settings-list__text {
     flex: 1;
     min-width: 0;
 }
 
-.shadcn-settings-list__label {
+.arcana-settings-list__label {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
@@ -2783,14 +2783,14 @@
     flex-wrap: wrap;
 }
 
-.shadcn-settings-list__caption {
+.arcana-settings-list__caption {
     font-size: 12.5px;
     color: #71717a;
     line-height: 1.45;
 }
 
 /* Action (lado direito) */
-.shadcn-settings-list__action {
+.arcana-settings-list__action {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -2798,7 +2798,7 @@
 }
 
 /* Helpers visuais */
-.shadcn-settings-list__current-value {
+.arcana-settings-list__current-value {
     font-size: 13px;
     color: #3f3f46;
     font-weight: 500;
@@ -2808,7 +2808,7 @@
     text-overflow: ellipsis;
 }
 
-.shadcn-settings-list__current-value--mono {
+.arcana-settings-list__current-value--mono {
     font-family: inherit;
     font-size: 12px;
     color: #3f3f46;
@@ -2818,13 +2818,13 @@
     letter-spacing: 0.02em;
 }
 
-.shadcn-settings-list__current-value--empty {
+.arcana-settings-list__current-value--empty {
     color: #a1a1aa;
     font-weight: 400;
     font-style: italic;
 }
 
-.shadcn-settings-list__edit-btn {
+.arcana-settings-list__edit-btn {
     font-family: inherit;
     font-size: 12.5px;
     font-weight: 500;
@@ -2842,33 +2842,33 @@
     line-height: 1;
 }
 
-.shadcn-settings-list__edit-btn:hover {
+.arcana-settings-list__edit-btn:hover {
     border-color: #d4d4d8;
     background: #fafafa;
     color: #09090b;
 }
 
-.shadcn-settings-list__edit-btn:focus-visible {
+.arcana-settings-list__edit-btn:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-settings-list__edit-btn svg {
+.arcana-settings-list__edit-btn svg {
     width: 11px;
     height: 11px;
     stroke-width: 2;
 }
 
 /* Group section (opcional) */
-.shadcn-settings-list__group {
+.arcana-settings-list__group {
     border-bottom: 1px solid #e4e4e7;
 }
 
-.shadcn-settings-list__group:last-child {
+.arcana-settings-list__group:last-child {
     border-bottom: none;
 }
 
-.shadcn-settings-list__group-head {
+.arcana-settings-list__group-head {
     padding: 14px 24px 12px;
     background: #fafafa;
     border-bottom: 1px solid #e4e4e7;
@@ -2878,7 +2878,7 @@
     gap: 16px;
 }
 
-.shadcn-settings-list__group-head-left {
+.arcana-settings-list__group-head-left {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -2886,7 +2886,7 @@
     min-width: 0;
 }
 
-.shadcn-settings-list__group-icon {
+.arcana-settings-list__group-icon {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -2898,16 +2898,16 @@
     transition: background 150ms ease, color 150ms ease;
 }
 
-.shadcn-settings-list__group-icon--blue    { background: #dbeafe; color: #1d4ed8; }
-.shadcn-settings-list__group-icon--emerald { background: #d1fae5; color: #047857; }
-.shadcn-settings-list__group-icon--amber   { background: #fef3c7; color: #b45309; }
-.shadcn-settings-list__group-icon--rose    { background: #ffe4e6; color: #be123c; }
-.shadcn-settings-list__group-icon--violet  { background: #ede9fe; color: #6d28d9; }
-.shadcn-settings-list__group-icon--indigo  { background: #e0e7ff; color: #4338ca; }
-.shadcn-settings-list__group-icon--teal    { background: #ccfbf1; color: #0f766e; }
-.shadcn-settings-list__group-icon--slate   { background: #f1f5f9; color: #475569; }
+.arcana-settings-list__group-icon--blue    { background: #dbeafe; color: #1d4ed8; }
+.arcana-settings-list__group-icon--emerald { background: #d1fae5; color: #047857; }
+.arcana-settings-list__group-icon--amber   { background: #fef3c7; color: #b45309; }
+.arcana-settings-list__group-icon--rose    { background: #ffe4e6; color: #be123c; }
+.arcana-settings-list__group-icon--violet  { background: #ede9fe; color: #6d28d9; }
+.arcana-settings-list__group-icon--indigo  { background: #e0e7ff; color: #4338ca; }
+.arcana-settings-list__group-icon--teal    { background: #ccfbf1; color: #0f766e; }
+.arcana-settings-list__group-icon--slate   { background: #f1f5f9; color: #475569; }
 
-.shadcn-settings-list__group-num {
+.arcana-settings-list__group-num {
     font-family: inherit;
     font-size: 10px;
     color: #a1a1aa;
@@ -2916,7 +2916,7 @@
     margin-bottom: 2px;
 }
 
-.shadcn-settings-list__group-title {
+.arcana-settings-list__group-title {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
@@ -2924,7 +2924,7 @@
     line-height: 1.25;
 }
 
-.shadcn-settings-list__group-meta {
+.arcana-settings-list__group-meta {
     font-family: inherit;
     font-size: 10px;
     color: #a1a1aa;
@@ -2934,28 +2934,28 @@
 
 /* Responsive — stack action embaixo do texto em telas estreitas */
 @media (max-width: 640px) {
-    .shadcn-settings-list__item {
+    .arcana-settings-list__item {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
         padding: 14px 18px;
     }
 
-    .shadcn-settings-list__action {
+    .arcana-settings-list__action {
         width: 100%;
         justify-content: flex-start;
     }
 
-    .shadcn-settings-list__group-head {
+    .arcana-settings-list__group-head {
         padding: 12px 18px 10px;
     }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSettingsListGroup.vue
+   ArcanaSettingsListGroup.vue
    ───────────────────────────────────────────────────────────────────────── */
 /* ─── Collapsible — header como button + chevron rotacionável ─── */
-.shadcn-settings-list__group--collapsible > .shadcn-settings-list__group-head {
+.arcana-settings-list__group--collapsible > .arcana-settings-list__group-head {
     width: 100%;
     border: none;
     background: #fafafa;
@@ -2965,27 +2965,27 @@
     transition: background 120ms ease;
 }
 
-.shadcn-settings-list__group--collapsible > .shadcn-settings-list__group-head:hover {
+.arcana-settings-list__group--collapsible > .arcana-settings-list__group-head:hover {
     background: #f4f4f5;
 }
 
-.shadcn-settings-list__group--collapsible > .shadcn-settings-list__group-head:focus-visible {
+.arcana-settings-list__group--collapsible > .arcana-settings-list__group-head:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: -2px;
 }
 
-.shadcn-settings-list__group--collapsed > .shadcn-settings-list__group-head {
+.arcana-settings-list__group--collapsed > .arcana-settings-list__group-head {
     border-bottom-color: transparent;
 }
 
-.shadcn-settings-list__group-head-right {
+.arcana-settings-list__group-head-right {
     display: flex;
     align-items: center;
     gap: 12px;
     flex-shrink: 0;
 }
 
-.shadcn-settings-list__group-chevron {
+.arcana-settings-list__group-chevron {
     width: 16px;
     height: 16px;
     color: #71717a;
@@ -2993,49 +2993,49 @@
     transform: rotate(0deg);
 }
 
-.shadcn-settings-list__group--collapsed .shadcn-settings-list__group-chevron {
+.arcana-settings-list__group--collapsed .arcana-settings-list__group-chevron {
     transform: rotate(-90deg);
 }
 
 /* ─── Compact — densidade maior pro header + items ─── */
-.shadcn-settings-list__group--compact > .shadcn-settings-list__group-head {
+.arcana-settings-list__group--compact > .arcana-settings-list__group-head {
     padding: 10px 18px 9px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__group-icon {
+.arcana-settings-list__group--compact .arcana-settings-list__group-icon {
     width: 26px;
     height: 26px;
     font-size: 12px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__group-title {
+.arcana-settings-list__group--compact .arcana-settings-list__group-title {
     font-size: 13px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__item {
+.arcana-settings-list__group--compact .arcana-settings-list__item {
     padding: 10px 18px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__item--nested {
+.arcana-settings-list__group--compact .arcana-settings-list__item--nested {
     padding-left: 44px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__item--nested::before {
+.arcana-settings-list__group--compact .arcana-settings-list__item--nested::before {
     left: 24px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__label {
+.arcana-settings-list__group--compact .arcana-settings-list__label {
     font-size: 13px;
 }
 
-.shadcn-settings-list__group--compact .shadcn-settings-list__caption {
+.arcana-settings-list__group--compact .arcana-settings-list__caption {
     font-size: 12px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSkeleton.vue
+   ArcanaSkeleton.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-skeleton {
+.arcana-skeleton {
     display: inline-block;
     background: #f4f4f5;
     /*
@@ -3052,18 +3052,18 @@
     );
     background-repeat: no-repeat;
     background-size: 200% 100%;
-    animation: shadcn-skeleton-shimmer 1.6s ease-in-out infinite;
+    animation: arcana-skeleton-shimmer 1.6s ease-in-out infinite;
     will-change: background-position;
 }
 
 /* Rounded variants */
-.shadcn-skeleton--rounded-none { border-radius: 0; }
-.shadcn-skeleton--rounded-sm   { border-radius: 4px; }
-.shadcn-skeleton--rounded-md   { border-radius: 6px; }
-.shadcn-skeleton--rounded-lg   { border-radius: 10px; }
-.shadcn-skeleton--rounded-full { border-radius: 9999px; }
+.arcana-skeleton--rounded-none { border-radius: 0; }
+.arcana-skeleton--rounded-sm   { border-radius: 4px; }
+.arcana-skeleton--rounded-md   { border-radius: 6px; }
+.arcana-skeleton--rounded-lg   { border-radius: 10px; }
+.arcana-skeleton--rounded-full { border-radius: 9999px; }
 
-@keyframes shadcn-skeleton-shimmer {
+@keyframes arcana-skeleton-shimmer {
     0% {
         background-position: 200% 0;
     }
@@ -3077,7 +3077,7 @@
  * mas mantém o bg sólido — ainda comunica "loading" via cor.
  */
 @media (prefers-reduced-motion: reduce) {
-    .shadcn-skeleton {
+    .arcana-skeleton {
         animation: none;
         background-image: none;
         background: #e4e4e7;
@@ -3085,9 +3085,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSpecSheet.vue
+   ArcanaSpecSheet.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-spec-sheet {
+.arcana-spec-sheet {
     background: #ffffff;
     border: 1px solid #e4e4e7;
     border-radius: 12px;
@@ -3096,7 +3096,7 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     /*
      * Sem `margin-top` intrínseca — quem coloca o componente é responsável pelo
-     * espaçamento (ex: `<ShadcnTabs>` já fornece `gap: 16px` entre tablist e
+     * espaçamento (ex: `<ArcanaTabs>` já fornece `gap: 16px` entre tablist e
      * panel). Tinha um `margin-top: 16px` aqui que causava double-spacing
      * quando usado dentro de tabs.
      */
@@ -3108,19 +3108,19 @@
    título quebrem linha em vez de empurrar o meta block. Usado em telas
    de detalhe onde o sheet vive dentro de um tab panel já com chrome.
    ───────────────────────────────────────────────────────────────────── */
-.shadcn-spec-sheet--flat {
+.arcana-spec-sheet--flat {
     border: none;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
 }
 
-.shadcn-spec-sheet--flat .shadcn-spec-sheet__meta {
+.arcana-spec-sheet--flat .arcana-spec-sheet__meta {
     text-align: left;
     min-width: 0;
 }
 
-.shadcn-spec-sheet--flat .shadcn-spec-sheet__doc-title {
+.arcana-spec-sheet--flat .arcana-spec-sheet__doc-title {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
@@ -3131,7 +3131,7 @@
    Header — eyebrow mono + título sans (Inter) + meta lateral
    Versão compacta: paddings e tamanhos reduzidos pra densidade maior.
    ───────────────────────────────────────────────────────────────────── */
-.shadcn-spec-sheet__header {
+.arcana-spec-sheet__header {
     padding: 10px 28px 28px 28px;
     border-bottom: 1px dashed #eeeef1;
     display: flex;
@@ -3140,7 +3140,7 @@
     gap: 20px;
 }
 
-.shadcn-spec-sheet__doc-num {
+.arcana-spec-sheet__doc-num {
     font-family: inherit;
     font-size: 11px;
     color: #71717a;
@@ -3148,7 +3148,7 @@
     margin-bottom: 6px;
 }
 
-.shadcn-spec-sheet__doc-title {
+.arcana-spec-sheet__doc-title {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.015em;
@@ -3157,19 +3157,19 @@
     margin: 0;
 }
 
-.shadcn-spec-sheet__doc-title em {
+.arcana-spec-sheet__doc-title em {
     font-style: italic;
     font-weight: 500;
     color: #52525b;
 }
 
-.shadcn-spec-sheet__meta {
+.arcana-spec-sheet__meta {
     text-align: right;
     flex-shrink: 0;
     min-width: 90px;
 }
 
-.shadcn-spec-sheet__meta-label {
+.arcana-spec-sheet__meta-label {
     font-family: inherit;
     font-size: 11px;
     color: #71717a;
@@ -3178,20 +3178,20 @@
 }
 
 /* Section — bloco com título + section-num + grid de fields */
-.shadcn-spec-sheet__section {
+.arcana-spec-sheet__section {
     padding: 18px 28px 30px;
     border-bottom: 1px dashed #eeeef1;
 }
 
-.shadcn-spec-sheet__section:last-of-type {
+.arcana-spec-sheet__section:last-of-type {
     border-bottom: none;
 }
 
-.shadcn-spec-sheet__section--compact {
+.arcana-spec-sheet__section--compact {
     padding: 0 0 10px 40px;
 }
 
-.shadcn-spec-sheet__section-head {
+.arcana-spec-sheet__section-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -3200,14 +3200,14 @@
     margin-bottom: 14px;
 }
 
-.shadcn-spec-sheet__section-head-left {
+.arcana-spec-sheet__section-head-left {
     display: flex;
     align-items: center;
     gap: 10px;
     min-width: 0;
 }
 
-.shadcn-spec-sheet__section-title {
+.arcana-spec-sheet__section-title {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
@@ -3217,7 +3217,7 @@
 }
 
 /* Ícone boxed (32×32, color tokens shadcn) à esquerda do título */
-.shadcn-spec-sheet__section-icon {
+.arcana-spec-sheet__section-icon {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -3228,205 +3228,205 @@
     flex-shrink: 0;
 }
 
-.shadcn-spec-sheet__section-icon--blue {
+.arcana-spec-sheet__section-icon--blue {
     background: #dbeafe;
     color: #1d4ed8;
 }
 
-.shadcn-spec-sheet__section-icon--emerald {
+.arcana-spec-sheet__section-icon--emerald {
     background: #d1fae5;
     color: #047857;
 }
 
-.shadcn-spec-sheet__section-icon--amber {
+.arcana-spec-sheet__section-icon--amber {
     background: #fef3c7;
     color: #b45309;
 }
 
-.shadcn-spec-sheet__section-icon--rose {
+.arcana-spec-sheet__section-icon--rose {
     background: #ffe4e6;
     color: #be123c;
 }
 
-.shadcn-spec-sheet__section-icon--violet {
+.arcana-spec-sheet__section-icon--violet {
     background: #ede9fe;
     color: #6d28d9;
 }
 
-.shadcn-spec-sheet__section-icon--indigo {
+.arcana-spec-sheet__section-icon--indigo {
     background: #e0e7ff;
     color: #4338ca;
 }
 
-.shadcn-spec-sheet__section-icon--teal {
+.arcana-spec-sheet__section-icon--teal {
     background: #ccfbf1;
     color: #0f766e;
 }
 
-.shadcn-spec-sheet__section-icon--slate {
+.arcana-spec-sheet__section-icon--slate {
     background: #f1f5f9;
     color: #475569;
 }
 
-.shadcn-spec-sheet__section-num {
+.arcana-spec-sheet__section-num {
     font-family: inherit;
     font-size: 11px;
     color: #71717a;
     letter-spacing: 0;
 }
 
-.shadcn-spec-sheet__section-head-right {
+.arcana-spec-sheet__section-head-right {
     display: flex;
     align-items: center;
     gap: 12px;
     flex-shrink: 0;
 }
 
-.shadcn-spec-sheet__grid {
+.arcana-spec-sheet__grid {
     display: grid;
     gap: 0;
 }
 
-.shadcn-spec-sheet__grid--cols-1 {
+.arcana-spec-sheet__grid--cols-1 {
     grid-template-columns: 1fr;
 }
 
-.shadcn-spec-sheet__grid--cols-2 {
+.arcana-spec-sheet__grid--cols-2 {
     grid-template-columns: 1fr 1fr;
 }
 
-.shadcn-spec-sheet__grid--cols-3 {
+.arcana-spec-sheet__grid--cols-3 {
     grid-template-columns: repeat(3, 1fr);
 }
 
-.shadcn-spec-sheet__grid--cols-4 {
+.arcana-spec-sheet__grid--cols-4 {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.shadcn-spec-sheet__grid--cols-5 {
+.arcana-spec-sheet__grid--cols-5 {
     grid-template-columns: repeat(5, 1fr);
 }
 
-.shadcn-spec-sheet__grid--cols-6 {
+.arcana-spec-sheet__grid--cols-6 {
     grid-template-columns: repeat(6, 1fr);
 }
 
 /* Field — base */
-.shadcn-spec-sheet__field {
+.arcana-spec-sheet__field {
     padding: 10px 0;
     border-top: 1px dashed #e4e4e7;
     min-width: 0;
 }
 
 /* ─── 1-col layout (sem dashed dividers entre cols) ─── */
-.shadcn-spec-sheet__grid--cols-1>.shadcn-spec-sheet__field:nth-child(1) {
+.arcana-spec-sheet__grid--cols-1>.arcana-spec-sheet__field:nth-child(1) {
     border-top: none;
     padding-top: 2px;
 }
 
 /* ─── 2-col layout (default original) ─── */
-.shadcn-spec-sheet__grid--cols-2>.shadcn-spec-sheet__field:nth-child(-n+2) {
+.arcana-spec-sheet__grid--cols-2>.arcana-spec-sheet__field:nth-child(-n+2) {
     border-top: none;
     padding-top: 2px;
 }
 
-.shadcn-spec-sheet__grid--cols-2>.shadcn-spec-sheet__field:nth-child(2n+1) {
+.arcana-spec-sheet__grid--cols-2>.arcana-spec-sheet__field:nth-child(2n+1) {
     padding-right: 22px;
 }
 
-.shadcn-spec-sheet__grid--cols-2>.shadcn-spec-sheet__field:nth-child(2n) {
+.arcana-spec-sheet__grid--cols-2>.arcana-spec-sheet__field:nth-child(2n) {
     padding-left: 22px;
     border-left: 1px dashed #e4e4e7;
 }
 
 /* ─── 3-col layout ─── */
-.shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field {
+.arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field {
     padding: 10px 18px;
     border-left: 1px dashed #e4e4e7;
 }
 
-.shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field:nth-child(3n+1) {
+.arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field:nth-child(3n+1) {
     padding-left: 0;
     border-left: none;
 }
 
-.shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field:nth-child(3n) {
+.arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field:nth-child(3n) {
     padding-right: 0;
 }
 
-.shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field:nth-child(-n+3) {
+.arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field:nth-child(-n+3) {
     border-top: none;
     padding-top: 2px;
 }
 
 /* ─── 4-col layout ─── */
-.shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field {
+.arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field {
     padding: 10px 14px;
     border-left: 1px dashed #e4e4e7;
 }
 
-.shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field:nth-child(4n+1) {
+.arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field:nth-child(4n+1) {
     padding-left: 0;
     border-left: none;
 }
 
-.shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field:nth-child(4n) {
+.arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field:nth-child(4n) {
     padding-right: 0;
 }
 
-.shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field:nth-child(-n+4) {
+.arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field:nth-child(-n+4) {
     border-top: none;
     padding-top: 2px;
 }
 
 /* ─── 5-col layout ─── */
-.shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field {
+.arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field {
     padding: 10px 12px;
     border-left: 1px dashed #e4e4e7;
 }
 
-.shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field:nth-child(5n+1) {
+.arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field:nth-child(5n+1) {
     padding-left: 0;
     border-left: none;
 }
 
-.shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field:nth-child(5n) {
+.arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field:nth-child(5n) {
     padding-right: 0;
 }
 
-.shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field:nth-child(-n+5) {
+.arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field:nth-child(-n+5) {
     border-top: none;
     padding-top: 2px;
 }
 
 /* ─── 6-col layout ─── */
-.shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field {
+.arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field {
     padding: 10px 10px;
     border-left: 1px dashed #e4e4e7;
 }
 
-.shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field:nth-child(6n+1) {
+.arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field:nth-child(6n+1) {
     padding-left: 0;
     border-left: none;
 }
 
-.shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field:nth-child(6n) {
+.arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field:nth-child(6n) {
     padding-right: 0;
 }
 
-.shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field:nth-child(-n+6) {
+.arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field:nth-child(-n+6) {
     border-top: none;
     padding-top: 2px;
 }
 
 /* ─── No-row-dividers modifier ─── */
 /* Remove dashed border-top de todos os fields (incluindo o reset da 1ª linha) */
-.shadcn-spec-sheet__grid--no-row-dividers>.shadcn-spec-sheet__field {
+.arcana-spec-sheet__grid--no-row-dividers>.arcana-spec-sheet__field {
     border-top: none;
     padding-top: 10px;
 }
 
-.shadcn-spec-sheet__label {
+.arcana-spec-sheet__label {
     font-family: inherit;
     font-size: 12px;
     color: #7e7e89;
@@ -3435,7 +3435,7 @@
     margin-bottom: 4px;
 }
 
-.shadcn-spec-sheet__value {
+.arcana-spec-sheet__value {
     font-size: 13.5px;
     color: #09090b;
     font-weight: 500;
@@ -3443,14 +3443,14 @@
     line-height: 1.4;
 }
 
-.shadcn-spec-sheet__value--empty {
+.arcana-spec-sheet__value--empty {
     color: #a1a1aa;
     font-weight: 400;
     font-style: italic;
 }
 
 /* Footer — bg zinc-50, ações alinhadas à direita */
-.shadcn-spec-sheet__footer {
+.arcana-spec-sheet__footer {
     padding: 14px 28px;
     background: #fafafa;
     border-top: 1px solid #e4e4e7;
@@ -3461,7 +3461,7 @@
 }
 
 /* Status badge (compartilhado — usado tipicamente no slot meta) */
-.shadcn-spec-sheet-badge {
+.arcana-spec-sheet-badge {
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -3472,7 +3472,7 @@
     border-radius: 999px;
 }
 
-.shadcn-spec-sheet-badge::before {
+.arcana-spec-sheet-badge::before {
     content: '';
     width: 6px;
     height: 6px;
@@ -3480,123 +3480,123 @@
     background: currentColor;
 }
 
-.shadcn-spec-sheet-badge--active {
+.arcana-spec-sheet-badge--active {
     background: #ecfdf5;
     color: #047857;
     border: 1px solid #3fc73f;
 }
 
-.shadcn-spec-sheet-badge--active::before {
+.arcana-spec-sheet-badge--active::before {
     background: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
 }
 
-.shadcn-spec-sheet-badge--inactive {
+.arcana-spec-sheet-badge--inactive {
     background: #fef2f2;
     color: #b91c1c;
 }
 
-.shadcn-spec-sheet-badge--inactive::before {
+.arcana-spec-sheet-badge--inactive::before {
     background: #ef4444;
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
 }
 
-.shadcn-spec-sheet-badge--amber {
+.arcana-spec-sheet-badge--amber {
     background: #fffbeb;
     color: #b45309;
 }
 
-.shadcn-spec-sheet-badge--amber::before {
+.arcana-spec-sheet-badge--amber::before {
     background: #f59e0b;
     box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
 }
 
-.shadcn-spec-sheet-badge--neutral {
+.arcana-spec-sheet-badge--neutral {
     background: #f4f4f5;
     color: #52525b;
     border: 1px solid #dbdbdb;
 }
 
-.shadcn-spec-sheet-badge--neutral::before {
+.arcana-spec-sheet-badge--neutral::before {
     background: #a1a1aa;
     box-shadow: 0 0 0 3px rgba(161, 161, 170, 0.18);
 }
 
-.shadcn-spec-sheet-badge--blue {
+.arcana-spec-sheet-badge--blue {
     background: #eff6ff;
     color: #1e40af;
 }
 
-.shadcn-spec-sheet-badge--blue::before {
+.arcana-spec-sheet-badge--blue::before {
     background: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
-.shadcn-spec-sheet-badge--violet {
+.arcana-spec-sheet-badge--violet {
     background: #ede9fe;
     color: #5b21b6;
 }
 
-.shadcn-spec-sheet-badge--violet::before {
+.arcana-spec-sheet-badge--violet::before {
     background: #8b5cf6;
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
 }
 
 /* Responsive — mobile vira coluna única, ajustes nos paddings */
 @media (max-width: 880px) {
-    .shadcn-spec-sheet__header {
+    .arcana-spec-sheet__header {
         padding: 18px 20px 14px;
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .shadcn-spec-sheet__meta {
+    .arcana-spec-sheet__meta {
         text-align: left;
     }
 
-    .shadcn-spec-sheet__section {
+    .arcana-spec-sheet__section {
         padding: 14px 20px 10px;
     }
 
     /* Colapsa qualquer variante de cols pra 1-col em mobile */
-    .shadcn-spec-sheet__grid--cols-2,
-    .shadcn-spec-sheet__grid--cols-3,
-    .shadcn-spec-sheet__grid--cols-4,
-    .shadcn-spec-sheet__grid--cols-5,
-    .shadcn-spec-sheet__grid--cols-6 {
+    .arcana-spec-sheet__grid--cols-2,
+    .arcana-spec-sheet__grid--cols-3,
+    .arcana-spec-sheet__grid--cols-4,
+    .arcana-spec-sheet__grid--cols-5,
+    .arcana-spec-sheet__grid--cols-6 {
         grid-template-columns: 1fr;
     }
 
     /* Reset dividers/paddings entre cols (já não há cols lado-a-lado em mobile) */
-    .shadcn-spec-sheet__grid--cols-2>.shadcn-spec-sheet__field,
-    .shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field,
-    .shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field,
-    .shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field,
-    .shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field {
+    .arcana-spec-sheet__grid--cols-2>.arcana-spec-sheet__field,
+    .arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field,
+    .arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field,
+    .arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field,
+    .arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field {
         padding-left: 0;
         padding-right: 0;
         border-left: none;
     }
 
     /* Cada field volta a ter border-top exceto o primeiro */
-    .shadcn-spec-sheet__grid--cols-2>.shadcn-spec-sheet__field:not(:first-child),
-    .shadcn-spec-sheet__grid--cols-3>.shadcn-spec-sheet__field:not(:first-child),
-    .shadcn-spec-sheet__grid--cols-4>.shadcn-spec-sheet__field:not(:first-child),
-    .shadcn-spec-sheet__grid--cols-5>.shadcn-spec-sheet__field:not(:first-child),
-    .shadcn-spec-sheet__grid--cols-6>.shadcn-spec-sheet__field:not(:first-child) {
+    .arcana-spec-sheet__grid--cols-2>.arcana-spec-sheet__field:not(:first-child),
+    .arcana-spec-sheet__grid--cols-3>.arcana-spec-sheet__field:not(:first-child),
+    .arcana-spec-sheet__grid--cols-4>.arcana-spec-sheet__field:not(:first-child),
+    .arcana-spec-sheet__grid--cols-5>.arcana-spec-sheet__field:not(:first-child),
+    .arcana-spec-sheet__grid--cols-6>.arcana-spec-sheet__field:not(:first-child) {
         border-top: 1px dashed #e4e4e7;
         padding-top: 10px;
     }
 
-    .shadcn-spec-sheet__footer {
+    .arcana-spec-sheet__footer {
         padding: 12px 20px;
     }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSummaryTile.vue
+   ArcanaSummaryTile.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-summary-tile {
+.arcana-summary-tile {
     display: flex;
     align-items: center;
     gap: 11px;
@@ -3606,7 +3606,7 @@
     background: #ffffff;
 }
 
-.shadcn-summary-tile__icon {
+.arcana-summary-tile__icon {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -3619,7 +3619,7 @@
     flex-shrink: 0;
 }
 
-.shadcn-summary-tile__main {
+.arcana-summary-tile__main {
     display: flex;
     flex-direction: column;
     gap: 1px;
@@ -3627,7 +3627,7 @@
     min-width: 0;
 }
 
-.shadcn-summary-tile__label {
+.arcana-summary-tile__label {
     font-size: 10.5px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -3636,13 +3636,13 @@
     line-height: 1.3;
 }
 
-.shadcn-summary-tile__sub {
+.arcana-summary-tile__sub {
     font-size: 10.5px;
     color: #71717a;
     line-height: 1.3;
 }
 
-.shadcn-summary-tile__value {
+.arcana-summary-tile__value {
     font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.015em;
@@ -3655,63 +3655,63 @@
 
 /* ─── Tone variants ────────────────────────────────────────────────── */
 
-.shadcn-summary-tile--positive {
+.arcana-summary-tile--positive {
     background: #dcfce7;
     border-color: #86efac;
 }
-.shadcn-summary-tile--positive .shadcn-summary-tile__icon {
+.arcana-summary-tile--positive .arcana-summary-tile__icon {
     background: #86efac;
     color: #166534;
 }
-.shadcn-summary-tile--positive .shadcn-summary-tile__label,
-.shadcn-summary-tile--positive .shadcn-summary-tile__sub {
+.arcana-summary-tile--positive .arcana-summary-tile__label,
+.arcana-summary-tile--positive .arcana-summary-tile__sub {
     color: #15803d;
 }
-.shadcn-summary-tile--positive .shadcn-summary-tile__value {
+.arcana-summary-tile--positive .arcana-summary-tile__value {
     color: #166534;
 }
 
-.shadcn-summary-tile--negative {
+.arcana-summary-tile--negative {
     background: #fef2f2;
     border-color: #fecaca;
 }
-.shadcn-summary-tile--negative .shadcn-summary-tile__icon {
+.arcana-summary-tile--negative .arcana-summary-tile__icon {
     background: #fee2e2;
     color: #991b1b;
 }
-.shadcn-summary-tile--negative .shadcn-summary-tile__label,
-.shadcn-summary-tile--negative .shadcn-summary-tile__sub {
+.arcana-summary-tile--negative .arcana-summary-tile__label,
+.arcana-summary-tile--negative .arcana-summary-tile__sub {
     color: #b91c1c;
 }
-.shadcn-summary-tile--negative .shadcn-summary-tile__value {
+.arcana-summary-tile--negative .arcana-summary-tile__value {
     color: #991b1b;
 }
 
 /* "indigo": card neutro mas pip indigo — usado em totais "síntese". */
-.shadcn-summary-tile--indigo .shadcn-summary-tile__icon {
+.arcana-summary-tile--indigo .arcana-summary-tile__icon {
     background: #e0e7ff;
     color: #4338ca;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSummaryTiles.vue
+   ArcanaSummaryTiles.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-summary-tiles {
+.arcana-summary-tiles {
     display: grid;
-    grid-template-columns: repeat(var(--shadcn-summary-tiles-cols, 3), 1fr);
+    grid-template-columns: repeat(var(--arcana-summary-tiles-cols, 3), 1fr);
     gap: 10px;
 }
 
 @media (max-width: 880px) {
-    .shadcn-summary-tiles {
+    .arcana-summary-tiles {
         grid-template-columns: 1fr;
     }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSwitch.vue
+   ArcanaSwitch.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-switch {
+.arcana-switch {
     /*
      * Track (background) — feedback semântico de status:
      * - OFF: vermelho (red-500 #ef4444) — comunica "desligado / inativo"
@@ -3739,23 +3739,23 @@
     font-family: inherit;
 }
 
-.shadcn-switch:focus-visible {
+.arcana-switch:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-switch.is-checked {
+.arcana-switch.is-checked {
     background: #10b981;     /* on — emerald-500 */
 }
 
-.shadcn-switch.is-disabled,
-.shadcn-switch:disabled {
+.arcana-switch.is-disabled,
+.arcana-switch:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 /* Thumb (círculo branco que move) */
-.shadcn-switch__thumb {
+.arcana-switch__thumb {
     display: block;
     background: #ffffff;
     border-radius: 9999px;
@@ -3766,7 +3766,7 @@
 }
 
 /* Hidden checkbox pra integração com forms HTML */
-.shadcn-switch__hidden-input {
+.arcana-switch__hidden-input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -3778,60 +3778,60 @@
 /* ─── Sizes ─── */
 
 /* MD (default) — 36×20 track, 16 thumb */
-.shadcn-switch--md {
+.arcana-switch--md {
     width: 36px;
     height: 20px;
     padding: 2px;
 }
 
-.shadcn-switch--md .shadcn-switch__thumb {
+.arcana-switch--md .arcana-switch__thumb {
     width: 16px;
     height: 16px;
     transform: translateX(0);
 }
 
-.shadcn-switch--md.is-checked .shadcn-switch__thumb {
+.arcana-switch--md.is-checked .arcana-switch__thumb {
     transform: translateX(16px);
 }
 
 /* SM — 28×16 track, 12 thumb */
-.shadcn-switch--sm {
+.arcana-switch--sm {
     width: 28px;
     height: 16px;
     padding: 2px;
 }
 
-.shadcn-switch--sm .shadcn-switch__thumb {
+.arcana-switch--sm .arcana-switch__thumb {
     width: 12px;
     height: 12px;
     transform: translateX(0);
 }
 
-.shadcn-switch--sm.is-checked .shadcn-switch__thumb {
+.arcana-switch--sm.is-checked .arcana-switch__thumb {
     transform: translateX(12px);
 }
 
 /* LG — 44×24 track, 20 thumb */
-.shadcn-switch--lg {
+.arcana-switch--lg {
     width: 44px;
     height: 24px;
     padding: 2px;
 }
 
-.shadcn-switch--lg .shadcn-switch__thumb {
+.arcana-switch--lg .arcana-switch__thumb {
     width: 20px;
     height: 20px;
     transform: translateX(0);
 }
 
-.shadcn-switch--lg.is-checked .shadcn-switch__thumb {
+.arcana-switch--lg.is-checked .arcana-switch__thumb {
     transform: translateX(20px);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSwitchCard.vue
+   ArcanaSwitchCard.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-switch-card {
+.arcana-switch-card {
     width: 100%;
     background: #ffffff;
     border: 1px solid #e4e4e7;
@@ -3853,19 +3853,19 @@
     text-align: left;
 }
 
-.shadcn-switch-card:focus-visible {
+.arcana-switch-card:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 3px;
 }
 
-.shadcn-switch-card.is-disabled {
+.arcana-switch-card.is-disabled {
     opacity: 0.55;
     cursor: not-allowed;
 }
 
-.shadcn-switch-card.is-on {
+.arcana-switch-card.is-on {
     /* Ativo = verde claro (emerald-100 + borda emerald-500), tom "positivo/incluso" coerente
-     * com o resto do app (badges "Incluso no plano", ShadcnSwitch padrão). */
+     * com o resto do app (badges "Incluso no plano", ArcanaSwitch padrão). */
     background: #ecfdf5;
     border-color: #10b981;
 }
@@ -3875,7 +3875,7 @@
  * que comunica "estado live", sem poluir o fundo claro. Pseudo-element pra não adicionar markup.
  * `pointer-events: none` pra não interferir no click.
  */
-.shadcn-switch-card.is-on::before {
+.arcana-switch-card.is-on::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -3884,7 +3884,7 @@
 }
 
 /* ─── Ícone ─── */
-.shadcn-switch-card__icon {
+.arcana-switch-card__icon {
     width: 40px;
     height: 40px;
     border-radius: 10px;
@@ -3898,18 +3898,18 @@
     transition: background 320ms ease, color 320ms ease;
 }
 
-.shadcn-switch-card.is-on .shadcn-switch-card__icon {
+.arcana-switch-card.is-on .arcana-switch-card__icon {
     background: #10b981;
     color: #ffffff;
 }
 
-.shadcn-switch-card__icon svg {
+.arcana-switch-card__icon svg {
     width: 18px;
     height: 18px;
 }
 
 /* ─── Texto ─── */
-.shadcn-switch-card__text {
+.arcana-switch-card__text {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -3917,7 +3917,7 @@
     gap: 3px;
 }
 
-.shadcn-switch-card__title {
+.arcana-switch-card__title {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
@@ -3925,11 +3925,11 @@
     transition: color 320ms ease;
 }
 
-.shadcn-switch-card.is-on .shadcn-switch-card__title {
+.arcana-switch-card.is-on .arcana-switch-card__title {
     color: #065f46;
 }
 
-.shadcn-switch-card__status {
+.arcana-switch-card__status {
     /* Mono pra status — comunica "spec/info técnica" e diferencia visualmente do título. */
     font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
     font-size: 11px;
@@ -3939,12 +3939,12 @@
     transition: color 320ms ease;
 }
 
-.shadcn-switch-card.is-on .shadcn-switch-card__status {
+.arcana-switch-card.is-on .arcana-switch-card__status {
     color: #059669;
 }
 
 /* ─── Switch interno ─── */
-.shadcn-switch-card__switch {
+.arcana-switch-card__switch {
     position: relative;
     width: 36px;
     height: 20px;
@@ -3956,7 +3956,7 @@
     pointer-events: none;
 }
 
-.shadcn-switch-card__switch-thumb {
+.arcana-switch-card__switch-thumb {
     position: absolute;
     top: 2px;
     left: 2px;
@@ -3969,22 +3969,22 @@
 }
 
 /*
- * Quando ativo: track verde (emerald-500) + thumb branco — mesmo padrão do ShadcnSwitch comum,
+ * Quando ativo: track verde (emerald-500) + thumb branco — mesmo padrão do ArcanaSwitch comum,
  * com bom contraste sobre o card verde claro.
  */
-.shadcn-switch-card.is-on .shadcn-switch-card__switch {
+.arcana-switch-card.is-on .arcana-switch-card__switch {
     background: #10b981;
 }
 
-.shadcn-switch-card.is-on .shadcn-switch-card__switch-thumb {
+.arcana-switch-card.is-on .arcana-switch-card__switch-thumb {
     background: #ffffff;
     transform: translateX(16px);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSwitchRow.vue
+   ArcanaSwitchRow.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-switch-row {
+.arcana-switch-row {
     width: 100%;
     background: #ffffff;
     border: 1px solid #e4e4e7;
@@ -4000,22 +4000,22 @@
     text-align: left;
 }
 
-.shadcn-switch-row:hover:not(.is-disabled) {
+.arcana-switch-row:hover:not(.is-disabled) {
     background: #fafafa;
     border-color: #d4d4d8;
 }
 
-.shadcn-switch-row:focus-visible {
+.arcana-switch-row:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.shadcn-switch-row.is-disabled {
+.arcana-switch-row.is-disabled {
     opacity: 0.55;
     cursor: not-allowed;
 }
 
-.shadcn-switch-row__text {
+.arcana-switch-row__text {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -4023,20 +4023,20 @@
     flex: 1;
 }
 
-.shadcn-switch-row__title {
+.arcana-switch-row__title {
     font-size: 14px;
     font-weight: 600;
     color: #09090b;
     line-height: 1.35;
 }
 
-.shadcn-switch-row__sub {
+.arcana-switch-row__sub {
     font-size: 12.5px;
     color: #71717a;
     line-height: 1.45;
 }
 
-.shadcn-switch-row__switch {
+.arcana-switch-row__switch {
     /*
      * `pointer-events: none` impede o switch de capturar o click — o button externo
      * (a row inteira) é o único click handler. Sem isso, clicar exatamente em cima
@@ -4047,9 +4047,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnSwitchSegmented.vue
+   ArcanaSwitchSegmented.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-switch-segmented {
+.arcana-switch-segmented {
     --seg-active: #18181b;
     width: 100%;
     height: 48px;
@@ -4066,35 +4066,35 @@
     transition: opacity 180ms ease;
 }
 
-.shadcn-switch-segmented:focus-visible {
+.arcana-switch-segmented:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 3px;
 }
 
 /* Variant compacto — altura/fonte reduzidas pra uso inline em forms densos. */
-.shadcn-switch-segmented.is-compact {
+.arcana-switch-segmented.is-compact {
     height: 36px;
 }
 
-.shadcn-switch-segmented.is-compact .shadcn-switch-segmented__option {
+.arcana-switch-segmented.is-compact .arcana-switch-segmented__option {
     font-size: 12.5px;
 }
 
 /* Variant cantos menos arredondados — radius moderado no lugar do pill total. */
-.shadcn-switch-segmented.is-squared {
+.arcana-switch-segmented.is-squared {
     border-radius: 8px;
 }
 
-.shadcn-switch-segmented.is-squared .shadcn-switch-segmented__indicator {
+.arcana-switch-segmented.is-squared .arcana-switch-segmented__indicator {
     border-radius: 6px;
 }
 
-.shadcn-switch-segmented.is-disabled {
+.arcana-switch-segmented.is-disabled {
     opacity: 0.55;
     cursor: not-allowed;
 }
 
-.shadcn-switch-segmented__indicator {
+.arcana-switch-segmented__indicator {
     position: absolute;
     top: 4px;
     bottom: 4px;
@@ -4114,11 +4114,11 @@
     z-index: 0;
 }
 
-.shadcn-switch-segmented.is-on .shadcn-switch-segmented__indicator {
+.arcana-switch-segmented.is-on .arcana-switch-segmented__indicator {
     transform: translateX(100%);
 }
 
-.shadcn-switch-segmented__option {
+.arcana-switch-segmented__option {
     flex: 1;
     z-index: 1;
     font-size: 13px;
@@ -4135,13 +4135,13 @@
     pointer-events: none;
 }
 
-.shadcn-switch-segmented:not(.is-on) .shadcn-switch-segmented__option--off,
-.shadcn-switch-segmented.is-on .shadcn-switch-segmented__option--on {
+.arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off,
+.arcana-switch-segmented.is-on .arcana-switch-segmented__option--on {
     color: #ffffff;
 }
 
 /* Radio indicator (opt-in via prop `radio`) */
-.shadcn-switch-segmented__radio {
+.arcana-switch-segmented__radio {
     position: relative;
     width: 14px;
     height: 14px;
@@ -4150,7 +4150,7 @@
     flex-shrink: 0;
     transition: border-color .2s ease;
 }
-.shadcn-switch-segmented__radio::after {
+.arcana-switch-segmented__radio::after {
     content: '';
     position: absolute;
     inset: 3px;
@@ -4159,26 +4159,26 @@
     transition: background .2s ease;
 }
 /* Lado ativo (texto branco sobre o indicador) → radio branco preenchido */
-.shadcn-switch-segmented:not(.is-on) .shadcn-switch-segmented__option--off .shadcn-switch-segmented__radio,
-.shadcn-switch-segmented.is-on .shadcn-switch-segmented__option--on .shadcn-switch-segmented__radio {
+.arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off .arcana-switch-segmented__radio,
+.arcana-switch-segmented.is-on .arcana-switch-segmented__option--on .arcana-switch-segmented__radio {
     border-color: #ffffff;
 }
-.shadcn-switch-segmented:not(.is-on) .shadcn-switch-segmented__option--off .shadcn-switch-segmented__radio::after,
-.shadcn-switch-segmented.is-on .shadcn-switch-segmented__option--on .shadcn-switch-segmented__radio::after {
+.arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off .arcana-switch-segmented__radio::after,
+.arcana-switch-segmented.is-on .arcana-switch-segmented__option--on .arcana-switch-segmented__radio::after {
     background: #ffffff;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnTable.vue
+   ArcanaTable.vue
    ───────────────────────────────────────────────────────────────────────── */
-.shadcn-table-wrap {
+.arcana-table-wrap {
     width: 100%;
     overflow-x: auto;
     border: 1px solid #e4e4e7;
     border-radius: 8px;
 }
 
-.shadcn-table {
+.arcana-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -4224,7 +4224,7 @@
         padding: 18px 12px;
     }
 }
-.shadcn-table__foot td {
+.arcana-table__foot td {
     background: #fafafa;
     border-top: 1px solid #e4e4e7;
     padding: 10px 12px;
@@ -4235,32 +4235,32 @@
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
-.shadcn-table__foot td.shadcn-table__td--right {
+.arcana-table__foot td.arcana-table__td--right {
     text-align: right;
 }
-.shadcn-table__foot tr:hover td {
+.arcana-table__foot tr:hover td {
     background: #fafafa;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ShadcnTabs.vue
+   ArcanaTabs.vue
    ───────────────────────────────────────────────────────────────────────── */
 /* ═══════════════════════════════════════════════════════════════════════
    Container raiz — orientation horizontal/vertical
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs {
+.arcana-tabs {
     display: flex;
     gap: 16px;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Horizontal (default): tablist em cima, panel embaixo */
-.shadcn-tabs--horizontal {
+.arcana-tabs--horizontal {
     flex-direction: column;
 }
 
 /* Vertical: tablist à esquerda, panel à direita */
-.shadcn-tabs--vertical {
+.arcana-tabs--vertical {
     flex-direction: row;
     align-items: flex-start;
     gap: 24px;
@@ -4271,11 +4271,11 @@
  * os items mais longos (`flex-shrink: 0`). Sem isso, o flex layout do root distribui
  * espaço igual entre tablist+panel — tablist fica gigante e panel esmagado.
  */
-.shadcn-tabs--vertical>.shadcn-tabs__list {
+.arcana-tabs--vertical>.arcana-tabs__list {
     flex-shrink: 0;
 }
 
-.shadcn-tabs--vertical>.shadcn-tabs__panel {
+.arcana-tabs--vertical>.arcana-tabs__panel {
     flex: 1 1 auto;
     min-width: 0;
 }
@@ -4283,7 +4283,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Tab list (botões)
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs__list {
+.arcana-tabs__list {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -4291,14 +4291,14 @@
 
 /*
  * IMPORTANTE: todos os seletores aqui usam `>` (child combinator) em vez de descendant
- * combinator. Isso é crítico porque `<ShadcnTabs>` pode ser ANINHADO (ex: tabs sidebar
+ * combinator. Isso é crítico porque `<ArcanaTabs>` pode ser ANINHADO (ex: tabs sidebar
  * com tabs boxed dentro de um dos panels). Sem o `>`, os estilos do tablist pai (vertical)
  * vazam pro tablist filho — a child variant ficaria vertical/empilhada quando deveria
  * ser horizontal/boxed.
  */
 
 /* Variant `pills`: container com bg cinza, tab ativa branca com shadow */
-.shadcn-tabs--pills>.shadcn-tabs__list {
+.arcana-tabs--pills>.arcana-tabs__list {
     background: #f4f4f5;
     padding: 4px;
     border-radius: 8px;
@@ -4306,12 +4306,12 @@
 }
 
 /* `flush`: zera a margin do tablist (inclusive a herdada de um wrapper pai via :deep) */
-.shadcn-tabs--flush>.shadcn-tabs__list {
+.arcana-tabs--flush>.arcana-tabs__list {
     margin: 0 !important;
 }
 
 /* Variant `underline`: sem container, gap maior, border-bottom global */
-.shadcn-tabs--underline>.shadcn-tabs__list {
+.arcana-tabs--underline>.arcana-tabs__list {
     gap: 0;
     border-bottom: 1px solid #e4e4e7;
     width: 100%;
@@ -4321,7 +4321,7 @@
 }
 
 /* Variant `boxed`: cada tab vira um card separado, sem container externo, gap 8px */
-.shadcn-tabs--boxed>.shadcn-tabs__list {
+.arcana-tabs--boxed>.arcana-tabs__list {
     gap: 8px;
     background: transparent;
     padding: 0;
@@ -4332,10 +4332,10 @@
 /*
  * Variant `sidebar`: list vertical com largura intrínseca (do item mais longo).
  * `width: max-content` faz o tablist ter EXATAMENTE a largura necessária pros menus —
- * nem mais, nem menos. Combinado com `flex-shrink: 0` (em `.shadcn-tabs--vertical`),
+ * nem mais, nem menos. Combinado com `flex-shrink: 0` (em `.arcana-tabs--vertical`),
  * a sidebar fica "ajustada" ao conteúdo e o panel ocupa todo o resto da largura.
  */
-.shadcn-tabs--sidebar>.shadcn-tabs__list {
+.arcana-tabs--sidebar>.arcana-tabs__list {
     flex-direction: column;
     align-items: stretch;
     width: max-content;
@@ -4346,18 +4346,18 @@
 }
 
 /* Quando a orientation é vertical em outras variants, força o tablist coluna */
-.shadcn-tabs--vertical>.shadcn-tabs__list {
+.arcana-tabs--vertical>.arcana-tabs__list {
     flex-direction: column;
     align-items: stretch;
 }
 
 /* Em vertical com variant `pills`, container com largura intrínseca também */
-.shadcn-tabs--vertical.shadcn-tabs--pills>.shadcn-tabs__list {
+.arcana-tabs--vertical.arcana-tabs--pills>.arcana-tabs__list {
     width: max-content;
 }
 
 /* Em vertical com variant `underline`, border vai pra LADO em vez de bottom */
-.shadcn-tabs--vertical.shadcn-tabs--underline>.shadcn-tabs__list {
+.arcana-tabs--vertical.arcana-tabs--underline>.arcana-tabs__list {
     border-bottom: none;
     border-right: 1px solid #e4e4e7;
 }
@@ -4365,7 +4365,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Trigger (cada botão de tab)
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs__trigger {
+.arcana-tabs__trigger {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -4385,23 +4385,23 @@
     transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     color: #18181b;
 }
 
-.shadcn-tabs__trigger:focus-visible {
+.arcana-tabs__trigger:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
     z-index: 1;
 }
 
-.shadcn-tabs__trigger.is-disabled {
+.arcana-tabs__trigger.is-disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }
 
 /* ─── Variant `pills` — tab ativa com bg branco + shadow ─── */
-.shadcn-tabs--pills>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
+.arcana-tabs--pills>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
     background: #ffffff;
     color: #09090b;
     font-weight: 600;
@@ -4409,7 +4409,7 @@
 }
 
 /* ─── Variant `underline` — linha embaixo da ativa ─── */
-.shadcn-tabs--underline>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--underline>.arcana-tabs__list>.arcana-tabs__trigger {
     padding: 10px 16px;
     border-radius: 0;
     margin-bottom: -1px;
@@ -4417,14 +4417,14 @@
     border-bottom: 2px solid transparent;
 }
 
-.shadcn-tabs--underline>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
+.arcana-tabs--underline>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
     color: #09090b;
     font-weight: 600;
     border-bottom-color: #18181b;
 }
 
 /* ─── Variant `boxed` — card separado, ativa preta sólida ─── */
-.shadcn-tabs--boxed>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--boxed>.arcana-tabs__list>.arcana-tabs__trigger {
     padding: 8px 16px;
     background: #ffffff;
     border: 1px solid #e4e4e7;
@@ -4433,13 +4433,13 @@
     font-weight: 500;
 }
 
-.shadcn-tabs--boxed>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--boxed>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     background: #fafafa;
     border-color: #d4d4d8;
     color: #18181b;
 }
 
-.shadcn-tabs--boxed>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
+.arcana-tabs--boxed>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
     background: #18181b;
     border-color: #18181b;
     color: #ffffff;
@@ -4448,13 +4448,13 @@
 }
 
 /* Badge na variant boxed precisa de ajuste pra contraste com o bg preto da ativa */
-.shadcn-tabs--boxed>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active .shadcn-tabs__trigger-badge {
+.arcana-tabs--boxed>.arcana-tabs__list>.arcana-tabs__trigger.is-active .arcana-tabs__trigger-badge {
     background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
 }
 
 /* ─── Variant `sidebar` — list vertical estilo menu nav ─── */
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger {
     /*
      * `width: 100%` aqui faz cada item preencher a largura do tablist (que é `max-content`,
      * ou seja, do item mais longo). Resultado: todos os items ficam alinhados à direita
@@ -4478,13 +4478,13 @@
  * cinza claro da página). `cursor: pointer` reforçado pra evitar herdar `default` em
  * algum container ancestral. Transição já vem da regra base do `__trigger`.
  */
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     background: #e4e4e7;
     color: #09090b;
     cursor: pointer;
 }
 
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
     background: #18181b;
     color: #ffffff;
     font-weight: 600;
@@ -4492,7 +4492,7 @@
 }
 
 /* Indicator chevron ▶ à esquerda da tab ativa (estilo "selected nav item") */
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active::before {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger.is-active::before {
     content: "";
     display: inline-block;
     width: 0;
@@ -4505,14 +4505,14 @@
 }
 
 /* Badge na variant sidebar (ativa: branco semitransparente; inativa: zinc).
-   `.shadcn-tabs__trigger-badge` é descendente do trigger (não filho direto do list),
+   `.arcana-tabs__trigger-badge` é descendente do trigger (não filho direto do list),
    por isso usamos descendant combinator a partir do trigger escopado. */
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-badge {
     margin-left: auto;
     /* empurra badge pra direita do item */
 }
 
-.shadcn-tabs--sidebar>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-badge {
     background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
 }
@@ -4520,12 +4520,12 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Ícone + Badge dentro do trigger
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs__trigger-icon {
+.arcana-tabs__trigger-icon {
     font-size: 12px;
     line-height: 1;
 }
 
-.shadcn-tabs__trigger-badge {
+.arcana-tabs__trigger-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4541,7 +4541,7 @@
     transition: background-color 150ms ease, color 150ms ease;
 }
 
-.shadcn-tabs__trigger.is-active .shadcn-tabs__trigger-badge {
+.arcana-tabs__trigger.is-active .arcana-tabs__trigger-badge {
     background: #18181b;
     color: #ffffff;
 }
@@ -4549,11 +4549,11 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Panel (conteúdo da tab ativa)
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs__panel {
+.arcana-tabs__panel {
     outline: none;
 }
 
-.shadcn-tabs__panel:focus-visible {
+.arcana-tabs__panel:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 4px;
     border-radius: 4px;
@@ -4566,35 +4566,35 @@
    active com gradient ink → graphite e ícone em cor de acento.
 
    CSS vars overridáveis (no caller ou em :root pra theming global):
-   - `--shadcn-tabs-accent`        cor do ícone ativo (default sky `#7eb6f0`,
+   - `--arcana-tabs-accent`        cor do ícone ativo (default sky `#7eb6f0`,
                                    família do navy `#365c86` do `TopMenu.vue`
                                    mas claro o suficiente pra dar contraste
                                    ≈ 8.5:1 contra o gradient ink-→-graphite
                                    do estado ativo)
-   - `--shadcn-tabs-soft-bg`       fundo do card (default near-white)
-   - `--shadcn-tabs-soft-border`   borda do card (default zinc-200/8%)
-   - `--shadcn-tabs-soft-active`   gradient da tab ativa (default ink→graphite)
-   - `--shadcn-tabs-soft-text`     cor do texto inativo (default zinc-700)
-   - `--shadcn-tabs-soft-text-muted` cor dos group headers (default zinc-400)
+   - `--arcana-tabs-soft-bg`       fundo do card (default near-white)
+   - `--arcana-tabs-soft-border`   borda do card (default zinc-200/8%)
+   - `--arcana-tabs-soft-active`   gradient da tab ativa (default ink→graphite)
+   - `--arcana-tabs-soft-text`     cor do texto inativo (default zinc-700)
+   - `--arcana-tabs-soft-text-muted` cor dos group headers (default zinc-400)
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs--sidebar-soft {
-    --shadcn-tabs-accent: #7eb6f0;
-    --shadcn-tabs-soft-bg: #ffffff;
-    --shadcn-tabs-soft-border: rgba(21, 19, 26, 0.07);
-    --shadcn-tabs-soft-active: linear-gradient(135deg, #18181b 0%, #28232f 100%);
-    --shadcn-tabs-soft-text: #000;
-    --shadcn-tabs-soft-text-muted: #a1a1aa;
+.arcana-tabs--sidebar-soft {
+    --arcana-tabs-accent: #7eb6f0;
+    --arcana-tabs-soft-bg: #ffffff;
+    --arcana-tabs-soft-border: rgba(21, 19, 26, 0.07);
+    --arcana-tabs-soft-active: linear-gradient(135deg, #18181b 0%, #28232f 100%);
+    --arcana-tabs-soft-text: #000;
+    --arcana-tabs-soft-text-muted: #a1a1aa;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list {
     flex-direction: column;
     align-items: stretch;
     width: max-content;
     min-width: 220px;
     gap: 2px;
     padding: 12px 10px;
-    background: var(--shadcn-tabs-soft-bg);
-    border: 1px solid var(--shadcn-tabs-soft-border);
+    background: var(--arcana-tabs-soft-bg);
+    border: 1px solid var(--arcana-tabs-soft-border);
     border-radius: 18px;
     /* Sombra sutil pra "elevar" o card sem competir com o conteúdo da página */
     box-shadow:
@@ -4603,24 +4603,24 @@
 }
 
 /* Group headers — pequenos, mono, uppercase */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__group-header {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__group-header {
     font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
     font-size: 9.5px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--shadcn-tabs-soft-text-muted);
+    color: var(--arcana-tabs-soft-text-muted);
     padding: 14px 14px 6px;
     user-select: none;
 }
 
 /* Primeiro group header não precisa de top-padding extra */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__group-header:first-child {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__group-header:first-child {
     padding-top: 4px;
 }
 
 /* Triggers da sidebar-soft */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger {
     width: 100%;
     justify-content: flex-start;
     padding: 9px 12px;
@@ -4628,13 +4628,13 @@
     background: transparent;
     border: none;
     border-radius: 10px;
-    color: var(--shadcn-tabs-soft-text);
+    color: var(--arcana-tabs-soft-text);
     font-weight: 500;
     font-size: 13px;
     text-align: left;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-icon {
     width: 16px;
     font-size: 13px;
     opacity: 0.7;
@@ -4642,18 +4642,18 @@
     flex-shrink: 0;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     background: rgba(21, 19, 26, 0.04);
     color: #18181b;
     cursor: pointer;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled)>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled)>.arcana-tabs__trigger-icon {
     opacity: 1;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
-    background: var(--shadcn-tabs-soft-active);
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
+    background: var(--arcana-tabs-soft-active);
     color: #ffffff;
     font-weight: 600;
     box-shadow:
@@ -4661,42 +4661,42 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-icon {
-    color: var(--shadcn-tabs-accent);
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-icon {
+    color: var(--arcana-tabs-accent);
     opacity: 1;
 }
 
 /* Tone `danger` — vermelho suave, vira destaque ao hover */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active) {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active) {
     color: #b91c1c;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active)>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active)>.arcana-tabs__trigger-icon {
     color: #ef4444;
     opacity: 0.85;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
     background: rgba(239, 68, 68, 0.08);
     color: #991b1b;
 }
 
 /* Quando danger fica ativo, mantém o ink bg geral mas o ícone vai pro vermelho
    pra preservar o sinal de "área sensível" mesmo em estado selecionado. */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger.is-active>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger.is-active>.arcana-tabs__trigger-icon {
     color: #fca5a5;
 }
 
 /* Badges da sidebar-soft: empurra pra direita, estiliza com tinta de acento
    (navy PopGas) quando inativo, branco-translúcido quando ativo. */
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-badge {
     margin-left: auto;
     background: rgba(54, 92, 134, 0.12);
     color: #1f4068;
     font-weight: 700;
 }
 
-.shadcn-tabs--sidebar-soft>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar-soft>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-badge {
     background: rgba(255, 255, 255, 0.18);
     color: #ffffff;
 }
@@ -4720,25 +4720,25 @@
    - Quando a sidebar é parte estrutural da página, não navegação auxiliar
 
    CSS vars (mesmas do sidebar-soft, herda os defaults):
-   - `--shadcn-tabs-accent`       cor do ícone ativo
-   - `--shadcn-tabs-soft-bg`      fundo do shell
-   - `--shadcn-tabs-soft-border`  borda externa do shell
-   - `--shadcn-tabs-soft-active`  gradient da tab ativa
-   - `--shadcn-tabs-soft-text`    texto inativo
-   - `--shadcn-tabs-soft-text-muted` group headers
+   - `--arcana-tabs-accent`       cor do ícone ativo
+   - `--arcana-tabs-soft-bg`      fundo do shell
+   - `--arcana-tabs-soft-border`  borda externa do shell
+   - `--arcana-tabs-soft-active`  gradient da tab ativa
+   - `--arcana-tabs-soft-text`    texto inativo
+   - `--arcana-tabs-soft-text-muted` group headers
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs--sidebar-shell {
-    --shadcn-tabs-accent: #7eb6f0;
-    --shadcn-tabs-soft-bg: #ffffff;
-    --shadcn-tabs-soft-border: rgba(21, 19, 26, 0.08);
-    --shadcn-tabs-soft-active: linear-gradient(135deg, #18181b 0%, #28232f 100%);
-    --shadcn-tabs-soft-text: #4a4554;
-    --shadcn-tabs-soft-text-muted: #a1a1aa;
+.arcana-tabs--sidebar-shell {
+    --arcana-tabs-accent: #7eb6f0;
+    --arcana-tabs-soft-bg: #ffffff;
+    --arcana-tabs-soft-border: rgba(21, 19, 26, 0.08);
+    --arcana-tabs-soft-active: linear-gradient(135deg, #18181b 0%, #28232f 100%);
+    --arcana-tabs-soft-text: #4a4554;
+    --arcana-tabs-soft-text-muted: #a1a1aa;
     min-height: 100vh;
 
     /* O root vira o shell — borda, raio e sombra externos */
-    background: var(--shadcn-tabs-soft-bg);
-    border: 1px solid var(--shadcn-tabs-soft-border);
+    background: var(--arcana-tabs-soft-bg);
+    border: 1px solid var(--arcana-tabs-soft-border);
     border-radius: 16px;
     box-shadow:
         0 1px 2px rgba(21, 19, 26, 0.04),
@@ -4750,7 +4750,7 @@
 }
 
 /* Tablist é a coluna esquerda — sem card próprio, sem sombra; borda direita é o divisor */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list {
     flex-direction: column;
     align-items: stretch;
     width: max-content;
@@ -4759,29 +4759,29 @@
     padding: 16px 12px;
     background: #fafaf8;
     border: none;
-    border-right: 1px solid var(--shadcn-tabs-soft-border);
+    border-right: 1px solid var(--arcana-tabs-soft-border);
     border-radius: 0;
     box-shadow: none;
 }
 
 /* Group header — mesma estética do sidebar-soft */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__group-header {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__group-header {
     font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
     font-size: 9.5px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--shadcn-tabs-soft-text-muted);
+    color: var(--arcana-tabs-soft-text-muted);
     padding: 14px 14px 6px;
     user-select: none;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__group-header:first-child {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__group-header:first-child {
     padding-top: 4px;
 }
 
 /* Triggers — idênticos ao sidebar-soft (mantém consistência de comportamento) */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger {
     width: 100%;
     justify-content: flex-start;
     padding: 9px 12px;
@@ -4789,13 +4789,13 @@
     background: transparent;
     border: none;
     border-radius: 10px;
-    color: var(--shadcn-tabs-soft-text);
+    color: var(--arcana-tabs-soft-text);
     font-weight: 500;
     font-size: 13px;
     text-align: left;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-icon {
     width: 16px;
     font-size: 13px;
     opacity: 0.7;
@@ -4803,18 +4803,18 @@
     flex-shrink: 0;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     background: rgba(21, 19, 26, 0.04);
     color: #18181b;
     cursor: pointer;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled)>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled)>.arcana-tabs__trigger-icon {
     opacity: 1;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
-    background: var(--shadcn-tabs-soft-active);
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
+    background: var(--arcana-tabs-soft-active);
     color: #ffffff;
     font-weight: 600;
     box-shadow:
@@ -4822,46 +4822,46 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-icon {
-    color: var(--shadcn-tabs-accent);
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-icon {
+    color: var(--arcana-tabs-accent);
     opacity: 1;
 }
 
 /* Tone danger — herda da sidebar-soft */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active) {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active) {
     color: #b91c1c;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active)>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active)>.arcana-tabs__trigger-icon {
     color: #ef4444;
     opacity: 0.85;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
     background: rgba(239, 68, 68, 0.08);
     color: #991b1b;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger.is-active>.shadcn-tabs__trigger-icon {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger.is-active>.arcana-tabs__trigger-icon {
     color: #fca5a5;
 }
 
 /* Badges */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-badge {
     margin-left: auto;
     background: rgba(54, 92, 134, 0.12);
     color: #1f4068;
     font-weight: 700;
 }
 
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-badge {
+.arcana-tabs--sidebar-shell>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-badge {
     background: #fff;
     color: #26456c;
 }
 
 /* Panel — coluna direita, sem padding externo (o consumidor controla espaçamento interno) */
-.shadcn-tabs--sidebar-shell>.shadcn-tabs__panel {
-    background: var(--shadcn-tabs-soft-bg);
+.arcana-tabs--sidebar-shell>.arcana-tabs__panel {
+    background: var(--arcana-tabs-soft-bg);
     padding: 0;
     min-width: 0;
 }
@@ -4876,27 +4876,27 @@
    que precisam de visual leve mas distinto.
 
    CSS vars:
-   - `--shadcn-tabs-accent`             cor do ícone ativo (default navy)
-   - `--shadcn-tabs-segmented-bg`       fundo do container
-   - `--shadcn-tabs-segmented-border`   borda do container
+   - `--arcana-tabs-accent`             cor do ícone ativo (default navy)
+   - `--arcana-tabs-segmented-bg`       fundo do container
+   - `--arcana-tabs-segmented-border`   borda do container
    ═══════════════════════════════════════════════════════════════════════ */
-.shadcn-tabs--segmented {
-    --shadcn-tabs-accent: #365c86;
-    --shadcn-tabs-segmented-bg: rgba(21, 19, 26, 0.04);
-    --shadcn-tabs-segmented-border: rgba(21, 19, 26, 0.06);
+.arcana-tabs--segmented {
+    --arcana-tabs-accent: #365c86;
+    --arcana-tabs-segmented-bg: rgba(21, 19, 26, 0.04);
+    --arcana-tabs-segmented-border: rgba(21, 19, 26, 0.06);
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list {
+.arcana-tabs--segmented>.arcana-tabs__list {
     display: inline-flex;
     gap: 2px;
     padding: 4px;
-    background: var(--shadcn-tabs-segmented-bg);
-    border: 1px solid var(--shadcn-tabs-segmented-border);
+    background: var(--arcana-tabs-segmented-bg);
+    border: 1px solid var(--arcana-tabs-segmented-border);
     border-radius: 12px;
     width: fit-content;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger {
     padding: 8px 14px;
     gap: 8px;
     border-radius: 8px;
@@ -4906,16 +4906,16 @@
     border: none;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger>.shadcn-tabs__trigger-icon {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger>.arcana-tabs__trigger-icon {
     font-size: 12px;
     opacity: 0.7;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger:hover:not(.is-active):not(.is-disabled) {
     color: #18181b;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-active {
     background: #ffffff;
     color: #09090b;
     font-weight: 600;
@@ -4925,41 +4925,41 @@
         0 4px 12px -4px rgba(21, 19, 26, 0.10);
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-icon {
-    color: var(--shadcn-tabs-accent);
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-icon {
+    color: var(--arcana-tabs-accent);
     opacity: 1;
 }
 
 /* Badge no segmented — segue o padrão dos demais variants, mas com tinta de acento (navy) */
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-active>.shadcn-tabs__trigger-badge {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-active>.arcana-tabs__trigger-badge {
     background: rgba(54, 92, 134, 0.14);
     color: #1f4068;
 }
 
 /* ─── Tone `danger` no variant `segmented` ───────────────────────────────────
-   Escopo ESTRITO: só `.shadcn-tabs--segmented` + `.is-tone-danger`.
+   Escopo ESTRITO: só `.arcana-tabs--segmented` + `.is-tone-danger`.
    Nenhum outro variant ou tab é afetado.
    Cores derivadas da paleta danger usada nos sidebar variants:
      inativo  → texto #b91c1c (red-700), ícone #ef4444 (red-500, 85% op)
      hover    → bg rgba(239,68,68,.08), texto #991b1b (red-800)
      ativo    → texto #991b1b (red-800), ícone #dc2626 (red-600), bg levemente rosado
    ─────────────────────────────────────────────────────────────────────────── */
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active) {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active) {
     color: #b91c1c;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:not(.is-active)>.shadcn-tabs__trigger-icon {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:not(.is-active)>.arcana-tabs__trigger-icon {
     color: #ef4444;
     opacity: 0.85;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger:hover:not(.is-active):not(.is-disabled) {
     background: rgba(239, 68, 68, 0.08);
     color: #991b1b;
 }
 
 /* Ativo danger no segmented: bg branco rosado + texto e ícone vermelhos */
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger.is-active {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger.is-active {
     background: #fff1f2;
     color: #991b1b;
     box-shadow:
@@ -4967,12 +4967,12 @@
         0 4px 12px -4px rgba(220, 38, 38, 0.14);
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger.is-active>.shadcn-tabs__trigger-icon {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger.is-active>.arcana-tabs__trigger-icon {
     color: #dc2626;
     opacity: 1;
 }
 
-.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger.is-tone-danger.is-active>.shadcn-tabs__trigger-badge {
+.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger.is-tone-danger.is-active>.arcana-tabs__trigger-badge {
     background: rgba(220, 38, 38, 0.12);
     color: #991b1b;
 }
@@ -4981,26 +4981,26 @@
 
     /* Em mobile: tabs horizontais permitem wrap; vertical mantém comportamento (sidebar
        em mobile geralmente vai pra cima do conteúdo via media query do caller) */
-    .shadcn-tabs--horizontal>.shadcn-tabs__list {
+    .arcana-tabs--horizontal>.arcana-tabs__list {
         flex-wrap: wrap;
     }
 
-    .shadcn-tabs--horizontal.shadcn-tabs--pills>.shadcn-tabs__list {
+    .arcana-tabs--horizontal.arcana-tabs--pills>.arcana-tabs__list {
         width: 100%;
     }
 
-    .shadcn-tabs--horizontal>.shadcn-tabs__list>.shadcn-tabs__trigger {
+    .arcana-tabs--horizontal>.arcana-tabs__list>.arcana-tabs__trigger {
         flex: 1 1 auto;
         justify-content: center;
     }
 
     /* `segmented` em mobile estica os triggers pra ocupar a largura toda */
-    .shadcn-tabs--horizontal.shadcn-tabs--segmented>.shadcn-tabs__list {
+    .arcana-tabs--horizontal.arcana-tabs--segmented>.arcana-tabs__list {
         width: 100%;
         display: flex;
     }
 
-    .shadcn-tabs--horizontal.shadcn-tabs--segmented>.shadcn-tabs__list>.shadcn-tabs__trigger {
+    .arcana-tabs--horizontal.arcana-tabs--segmented>.arcana-tabs__list>.arcana-tabs__trigger {
         flex: 1 1 auto;
         justify-content: center;
     }

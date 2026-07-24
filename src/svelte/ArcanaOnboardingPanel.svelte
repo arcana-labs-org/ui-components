@@ -1,0 +1,116 @@
+<script lang="ts">
+  /**
+   * `<ArcanaOnboardingPanel>` — Svelte 5 port do SFC Vue. Empty state / CTA panel pra
+   * primeiras configurações. Markup/classes `arcana-onboarding*` idênticos ao SFC.
+   *
+   * Equivalências Vue → Svelte 5:
+   * - slot default → snippet `children` (fallback: `description`)
+   * - slot `#action` → snippet `action` (substitui a CTA padrão)
+   * - slot `#sub-hint` → snippet `subHintSlot` (substitui o sub-hint padrão)
+   * - `emit('action'|'secondary-action')` → `onAction` / `onSecondaryAction`
+   */
+  import type { Snippet } from "svelte";
+
+  let {
+    icon,
+    title,
+    description = "",
+    actionLabel = "",
+    actionIcon = "fa-solid fa-plus",
+    actionLoading = false,
+    secondaryActionLabel = "",
+    secondaryActionIcon = "",
+    subHint = "",
+    subHintIcon = "",
+    children,
+    action,
+    subHintSlot,
+    onAction,
+    onSecondaryAction,
+  }: {
+    icon: string;
+    title: string;
+    description?: string;
+    actionLabel?: string;
+    actionIcon?: string;
+    actionLoading?: boolean;
+    secondaryActionLabel?: string;
+    secondaryActionIcon?: string;
+    subHint?: string;
+    subHintIcon?: string;
+    children?: Snippet;
+    action?: Snippet;
+    subHintSlot?: Snippet;
+    onAction?: () => void;
+    onSecondaryAction?: () => void;
+  } = $props();
+
+  const hasDescription = $derived(Boolean(children) || Boolean(description));
+  const hasActionZone = $derived(Boolean(action || actionLabel || secondaryActionLabel));
+  const hasSubHint = $derived(Boolean(subHintSlot || subHint));
+</script>
+
+<div class="arcana-onboarding">
+  <div class="arcana-onboarding__visual">
+    <div class="arcana-onboarding__ring"></div>
+    <div class="arcana-onboarding__ring arcana-onboarding__ring--2"></div>
+    <div class="arcana-onboarding__icon">
+      <i class={icon}></i>
+    </div>
+  </div>
+
+  <h3 class="arcana-onboarding__title">{title}</h3>
+
+  {#if hasDescription}
+    <p class="arcana-onboarding__desc">
+      {#if children}{@render children()}{:else}{description}{/if}
+    </p>
+  {/if}
+
+  {#if hasActionZone}
+    <div class="arcana-onboarding__action">
+      {#if action}
+        {@render action()}
+      {:else}
+        {#if actionLabel}
+          <button
+            class="arcana-onboarding__cta"
+            disabled={actionLoading}
+            onclick={() => onAction?.()}
+          >
+            {#if actionLoading}
+              <i class="fa-solid fa-spinner fa-spin"></i>
+            {:else if actionIcon}
+              <i class={actionIcon}></i>
+            {/if}
+            <span>{actionLabel}</span>
+          </button>
+        {/if}
+        {#if secondaryActionLabel}
+          <button
+            class="arcana-onboarding__cta arcana-onboarding__cta--secondary"
+            onclick={() => onSecondaryAction?.()}
+          >
+            {#if secondaryActionIcon}
+              <i class={secondaryActionIcon}></i>
+            {/if}
+            <span>{secondaryActionLabel}</span>
+          </button>
+        {/if}
+      {/if}
+    </div>
+  {/if}
+
+  {#if hasSubHint}
+    <p class="arcana-onboarding__sub-hint">
+      {#if subHintSlot}
+        {@render subHintSlot()}
+      {:else}
+        {#if subHintIcon}
+          <i class={subHintIcon}></i>
+        {/if}
+        <span>{subHint}</span>
+      {/if}
+    </p>
+  {/if}
+</div>

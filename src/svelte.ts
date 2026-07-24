@@ -1,6 +1,6 @@
 // @arcanalabs/ui-components — Svelte 5 entry.
 //
-// Ports Svelte 5 (runes) dos SFCs Vue shadcn-style. Cada componente emite o MESMO
+// Ports Svelte 5 (runes) dos SFCs Vue arcana-style. Cada componente emite o MESMO
 // markup/classes que os equivalentes Vue/React/Angular, reusando o CSS compartilhado,
 // agnóstico de framework (`./styles/components.scss` → `@arcanalabs/ui-components/styles.css`).
 //
@@ -15,89 +15,72 @@
 
 import type { Component, Snippet } from "svelte";
 
-import ShadcnButtonComponent from "./svelte/ShadcnButton.svelte";
-import LabeledButtonComponent from "./svelte/LabeledButton.svelte";
-import ShadcnBadgeComponent from "./svelte/ShadcnBadge.svelte";
-import ShadcnInputComponent from "./svelte/ShadcnInput.svelte";
-import ShadcnCheckboxComponent from "./svelte/ShadcnCheckbox.svelte";
-import ShadcnSwitchComponent from "./svelte/ShadcnSwitch.svelte";
-import ShadcnSwitchRowComponent from "./svelte/ShadcnSwitchRow.svelte";
-import ShadcnSwitchCardComponent from "./svelte/ShadcnSwitchCard.svelte";
-import ShadcnSegmentedOptionsComponent from "./svelte/ShadcnSegmentedOptions.svelte";
-import ShadcnSkeletonComponent from "./svelte/ShadcnSkeleton.svelte";
-import ShadcnNoticeComponent from "./svelte/ShadcnNotice.svelte";
-import ShadcnTabsComponent from "./svelte/ShadcnTabs.svelte";
-import ShadcnAccordionComponent from "./svelte/ShadcnAccordion.svelte";
-import ShadcnAccordionItemComponent from "./svelte/ShadcnAccordionItem.svelte";
-import ShadcnSelectComponent from "./svelte/ShadcnSelect.svelte";
-import ShadcnInputBooleanComponent from "./svelte/ShadcnInputBoolean.svelte";
-import ShadcnNumberStepperComponent from "./svelte/ShadcnNumberStepper.svelte";
-import ShadcnRadioCardGroupComponent from "./svelte/ShadcnRadioCardGroup.svelte";
-import ShadcnSwitchSegmentedComponent from "./svelte/ShadcnSwitchSegmented.svelte";
-import MultiSelectPopoverComponent from "./svelte/MultiSelectPopover.svelte";
-import ShadcnInputMaskComponent from "./svelte/ShadcnInputMask.svelte";
-import InputCurrencyComponent from "./svelte/InputCurrency.svelte";
-import ShadcnDatePickerComponent from "./svelte/ShadcnDatePicker.svelte";
-import ShadcnTableComponent from "./svelte/ShadcnTable.svelte";
-import ShadcnSummaryTileComponent from "./svelte/ShadcnSummaryTile.svelte";
-import ShadcnSummaryTilesComponent from "./svelte/ShadcnSummaryTiles.svelte";
-import ShadcnLoadingOverlayComponent from "./svelte/ShadcnLoadingOverlay.svelte";
-import ShadcnDialogComponent from "./svelte/ShadcnDialog.svelte";
-import ShadcnDropdownComponent from "./svelte/ShadcnDropdown.svelte";
-import ShadcnDropdownItemComponent from "./svelte/ShadcnDropdownItem.svelte";
-import ShadcnEditFieldModalComponent from "./svelte/ShadcnEditFieldModal.svelte";
-import ShadcnRequiredFieldsDialogComponent from "./svelte/ShadcnRequiredFieldsDialog.svelte";
-import ShadcnOnboardingPanelComponent from "./svelte/ShadcnOnboardingPanel.svelte";
-import SparkGridEmptyStateComponent from "./svelte/SparkGridEmptyState.svelte";
-import ShadcnSettingsListComponent from "./svelte/ShadcnSettingsList.svelte";
-import ShadcnSettingsListGroupComponent from "./svelte/ShadcnSettingsListGroup.svelte";
-import ShadcnSettingsListItemComponent from "./svelte/ShadcnSettingsListItem.svelte";
-import ShadcnSettingsEditButtonComponent from "./svelte/ShadcnSettingsEditButton.svelte";
-import ShadcnSettingsEditableFieldComponent from "./svelte/ShadcnSettingsEditableField.svelte";
-import ShadcnSpecSheetComponent from "./svelte/ShadcnSpecSheet.svelte";
-import ShadcnSpecSheetSectionComponent from "./svelte/ShadcnSpecSheetSection.svelte";
-import ShadcnSpecSheetFieldComponent from "./svelte/ShadcnSpecSheetField.svelte";
+import ArcanaButtonComponent from "./svelte/ArcanaButton.svelte";
+import ArcanaBadgeComponent from "./svelte/ArcanaBadge.svelte";
+import ArcanaInputComponent from "./svelte/ArcanaInput.svelte";
+import ArcanaCheckboxComponent from "./svelte/ArcanaCheckbox.svelte";
+import ArcanaSwitchComponent from "./svelte/ArcanaSwitch.svelte";
+import ArcanaSwitchRowComponent from "./svelte/ArcanaSwitchRow.svelte";
+import ArcanaSwitchCardComponent from "./svelte/ArcanaSwitchCard.svelte";
+import ArcanaSegmentedOptionsComponent from "./svelte/ArcanaSegmentedOptions.svelte";
+import ArcanaSkeletonComponent from "./svelte/ArcanaSkeleton.svelte";
+import ArcanaNoticeComponent from "./svelte/ArcanaNotice.svelte";
+import ArcanaTabsComponent from "./svelte/ArcanaTabs.svelte";
+import ArcanaAccordionComponent from "./svelte/ArcanaAccordion.svelte";
+import ArcanaAccordionItemComponent from "./svelte/ArcanaAccordionItem.svelte";
+import ArcanaSelectComponent from "./svelte/ArcanaSelect.svelte";
+import ArcanaInputBooleanComponent from "./svelte/ArcanaInputBoolean.svelte";
+import ArcanaNumberStepperComponent from "./svelte/ArcanaNumberStepper.svelte";
+import ArcanaRadioCardGroupComponent from "./svelte/ArcanaRadioCardGroup.svelte";
+import ArcanaSwitchSegmentedComponent from "./svelte/ArcanaSwitchSegmented.svelte";
+import ArcanaMultiSelectPopoverComponent from "./svelte/ArcanaMultiSelectPopover.svelte";
+import ArcanaInputMaskComponent from "./svelte/ArcanaInputMask.svelte";
+import ArcanaInputCurrencyComponent from "./svelte/ArcanaInputCurrency.svelte";
+import ArcanaDatePickerComponent from "./svelte/ArcanaDatePicker.svelte";
+import ArcanaTableComponent from "./svelte/ArcanaTable.svelte";
+import ArcanaSummaryTileComponent from "./svelte/ArcanaSummaryTile.svelte";
+import ArcanaSummaryTilesComponent from "./svelte/ArcanaSummaryTiles.svelte";
+import ArcanaLoadingOverlayComponent from "./svelte/ArcanaLoadingOverlay.svelte";
+import ArcanaDialogComponent from "./svelte/ArcanaDialog.svelte";
+import ArcanaDropdownComponent from "./svelte/ArcanaDropdown.svelte";
+import ArcanaDropdownItemComponent from "./svelte/ArcanaDropdownItem.svelte";
+import ArcanaEditFieldModalComponent from "./svelte/ArcanaEditFieldModal.svelte";
+import ArcanaRequiredFieldsDialogComponent from "./svelte/ArcanaRequiredFieldsDialog.svelte";
+import ArcanaOnboardingPanelComponent from "./svelte/ArcanaOnboardingPanel.svelte";
+import ArcanaGridEmptyStateComponent from "./svelte/ArcanaGridEmptyState.svelte";
+import ArcanaSettingsListComponent from "./svelte/ArcanaSettingsList.svelte";
+import ArcanaSettingsListGroupComponent from "./svelte/ArcanaSettingsListGroup.svelte";
+import ArcanaSettingsListItemComponent from "./svelte/ArcanaSettingsListItem.svelte";
+import ArcanaSettingsEditButtonComponent from "./svelte/ArcanaSettingsEditButton.svelte";
+import ArcanaSettingsEditableFieldComponent from "./svelte/ArcanaSettingsEditableField.svelte";
+import ArcanaSpecSheetComponent from "./svelte/ArcanaSpecSheet.svelte";
+import ArcanaSpecSheetSectionComponent from "./svelte/ArcanaSpecSheetSection.svelte";
+import ArcanaSpecSheetFieldComponent from "./svelte/ArcanaSpecSheetField.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
 export { DateFormatter } from "./core/date";
 export { acquireZIndex, releaseZIndex } from "./vue/services/dialog-stack";
 
-/* ── ShadcnButton ─────────────────────────────────────────────────────────── */
-export type ShadcnButtonVariant =
+/* ── ArcanaButton ─────────────────────────────────────────────────────────── */
+export type ArcanaButtonVariant =
   | "primary" | "outline" | "outline-danger" | "ghost" | "danger" | "destructive"
   | "destructive-outline" | "success" | "secondary" | "dark" | "indigo" | "alert"
   | "info" | "warning" | "teal";
-export interface ShadcnButtonProps {
-  variant?: ShadcnButtonVariant;
+export interface ArcanaButtonProps {
+  variant?: ArcanaButtonVariant;
   type?: "button" | "submit";
   disabled?: boolean;
   onClick?: (ev: MouseEvent) => void;
   class?: string;
   children?: Snippet;
 }
-export const ShadcnButton = ShadcnButtonComponent as unknown as Component<ShadcnButtonProps>;
+export const ArcanaButton = ArcanaButtonComponent as unknown as Component<ArcanaButtonProps>;
 
-/* ── LabeledButton ────────────────────────────────────────────────────────── */
-export interface LabeledButtonProps {
-  icon?: string;
-  color?: string;
-  disabled?: boolean;
-  label: string;
-  shadcn?: boolean;
-  loading?: boolean;
-  centerLabel?: boolean;
-  centerContent?: boolean;
-  onClick?: (ev: MouseEvent) => void;
-  class?: string;
-  [key: string]: unknown;
-}
-export const LabeledButton = LabeledButtonComponent as unknown as Component<LabeledButtonProps>;
-
-/* ── ShadcnBadge ──────────────────────────────────────────────────────────── */
-export type ShadcnBadgeVariant = "neutral" | "blue" | "green" | "red" | "amber" | "violet";
-export interface ShadcnBadgeProps {
-  variant?: ShadcnBadgeVariant;
+/* ── ArcanaBadge ──────────────────────────────────────────────────────────── */
+export type ArcanaBadgeVariant = "neutral" | "blue" | "green" | "red" | "amber" | "violet";
+export interface ArcanaBadgeProps {
+  variant?: ArcanaBadgeVariant;
   dot?: boolean;
   size?: "sm" | "md";
   clickable?: boolean;
@@ -105,10 +88,10 @@ export interface ShadcnBadgeProps {
   class?: string;
   children?: Snippet;
 }
-export const ShadcnBadge = ShadcnBadgeComponent as unknown as Component<ShadcnBadgeProps>;
+export const ArcanaBadge = ArcanaBadgeComponent as unknown as Component<ArcanaBadgeProps>;
 
-/* ── ShadcnInput ──────────────────────────────────────────────────────────── */
-export interface ShadcnInputProps {
+/* ── ArcanaInput ──────────────────────────────────────────────────────────── */
+export interface ArcanaInputProps {
   value?: string | number | null;
   type?: string;
   placeholder?: string;
@@ -129,10 +112,10 @@ export interface ShadcnInputProps {
   onKeyup?: (ev: KeyboardEvent) => void;
   class?: string;
 }
-export const ShadcnInput = ShadcnInputComponent as unknown as Component<ShadcnInputProps>;
+export const ArcanaInput = ArcanaInputComponent as unknown as Component<ArcanaInputProps>;
 
-/* ── ShadcnCheckbox ───────────────────────────────────────────────────────── */
-export interface ShadcnCheckboxProps {
+/* ── ArcanaCheckbox ───────────────────────────────────────────────────────── */
+export interface ArcanaCheckboxProps {
   value?: boolean;
   indeterminate?: boolean;
   disabled?: boolean;
@@ -144,10 +127,10 @@ export interface ShadcnCheckboxProps {
   class?: string;
   children?: Snippet;
 }
-export const ShadcnCheckbox = ShadcnCheckboxComponent as unknown as Component<ShadcnCheckboxProps>;
+export const ArcanaCheckbox = ArcanaCheckboxComponent as unknown as Component<ArcanaCheckboxProps>;
 
-/* ── ShadcnSwitch ─────────────────────────────────────────────────────────── */
-export interface ShadcnSwitchProps {
+/* ── ArcanaSwitch ─────────────────────────────────────────────────────────── */
+export interface ArcanaSwitchProps {
   value?: boolean;
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
@@ -159,10 +142,10 @@ export interface ShadcnSwitchProps {
   tabindex?: number;
   "aria-hidden"?: boolean;
 }
-export const ShadcnSwitch = ShadcnSwitchComponent as unknown as Component<ShadcnSwitchProps>;
+export const ArcanaSwitch = ArcanaSwitchComponent as unknown as Component<ArcanaSwitchProps>;
 
-/* ── ShadcnSwitchRow ──────────────────────────────────────────────────────── */
-export interface ShadcnSwitchRowProps {
+/* ── ArcanaSwitchRow ──────────────────────────────────────────────────────── */
+export interface ArcanaSwitchRowProps {
   value?: boolean;
   label?: string | Snippet;
   description?: string | Snippet;
@@ -172,10 +155,10 @@ export interface ShadcnSwitchRowProps {
   onChange?: (value: boolean) => void;
   class?: string;
 }
-export const ShadcnSwitchRow = ShadcnSwitchRowComponent as unknown as Component<ShadcnSwitchRowProps>;
+export const ArcanaSwitchRow = ArcanaSwitchRowComponent as unknown as Component<ArcanaSwitchRowProps>;
 
-/* ── ShadcnSwitchCard ─────────────────────────────────────────────────────── */
-export interface ShadcnSwitchCardProps {
+/* ── ArcanaSwitchCard ─────────────────────────────────────────────────────── */
+export interface ArcanaSwitchCardProps {
   value?: boolean;
   title?: string | Snippet;
   statusOn?: string;
@@ -189,16 +172,16 @@ export interface ShadcnSwitchCardProps {
   onChange?: (value: boolean) => void;
   class?: string;
 }
-export const ShadcnSwitchCard = ShadcnSwitchCardComponent as unknown as Component<ShadcnSwitchCardProps>;
+export const ArcanaSwitchCard = ArcanaSwitchCardComponent as unknown as Component<ArcanaSwitchCardProps>;
 
-/* ── ShadcnSegmentedOptions ───────────────────────────────────────────────── */
+/* ── ArcanaSegmentedOptions ───────────────────────────────────────────────── */
 export interface SegmentedOption {
   label: string;
   value: string | number;
   disabled?: boolean;
   icon?: string;
 }
-export interface ShadcnSegmentedOptionsProps {
+export interface ArcanaSegmentedOptionsProps {
   value?: string | number | null;
   options?: SegmentedOption[];
   disabled?: boolean;
@@ -213,20 +196,20 @@ export interface ShadcnSegmentedOptionsProps {
   onChange?: (value: string | number) => void;
   class?: string;
 }
-export const ShadcnSegmentedOptions = ShadcnSegmentedOptionsComponent as unknown as Component<ShadcnSegmentedOptionsProps>;
+export const ArcanaSegmentedOptions = ArcanaSegmentedOptionsComponent as unknown as Component<ArcanaSegmentedOptionsProps>;
 
-/* ── ShadcnSkeleton ───────────────────────────────────────────────────────── */
-export interface ShadcnSkeletonProps {
+/* ── ArcanaSkeleton ───────────────────────────────────────────────────────── */
+export interface ArcanaSkeletonProps {
   width?: string;
   height?: string;
   rounded?: "sm" | "md" | "lg" | "full" | "none";
   class?: string;
 }
-export const ShadcnSkeleton = ShadcnSkeletonComponent as unknown as Component<ShadcnSkeletonProps>;
+export const ArcanaSkeleton = ArcanaSkeletonComponent as unknown as Component<ArcanaSkeletonProps>;
 
-/* ── ShadcnNotice ─────────────────────────────────────────────────────────── */
+/* ── ArcanaNotice ─────────────────────────────────────────────────────────── */
 export type NoticeVariant = "info" | "blue" | "success" | "warning" | "pending" | "destructive";
-export interface ShadcnNoticeProps {
+export interface ArcanaNoticeProps {
   variant?: NoticeVariant;
   title?: string | Snippet;
   icon?: string;
@@ -237,10 +220,10 @@ export interface ShadcnNoticeProps {
   class?: string;
   children?: Snippet;
 }
-export const ShadcnNotice = ShadcnNoticeComponent as unknown as Component<ShadcnNoticeProps>;
+export const ArcanaNotice = ArcanaNoticeComponent as unknown as Component<ArcanaNoticeProps>;
 
-/* ── ShadcnTabs ───────────────────────────────────────────────────────────── */
-export interface ShadcnTabItem {
+/* ── ArcanaTabs ───────────────────────────────────────────────────────────── */
+export interface ArcanaTabItem {
   name: string | number;
   label: string;
   disabled?: boolean;
@@ -251,12 +234,12 @@ export interface ShadcnTabItem {
   tone?: "default" | "danger";
   eager?: boolean;
 }
-export type ShadcnTabsVariant =
+export type ArcanaTabsVariant =
   | "pills" | "underline" | "boxed" | "sidebar" | "sidebar-soft" | "sidebar-shell" | "segmented";
-export interface ShadcnTabsProps {
+export interface ArcanaTabsProps {
   value: string | number;
-  tabs: ShadcnTabItem[];
-  variant?: ShadcnTabsVariant;
+  tabs: ArcanaTabItem[];
+  variant?: ArcanaTabsVariant;
   orientation?: "horizontal" | "vertical";
   ariaLabel?: string;
   keepAlive?: boolean;
@@ -267,39 +250,39 @@ export interface ShadcnTabsProps {
   /** Mapa `tab.name` → snippet do painel (equivale aos slots nomeados do Vue). */
   panels?: Record<string, Snippet>;
   /** Alternativa a `panels`: snippet único que recebe o tab a renderizar. */
-  panel?: Snippet<[ShadcnTabItem]>;
+  panel?: Snippet<[ArcanaTabItem]>;
   listHeader?: Snippet;
   class?: string;
 }
-export const ShadcnTabs = ShadcnTabsComponent as unknown as Component<ShadcnTabsProps>;
+export const ArcanaTabs = ArcanaTabsComponent as unknown as Component<ArcanaTabsProps>;
 
-/* ── ShadcnAccordion (+Item) ──────────────────────────────────────────────── */
-export interface ShadcnAccordionProps {
+/* ── ArcanaAccordion (+Item) ──────────────────────────────────────────────── */
+export interface ArcanaAccordionProps {
   value?: string | string[] | null;
   accordion?: boolean;
   onValueChange?: (value: string | string[] | null) => void;
   class?: string;
   children?: Snippet;
 }
-export const ShadcnAccordion = ShadcnAccordionComponent as unknown as Component<ShadcnAccordionProps>;
+export const ArcanaAccordion = ArcanaAccordionComponent as unknown as Component<ArcanaAccordionProps>;
 
-export interface ShadcnAccordionItemProps {
+export interface ArcanaAccordionItemProps {
   name: string;
   title?: string | Snippet;
   disabled?: boolean;
   class?: string;
   children?: Snippet;
 }
-export const ShadcnAccordionItem = ShadcnAccordionItemComponent as unknown as Component<ShadcnAccordionItemProps>;
+export const ArcanaAccordionItem = ArcanaAccordionItemComponent as unknown as Component<ArcanaAccordionItemProps>;
 
-/* ── ShadcnSelect ─────────────────────────────────────────────────────────── */
+/* ── ArcanaSelect ─────────────────────────────────────────────────────────── */
 export interface SelectOption {
   label: string;
   value: string | number | boolean | null;
   disabled?: boolean;
   description?: string;
 }
-export interface ShadcnSelectProps {
+export interface ArcanaSelectProps {
   value?: unknown;
   options?: SelectOption[] | string[] | number[];
   placeholder?: string;
@@ -313,10 +296,10 @@ export interface ShadcnSelectProps {
   onChange?: (value: unknown) => void;
   class?: string;
 }
-export const ShadcnSelect = ShadcnSelectComponent as unknown as Component<ShadcnSelectProps>;
+export const ArcanaSelect = ArcanaSelectComponent as unknown as Component<ArcanaSelectProps>;
 
-/* ── ShadcnInputBoolean ───────────────────────────────────────────────────── */
-export interface ShadcnInputBooleanProps {
+/* ── ArcanaInputBoolean ───────────────────────────────────────────────────── */
+export interface ArcanaInputBooleanProps {
   value?: unknown;
   variation?: "" | "status" | "nullable" | string;
   disabled?: boolean | number;
@@ -326,10 +309,10 @@ export interface ShadcnInputBooleanProps {
   onChange?: (value: unknown) => void;
   class?: string;
 }
-export const ShadcnInputBoolean = ShadcnInputBooleanComponent as unknown as Component<ShadcnInputBooleanProps>;
+export const ArcanaInputBoolean = ArcanaInputBooleanComponent as unknown as Component<ArcanaInputBooleanProps>;
 
-/* ── ShadcnNumberStepper ──────────────────────────────────────────────────── */
-export interface ShadcnNumberStepperProps {
+/* ── ArcanaNumberStepper ──────────────────────────────────────────────────── */
+export interface ArcanaNumberStepperProps {
   value?: number | string | null;
   min?: number;
   max?: number;
@@ -340,9 +323,9 @@ export interface ShadcnNumberStepperProps {
   onChange?: (value: number) => void;
   class?: string;
 }
-export const ShadcnNumberStepper = ShadcnNumberStepperComponent as unknown as Component<ShadcnNumberStepperProps>;
+export const ArcanaNumberStepper = ArcanaNumberStepperComponent as unknown as Component<ArcanaNumberStepperProps>;
 
-/* ── ShadcnRadioCardGroup ─────────────────────────────────────────────────── */
+/* ── ArcanaRadioCardGroup ─────────────────────────────────────────────────── */
 export interface RadioCardOption {
   label: string;
   value: string | number | boolean | null;
@@ -354,7 +337,7 @@ export interface RadioCardOption {
   iconColor?: string;
   iconBorder?: string;
 }
-export interface ShadcnRadioCardGroupProps {
+export interface ArcanaRadioCardGroupProps {
   value?: string | number | boolean | null;
   options: RadioCardOption[];
   name?: string;
@@ -367,10 +350,10 @@ export interface ShadcnRadioCardGroupProps {
   onChange?: (value: string | number | boolean | null) => void;
   class?: string;
 }
-export const ShadcnRadioCardGroup = ShadcnRadioCardGroupComponent as unknown as Component<ShadcnRadioCardGroupProps>;
+export const ArcanaRadioCardGroup = ArcanaRadioCardGroupComponent as unknown as Component<ArcanaRadioCardGroupProps>;
 
-/* ── ShadcnSwitchSegmented ────────────────────────────────────────────────── */
-export interface ShadcnSwitchSegmentedProps {
+/* ── ArcanaSwitchSegmented ────────────────────────────────────────────────── */
+export interface ArcanaSwitchSegmentedProps {
   value?: boolean;
   offLabel?: string;
   onLabel?: string;
@@ -386,9 +369,9 @@ export interface ShadcnSwitchSegmentedProps {
   onChange?: (value: boolean) => void;
   class?: string;
 }
-export const ShadcnSwitchSegmented = ShadcnSwitchSegmentedComponent as unknown as Component<ShadcnSwitchSegmentedProps>;
+export const ArcanaSwitchSegmented = ArcanaSwitchSegmentedComponent as unknown as Component<ArcanaSwitchSegmentedProps>;
 
-/* ── MultiSelectPopover ───────────────────────────────────────────────────── */
+/* ── ArcanaMultiSelectPopover ───────────────────────────────────────────────────── */
 export interface MultiSelectTab {
   key: string;
   label: string;
@@ -406,7 +389,7 @@ export interface MultiSelectTriggerContext {
   isEmpty: boolean;
   selectedCount: number;
 }
-export interface MultiSelectPopoverProps {
+export interface ArcanaMultiSelectPopoverProps {
   value?: Record<string, number[]>;
   tabs: MultiSelectTab[];
   emptyLabel?: string;
@@ -420,10 +403,10 @@ export interface MultiSelectPopoverProps {
   renderItem?: Snippet<[{ item: unknown; tab?: MultiSelectTab; selected: boolean }]>;
   class?: string;
 }
-export const MultiSelectPopover = MultiSelectPopoverComponent as unknown as Component<MultiSelectPopoverProps>;
+export const ArcanaMultiSelectPopover = ArcanaMultiSelectPopoverComponent as unknown as Component<ArcanaMultiSelectPopoverProps>;
 
-/* ── ShadcnInputMask ──────────────────────────────────────────────────────── */
-export interface ShadcnInputMaskProps {
+/* ── ArcanaInputMask ──────────────────────────────────────────────────────── */
+export interface ArcanaInputMaskProps {
   value?: string | number | null;
   mask: string | string[];
   placeholder?: string;
@@ -436,10 +419,10 @@ export interface ShadcnInputMaskProps {
   onFocus?: (ev: FocusEvent) => void;
   class?: string;
 }
-export const ShadcnInputMask = ShadcnInputMaskComponent as unknown as Component<ShadcnInputMaskProps>;
+export const ArcanaInputMask = ArcanaInputMaskComponent as unknown as Component<ArcanaInputMaskProps>;
 
-/* ── InputCurrency ────────────────────────────────────────────────────────── */
-export interface InputCurrencyProps {
+/* ── ArcanaInputCurrency ────────────────────────────────────────────────────────── */
+export interface ArcanaInputCurrencyProps {
   value?: string | number;
   disabled?: boolean | number;
   allowBlank?: boolean;
@@ -460,10 +443,10 @@ export interface InputCurrencyProps {
   onBlur?: (ev: FocusEvent) => void;
   class?: string;
 }
-export const InputCurrency = InputCurrencyComponent as unknown as Component<InputCurrencyProps>;
+export const ArcanaInputCurrency = ArcanaInputCurrencyComponent as unknown as Component<ArcanaInputCurrencyProps>;
 
-/* ── ShadcnDatePicker ─────────────────────────────────────────────────────── */
-export interface ShadcnDatePickerProps {
+/* ── ArcanaDatePicker ─────────────────────────────────────────────────────── */
+export interface ArcanaDatePickerProps {
   value?: string | string[] | null;
   type?: string;
   disabled?: boolean;
@@ -477,10 +460,10 @@ export interface ShadcnDatePickerProps {
   onFocus?: (ev: FocusEvent) => void;
   class?: string;
 }
-export const ShadcnDatePicker = ShadcnDatePickerComponent as unknown as Component<ShadcnDatePickerProps>;
+export const ArcanaDatePicker = ArcanaDatePickerComponent as unknown as Component<ArcanaDatePickerProps>;
 
-/* ── ShadcnTable ──────────────────────────────────────────────────────────── */
-export interface ShadcnTableColumn {
+/* ── ArcanaTable ──────────────────────────────────────────────────────────── */
+export interface ArcanaTableColumn {
   key: string;
   label: string;
   width?: string;
@@ -488,18 +471,18 @@ export interface ShadcnTableColumn {
   valueGetter?: (value: unknown, row: unknown, index: number) => unknown;
   render?: Snippet<[{ row: unknown; value: unknown; index: number }]>;
 }
-export interface ShadcnTableProps {
-  columns: ShadcnTableColumn[];
+export interface ArcanaTableProps {
+  columns: ArcanaTableColumn[];
   rows?: unknown[];
   emptyText?: string;
   footer?: Snippet;
   class?: string;
 }
-export const ShadcnTable = ShadcnTableComponent as unknown as Component<ShadcnTableProps>;
+export const ArcanaTable = ArcanaTableComponent as unknown as Component<ArcanaTableProps>;
 
-/* ── ShadcnSummaryTile (+Tiles) ───────────────────────────────────────────── */
+/* ── ArcanaSummaryTile (+Tiles) ───────────────────────────────────────────── */
 export type SummaryTileTone = "neutral" | "positive" | "negative" | "indigo";
-export interface ShadcnSummaryTileProps {
+export interface ArcanaSummaryTileProps {
   label: string;
   value?: string | number | null;
   icon?: string;
@@ -510,29 +493,29 @@ export interface ShadcnSummaryTileProps {
   class?: string;
   style?: string;
 }
-export const ShadcnSummaryTile = ShadcnSummaryTileComponent as unknown as Component<ShadcnSummaryTileProps>;
+export const ArcanaSummaryTile = ArcanaSummaryTileComponent as unknown as Component<ArcanaSummaryTileProps>;
 
-export interface ShadcnSummaryTilesProps {
+export interface ArcanaSummaryTilesProps {
   columns?: number | string;
   children?: Snippet;
   class?: string;
 }
-export const ShadcnSummaryTiles = ShadcnSummaryTilesComponent as unknown as Component<ShadcnSummaryTilesProps>;
+export const ArcanaSummaryTiles = ArcanaSummaryTilesComponent as unknown as Component<ArcanaSummaryTilesProps>;
 
-/* ── ShadcnLoadingOverlay ─────────────────────────────────────────────────── */
-export interface ShadcnLoadingOverlayProps {
+/* ── ArcanaLoadingOverlay ─────────────────────────────────────────────────── */
+export interface ArcanaLoadingOverlayProps {
   visible?: boolean;
   text?: string;
   class?: string;
 }
-export const ShadcnLoadingOverlay = ShadcnLoadingOverlayComponent as unknown as Component<ShadcnLoadingOverlayProps>;
+export const ArcanaLoadingOverlay = ArcanaLoadingOverlayComponent as unknown as Component<ArcanaLoadingOverlayProps>;
 
-/* ── ShadcnDialog (overlay imperativo) ────────────────────────────────────── */
-export type ShadcnDialogSize = "sm" | "md" | "lg" | "xl" | "full" | number;
-export interface ShadcnDialogProps {
+/* ── ArcanaDialog (overlay imperativo) ────────────────────────────────────── */
+export type ArcanaDialogSize = "sm" | "md" | "lg" | "xl" | "full" | number;
+export interface ArcanaDialogProps {
   title?: string;
   description?: string;
-  size?: ShadcnDialogSize;
+  size?: ArcanaDialogSize;
   fullHeight?: boolean;
   closeable?: boolean;
   contentClass?: string;
@@ -553,24 +536,24 @@ export interface ShadcnDialogProps {
  * API imperativa: `show()` / `hide()` acessíveis via `bind:this`.
  * ```svelte
  * <script>let dialog; </script>
- * <ShadcnDialog bind:this={dialog}>...</ShadcnDialog>
+ * <ArcanaDialog bind:this={dialog}>...</ArcanaDialog>
  * <button onclick={() => dialog.show()}>Abrir</button>
  * ```
  */
-export interface ShadcnDialogHandle {
+export interface ArcanaDialogHandle {
   show: () => void;
   hide: () => void;
 }
-export const ShadcnDialog = ShadcnDialogComponent as unknown as Component<ShadcnDialogProps>;
+export const ArcanaDialog = ArcanaDialogComponent as unknown as Component<ArcanaDialogProps>;
 
-/* ── ShadcnDropdown (+Item) ───────────────────────────────────────────────── */
-export type ShadcnDropdownPlacement = "bottom-end" | "bottom-start" | "top-end" | "top-start";
-export type ShadcnDropdownSize = "default" | "comfortable";
-export interface ShadcnDropdownProps {
-  placement?: ShadcnDropdownPlacement;
+/* ── ArcanaDropdown (+Item) ───────────────────────────────────────────────── */
+export type ArcanaDropdownPlacement = "bottom-end" | "bottom-start" | "top-end" | "top-start";
+export type ArcanaDropdownSize = "default" | "comfortable";
+export interface ArcanaDropdownProps {
+  placement?: ArcanaDropdownPlacement;
   offset?: number;
   disabled?: boolean;
-  size?: ShadcnDropdownSize;
+  size?: ArcanaDropdownSize;
   /** Snippet do gatilho — recebe `{ open, toggle }`. */
   trigger?: Snippet<[{ open: boolean; toggle: () => void }]>;
   /** Snippet do painel — recebe `{ close }`. */
@@ -578,24 +561,24 @@ export interface ShadcnDropdownProps {
   onOpen?: () => void;
   onClose?: () => void;
 }
-export const ShadcnDropdown = ShadcnDropdownComponent as unknown as Component<ShadcnDropdownProps>;
+export const ArcanaDropdown = ArcanaDropdownComponent as unknown as Component<ArcanaDropdownProps>;
 
-export interface ShadcnDropdownItemProps {
+export interface ArcanaDropdownItemProps {
   icon?: string;
   iconColor?: string;
   variant?: "default" | "danger" | "success" | "warning";
   disabled?: boolean;
   divided?: boolean;
   closeOnClick?: boolean;
-  size?: ShadcnDropdownSize | null;
+  size?: ArcanaDropdownSize | null;
   suffix?: Snippet;
   children?: Snippet;
   onClick?: (e: MouseEvent) => void;
 }
-export const ShadcnDropdownItem = ShadcnDropdownItemComponent as unknown as Component<ShadcnDropdownItemProps>;
+export const ArcanaDropdownItem = ArcanaDropdownItemComponent as unknown as Component<ArcanaDropdownItemProps>;
 
-/* ── ShadcnEditFieldModal ─────────────────────────────────────────────────── */
-export interface ShadcnEditFieldModalProps {
+/* ── ArcanaEditFieldModal ─────────────────────────────────────────────────── */
+export interface ArcanaEditFieldModalProps {
   title: string;
   description?: string;
   cancelLabel?: string;
@@ -608,20 +591,20 @@ export interface ShadcnEditFieldModalProps {
   children?: Snippet;
   onSave?: () => void;
 }
-/** API imperativa `show()`/`hide()` via `bind:this` (delega pro ShadcnDialog interno). */
-export interface ShadcnEditFieldModalHandle {
+/** API imperativa `show()`/`hide()` via `bind:this` (delega pro ArcanaDialog interno). */
+export interface ArcanaEditFieldModalHandle {
   show: () => void;
   hide: () => void;
 }
-export const ShadcnEditFieldModal = ShadcnEditFieldModalComponent as unknown as Component<ShadcnEditFieldModalProps>;
+export const ArcanaEditFieldModal = ArcanaEditFieldModalComponent as unknown as Component<ArcanaEditFieldModalProps>;
 
-/* ── ShadcnRequiredFieldsDialog ───────────────────────────────────────────── */
+/* ── ArcanaRequiredFieldsDialog ───────────────────────────────────────────── */
 export interface RequiredField {
   key: string;
   label: string;
   hint: string;
 }
-export interface ShadcnRequiredFieldsDialogProps {
+export interface ArcanaRequiredFieldsDialogProps {
   title?: string;
   description?: string;
   fields?: RequiredField[];
@@ -629,14 +612,14 @@ export interface ShadcnRequiredFieldsDialogProps {
   size?: number | string;
 }
 /** API imperativa `show()`/`hide()` via `bind:this`. */
-export interface ShadcnRequiredFieldsDialogHandle {
+export interface ArcanaRequiredFieldsDialogHandle {
   show: () => void;
   hide: () => void;
 }
-export const ShadcnRequiredFieldsDialog = ShadcnRequiredFieldsDialogComponent as unknown as Component<ShadcnRequiredFieldsDialogProps>;
+export const ArcanaRequiredFieldsDialog = ArcanaRequiredFieldsDialogComponent as unknown as Component<ArcanaRequiredFieldsDialogProps>;
 
-/* ── ShadcnOnboardingPanel ────────────────────────────────────────────────── */
-export interface ShadcnOnboardingPanelProps {
+/* ── ArcanaOnboardingPanel ────────────────────────────────────────────────── */
+export interface ArcanaOnboardingPanelProps {
   icon: string;
   title: string;
   description?: string;
@@ -653,10 +636,10 @@ export interface ShadcnOnboardingPanelProps {
   onAction?: () => void;
   onSecondaryAction?: () => void;
 }
-export const ShadcnOnboardingPanel = ShadcnOnboardingPanelComponent as unknown as Component<ShadcnOnboardingPanelProps>;
+export const ArcanaOnboardingPanel = ArcanaOnboardingPanelComponent as unknown as Component<ArcanaOnboardingPanelProps>;
 
-/* ── SparkGridEmptyState ──────────────────────────────────────────────────── */
-export interface SparkGridEmptyStateProps {
+/* ── ArcanaGridEmptyState ──────────────────────────────────────────────────── */
+export interface ArcanaGridEmptyStateProps {
   total: number;
   loading: boolean;
   filtered: boolean;
@@ -672,18 +655,18 @@ export interface SparkGridEmptyStateProps {
   onSecondaryAction?: () => void;
   onPanelVisible?: (visible: boolean) => void;
 }
-export const SparkGridEmptyState = SparkGridEmptyStateComponent as unknown as Component<SparkGridEmptyStateProps>;
+export const ArcanaGridEmptyState = ArcanaGridEmptyStateComponent as unknown as Component<ArcanaGridEmptyStateProps>;
 
-/* ── ShadcnSettingsList (família) ─────────────────────────────────────────── */
+/* ── ArcanaSettingsList (família) ─────────────────────────────────────────── */
 export type SettingsGroupIconColor =
   | "blue" | "emerald" | "amber" | "rose" | "violet" | "indigo" | "teal" | "slate";
 
-export interface ShadcnSettingsListProps {
+export interface ArcanaSettingsListProps {
   children?: Snippet;
 }
-export const ShadcnSettingsList = ShadcnSettingsListComponent as unknown as Component<ShadcnSettingsListProps>;
+export const ArcanaSettingsList = ArcanaSettingsListComponent as unknown as Component<ArcanaSettingsListProps>;
 
-export interface ShadcnSettingsListGroupProps {
+export interface ArcanaSettingsListGroupProps {
   title?: string | Snippet;
   sectionNum?: string;
   meta?: string | Snippet;
@@ -694,30 +677,30 @@ export interface ShadcnSettingsListGroupProps {
   compact?: boolean;
   children?: Snippet;
 }
-export const ShadcnSettingsListGroup = ShadcnSettingsListGroupComponent as unknown as Component<ShadcnSettingsListGroupProps>;
+export const ArcanaSettingsListGroup = ArcanaSettingsListGroupComponent as unknown as Component<ArcanaSettingsListGroupProps>;
 
-export interface ShadcnSettingsListItemProps {
+export interface ArcanaSettingsListItemProps {
   label?: string | Snippet;
   caption?: string | Snippet;
   disabled?: boolean;
   nested?: boolean;
   children?: Snippet;
 }
-export const ShadcnSettingsListItem = ShadcnSettingsListItemComponent as unknown as Component<ShadcnSettingsListItemProps>;
+export const ArcanaSettingsListItem = ArcanaSettingsListItemComponent as unknown as Component<ArcanaSettingsListItemProps>;
 
 /** Helper aditivo (parity React/Angular): botão "Alterar" pro slot de ação do item. */
-export interface ShadcnSettingsEditButtonProps {
+export interface ArcanaSettingsEditButtonProps {
   disabled?: boolean;
   label?: string;
   onClick?: (e: MouseEvent) => void;
 }
-export const ShadcnSettingsEditButton = ShadcnSettingsEditButtonComponent as unknown as Component<ShadcnSettingsEditButtonProps>;
+export const ArcanaSettingsEditButton = ArcanaSettingsEditButtonComponent as unknown as Component<ArcanaSettingsEditButtonProps>;
 
 export interface EditableFieldSelectOption {
   label: string;
   value: string | number | boolean | null;
 }
-export interface ShadcnSettingsEditableFieldProps {
+export interface ArcanaSettingsEditableFieldProps {
   value?: string | number | boolean | null;
   label: string;
   caption?: string;
@@ -739,13 +722,13 @@ export interface ShadcnSettingsEditableFieldProps {
   onValueChange?: (value: string | number | boolean | null) => void;
   onSave?: (value: string | number | boolean | null) => void;
 }
-export const ShadcnSettingsEditableField = ShadcnSettingsEditableFieldComponent as unknown as Component<ShadcnSettingsEditableFieldProps>;
+export const ArcanaSettingsEditableField = ArcanaSettingsEditableFieldComponent as unknown as Component<ArcanaSettingsEditableFieldProps>;
 
-/* ── ShadcnSpecSheet (família) ────────────────────────────────────────────── */
+/* ── ArcanaSpecSheet (família) ────────────────────────────────────────────── */
 export type SpecSheetAccentColor =
   | "blue" | "emerald" | "amber" | "rose" | "violet" | "indigo" | "teal" | "slate";
 
-export interface ShadcnSpecSheetProps {
+export interface ArcanaSpecSheetProps {
   docNum?: string;
   title?: string | Snippet;
   metaLabel?: string;
@@ -755,9 +738,9 @@ export interface ShadcnSpecSheetProps {
   footer?: Snippet;
   children?: Snippet;
 }
-export const ShadcnSpecSheet = ShadcnSpecSheetComponent as unknown as Component<ShadcnSpecSheetProps>;
+export const ArcanaSpecSheet = ArcanaSpecSheetComponent as unknown as Component<ArcanaSpecSheetProps>;
 
-export interface ShadcnSpecSheetSectionProps {
+export interface ArcanaSpecSheetSectionProps {
   title?: string | Snippet;
   sectionNum?: string;
   icon?: string;
@@ -768,13 +751,13 @@ export interface ShadcnSpecSheetSectionProps {
   actions?: Snippet;
   children?: Snippet;
 }
-export const ShadcnSpecSheetSection = ShadcnSpecSheetSectionComponent as unknown as Component<ShadcnSpecSheetSectionProps>;
+export const ArcanaSpecSheetSection = ArcanaSpecSheetSectionComponent as unknown as Component<ArcanaSpecSheetSectionProps>;
 
-export interface ShadcnSpecSheetFieldProps {
+export interface ArcanaSpecSheetFieldProps {
   label: string;
   value?: string | number | null;
   emptyText?: string;
   span?: number | string;
   children?: Snippet;
 }
-export const ShadcnSpecSheetField = ShadcnSpecSheetFieldComponent as unknown as Component<ShadcnSpecSheetFieldProps>;
+export const ArcanaSpecSheetField = ArcanaSpecSheetFieldComponent as unknown as Component<ArcanaSpecSheetFieldProps>;

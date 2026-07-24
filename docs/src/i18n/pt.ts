@@ -59,7 +59,7 @@ export const pt: Messages = {
     },
     maska: {
       title: "Registrando o v-maska",
-      p1: "Alguns componentes (<c>ShadcnInputMask</c>, <c>ShadcnDatePicker</c>) dependem da diretiva <c>v-maska</c> do pacote <c>maska</c>. Registre-a globalmente uma vez ao criar o app.",
+      p1: "Alguns componentes (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) dependem da diretiva <c>v-maska</c> do pacote <c>maska</c>. Registre-a globalmente uma vez ao criar o app.",
       p2: "Componentes que não usam máscara não exigem setup extra — este passo só é necessário se você renderizar um input com máscara."
     }
   },
@@ -91,7 +91,7 @@ export const pt: Messages = {
       blurb: "Um select totalmente customizado (sem Element Plus) teleportado para <c>&lt;body&gt;</c>, com single/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> e navegação por teclado."
     },
     checkbox: {
-      blurb: "Um checkbox binário que envolve um <c>&lt;input type=\"checkbox\"&gt;</c> nativo real com estado <c>indeterminate</c>; use <c>ShadcnSwitch</c> para alternar uma configuração."
+      blurb: "Um checkbox binário que envolve um <c>&lt;input type=\"checkbox\"&gt;</c> nativo real com estado <c>indeterminate</c>; use <c>ArcanaSwitch</c> para alternar uma configuração."
     },
     switch: {
       blurb: "Um toggle binário liga/desliga (switch WAI-ARIA), com cores vermelho/verde, e um checkbox oculto opcional para formulários nativos."
@@ -126,20 +126,17 @@ export const pt: Messages = {
     inputCurrency: {
       blurb: "Um input de moeda (sobre <c>v-money3</c>) que formata enquanto você digita, com decimais configuráveis e limites <c>min</c>/<c>max</c>; BRL por padrão."
     },
-    labeledButton: {
-      blurb: "O botão base com um <c>label</c>, <c>icon</c> opcional e um estado de spinner <c>loading</c>; a flag <c>shadcn</c> mapeia cores legadas para variantes semânticas."
-    },
     accordion: {
-      blurb: "O contêiner para <c>ShadcnAccordionItem</c>s colapsáveis, com um <c>v-model</c> para modo de abertura única ou múltipla."
+      blurb: "O contêiner para <c>ArcanaAccordionItem</c>s colapsáveis, com um <c>v-model</c> para modo de abertura única ou múltipla."
     },
     accordionItem: {
-      blurb: "Um único painel colapsável dentro de um <c>ShadcnAccordion</c>, identificado por um <c>name</c>, com cabeçalho <c>title</c> e corpo via slot."
+      blurb: "Um único painel colapsável dentro de um <c>ArcanaAccordion</c>, identificado por um <c>name</c>, com cabeçalho <c>title</c> e corpo via slot."
     },
     dropdown: {
       blurb: "Um menu dropdown shadcn que teleporta para <c>&lt;body&gt;</c>, se posiciona sozinho e fecha ao clicar fora, no Escape ou na seleção."
     },
     dropdownItem: {
-      blurb: "Uma linha dentro de um <c>ShadcnDropdown</c> — <c>icon</c>, rótulo e <c>suffix</c> opcionais — colorível, com um separador <c>divided</c> para ações destrutivas."
+      blurb: "Uma linha dentro de um <c>ArcanaDropdown</c> — <c>icon</c>, rótulo e <c>suffix</c> opcionais — colorível, com um separador <c>divided</c> para ações destrutivas."
     },
     table: {
       blurb: "Uma tabela shadcn estática para arrays em memória; colunas declaram <c>{ key, label, width?, align?, valueGetter? }</c>, com slots de célula e rodapé."
@@ -148,7 +145,7 @@ export const pt: Messages = {
       blurb: "Uma \"ficha técnica\" editorial e somente leitura para registros formais, com um sobretítulo <c>docNum</c>, um <c>title</c> e seções filhas."
     },
     specSheetSection: {
-      blurb: "Uma seção dentro de um <c>ShadcnSpecSheet</c> — <c>icon</c> de destaque, <c>title</c> e <c>sectionNum</c> sobre um grid de campos em <c>columns</c>."
+      blurb: "Uma seção dentro de um <c>ArcanaSpecSheet</c> — <c>icon</c> de destaque, <c>title</c> e <c>sectionNum</c> sobre um grid de campos em <c>columns</c>."
     },
     specSheetField: {
       blurb: "Um único par rótulo/valor; um valor vazio mostra <c>emptyText</c> para que lacunas pareçam intencionais, e <c>span</c> o alarga."
@@ -163,7 +160,7 @@ export const pt: Messages = {
       blurb: "Um contêiner ao estilo Ajustes do iOS com linhas separadas por fios finos, cada uma com rótulo + legenda e um controle alinhado à direita."
     },
     settingsListGroup: {
-      blurb: "Uma seção com título, opcionalmente <c>collapsible</c>, dentro de um <c>ShadcnSettingsList</c>, com um ícone, <c>sectionNum</c> e <c>meta</c>."
+      blurb: "Uma seção com título, opcionalmente <c>collapsible</c>, dentro de um <c>ArcanaSettingsList</c>, com um ícone, <c>sectionNum</c> e <c>meta</c>."
     },
     settingsListItem: {
       blurb: "Uma única linha de configuração — <c>label</c> + <c>caption</c> à esquerda, seu controle à direita."

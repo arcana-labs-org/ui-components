@@ -2,7 +2,7 @@
    spark-grid-shadcn.scss
    ─────────────────────────────────────────────────────────────────────────
 
-   Tema shadcn-style (palette zinc) para o `spark-grid-vue3`.
+   Tema arcana-style (palette zinc) para o `spark-grid-vue3`.
 
    Como usar:
    ─────────
@@ -303,9 +303,9 @@
     /* Modifier: densidade compacta — reduz padding vertical das células do body
        de `12px → 6px`, mantendo o horizontal. Útil em grids embarcados em
        cards/abas onde economizar altura é importante (ex: Acerto de Contas).
-       Uso: `<div class="spark-grid-shadcn spark-grid-shadcn--compact">`. */
-    &.spark-grid-shadcn--compact .spark-grid-datatable-body .spark-grid-datatable-cell,
-    &.spark-grid-shadcn--compact .grid-body .grid-cell {
+       Uso: `<div class="spark-grid-shadcn spark-grid-arcana--compact">`. */
+    &.spark-grid-arcana--compact .spark-grid-datatable-body .spark-grid-datatable-cell,
+    &.spark-grid-arcana--compact .grid-body .grid-cell {
         padding: 8px 14px !important;
     }
 

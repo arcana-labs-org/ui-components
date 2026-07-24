@@ -6,166 +6,163 @@
 // (props Vue → props React; `emit('update:modelValue')`/v-model → `value` +
 // `onValueChange`; `emit('x')` → `onX`; slots → `children`/props ReactNode).
 
-export { ShadcnButton } from "./ShadcnButton";
-export type { ShadcnButtonProps, ShadcnButtonVariant } from "./ShadcnButton";
+export { ArcanaButton } from "./ArcanaButton";
+export type { ArcanaButtonProps, ArcanaButtonVariant } from "./ArcanaButton";
 
-export { LabeledButton } from "./LabeledButton";
-export type { LabeledButtonProps } from "./LabeledButton";
+export { ArcanaBadge } from "./ArcanaBadge";
+export type { ArcanaBadgeProps, ArcanaBadgeVariant } from "./ArcanaBadge";
 
-export { ShadcnBadge } from "./ShadcnBadge";
-export type { ShadcnBadgeProps, ShadcnBadgeVariant } from "./ShadcnBadge";
+export { ArcanaInput } from "./ArcanaInput";
+export type { ArcanaInputProps } from "./ArcanaInput";
 
-export { ShadcnInput } from "./ShadcnInput";
-export type { ShadcnInputProps } from "./ShadcnInput";
+export { ArcanaCheckbox } from "./ArcanaCheckbox";
+export type { ArcanaCheckboxProps } from "./ArcanaCheckbox";
 
-export { ShadcnCheckbox } from "./ShadcnCheckbox";
-export type { ShadcnCheckboxProps } from "./ShadcnCheckbox";
+export { ArcanaSwitch } from "./ArcanaSwitch";
+export type { ArcanaSwitchProps } from "./ArcanaSwitch";
 
-export { ShadcnSwitch } from "./ShadcnSwitch";
-export type { ShadcnSwitchProps } from "./ShadcnSwitch";
+export { ArcanaSwitchRow } from "./ArcanaSwitchRow";
+export type { ArcanaSwitchRowProps } from "./ArcanaSwitchRow";
 
-export { ShadcnSwitchRow } from "./ShadcnSwitchRow";
-export type { ShadcnSwitchRowProps } from "./ShadcnSwitchRow";
+export { ArcanaSwitchCard } from "./ArcanaSwitchCard";
+export type { ArcanaSwitchCardProps } from "./ArcanaSwitchCard";
 
-export { ShadcnSwitchCard } from "./ShadcnSwitchCard";
-export type { ShadcnSwitchCardProps } from "./ShadcnSwitchCard";
-
-export { ShadcnSegmentedOptions } from "./ShadcnSegmentedOptions";
+export { ArcanaSegmentedOptions } from "./ArcanaSegmentedOptions";
 export type {
-    ShadcnSegmentedOptionsProps,
+    ArcanaSegmentedOptionsProps,
     SegmentedOption,
-} from "./ShadcnSegmentedOptions";
+} from "./ArcanaSegmentedOptions";
 
-export { ShadcnSkeleton } from "./ShadcnSkeleton";
-export type { ShadcnSkeletonProps } from "./ShadcnSkeleton";
+export { ArcanaSkeleton } from "./ArcanaSkeleton";
+export type { ArcanaSkeletonProps } from "./ArcanaSkeleton";
 
-export { ShadcnNotice } from "./ShadcnNotice";
-export type { ShadcnNoticeProps, NoticeVariant } from "./ShadcnNotice";
+export { ArcanaNotice } from "./ArcanaNotice";
+export type { ArcanaNoticeProps, NoticeVariant } from "./ArcanaNotice";
 
-export { ShadcnTabs } from "./ShadcnTabs";
+export { ArcanaTabs } from "./ArcanaTabs";
 export type {
-    ShadcnTabsProps,
-    ShadcnTabItem,
-    ShadcnTabsVariant,
-} from "./ShadcnTabs";
+    ArcanaTabsProps,
+    ArcanaTabItem,
+    ArcanaTabsVariant,
+} from "./ArcanaTabs";
 
-export { ShadcnAccordion, ShadcnAccordionItem } from "./ShadcnAccordion";
+export { ArcanaAccordion, ArcanaAccordionItem } from "./ArcanaAccordion";
 export type {
-    ShadcnAccordionProps,
-    ShadcnAccordionItemProps,
-} from "./ShadcnAccordion";
+    ArcanaAccordionProps,
+    ArcanaAccordionItemProps,
+} from "./ArcanaAccordion";
 
 // ── React lote 2 ────────────────────────────────────────────────────────────
 
-export { ShadcnSelect } from "./ShadcnSelect";
-export type { ShadcnSelectProps, SelectOption } from "./ShadcnSelect";
+export { ArcanaSelect } from "./ArcanaSelect";
+export type { ArcanaSelectProps, SelectOption } from "./ArcanaSelect";
 
-export { ShadcnInputBoolean } from "./ShadcnInputBoolean";
-export type { ShadcnInputBooleanProps } from "./ShadcnInputBoolean";
+export { ArcanaInputBoolean } from "./ArcanaInputBoolean";
+export type { ArcanaInputBooleanProps } from "./ArcanaInputBoolean";
 
-export { ShadcnNumberStepper } from "./ShadcnNumberStepper";
-export type { ShadcnNumberStepperProps } from "./ShadcnNumberStepper";
+export { ArcanaNumberStepper } from "./ArcanaNumberStepper";
+export type { ArcanaNumberStepperProps } from "./ArcanaNumberStepper";
 
-export { ShadcnRadioCardGroup } from "./ShadcnRadioCardGroup";
+export { ArcanaRadioCardGroup } from "./ArcanaRadioCardGroup";
 export type {
-    ShadcnRadioCardGroupProps,
+    ArcanaRadioCardGroupProps,
     RadioCardOption,
-} from "./ShadcnRadioCardGroup";
+} from "./ArcanaRadioCardGroup";
 
-export { ShadcnSwitchSegmented } from "./ShadcnSwitchSegmented";
-export type { ShadcnSwitchSegmentedProps } from "./ShadcnSwitchSegmented";
+export { ArcanaSwitchSegmented } from "./ArcanaSwitchSegmented";
+export type { ArcanaSwitchSegmentedProps } from "./ArcanaSwitchSegmented";
 
-export { MultiSelectPopover } from "./MultiSelectPopover";
+export { ArcanaMultiSelectPopover } from "./ArcanaMultiSelectPopover";
 export type {
-    MultiSelectPopoverProps,
+    ArcanaMultiSelectPopoverProps,
     MultiSelectTab,
     MultiSelectTriggerContext,
-} from "./MultiSelectPopover";
+} from "./ArcanaMultiSelectPopover";
 
-export { ShadcnInputMask } from "./ShadcnInputMask";
-export type { ShadcnInputMaskProps } from "./ShadcnInputMask";
+export { ArcanaInputMask } from "./ArcanaInputMask";
+export type { ArcanaInputMaskProps } from "./ArcanaInputMask";
 
-export { InputCurrency } from "./InputCurrency";
-export type { InputCurrencyProps } from "./InputCurrency";
+export { ArcanaInputCurrency } from "./ArcanaInputCurrency";
+export type { ArcanaInputCurrencyProps } from "./ArcanaInputCurrency";
 
-export { ShadcnDatePicker } from "./ShadcnDatePicker";
-export type { ShadcnDatePickerProps } from "./ShadcnDatePicker";
+export { ArcanaDatePicker } from "./ArcanaDatePicker";
+export type { ArcanaDatePickerProps } from "./ArcanaDatePicker";
 
-export { ShadcnTable } from "./ShadcnTable";
-export type { ShadcnTableProps, ShadcnTableColumn } from "./ShadcnTable";
+export { ArcanaTable } from "./ArcanaTable";
+export type { ArcanaTableProps, ArcanaTableColumn } from "./ArcanaTable";
 
-export { ShadcnSummaryTile } from "./ShadcnSummaryTile";
+export { ArcanaSummaryTile } from "./ArcanaSummaryTile";
 export type {
-    ShadcnSummaryTileProps,
+    ArcanaSummaryTileProps,
     SummaryTileTone,
-} from "./ShadcnSummaryTile";
+} from "./ArcanaSummaryTile";
 
-export { ShadcnSummaryTiles } from "./ShadcnSummaryTiles";
-export type { ShadcnSummaryTilesProps } from "./ShadcnSummaryTiles";
+export { ArcanaSummaryTiles } from "./ArcanaSummaryTiles";
+export type { ArcanaSummaryTilesProps } from "./ArcanaSummaryTiles";
 
-export { ShadcnLoadingOverlay } from "./ShadcnLoadingOverlay";
-export type { ShadcnLoadingOverlayProps } from "./ShadcnLoadingOverlay";
+export { ArcanaLoadingOverlay } from "./ArcanaLoadingOverlay";
+export type { ArcanaLoadingOverlayProps } from "./ArcanaLoadingOverlay";
 
 // ── React lote 3 (final): overlay / composição ──────────────────────────────
 
-export { ShadcnDialog } from "./ShadcnDialog";
+export { ArcanaDialog } from "./ArcanaDialog";
 export type {
-    ShadcnDialogProps,
-    ShadcnDialogHandle,
-    ShadcnDialogSize,
-} from "./ShadcnDialog";
+    ArcanaDialogProps,
+    ArcanaDialogHandle,
+    ArcanaDialogSize,
+} from "./ArcanaDialog";
 
-export { ShadcnDropdown, ShadcnDropdownItem } from "./ShadcnDropdown";
+export { ArcanaDropdown, ArcanaDropdownItem } from "./ArcanaDropdown";
 export type {
-    ShadcnDropdownProps,
-    ShadcnDropdownItemProps,
-    ShadcnDropdownPlacement,
-    ShadcnDropdownSize,
-} from "./ShadcnDropdown";
+    ArcanaDropdownProps,
+    ArcanaDropdownItemProps,
+    ArcanaDropdownPlacement,
+    ArcanaDropdownSize,
+} from "./ArcanaDropdown";
 
-export { ShadcnEditFieldModal } from "./ShadcnEditFieldModal";
+export { ArcanaEditFieldModal } from "./ArcanaEditFieldModal";
 export type {
-    ShadcnEditFieldModalProps,
-    ShadcnEditFieldModalHandle,
-} from "./ShadcnEditFieldModal";
+    ArcanaEditFieldModalProps,
+    ArcanaEditFieldModalHandle,
+} from "./ArcanaEditFieldModal";
 
-export { ShadcnRequiredFieldsDialog } from "./ShadcnRequiredFieldsDialog";
+export { ArcanaRequiredFieldsDialog } from "./ArcanaRequiredFieldsDialog";
 export type {
-    ShadcnRequiredFieldsDialogProps,
-    ShadcnRequiredFieldsDialogHandle,
+    ArcanaRequiredFieldsDialogProps,
+    ArcanaRequiredFieldsDialogHandle,
     RequiredField,
-} from "./ShadcnRequiredFieldsDialog";
+} from "./ArcanaRequiredFieldsDialog";
 
-export { ShadcnOnboardingPanel } from "./ShadcnOnboardingPanel";
-export type { ShadcnOnboardingPanelProps } from "./ShadcnOnboardingPanel";
+export { ArcanaOnboardingPanel } from "./ArcanaOnboardingPanel";
+export type { ArcanaOnboardingPanelProps } from "./ArcanaOnboardingPanel";
 
-export { SparkGridEmptyState } from "./SparkGridEmptyState";
-export type { SparkGridEmptyStateProps } from "./SparkGridEmptyState";
+export { ArcanaGridEmptyState } from "./ArcanaGridEmptyState";
+export type { ArcanaGridEmptyStateProps } from "./ArcanaGridEmptyState";
 
 export {
-    ShadcnSettingsList,
-    ShadcnSettingsListGroup,
-    ShadcnSettingsListItem,
-    ShadcnSettingsEditButton,
-} from "./ShadcnSettingsList";
+    ArcanaSettingsList,
+    ArcanaSettingsListGroup,
+    ArcanaSettingsListItem,
+    ArcanaSettingsEditButton,
+} from "./ArcanaSettingsList";
 export type {
-    ShadcnSettingsListProps,
-    ShadcnSettingsListGroupProps,
-    ShadcnSettingsListItemProps,
-    ShadcnSettingsEditButtonProps,
+    ArcanaSettingsListProps,
+    ArcanaSettingsListGroupProps,
+    ArcanaSettingsListItemProps,
+    ArcanaSettingsEditButtonProps,
     SettingsGroupIconColor,
-} from "./ShadcnSettingsList";
+} from "./ArcanaSettingsList";
 
-export { ShadcnSettingsEditableField } from "./ShadcnSettingsEditableField";
-export type { ShadcnSettingsEditableFieldProps } from "./ShadcnSettingsEditableField";
+export { ArcanaSettingsEditableField } from "./ArcanaSettingsEditableField";
+export type { ArcanaSettingsEditableFieldProps } from "./ArcanaSettingsEditableField";
 
 export {
-    ShadcnSpecSheet,
-    ShadcnSpecSheetSection,
-    ShadcnSpecSheetField,
-} from "./ShadcnSpecSheet";
+    ArcanaSpecSheet,
+    ArcanaSpecSheetSection,
+    ArcanaSpecSheetField,
+} from "./ArcanaSpecSheet";
 export type {
-    ShadcnSpecSheetProps,
-    ShadcnSpecSheetSectionProps,
-    ShadcnSpecSheetFieldProps,
-} from "./ShadcnSpecSheet";
+    ArcanaSpecSheetProps,
+    ArcanaSpecSheetSectionProps,
+    ArcanaSpecSheetFieldProps,
+} from "./ArcanaSpecSheet";

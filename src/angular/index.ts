@@ -2,113 +2,111 @@
 //
 // Ports Angular (standalone, attribute selectors `arcana*`) dos SFCs Vue de mesmo nome.
 // Cada componente é o PRÓPRIO elemento semântico (host = `<button>`/`<span>`/`<div>`/…) e
-// emite o MESMO markup e as MESMAS classes shadcn do equivalente Vue/React, reusando o CSS
+// emite o MESMO markup e as MESMAS classes arcana do equivalente Vue/React, reusando o CSS
 // compartilhado (`@arcanalabs/ui-components/styles.css`).
 //
 // v-model → `@Input() value` + `@Output() valueChange` (suporta `[(value)]`);
 // `emit('x')` → `@Output() x`; slots → `<ng-content>` / `@Input` (string) / diretiva de template.
 
-export { ShadcnButtonComponent } from "./shadcn-button.component";
-export type { ShadcnButtonVariant } from "./shadcn-button.component";
+export { ArcanaButtonComponent } from "./arcana-button.component";
+export type { ArcanaButtonVariant } from "./arcana-button.component";
 
-export { LabeledButtonComponent } from "./labeled-button.component";
+export { ArcanaBadgeComponent } from "./arcana-badge.component";
+export type { ArcanaBadgeVariant } from "./arcana-badge.component";
 
-export { ShadcnBadgeComponent } from "./shadcn-badge.component";
-export type { ShadcnBadgeVariant } from "./shadcn-badge.component";
+export { ArcanaInputComponent } from "./arcana-input.component";
 
-export { ShadcnInputComponent } from "./shadcn-input.component";
+export { ArcanaCheckboxComponent } from "./arcana-checkbox.component";
 
-export { ShadcnCheckboxComponent } from "./shadcn-checkbox.component";
+export { ArcanaSwitchComponent } from "./arcana-switch.component";
 
-export { ShadcnSwitchComponent } from "./shadcn-switch.component";
+export { ArcanaSwitchRowComponent } from "./arcana-switch-row.component";
 
-export { ShadcnSwitchRowComponent } from "./shadcn-switch-row.component";
+export { ArcanaSwitchCardComponent } from "./arcana-switch-card.component";
 
-export { ShadcnSwitchCardComponent } from "./shadcn-switch-card.component";
+export { ArcanaSegmentedOptionsComponent } from "./arcana-segmented-options.component";
+export type { SegmentedOption } from "./arcana-segmented-options.component";
 
-export { ShadcnSegmentedOptionsComponent } from "./shadcn-segmented-options.component";
-export type { SegmentedOption } from "./shadcn-segmented-options.component";
+export { ArcanaSkeletonComponent } from "./arcana-skeleton.component";
+export type { SkeletonRounded } from "./arcana-skeleton.component";
 
-export { ShadcnSkeletonComponent } from "./shadcn-skeleton.component";
-export type { SkeletonRounded } from "./shadcn-skeleton.component";
+export { ArcanaNoticeComponent } from "./arcana-notice.component";
+export type { NoticeVariant } from "./arcana-notice.component";
 
-export { ShadcnNoticeComponent } from "./shadcn-notice.component";
-export type { NoticeVariant } from "./shadcn-notice.component";
-
-export { ShadcnTabsComponent } from "./shadcn-tabs.component";
-export type { ShadcnTabItem, ShadcnTabsVariant } from "./shadcn-tabs.component";
+export { ArcanaTabsComponent } from "./arcana-tabs.component";
+export type { ArcanaTabItem, ArcanaTabsVariant } from "./arcana-tabs.component";
 export { ArcanaTabPanelDirective } from "./tab-panel.directive";
 
-export { ShadcnAccordionComponent } from "./shadcn-accordion.component";
-export { ShadcnAccordionItemComponent } from "./shadcn-accordion-item.component";
+export { ArcanaAccordionComponent } from "./arcana-accordion.component";
+export { ArcanaAccordionItemComponent } from "./arcana-accordion-item.component";
 
 // ── Lote 2: form / deps / estrutura ─────────────────────────────────────────
 
-export { ShadcnSelectComponent } from "./shadcn-select.component";
-export type { SelectOption } from "./shadcn-select.component";
+export { ArcanaSelectComponent } from "./arcana-select.component";
+export type { SelectOption } from "./arcana-select.component";
 
-export { ShadcnInputBooleanComponent } from "./shadcn-input-boolean.component";
+export { ArcanaInputBooleanComponent } from "./arcana-input-boolean.component";
 
-export { ShadcnNumberStepperComponent } from "./shadcn-number-stepper.component";
+export { ArcanaNumberStepperComponent } from "./arcana-number-stepper.component";
 
-export { ShadcnRadioCardGroupComponent } from "./shadcn-radio-card-group.component";
-export type { RadioCardOption } from "./shadcn-radio-card-group.component";
+export { ArcanaRadioCardGroupComponent } from "./arcana-radio-card-group.component";
+export type { RadioCardOption } from "./arcana-radio-card-group.component";
 
-export { ShadcnSwitchSegmentedComponent } from "./shadcn-switch-segmented.component";
+export { ArcanaSwitchSegmentedComponent } from "./arcana-switch-segmented.component";
 
-export { MultiSelectPopoverComponent } from "./multi-select-popover.component";
-export type { MultiSelectTab, MultiSelectTriggerContext } from "./multi-select-popover.component";
+export { ArcanaMultiSelectPopoverComponent } from "./arcana-multi-select-popover.component";
+export type { MultiSelectTab, MultiSelectTriggerContext } from "./arcana-multi-select-popover.component";
 
-export { ShadcnInputMaskComponent } from "./shadcn-input-mask.component";
+export { ArcanaInputMaskComponent } from "./arcana-input-mask.component";
 
-export { InputCurrencyComponent } from "./input-currency.component";
+export { ArcanaInputCurrencyComponent } from "./arcana-input-currency.component";
 
-export { ShadcnDatePickerComponent } from "./shadcn-date-picker.component";
+export { ArcanaDatePickerComponent } from "./arcana-date-picker.component";
 
-export { ShadcnTableComponent } from "./shadcn-table.component";
-export type { ShadcnTableColumn } from "./shadcn-table.component";
+export { ArcanaTableComponent } from "./arcana-table.component";
+export type { ArcanaTableColumn } from "./arcana-table.component";
 
-export { ShadcnSummaryTileComponent } from "./shadcn-summary-tile.component";
-export type { SummaryTileTone } from "./shadcn-summary-tile.component";
+export { ArcanaSummaryTileComponent } from "./arcana-summary-tile.component";
+export type { SummaryTileTone } from "./arcana-summary-tile.component";
 
-export { ShadcnSummaryTilesComponent } from "./shadcn-summary-tiles.component";
+export { ArcanaSummaryTilesComponent } from "./arcana-summary-tiles.component";
 
-export { ShadcnLoadingOverlayComponent } from "./shadcn-loading-overlay.component";
+export { ArcanaLoadingOverlayComponent } from "./arcana-loading-overlay.component";
 
 // ── Lote 3 (final): overlay / composição ────────────────────────────────────
 
-export { ShadcnDialogComponent } from "./shadcn-dialog.component";
-export type { ShadcnDialogSize } from "./shadcn-dialog.component";
+export { ArcanaDialogComponent } from "./arcana-dialog.component";
+export type { ArcanaDialogSize } from "./arcana-dialog.component";
 
-export { ShadcnDropdownComponent } from "./shadcn-dropdown.component";
-export type { ShadcnDropdownPlacement, ShadcnDropdownSize } from "./shadcn-dropdown.component";
+export { ArcanaDropdownComponent } from "./arcana-dropdown.component";
+export type { ArcanaDropdownPlacement, ArcanaDropdownSize } from "./arcana-dropdown.component";
 
-export { ShadcnDropdownItemComponent } from "./shadcn-dropdown-item.component";
+export { ArcanaDropdownItemComponent } from "./arcana-dropdown-item.component";
 
-export { ShadcnEditFieldModalComponent } from "./shadcn-edit-field-modal.component";
+export { ArcanaEditFieldModalComponent } from "./arcana-edit-field-modal.component";
 
-export { ShadcnRequiredFieldsDialogComponent } from "./shadcn-required-fields-dialog.component";
-export type { RequiredField } from "./shadcn-required-fields-dialog.component";
+export { ArcanaRequiredFieldsDialogComponent } from "./arcana-required-fields-dialog.component";
+export type { RequiredField } from "./arcana-required-fields-dialog.component";
 
-export { ShadcnOnboardingPanelComponent } from "./shadcn-onboarding-panel.component";
+export { ArcanaOnboardingPanelComponent } from "./arcana-onboarding-panel.component";
 
-export { SparkGridEmptyStateComponent } from "./spark-grid-empty-state.component";
+export { ArcanaGridEmptyStateComponent } from "./arcana-grid-empty-state.component";
 
 export {
-  ShadcnSettingsListComponent,
-  ShadcnSettingsEditButtonComponent
-} from "./shadcn-settings-list.component";
+  ArcanaSettingsListComponent,
+  ArcanaSettingsEditButtonComponent
+} from "./arcana-settings-list.component";
 
-export { ShadcnSettingsListGroupComponent } from "./shadcn-settings-list-group.component";
-export type { SettingsGroupIconColor } from "./shadcn-settings-list-group.component";
+export { ArcanaSettingsListGroupComponent } from "./arcana-settings-list-group.component";
+export type { SettingsGroupIconColor } from "./arcana-settings-list-group.component";
 
-export { ShadcnSettingsListItemComponent } from "./shadcn-settings-list-item.component";
+export { ArcanaSettingsListItemComponent } from "./arcana-settings-list-item.component";
 
-export { ShadcnSettingsEditableFieldComponent } from "./shadcn-settings-editable-field.component";
+export { ArcanaSettingsEditableFieldComponent } from "./arcana-settings-editable-field.component";
 
-export { ShadcnSpecSheetComponent } from "./shadcn-spec-sheet.component";
+export { ArcanaSpecSheetComponent } from "./arcana-spec-sheet.component";
 
-export { ShadcnSpecSheetSectionComponent } from "./shadcn-spec-sheet-section.component";
-export type { SpecSheetAccentColor } from "./shadcn-spec-sheet-section.component";
+export { ArcanaSpecSheetSectionComponent } from "./arcana-spec-sheet-section.component";
+export type { SpecSheetAccentColor } from "./arcana-spec-sheet-section.component";
 
-export { ShadcnSpecSheetFieldComponent } from "./shadcn-spec-sheet-field.component";
+export { ArcanaSpecSheetFieldComponent } from "./arcana-spec-sheet-field.component";

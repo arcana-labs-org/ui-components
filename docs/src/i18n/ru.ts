@@ -59,7 +59,7 @@ export const ru: Messages = {
     },
     maska: {
       title: "Регистрация v-maska",
-      p1: "Несколько компонентов (<c>ShadcnInputMask</c>, <c>ShadcnDatePicker</c>) используют директиву <c>v-maska</c> из пакета <c>maska</c>. Зарегистрируйте её глобально один раз при создании приложения.",
+      p1: "Несколько компонентов (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) используют директиву <c>v-maska</c> из пакета <c>maska</c>. Зарегистрируйте её глобально один раз при создании приложения.",
       p2: "Компонентам без маски дополнительная настройка не нужна — этот шаг требуется только при отрисовке поля ввода с маской."
     }
   },
@@ -91,7 +91,7 @@ export const ru: Messages = {
       blurb: "Полностью самописный select (без Element Plus), телепортируемый в <c>&lt;body&gt;</c>, с одиночным/<c>multiple</c> выбором, <c>searchable</c>, <c>clearable</c> и навигацией с клавиатуры."
     },
     checkbox: {
-      blurb: "Бинарный чекбокс, оборачивающий настоящий нативный <c>&lt;input type=\"checkbox\"&gt;</c> с состоянием <c>indeterminate</c>; для переключения настройки используйте <c>ShadcnSwitch</c>."
+      blurb: "Бинарный чекбокс, оборачивающий настоящий нативный <c>&lt;input type=\"checkbox\"&gt;</c> с состоянием <c>indeterminate</c>; для переключения настройки используйте <c>ArcanaSwitch</c>."
     },
     switch: {
       blurb: "Бинарный переключатель вкл/выкл (WAI-ARIA switch) с цветовой индикацией красный/зелёный и необязательным скрытым чекбоксом для нативных форм."
@@ -126,20 +126,17 @@ export const ru: Messages = {
     inputCurrency: {
       blurb: "Поле ввода валюты (на <c>v-money3</c>), форматирующее по мере ввода, с настраиваемым числом знаков и ограничением <c>min</c>/<c>max</c>; по умолчанию BRL."
     },
-    labeledButton: {
-      blurb: "Базовая кнопка с <c>label</c>, необязательной <c>icon</c> и состоянием спиннера <c>loading</c>; флаг <c>shadcn</c> сопоставляет устаревшие цвета с семантическими вариантами."
-    },
     accordion: {
-      blurb: "Контейнер для сворачиваемых <c>ShadcnAccordionItem</c>, привязывающий <c>v-model</c> для режима одного или нескольких открытых."
+      blurb: "Контейнер для сворачиваемых <c>ArcanaAccordionItem</c>, привязывающий <c>v-model</c> для режима одного или нескольких открытых."
     },
     accordionItem: {
-      blurb: "Одна сворачиваемая панель внутри <c>ShadcnAccordion</c>, определяемая по <c>name</c>, с заголовком <c>title</c> и телом-слотом."
+      blurb: "Одна сворачиваемая панель внутри <c>ArcanaAccordion</c>, определяемая по <c>name</c>, с заголовком <c>title</c> и телом-слотом."
     },
     dropdown: {
       blurb: "Выпадающее меню shadcn, телепортируемое в <c>&lt;body&gt;</c>, авто-позиционируемое и закрывающееся по клику снаружи, Escape или выбору."
     },
     dropdownItem: {
-      blurb: "Строка внутри <c>ShadcnDropdown</c> — необязательная <c>icon</c>, подпись и <c>suffix</c> — с настройкой цвета и разделителем <c>divided</c> для деструктивных действий."
+      blurb: "Строка внутри <c>ArcanaDropdown</c> — необязательная <c>icon</c>, подпись и <c>suffix</c> — с настройкой цвета и разделителем <c>divided</c> для деструктивных действий."
     },
     table: {
       blurb: "Статическая таблица shadcn для массивов в памяти; колонки объявляются как <c>{ key, label, width?, align?, valueGetter? }</c>, со слотами ячеек и футера."
@@ -148,7 +145,7 @@ export const ru: Messages = {
       blurb: "Редакционная «спецификация» только для чтения для формальных записей, с эйбровом <c>docNum</c>, заголовком <c>title</c> и дочерними секциями."
     },
     specSheetSection: {
-      blurb: "Секция внутри <c>ShadcnSpecSheet</c> — акцентная <c>icon</c>, <c>title</c> и <c>sectionNum</c> над сеткой полей <c>columns</c>."
+      blurb: "Секция внутри <c>ArcanaSpecSheet</c> — акцентная <c>icon</c>, <c>title</c> и <c>sectionNum</c> над сеткой полей <c>columns</c>."
     },
     specSheetField: {
       blurb: "Одна пара метка/значение; пустое значение показывает <c>emptyText</c>, чтобы пропуски читались как намеренные, а <c>span</c> расширяет поле."
@@ -163,7 +160,7 @@ export const ru: Messages = {
       blurb: "Контейнер в стиле «Настройки» iOS из строк, разделённых тонкими линиями, у каждой метка + подпись и выровненный по правому краю контрол."
     },
     settingsListGroup: {
-      blurb: "Озаглавленная, при желании <c>collapsible</c>, секция внутри <c>ShadcnSettingsList</c>, с иконкой, <c>sectionNum</c> и <c>meta</c>."
+      blurb: "Озаглавленная, при желании <c>collapsible</c>, секция внутри <c>ArcanaSettingsList</c>, с иконкой, <c>sectionNum</c> и <c>meta</c>."
     },
     settingsListItem: {
       blurb: "Одна строка настроек — <c>label</c> + <c>caption</c> слева, ваш контрол справа."

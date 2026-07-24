@@ -2,119 +2,119 @@ import { describe, it, expect, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 import { useRef, useState } from "react";
 import {
-    ShadcnDialog,
-    type ShadcnDialogHandle,
-    ShadcnDropdown,
-    ShadcnDropdownItem,
-    ShadcnEditFieldModal,
-    type ShadcnEditFieldModalHandle,
-    ShadcnRequiredFieldsDialog,
-    type ShadcnRequiredFieldsDialogHandle,
-    ShadcnOnboardingPanel,
-    SparkGridEmptyState,
-    ShadcnSettingsList,
-    ShadcnSettingsListGroup,
-    ShadcnSettingsListItem,
-    ShadcnSettingsEditableField,
-    ShadcnSpecSheet,
-    ShadcnSpecSheetSection,
-    ShadcnSpecSheetField,
-    ShadcnButton,
-    ShadcnBadge,
-    ShadcnInput,
-    ShadcnSwitch,
-    ShadcnTabs,
-    ShadcnCheckbox,
-    ShadcnSelect,
-    ShadcnInputBoolean,
-    ShadcnNumberStepper,
-    ShadcnRadioCardGroup,
-    ShadcnSwitchSegmented,
-    MultiSelectPopover,
-    ShadcnInputMask,
-    InputCurrency,
-    ShadcnDatePicker,
-    ShadcnTable,
-    ShadcnSummaryTile,
-    ShadcnSummaryTiles,
-    ShadcnLoadingOverlay,
+    ArcanaDialog,
+    type ArcanaDialogHandle,
+    ArcanaDropdown,
+    ArcanaDropdownItem,
+    ArcanaEditFieldModal,
+    type ArcanaEditFieldModalHandle,
+    ArcanaRequiredFieldsDialog,
+    type ArcanaRequiredFieldsDialogHandle,
+    ArcanaOnboardingPanel,
+    ArcanaGridEmptyState,
+    ArcanaSettingsList,
+    ArcanaSettingsListGroup,
+    ArcanaSettingsListItem,
+    ArcanaSettingsEditableField,
+    ArcanaSpecSheet,
+    ArcanaSpecSheetSection,
+    ArcanaSpecSheetField,
+    ArcanaButton,
+    ArcanaBadge,
+    ArcanaInput,
+    ArcanaSwitch,
+    ArcanaTabs,
+    ArcanaCheckbox,
+    ArcanaSelect,
+    ArcanaInputBoolean,
+    ArcanaNumberStepper,
+    ArcanaRadioCardGroup,
+    ArcanaSwitchSegmented,
+    ArcanaMultiSelectPopover,
+    ArcanaInputMask,
+    ArcanaInputCurrency,
+    ArcanaDatePicker,
+    ArcanaTable,
+    ArcanaSummaryTile,
+    ArcanaSummaryTiles,
+    ArcanaLoadingOverlay,
 } from "../src/react";
 
 // Smoke test do port React (lote 1): monta uma amostra dos componentes e garante que
 // emitem as MESMAS classes shadcn do equivalente Vue (reuso do CSS compartilhado), além
 // de um teste de interação por reatividade (click/toggle).
 describe("@arcanalabs/ui-components — React smoke", () => {
-    it("ShadcnButton renderiza com as classes shadcn e dispara onClick", () => {
+    it("ArcanaButton renderiza com as classes shadcn e dispara onClick", () => {
         const onClick = vi.fn();
         const { container, getByText } = render(
-            <ShadcnButton variant="primary" onClick={onClick}>
+            <ArcanaButton variant="primary" onClick={onClick}>
                 Salvar
-            </ShadcnButton>
+            </ArcanaButton>
         );
         const btn = container.querySelector("button")!;
-        expect(btn.classList.contains("shadcn-button")).toBe(true);
-        expect(btn.classList.contains("shadcn-button--primary")).toBe(true);
+        expect(btn.classList.contains("arcana-button")).toBe(true);
+        expect(btn.classList.contains("arcana-button--primary")).toBe(true);
         expect(getByText("Salvar")).toBeTruthy();
         fireEvent.click(btn);
         expect(onClick).toHaveBeenCalledOnce();
     });
 
-    it("ShadcnBadge renderiza com variant e slot (children)", () => {
+    it("ArcanaBadge renderiza com variant e slot (children)", () => {
         const { container, getByText } = render(
-            <ShadcnBadge variant="green">Ativo</ShadcnBadge>
+            <ArcanaBadge variant="green">Ativo</ArcanaBadge>
         );
-        const span = container.querySelector("span.shadcn-badge")!;
-        expect(span.classList.contains("shadcn-badge--green")).toBe(true);
+        const span = container.querySelector("span.arcana-badge")!;
+        expect(span.classList.contains("arcana-badge--green")).toBe(true);
         expect(getByText("Ativo")).toBeTruthy();
     });
 
-    it("ShadcnInput renderiza um input controlado com a classe shadcn-input", () => {
-        const { container } = render(<ShadcnInput value="olá" />);
-        const input = container.querySelector("input.shadcn-input") as HTMLInputElement;
+    it("ArcanaInput renderiza um input controlado com a classe arcana-input", () => {
+        const { container } = render(<ArcanaInput value="olá" />);
+        const input = container.querySelector("input.arcana-input") as HTMLInputElement;
         expect(input).toBeTruthy();
-        expect(input.classList.contains("shadcn-input--md")).toBe(true);
+        expect(input.classList.contains("arcana-input--md")).toBe(true);
         expect(input.value).toBe("olá");
     });
 
-    it("ShadcnInput emite onValueChange ao digitar", () => {
+    it("ArcanaInput emite onValueChange ao digitar", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnInput value="" onValueChange={onValueChange} />
+            <ArcanaInput value="" onValueChange={onValueChange} />
         );
-        const input = container.querySelector("input.shadcn-input") as HTMLInputElement;
+        const input = container.querySelector("input.arcana-input") as HTMLInputElement;
         fireEvent.change(input, { target: { value: "abc" } });
         expect(onValueChange).toHaveBeenCalledWith("abc");
     });
 
-    it("ShadcnSwitch renderiza role=switch e emite o novo valor ao alternar", () => {
+    it("ArcanaSwitch renderiza role=switch e emite o novo valor ao alternar", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnSwitch value={false} onValueChange={onValueChange} />
+            <ArcanaSwitch value={false} onValueChange={onValueChange} />
         );
-        const btn = container.querySelector("button.shadcn-switch")!;
+        const btn = container.querySelector("button.arcana-switch")!;
         expect(btn.getAttribute("role")).toBe("switch");
         expect(btn.getAttribute("aria-checked")).toBe("false");
         fireEvent.click(btn);
         expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
-    it("ShadcnCheckbox usa input nativo e emite ao marcar", () => {
+    it("ArcanaCheckbox usa input nativo e emite ao marcar", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnCheckbox value={false} label="Aceito" onValueChange={onValueChange} />
+            <ArcanaCheckbox value={false} label="Aceito" onValueChange={onValueChange} />
         );
-        const label = container.querySelector("label.shadcn-checkbox")!;
-        const input = label.querySelector("input.shadcn-checkbox__input") as HTMLInputElement;
+        const label = container.querySelector("label.arcana-checkbox")!;
+        const input = label.querySelector("input.arcana-checkbox__input") as HTMLInputElement;
         expect(input.type).toBe("checkbox");
         fireEvent.click(input);
         expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
-    it("ShadcnTabs renderiza triggers e troca o painel ativo (controlado)", () => {
+    it("ArcanaTabs renderiza triggers e troca o painel ativo (controlado)", () => {
         function Harness() {
             const [tab, setTab] = useState("a");
             return (
-                <ShadcnTabs
+                <ArcanaTabs
                     value={tab}
                     onValueChange={(name) => setTab(String(name))}
                     tabs={[
@@ -126,7 +126,7 @@ describe("@arcanalabs/ui-components — React smoke", () => {
             );
         }
         const { container, getByText, queryByText } = render(<Harness />);
-        expect(container.querySelector(".shadcn-tabs__list")).toBeTruthy();
+        expect(container.querySelector(".arcana-tabs__list")).toBeTruthy();
         expect(getByText("Aba A")).toBeTruthy();
         expect(getByText("Aba B")).toBeTruthy();
         expect(getByText("Painel A")).toBeTruthy();
@@ -138,11 +138,11 @@ describe("@arcanalabs/ui-components — React smoke", () => {
 
 // ── React lote 2 ────────────────────────────────────────────────────────────
 describe("@arcanalabs/ui-components — React lote 2", () => {
-    it("ShadcnSelect abre o panel teleportado e seleciona uma opção", () => {
+    it("ArcanaSelect abre o panel teleportado e seleciona uma opção", () => {
         function Harness() {
             const [v, setV] = useState<unknown>(null);
             return (
-                <ShadcnSelect
+                <ArcanaSelect
                     value={v}
                     onValueChange={setV}
                     options={[
@@ -153,39 +153,39 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
             );
         }
         const { container } = render(<Harness />);
-        const trigger = container.querySelector("button.shadcn-select__trigger")!;
-        expect(container.querySelector(".shadcn-select")).toBeTruthy();
+        const trigger = container.querySelector("button.arcana-select__trigger")!;
+        expect(container.querySelector(".arcana-select")).toBeTruthy();
         // fechado: sem panel
-        expect(document.body.querySelector(".shadcn-select__panel")).toBeNull();
+        expect(document.body.querySelector(".arcana-select__panel")).toBeNull();
         fireEvent.click(trigger);
-        const panel = document.body.querySelector(".shadcn-select__panel")!;
+        const panel = document.body.querySelector(".arcana-select__panel")!;
         expect(panel).toBeTruthy();
-        const items = panel.querySelectorAll(".shadcn-select__item");
+        const items = panel.querySelectorAll(".arcana-select__item");
         expect(items.length).toBe(2);
         fireEvent.click(items[1]);
         // após seleção fecha e mostra o label
-        expect(document.body.querySelector(".shadcn-select__panel")).toBeNull();
+        expect(document.body.querySelector(".arcana-select__panel")).toBeNull();
         expect(
-            container.querySelector(".shadcn-select__label")!.textContent
+            container.querySelector(".arcana-select__label")!.textContent
         ).toContain("Dois");
     });
 
-    it("ShadcnInputBoolean renderiza como shadcn-select com opção Todos", () => {
-        const { container } = render(<ShadcnInputBoolean value={null} />);
-        const trigger = container.querySelector("button.shadcn-select__trigger")!;
+    it("ArcanaInputBoolean renderiza como arcana-select com opção Todos", () => {
+        const { container } = render(<ArcanaInputBoolean value={null} />);
+        const trigger = container.querySelector("button.arcana-select__trigger")!;
         fireEvent.click(trigger);
         const labels = Array.from(
-            document.body.querySelectorAll(".shadcn-select__item-label")
+            document.body.querySelectorAll(".arcana-select__item-label")
         ).map((el) => el.textContent);
         expect(labels).toEqual(["Todos", "Sim", "Não"]);
     });
 
-    it("ShadcnNumberStepper incrementa e respeita o max", () => {
+    it("ArcanaNumberStepper incrementa e respeita o max", () => {
         const onValueChange = vi.fn();
         function Harness() {
             const [v, setV] = useState(2);
             return (
-                <ShadcnNumberStepper
+                <ArcanaNumberStepper
                     value={v}
                     max={3}
                     onValueChange={(n) => {
@@ -196,9 +196,9 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
             );
         }
         const { container } = render(<Harness />);
-        expect(container.querySelector(".shadcn-number-stepper")).toBeTruthy();
+        expect(container.querySelector(".arcana-number-stepper")).toBeTruthy();
         const inc = container.querySelector(
-            ".shadcn-number-stepper__btn--increment"
+            ".arcana-number-stepper__btn--increment"
         ) as HTMLButtonElement;
         fireEvent.click(inc);
         expect(onValueChange).toHaveBeenLastCalledWith(3);
@@ -206,10 +206,10 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(inc.disabled).toBe(true);
     });
 
-    it("ShadcnRadioCardGroup emite ao trocar de opção", () => {
+    it("ArcanaRadioCardGroup emite ao trocar de opção", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnRadioCardGroup
+            <ArcanaRadioCardGroup
                 value="a"
                 onValueChange={onValueChange}
                 options={[
@@ -218,31 +218,31 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 ]}
             />
         );
-        const cards = container.querySelectorAll(".shadcn-radio-card");
+        const cards = container.querySelectorAll(".arcana-radio-card");
         expect(cards.length).toBe(2);
         expect(cards[0].classList.contains("is-selected")).toBe(true);
         const inputB = cards[1].querySelector(
-            "input.shadcn-radio-card__input"
+            "input.arcana-radio-card__input"
         ) as HTMLInputElement;
         fireEvent.click(inputB);
         expect(onValueChange).toHaveBeenCalledWith("b");
     });
 
-    it("ShadcnSwitchSegmented alterna e reflete is-on", () => {
+    it("ArcanaSwitchSegmented alterna e reflete is-on", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnSwitchSegmented value={false} onValueChange={onValueChange} />
+            <ArcanaSwitchSegmented value={false} onValueChange={onValueChange} />
         );
-        const root = container.querySelector(".shadcn-switch-segmented")!;
+        const root = container.querySelector(".arcana-switch-segmented")!;
         expect(root.getAttribute("role")).toBe("switch");
         expect(root.classList.contains("is-on")).toBe(false);
         fireEvent.click(root);
         expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
-    it("MultiSelectPopover renderiza o trigger com o summary vazio", () => {
+    it("ArcanaMultiSelectPopover renderiza o trigger com o summary vazio", () => {
         const { container } = render(
-            <MultiSelectPopover
+            <ArcanaMultiSelectPopover
                 value={{}}
                 emptyLabel="Selecione pessoas"
                 tabs={[
@@ -261,52 +261,52 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         ).toBe("Selecione pessoas");
     });
 
-    it("ShadcnInputMask formata o valor conforme a máscara e emite o raw", () => {
+    it("ArcanaInputMask formata o valor conforme a máscara e emite o raw", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnInputMask
+            <ArcanaInputMask
                 value=""
                 mask="##.###.###/####-##"
                 onValueChange={onValueChange}
             />
         );
-        const input = container.querySelector("input.shadcn-input") as HTMLInputElement;
+        const input = container.querySelector("input.arcana-input") as HTMLInputElement;
         fireEvent.change(input, { target: { value: "11222333000181" } });
         expect(input.value).toBe("11.222.333/0001-81");
         expect(onValueChange).toHaveBeenLastCalledWith("11222333000181");
     });
 
-    it("InputCurrency formata BRL enquanto digita (modo shadcn)", () => {
+    it("ArcanaInputCurrency formata BRL enquanto digita (modo shadcn)", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <InputCurrency value="" shadcn onValueChange={onValueChange} />
+            <ArcanaInputCurrency value="" shadcn onValueChange={onValueChange} />
         );
-        expect(container.querySelector(".icur-shadcn-field")).toBeTruthy();
+        expect(container.querySelector(".icur-arcana-field")).toBeTruthy();
         const input = container.querySelector(
-            "input.icur-shadcn-input"
+            "input.icur-arcana-input"
         ) as HTMLInputElement;
         fireEvent.change(input, { target: { value: "123456" } });
         expect(input.value).toBe("1.234,56");
         expect(onValueChange).toHaveBeenLastCalledWith("1.234,56");
     });
 
-    it("ShadcnDatePicker (composite) mascara a digitação e emite YYYY-MM-DD", () => {
+    it("ArcanaDatePicker (composite) mascara a digitação e emite YYYY-MM-DD", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ShadcnDatePicker value={null} onValueChange={onValueChange} />
+            <ArcanaDatePicker value={null} onValueChange={onValueChange} />
         );
-        expect(container.querySelector(".shadcn-date-picker__box")).toBeTruthy();
+        expect(container.querySelector(".arcana-date-picker__box")).toBeTruthy();
         const text = container.querySelector(
-            "input.shadcn-date-picker__text"
+            "input.arcana-date-picker__text"
         ) as HTMLInputElement;
         fireEvent.change(text, { target: { value: "25072026" } });
         expect(text.value).toBe("25/07/2026");
         expect(onValueChange).toHaveBeenLastCalledWith("2026-07-25");
     });
 
-    it("ShadcnTable renderiza colunas, células e empty", () => {
+    it("ArcanaTable renderiza colunas, células e empty", () => {
         const { container, getByText, rerender } = render(
-            <ShadcnTable
+            <ArcanaTable
                 columns={[
                     { key: "name", label: "Nome" },
                     { key: "qty", label: "Qtd", align: "right" },
@@ -314,133 +314,133 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 rows={[{ name: "Gás", qty: 2 }]}
             />
         );
-        expect(container.querySelector("table.shadcn-table")).toBeTruthy();
-        expect(container.querySelector(".shadcn-table__th--right")).toBeTruthy();
+        expect(container.querySelector("table.arcana-table")).toBeTruthy();
+        expect(container.querySelector(".arcana-table__th--right")).toBeTruthy();
         expect(getByText("Gás")).toBeTruthy();
         rerender(
-            <ShadcnTable
+            <ArcanaTable
                 columns={[{ key: "name", label: "Nome" }]}
                 rows={[]}
             />
         );
-        expect(container.querySelector(".shadcn-table__empty")).toBeTruthy();
+        expect(container.querySelector(".arcana-table__empty")).toBeTruthy();
     });
 
-    it("ShadcnSummaryTiles + ShadcnSummaryTile renderizam o grid e o tone", () => {
+    it("ArcanaSummaryTiles + ArcanaSummaryTile renderizam o grid e o tone", () => {
         const { container, getByText } = render(
-            <ShadcnSummaryTiles columns={2}>
-                <ShadcnSummaryTile
+            <ArcanaSummaryTiles columns={2}>
+                <ArcanaSummaryTile
                     tone="positive"
                     label="Entradas"
                     value="R$ 10"
                     sub="4 formas"
                 />
-            </ShadcnSummaryTiles>
+            </ArcanaSummaryTiles>
         );
-        const tiles = container.querySelector(".shadcn-summary-tiles") as HTMLElement;
-        expect(tiles.style.getPropertyValue("--shadcn-summary-tiles-cols")).toBe("2");
+        const tiles = container.querySelector(".arcana-summary-tiles") as HTMLElement;
+        expect(tiles.style.getPropertyValue("--arcana-summary-tiles-cols")).toBe("2");
         expect(
-            container.querySelector(".shadcn-summary-tile--positive")
+            container.querySelector(".arcana-summary-tile--positive")
         ).toBeTruthy();
         expect(getByText("R$ 10")).toBeTruthy();
         expect(getByText("4 formas")).toBeTruthy();
     });
 
-    it("ShadcnLoadingOverlay respeita a prop visible", () => {
+    it("ArcanaLoadingOverlay respeita a prop visible", () => {
         const { container, rerender } = render(
-            <ShadcnLoadingOverlay visible={false} />
+            <ArcanaLoadingOverlay visible={false} />
         );
-        expect(container.querySelector(".shadcn-loading-overlay")).toBeNull();
-        rerender(<ShadcnLoadingOverlay visible text="Salvando…" />);
-        expect(container.querySelector(".shadcn-loading-overlay")).toBeTruthy();
+        expect(container.querySelector(".arcana-loading-overlay")).toBeNull();
+        rerender(<ArcanaLoadingOverlay visible text="Salvando…" />);
+        expect(container.querySelector(".arcana-loading-overlay")).toBeTruthy();
         expect(
-            container.querySelector(".shadcn-loading-overlay__text")!.textContent
+            container.querySelector(".arcana-loading-overlay__text")!.textContent
         ).toBe("Salvando…");
     });
 
     // ── React lote 3 (final): overlay / composição ─────────────────────────
 
-    it("ShadcnDialog abre/fecha via ref e teleporta pro body com as classes shadcn", () => {
+    it("ArcanaDialog abre/fecha via ref e teleporta pro body com as classes shadcn", () => {
         function Harness() {
-            const ref = useRef<ShadcnDialogHandle>(null);
+            const ref = useRef<ArcanaDialogHandle>(null);
             return (
                 <>
                     <button onClick={() => ref.current?.show()}>abrir</button>
-                    <ShadcnDialog
+                    <ArcanaDialog
                         ref={ref}
                         title="Meu Modal"
                         footer={(hide) => <button onClick={hide}>fechar</button>}
                     >
                         <p>corpo do dialog</p>
-                    </ShadcnDialog>
+                    </ArcanaDialog>
                 </>
             );
         }
         const { getByText } = render(<Harness />);
         // Fechado por default — nada no body.
-        expect(document.querySelector(".shadcn-dialog-overlay")).toBeNull();
+        expect(document.querySelector(".arcana-dialog-overlay")).toBeNull();
 
         fireEvent.click(getByText("abrir"));
-        const overlay = document.querySelector(".shadcn-dialog-overlay")!;
+        const overlay = document.querySelector(".arcana-dialog-overlay")!;
         expect(overlay).toBeTruthy();
-        expect(document.querySelector(".shadcn-dialog-content")).toBeTruthy();
-        expect(document.querySelector(".shadcn-dialog-title")!.textContent).toBe("Meu Modal");
+        expect(document.querySelector(".arcana-dialog-content")).toBeTruthy();
+        expect(document.querySelector(".arcana-dialog-title")!.textContent).toBe("Meu Modal");
         expect(getByText("corpo do dialog")).toBeTruthy();
 
         fireEvent.click(getByText("fechar"));
-        expect(document.querySelector(".shadcn-dialog-overlay")).toBeNull();
+        expect(document.querySelector(".arcana-dialog-overlay")).toBeNull();
     });
 
-    it("ShadcnDropdown abre no click do trigger e o item dispara onClick + fecha", () => {
+    it("ArcanaDropdown abre no click do trigger e o item dispara onClick + fecha", () => {
         const onClick = vi.fn();
         const { getByText } = render(
-            <ShadcnDropdown trigger={<button>menu</button>}>
-                <ShadcnDropdownItem icon="fa-solid fa-pen" onClick={onClick}>
+            <ArcanaDropdown trigger={<button>menu</button>}>
+                <ArcanaDropdownItem icon="fa-solid fa-pen" onClick={onClick}>
                     Renomear
-                </ShadcnDropdownItem>
-            </ShadcnDropdown>
+                </ArcanaDropdownItem>
+            </ArcanaDropdown>
         );
-        expect(document.querySelector(".shadcn-dropdown__menu")).toBeNull();
+        expect(document.querySelector(".arcana-dropdown__menu")).toBeNull();
 
         fireEvent.click(getByText("menu"));
-        const menu = document.querySelector(".shadcn-dropdown__menu")!;
+        const menu = document.querySelector(".arcana-dropdown__menu")!;
         expect(menu).toBeTruthy();
-        const item = document.querySelector(".shadcn-dropdown-item")!;
-        expect(item.classList.contains("shadcn-dropdown-item--default")).toBe(true);
+        const item = document.querySelector(".arcana-dropdown-item")!;
+        expect(item.classList.contains("arcana-dropdown-item--default")).toBe(true);
 
         fireEvent.click(getByText("Renomear"));
         expect(onClick).toHaveBeenCalledOnce();
         // closeOnClick default → menu fecha.
-        expect(document.querySelector(".shadcn-dropdown__menu")).toBeNull();
+        expect(document.querySelector(".arcana-dropdown__menu")).toBeNull();
     });
 
-    it("ShadcnEditFieldModal abre via ref e dispara onSave", () => {
+    it("ArcanaEditFieldModal abre via ref e dispara onSave", () => {
         const onSave = vi.fn();
         function Harness() {
-            const ref = useRef<ShadcnEditFieldModalHandle>(null);
+            const ref = useRef<ArcanaEditFieldModalHandle>(null);
             return (
                 <>
                     <button onClick={() => ref.current?.show()}>editar</button>
-                    <ShadcnEditFieldModal ref={ref} title="Alterar Plano" onSave={onSave}>
+                    <ArcanaEditFieldModal ref={ref} title="Alterar Plano" onSave={onSave}>
                         <input aria-label="campo" />
-                    </ShadcnEditFieldModal>
+                    </ArcanaEditFieldModal>
                 </>
             );
         }
         const { getByText } = render(<Harness />);
         fireEvent.click(getByText("editar"));
-        expect(document.querySelector(".shadcn-dialog-title")!.textContent).toBe("Alterar Plano");
+        expect(document.querySelector(".arcana-dialog-title")!.textContent).toBe("Alterar Plano");
         fireEvent.click(getByText("Salvar Alterações"));
         expect(onSave).toHaveBeenCalledOnce();
     });
 
-    it("ShadcnRequiredFieldsDialog lista os campos pendentes via ref", () => {
+    it("ArcanaRequiredFieldsDialog lista os campos pendentes via ref", () => {
         function Harness() {
-            const ref = useRef<ShadcnRequiredFieldsDialogHandle>(null);
+            const ref = useRef<ArcanaRequiredFieldsDialogHandle>(null);
             return (
                 <>
                     <button onClick={() => ref.current?.show()}>validar</button>
-                    <ShadcnRequiredFieldsDialog
+                    <ArcanaRequiredFieldsDialog
                         ref={ref}
                         fields={[
                             { key: "name", label: "Nome", hint: "Passo 1" },
@@ -457,10 +457,10 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(getByText("CNPJ")).toBeTruthy();
     });
 
-    it("ShadcnOnboardingPanel renderiza visual + CTA e dispara onAction", () => {
+    it("ArcanaOnboardingPanel renderiza visual + CTA e dispara onAction", () => {
         const onAction = vi.fn();
         const { container, getByText } = render(
-            <ShadcnOnboardingPanel
+            <ArcanaOnboardingPanel
                 icon="fa-solid fa-clock"
                 title="Configure os horários"
                 description="Cadastre os intervalos."
@@ -468,18 +468,18 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 onAction={onAction}
             />
         );
-        expect(container.querySelector(".shadcn-onboarding")).toBeTruthy();
-        expect(container.querySelectorAll(".shadcn-onboarding__ring").length).toBe(2);
-        expect(container.querySelector(".shadcn-onboarding__title")!.textContent).toBe(
+        expect(container.querySelector(".arcana-onboarding")).toBeTruthy();
+        expect(container.querySelectorAll(".arcana-onboarding__ring").length).toBe(2);
+        expect(container.querySelector(".arcana-onboarding__title")!.textContent).toBe(
             "Configure os horários"
         );
         fireEvent.click(getByText("Adicionar"));
         expect(onAction).toHaveBeenCalledOnce();
     });
 
-    it("SparkGridEmptyState mostra o painel só quando carregou vazio e sem filtro", () => {
+    it("ArcanaGridEmptyState mostra o painel só quando carregou vazio e sem filtro", () => {
         const { container, rerender, queryByText } = render(
-            <SparkGridEmptyState
+            <ArcanaGridEmptyState
                 total={0}
                 loading
                 filtered={false}
@@ -488,14 +488,14 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 actionLabel="Criar"
             >
                 <div>conteúdo da grid</div>
-            </SparkGridEmptyState>
+            </ArcanaGridEmptyState>
         );
         // Ainda carregando → sem painel, children visível.
-        expect(container.querySelector(".shadcn-onboarding")).toBeNull();
+        expect(container.querySelector(".arcana-onboarding")).toBeNull();
 
         // loading true → false com total 0 e sem filtro → painel aparece.
         rerender(
-            <SparkGridEmptyState
+            <ArcanaGridEmptyState
                 total={0}
                 loading={false}
                 filtered={false}
@@ -504,54 +504,54 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 actionLabel="Criar"
             >
                 <div>conteúdo da grid</div>
-            </SparkGridEmptyState>
+            </ArcanaGridEmptyState>
         );
-        expect(container.querySelector(".shadcn-onboarding")).toBeTruthy();
+        expect(container.querySelector(".arcana-onboarding")).toBeTruthy();
         expect(queryByText("Sem itens")).toBeTruthy();
     });
 
-    it("família ShadcnSettingsList monta com as classes compartilhadas", () => {
+    it("família ArcanaSettingsList monta com as classes compartilhadas", () => {
         const { container, getByText } = render(
-            <ShadcnSettingsList>
-                <ShadcnSettingsListGroup
+            <ArcanaSettingsList>
+                <ArcanaSettingsListGroup
                     title="Pedidos"
                     icon="fa-solid fa-cart-shopping"
                     iconColor="indigo"
                 >
-                    <ShadcnSettingsListItem label="Plano" caption="Funcionalidades">
-                        <span className="shadcn-settings-list__current-value">Pro</span>
-                    </ShadcnSettingsListItem>
-                </ShadcnSettingsListGroup>
-            </ShadcnSettingsList>
+                    <ArcanaSettingsListItem label="Plano" caption="Funcionalidades">
+                        <span className="arcana-settings-list__current-value">Pro</span>
+                    </ArcanaSettingsListItem>
+                </ArcanaSettingsListGroup>
+            </ArcanaSettingsList>
         );
-        expect(container.querySelector(".shadcn-settings-list")).toBeTruthy();
+        expect(container.querySelector(".arcana-settings-list")).toBeTruthy();
         expect(
-            container.querySelector(".shadcn-settings-list__group-icon--indigo")
+            container.querySelector(".arcana-settings-list__group-icon--indigo")
         ).toBeTruthy();
-        expect(container.querySelector(".shadcn-settings-list__item")).toBeTruthy();
-        expect(container.querySelector(".shadcn-settings-list__caption")!.textContent).toBe(
+        expect(container.querySelector(".arcana-settings-list__item")).toBeTruthy();
+        expect(container.querySelector(".arcana-settings-list__caption")!.textContent).toBe(
             "Funcionalidades"
         );
         expect(getByText("Plano")).toBeTruthy();
     });
 
-    it("ShadcnSettingsListGroup collapsible alterna a visibilidade dos items", () => {
+    it("ArcanaSettingsListGroup collapsible alterna a visibilidade dos items", () => {
         const { container, getByText } = render(
-            <ShadcnSettingsListGroup title="Avançado" collapsible defaultCollapsed>
-                <ShadcnSettingsListItem label="Escondido" />
-            </ShadcnSettingsListGroup>
+            <ArcanaSettingsListGroup title="Avançado" collapsible defaultCollapsed>
+                <ArcanaSettingsListItem label="Escondido" />
+            </ArcanaSettingsListGroup>
         );
         // Colapsado por default → item não renderiza.
-        expect(container.querySelector(".shadcn-settings-list__item")).toBeNull();
+        expect(container.querySelector(".arcana-settings-list__item")).toBeNull();
         fireEvent.click(getByText("Avançado"));
-        expect(container.querySelector(".shadcn-settings-list__item")).toBeTruthy();
+        expect(container.querySelector(".arcana-settings-list__item")).toBeTruthy();
     });
 
-    it("ShadcnSettingsEditableField mostra display + abre modal e salva o buffer", () => {
+    it("ArcanaSettingsEditableField mostra display + abre modal e salva o buffer", () => {
         const onValueChange = vi.fn();
         const onSave = vi.fn();
         const { container, getByText } = render(
-            <ShadcnSettingsEditableField
+            <ArcanaSettingsEditableField
                 label="Desconto"
                 caption="Valor aplicado"
                 type="text"
@@ -560,39 +560,39 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 onSave={onSave}
             />
         );
-        expect(container.querySelector(".shadcn-settings-list__current-value")!.textContent).toBe(
+        expect(container.querySelector(".arcana-settings-list__current-value")!.textContent).toBe(
             "10"
         );
         fireEvent.click(getByText("Alterar"));
-        expect(document.querySelector(".shadcn-dialog-content")).toBeTruthy();
+        expect(document.querySelector(".arcana-dialog-content")).toBeTruthy();
         fireEvent.click(getByText("Salvar Alterações"));
         expect(onValueChange).toHaveBeenCalledWith("10");
         expect(onSave).toHaveBeenCalledWith("10");
     });
 
-    it("família ShadcnSpecSheet monta header/section/field com as classes e emptyText", () => {
+    it("família ArcanaSpecSheet monta header/section/field com as classes e emptyText", () => {
         const { container, getByText } = render(
-            <ShadcnSpecSheet
+            <ArcanaSpecSheet
                 docNum="Cadastro Nº 042"
                 title="Popgás"
                 metaLabel="Status"
-                meta={<span className="shadcn-spec-sheet-badge">Ativo</span>}
+                meta={<span className="arcana-spec-sheet-badge">Ativo</span>}
                 footer={<button>Alterar</button>}
             >
-                <ShadcnSpecSheetSection title="Dados" sectionNum="§ 01" columns={2}>
-                    <ShadcnSpecSheetField label="Razão Social" value="Popgás Ltda" />
-                    <ShadcnSpecSheetField label="CNPJ" value={null} />
-                </ShadcnSpecSheetSection>
-            </ShadcnSpecSheet>
+                <ArcanaSpecSheetSection title="Dados" sectionNum="§ 01" columns={2}>
+                    <ArcanaSpecSheetField label="Razão Social" value="Popgás Ltda" />
+                    <ArcanaSpecSheetField label="CNPJ" value={null} />
+                </ArcanaSpecSheetSection>
+            </ArcanaSpecSheet>
         );
-        expect(container.querySelector("article.shadcn-spec-sheet")).toBeTruthy();
-        expect(container.querySelector(".shadcn-spec-sheet__doc-num")!.textContent).toBe(
+        expect(container.querySelector("article.arcana-spec-sheet")).toBeTruthy();
+        expect(container.querySelector(".arcana-spec-sheet__doc-num")!.textContent).toBe(
             "Cadastro Nº 042"
         );
-        expect(container.querySelector(".shadcn-spec-sheet__grid--cols-2")).toBeTruthy();
-        expect(container.querySelector(".shadcn-spec-sheet__footer")).toBeTruthy();
+        expect(container.querySelector(".arcana-spec-sheet__grid--cols-2")).toBeTruthy();
+        expect(container.querySelector(".arcana-spec-sheet__footer")).toBeTruthy();
         // Field vazio (value=null) mostra o emptyText com a classe --empty.
-        const emptyValue = container.querySelector(".shadcn-spec-sheet__value--empty")!;
+        const emptyValue = container.querySelector(".arcana-spec-sheet__value--empty")!;
         expect(emptyValue.textContent).toBe("Não informado");
         expect(getByText("Popgás Ltda")).toBeTruthy();
     });

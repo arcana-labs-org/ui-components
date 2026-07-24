@@ -1,19 +1,19 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import {
-  ShadcnButton,
-  ShadcnBadge,
-  ShadcnInput,
-  ShadcnTabs,
-  ShadcnSwitch
+  ArcanaButton,
+  ArcanaBadge,
+  ArcanaInput,
+  ArcanaTabs,
+  ArcanaSwitch
 } from "../src/vue";
 
 // Smoke test: monta uma amostra variada de componentes da lib Vue e garante que
 // renderizam sem lançar erro. Não valida comportamento — só que o barrel export
 // e o build de SFC estão saudáveis.
 describe("@arcanalabs/ui-components — Vue smoke", () => {
-  it("ShadcnButton renderiza com um slot de label", () => {
-    const wrapper = mount(ShadcnButton, {
+  it("ArcanaButton renderiza com um slot de label", () => {
+    const wrapper = mount(ArcanaButton, {
       props: { variant: "primary" },
       slots: { default: "Salvar" }
     });
@@ -21,17 +21,17 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     expect(wrapper.find("button").exists()).toBe(true);
   });
 
-  it("ShadcnBadge renderiza com variant e slot", () => {
-    const wrapper = mount(ShadcnBadge, {
+  it("ArcanaBadge renderiza com variant e slot", () => {
+    const wrapper = mount(ArcanaBadge, {
       props: { variant: "green" },
       slots: { default: "Ativo" }
     });
     expect(wrapper.text()).toContain("Ativo");
-    expect(wrapper.classes().join(" ")).toContain("shadcn-badge");
+    expect(wrapper.classes().join(" ")).toContain("arcana-badge");
   });
 
-  it("ShadcnInput renderiza um input com v-model", () => {
-    const wrapper = mount(ShadcnInput, {
+  it("ArcanaInput renderiza um input com v-model", () => {
+    const wrapper = mount(ArcanaInput, {
       props: { modelValue: "olá" }
     });
     const input = wrapper.find("input");
@@ -39,8 +39,8 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     expect((input.element as HTMLInputElement).value).toBe("olá");
   });
 
-  it("ShadcnTabs renderiza os triggers das abas", () => {
-    const wrapper = mount(ShadcnTabs, {
+  it("ArcanaTabs renderiza os triggers das abas", () => {
+    const wrapper = mount(ArcanaTabs, {
       props: {
         modelValue: "a",
         tabs: [
@@ -54,8 +54,8 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     expect(wrapper.text()).toContain("Aba B");
   });
 
-  it("ShadcnSwitch renderiza e emite update ao alternar", async () => {
-    const wrapper = mount(ShadcnSwitch, {
+  it("ArcanaSwitch renderiza e emite update ao alternar", async () => {
+    const wrapper = mount(ArcanaSwitch, {
       props: { modelValue: false }
     });
     await wrapper.find("button, [role='switch']").trigger("click");

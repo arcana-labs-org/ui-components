@@ -7,11 +7,13 @@ import type { CategoryId, DocumentedKey } from "../i18n/types";
  * registered as "coming soon" stubs so the navigation is already complete.
  *
  * `id` is the section anchor (used in the URL hash). `name` is the exported
- * component identifier, shown verbatim as the section heading (not translated).
+ * component identifier, shown verbatim in the code examples (not translated).
+ * `label` is the short, human-friendly name shown in the sidebar and heading.
  */
 export interface ComponentEntry {
   id: string;
   name: string;
+  label: string;
   category: CategoryId;
   /** Present ⇒ fully documented; keyed into `messages.components` + the doc map. */
   docKey?: DocumentedKey;
@@ -19,55 +21,54 @@ export interface ComponentEntry {
 
 export const COMPONENTS: ComponentEntry[] = [
   // ── Forms ──────────────────────────────────────────────────────────────
-  { id: "shadcn-button", name: "ShadcnButton", category: "forms", docKey: "button" },
-  { id: "shadcn-input", name: "ShadcnInput", category: "forms", docKey: "input" },
-  { id: "shadcn-input-mask", name: "ShadcnInputMask", category: "forms", docKey: "inputMask" },
-  { id: "shadcn-input-boolean", name: "ShadcnInputBoolean", category: "forms", docKey: "inputBoolean" },
-  { id: "shadcn-number-stepper", name: "ShadcnNumberStepper", category: "forms", docKey: "numberStepper" },
-  { id: "shadcn-select", name: "ShadcnSelect", category: "forms", docKey: "select" },
-  { id: "multi-select-popover", name: "MultiSelectPopover", category: "forms", docKey: "multiSelectPopover" },
-  { id: "shadcn-checkbox", name: "ShadcnCheckbox", category: "forms", docKey: "checkbox" },
-  { id: "shadcn-switch", name: "ShadcnSwitch", category: "forms", docKey: "switch" },
-  { id: "shadcn-radio-card-group", name: "ShadcnRadioCardGroup", category: "forms", docKey: "radioCardGroup" },
-  { id: "shadcn-segmented-options", name: "ShadcnSegmentedOptions", category: "forms", docKey: "segmentedOptions" },
-  { id: "shadcn-date-picker", name: "ShadcnDatePicker", category: "forms", docKey: "datePicker" },
-  { id: "input-currency", name: "InputCurrency", category: "forms", docKey: "inputCurrency" },
-  { id: "labeled-button", name: "LabeledButton", category: "forms", docKey: "labeledButton" },
+  { id: "arcana-button", name: "ArcanaButton", label: "Button", category: "forms", docKey: "button" },
+  { id: "arcana-input", name: "ArcanaInput", label: "Input", category: "forms", docKey: "input" },
+  { id: "arcana-input-mask", name: "ArcanaInputMask", label: "Input Mask", category: "forms", docKey: "inputMask" },
+  { id: "arcana-input-boolean", name: "ArcanaInputBoolean", label: "Input Boolean", category: "forms", docKey: "inputBoolean" },
+  { id: "arcana-number-stepper", name: "ArcanaNumberStepper", label: "Number Stepper", category: "forms", docKey: "numberStepper" },
+  { id: "input-currency", name: "ArcanaInputCurrency", label: "Input Currency", category: "forms", docKey: "inputCurrency" },
+  { id: "arcana-select", name: "ArcanaSelect", label: "Select", category: "forms", docKey: "select" },
+  { id: "multi-select-popover", name: "ArcanaMultiSelectPopover", label: "Multi-Select Popover", category: "forms", docKey: "multiSelectPopover" },
+  { id: "arcana-checkbox", name: "ArcanaCheckbox", label: "Checkbox", category: "forms", docKey: "checkbox" },
+  { id: "arcana-switch", name: "ArcanaSwitch", label: "Switch", category: "forms", docKey: "switch" },
+  { id: "arcana-radio-card-group", name: "ArcanaRadioCardGroup", label: "Radio Card Group", category: "forms", docKey: "radioCardGroup" },
+  { id: "arcana-segmented-options", name: "ArcanaSegmentedOptions", label: "Segmented Options", category: "forms", docKey: "segmentedOptions" },
+  { id: "arcana-date-picker", name: "ArcanaDatePicker", label: "Date Picker", category: "forms", docKey: "datePicker" },
 
   // ── Data display ───────────────────────────────────────────────────────
-  { id: "shadcn-badge", name: "ShadcnBadge", category: "dataDisplay", docKey: "badge" },
-  { id: "shadcn-table", name: "ShadcnTable", category: "dataDisplay", docKey: "table" },
-  { id: "shadcn-spec-sheet", name: "ShadcnSpecSheet", category: "dataDisplay", docKey: "specSheet" },
-  { id: "shadcn-spec-sheet-section", name: "ShadcnSpecSheetSection", category: "dataDisplay", docKey: "specSheetSection" },
-  { id: "shadcn-spec-sheet-field", name: "ShadcnSpecSheetField", category: "dataDisplay", docKey: "specSheetField" },
-  { id: "shadcn-summary-tile", name: "ShadcnSummaryTile", category: "dataDisplay", docKey: "summaryTile" },
-  { id: "shadcn-summary-tiles", name: "ShadcnSummaryTiles", category: "dataDisplay", docKey: "summaryTiles" },
-  { id: "shadcn-settings-list", name: "ShadcnSettingsList", category: "dataDisplay", docKey: "settingsList" },
-  { id: "shadcn-settings-list-group", name: "ShadcnSettingsListGroup", category: "dataDisplay", docKey: "settingsListGroup" },
-  { id: "shadcn-settings-list-item", name: "ShadcnSettingsListItem", category: "dataDisplay", docKey: "settingsListItem" },
-  { id: "shadcn-settings-editable-field", name: "ShadcnSettingsEditableField", category: "dataDisplay", docKey: "settingsEditableField" },
-  { id: "spark-grid-empty-state", name: "SparkGridEmptyState", category: "dataDisplay", docKey: "sparkGridEmptyState" },
+  { id: "arcana-badge", name: "ArcanaBadge", label: "Badge", category: "dataDisplay", docKey: "badge" },
+  { id: "arcana-table", name: "ArcanaTable", label: "Table", category: "dataDisplay", docKey: "table" },
+  { id: "arcana-spec-sheet", name: "ArcanaSpecSheet", label: "Spec Sheet", category: "dataDisplay", docKey: "specSheet" },
+  { id: "arcana-spec-sheet-section", name: "ArcanaSpecSheetSection", label: "Spec Sheet Section", category: "dataDisplay", docKey: "specSheetSection" },
+  { id: "arcana-spec-sheet-field", name: "ArcanaSpecSheetField", label: "Spec Sheet Field", category: "dataDisplay", docKey: "specSheetField" },
+  { id: "arcana-summary-tile", name: "ArcanaSummaryTile", label: "Summary Tile", category: "dataDisplay", docKey: "summaryTile" },
+  { id: "arcana-summary-tiles", name: "ArcanaSummaryTiles", label: "Summary Tiles", category: "dataDisplay", docKey: "summaryTiles" },
+  { id: "arcana-settings-list", name: "ArcanaSettingsList", label: "Settings List", category: "dataDisplay", docKey: "settingsList" },
+  { id: "arcana-settings-list-group", name: "ArcanaSettingsListGroup", label: "Settings List Group", category: "dataDisplay", docKey: "settingsListGroup" },
+  { id: "arcana-settings-list-item", name: "ArcanaSettingsListItem", label: "Settings List Item", category: "dataDisplay", docKey: "settingsListItem" },
+  { id: "arcana-settings-editable-field", name: "ArcanaSettingsEditableField", label: "Settings Editable Field", category: "dataDisplay", docKey: "settingsEditableField" },
+  { id: "spark-grid-empty-state", name: "ArcanaGridEmptyState", label: "Grid Empty State", category: "dataDisplay", docKey: "sparkGridEmptyState" },
 
   // ── Overlay ────────────────────────────────────────────────────────────
-  { id: "shadcn-dialog", name: "ShadcnDialog", category: "overlay", docKey: "dialog" },
-  { id: "shadcn-dropdown", name: "ShadcnDropdown", category: "overlay", docKey: "dropdown" },
-  { id: "shadcn-dropdown-item", name: "ShadcnDropdownItem", category: "overlay", docKey: "dropdownItem" },
-  { id: "shadcn-edit-field-modal", name: "ShadcnEditFieldModal", category: "overlay", docKey: "editFieldModal" },
-  { id: "shadcn-required-fields-dialog", name: "ShadcnRequiredFieldsDialog", category: "overlay", docKey: "requiredFieldsDialog" },
-  { id: "shadcn-notice", name: "ShadcnNotice", category: "overlay", docKey: "notice" },
-  { id: "shadcn-onboarding-panel", name: "ShadcnOnboardingPanel", category: "overlay", docKey: "onboardingPanel" },
+  { id: "arcana-dialog", name: "ArcanaDialog", label: "Dialog", category: "overlay", docKey: "dialog" },
+  { id: "arcana-dropdown", name: "ArcanaDropdown", label: "Dropdown", category: "overlay", docKey: "dropdown" },
+  { id: "arcana-dropdown-item", name: "ArcanaDropdownItem", label: "Dropdown Item", category: "overlay", docKey: "dropdownItem" },
+  { id: "arcana-edit-field-modal", name: "ArcanaEditFieldModal", label: "Edit Field Modal", category: "overlay", docKey: "editFieldModal" },
+  { id: "arcana-required-fields-dialog", name: "ArcanaRequiredFieldsDialog", label: "Required Fields Dialog", category: "overlay", docKey: "requiredFieldsDialog" },
+  { id: "arcana-notice", name: "ArcanaNotice", label: "Notice", category: "overlay", docKey: "notice" },
+  { id: "arcana-onboarding-panel", name: "ArcanaOnboardingPanel", label: "Onboarding Panel", category: "overlay", docKey: "onboardingPanel" },
 
   // ── Layout & navigation ────────────────────────────────────────────────
-  { id: "shadcn-tabs", name: "ShadcnTabs", category: "layoutNav", docKey: "tabs" },
-  { id: "shadcn-accordion", name: "ShadcnAccordion", category: "layoutNav", docKey: "accordion" },
-  { id: "shadcn-accordion-item", name: "ShadcnAccordionItem", category: "layoutNav", docKey: "accordionItem" },
-  { id: "shadcn-switch-card", name: "ShadcnSwitchCard", category: "layoutNav", docKey: "switchCard" },
-  { id: "shadcn-switch-row", name: "ShadcnSwitchRow", category: "layoutNav", docKey: "switchRow" },
-  { id: "shadcn-switch-segmented", name: "ShadcnSwitchSegmented", category: "layoutNav", docKey: "switchSegmented" },
+  { id: "arcana-tabs", name: "ArcanaTabs", label: "Tabs", category: "layoutNav", docKey: "tabs" },
+  { id: "arcana-accordion", name: "ArcanaAccordion", label: "Accordion", category: "layoutNav", docKey: "accordion" },
+  { id: "arcana-accordion-item", name: "ArcanaAccordionItem", label: "Accordion Item", category: "layoutNav", docKey: "accordionItem" },
+  { id: "arcana-switch-card", name: "ArcanaSwitchCard", label: "Switch Card", category: "layoutNav", docKey: "switchCard" },
+  { id: "arcana-switch-row", name: "ArcanaSwitchRow", label: "Switch Row", category: "layoutNav", docKey: "switchRow" },
+  { id: "arcana-switch-segmented", name: "ArcanaSwitchSegmented", label: "Switch Segmented", category: "layoutNav", docKey: "switchSegmented" },
 
   // ── Feedback ───────────────────────────────────────────────────────────
-  { id: "shadcn-skeleton", name: "ShadcnSkeleton", category: "feedback", docKey: "skeleton" },
-  { id: "shadcn-loading-overlay", name: "ShadcnLoadingOverlay", category: "feedback", docKey: "loadingOverlay" }
+  { id: "arcana-skeleton", name: "ArcanaSkeleton", label: "Skeleton", category: "feedback", docKey: "skeleton" },
+  { id: "arcana-loading-overlay", name: "ArcanaLoadingOverlay", label: "Loading Overlay", category: "feedback", docKey: "loadingOverlay" }
 ];
 
 /** Sidebar category order. */

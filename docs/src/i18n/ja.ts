@@ -59,7 +59,7 @@ export const ja: Messages = {
     },
     maska: {
       title: "v-maska の登録",
-      p1: "一部のコンポーネント（<c>ShadcnInputMask</c>、<c>ShadcnDatePicker</c>）は <c>maska</c> パッケージの <c>v-maska</c> ディレクティブに依存します。アプリ作成時に一度グローバル登録してください。",
+      p1: "一部のコンポーネント（<c>ArcanaInputMask</c>、<c>ArcanaDatePicker</c>）は <c>maska</c> パッケージの <c>v-maska</c> ディレクティブに依存します。アプリ作成時に一度グローバル登録してください。",
       p2: "マスクを使わないコンポーネントに追加設定は不要です — この手順はマスク付き入力をレンダリングする場合にのみ必要です。"
     }
   },
@@ -91,7 +91,7 @@ export const ja: Messages = {
       blurb: "<c>&lt;body&gt;</c> にテレポートする完全カスタムなセレクト（Element Plus 不使用）で、単一/<c>multiple</c>、<c>searchable</c>、<c>clearable</c>、キーボード操作をサポートします。"
     },
     checkbox: {
-      blurb: "本物のネイティブ <c>&lt;input type=\"checkbox\"&gt;</c> をラップし <c>indeterminate</c> 状態を持つ二値チェックボックスで、設定のオン/オフには <c>ShadcnSwitch</c> を使います。"
+      blurb: "本物のネイティブ <c>&lt;input type=\"checkbox\"&gt;</c> をラップし <c>indeterminate</c> 状態を持つ二値チェックボックスで、設定のオン/オフには <c>ArcanaSwitch</c> を使います。"
     },
     switch: {
       blurb: "赤/緑で色分けされた二値オン/オフトグル（WAI-ARIA スイッチ）で、ネイティブフォーム用の任意の隠しチェックボックスを備えます。"
@@ -126,20 +126,17 @@ export const ja: Messages = {
     inputCurrency: {
       blurb: "入力に合わせて整形する通貨入力（<c>v-money3</c> 上に構築）で、小数桁数の設定と <c>min</c>/<c>max</c> の制限を備え、デフォルトは BRL です。"
     },
-    labeledButton: {
-      blurb: "<c>label</c>、任意の <c>icon</c>、<c>loading</c> スピナー状態を持つベースボタンで、<c>shadcn</c> フラグがレガシーな色をセマンティックなバリアントにマッピングします。"
-    },
     accordion: {
-      blurb: "折りたたみ可能な <c>ShadcnAccordionItem</c> 群のコンテナで、単一または複数開けるモード向けに <c>v-model</c> をバインドします。"
+      blurb: "折りたたみ可能な <c>ArcanaAccordionItem</c> 群のコンテナで、単一または複数開けるモード向けに <c>v-model</c> をバインドします。"
     },
     accordionItem: {
-      blurb: "<c>ShadcnAccordion</c> 内の単一の折りたたみパネルで、<c>name</c> で識別され、<c>title</c> ヘッダーとスロット本文を持ちます。"
+      blurb: "<c>ArcanaAccordion</c> 内の単一の折りたたみパネルで、<c>name</c> で識別され、<c>title</c> ヘッダーとスロット本文を持ちます。"
     },
     dropdown: {
       blurb: "<c>&lt;body&gt;</c> にテレポートする shadcn ドロップダウンメニューで、自動配置し、外側クリック・Escape・選択で閉じます。"
     },
     dropdownItem: {
-      blurb: "<c>ShadcnDropdown</c> 内の 1 行で、任意の <c>icon</c>・ラベル・<c>suffix</c> を持ち、色付け可能で、破壊的操作向けに <c>divided</c> の区切り線を備えます。"
+      blurb: "<c>ArcanaDropdown</c> 内の 1 行で、任意の <c>icon</c>・ラベル・<c>suffix</c> を持ち、色付け可能で、破壊的操作向けに <c>divided</c> の区切り線を備えます。"
     },
     table: {
       blurb: "メモリ上の配列向けの静的な shadcn テーブルで、列は <c>{ key, label, width?, align?, valueGetter? }</c> で宣言し、セルとフッターのスロットを備えます。"
@@ -148,7 +145,7 @@ export const ja: Messages = {
       blurb: "正式な記録のための読み取り専用・エディトリアルな\"スペックシート\"で、<c>docNum</c> のアイブロウ、<c>title</c>、セクションの子を備えます。"
     },
     specSheetSection: {
-      blurb: "<c>ShadcnSpecSheet</c> 内のセクションで、アクセント <c>icon</c>・<c>title</c>・<c>sectionNum</c> が、フィールドの <c>columns</c> グリッドの上に並びます。"
+      blurb: "<c>ArcanaSpecSheet</c> 内のセクションで、アクセント <c>icon</c>・<c>title</c>・<c>sectionNum</c> が、フィールドの <c>columns</c> グリッドの上に並びます。"
     },
     specSheetField: {
       blurb: "単一のラベル/値ペアで、空の値は <c>emptyText</c> を表示して空白が意図的であることを示し、<c>span</c> で幅を広げます。"
@@ -163,7 +160,7 @@ export const ja: Messages = {
       blurb: "iOS 設定風の、ヘアラインで区切られた行のコンテナで、各行は左にラベル + キャプション、右寄せのコントロールを持ちます。"
     },
     settingsListGroup: {
-      blurb: "<c>ShadcnSettingsList</c> 内のタイトル付きで任意に <c>collapsible</c> なセクションで、アイコン・<c>sectionNum</c>・<c>meta</c> を備えます。"
+      blurb: "<c>ArcanaSettingsList</c> 内のタイトル付きで任意に <c>collapsible</c> なセクションで、アイコン・<c>sectionNum</c>・<c>meta</c> を備えます。"
     },
     settingsListItem: {
       blurb: "単一の設定行で、左に <c>label</c> + <c>caption</c>、右にコントロールを置きます。"

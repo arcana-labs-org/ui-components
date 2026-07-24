@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SparkGridEmptyState } from "../../src/svelte";
+  import { ArcanaGridEmptyState } from "../../src/svelte";
 
   let { onPanelVisible }: { onPanelVisible?: (v: boolean) => void } = $props();
 
@@ -11,7 +11,7 @@
   }
 </script>
 
-<SparkGridEmptyState
+<ArcanaGridEmptyState
   total={0}
   {loading}
   filtered={false}
@@ -21,4 +21,4 @@
   {onPanelVisible}
 >
   <div class="spark-children">Conteúdo real</div>
-</SparkGridEmptyState>
+</ArcanaGridEmptyState>

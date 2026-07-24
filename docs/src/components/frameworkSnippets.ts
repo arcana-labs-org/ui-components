@@ -20,7 +20,7 @@ export interface FrameworkTriple {
 
 export const FRAMEWORK_SNIPPETS: Record<DocumentedKey, FrameworkTriple> = {
   button: {
-    react: `import { ShadcnButton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function Toolbar() {
   function save() {
@@ -28,23 +28,23 @@ export function Toolbar() {
   }
   return (
     <>
-      <ShadcnButton variant="primary" onClick={save}>Save</ShadcnButton>
-      <ShadcnButton variant="outline">Cancel</ShadcnButton>
-      <ShadcnButton variant="destructive" disabled={busy}>Delete</ShadcnButton>
+      <ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
+      <ArcanaButton variant="outline">Cancel</ArcanaButton>
+      <ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [ShadcnButtonComponent],
+  imports: [ArcanaButtonComponent],
   template: \`
-    <button arcanaShadcnButton variant="primary" (click)="save()">Save</button>
-    <button arcanaShadcnButton variant="outline">Cancel</button>
-    <button arcanaShadcnButton variant="destructive" [disabled]="busy">Delete</button>
+    <button arcanaButton variant="primary" (click)="save()">Save</button>
+    <button arcanaButton variant="outline">Cancel</button>
+    <button arcanaButton variant="destructive" [disabled]="busy">Delete</button>
   \`
 })
 export class ToolbarComponent {
@@ -52,7 +52,7 @@ export class ToolbarComponent {
   save() { /* …persist changes */ }
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaButton } from '@arcanalabs/ui-components/svelte'
 
   let busy = $state(false)
   function save() {
@@ -60,70 +60,70 @@ export class ToolbarComponent {
   }
 </script>
 
-<ShadcnButton variant="primary" onClick={save}>Save</ShadcnButton>
-<ShadcnButton variant="outline">Cancel</ShadcnButton>
-<ShadcnButton variant="destructive" disabled={busy}>Delete</ShadcnButton>`
+<ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
+<ArcanaButton variant="outline">Cancel</ArcanaButton>
+<ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>`
   },
 
   badge: {
-    react: `import { ShadcnBadge } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaBadge } from '@arcanalabs/ui-components/react'
 
 export function Statuses() {
   return (
     <>
-      <ShadcnBadge variant="green" dot>Active</ShadcnBadge>
-      <ShadcnBadge variant="blue">12 records</ShadcnBadge>
-      <ShadcnBadge variant="red" size="sm">Overdue</ShadcnBadge>
+      <ArcanaBadge variant="green" dot>Active</ArcanaBadge>
+      <ArcanaBadge variant="blue">12 records</ArcanaBadge>
+      <ArcanaBadge variant="red" size="sm">Overdue</ArcanaBadge>
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnBadgeComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaBadgeComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-statuses',
   standalone: true,
-  imports: [ShadcnBadgeComponent],
+  imports: [ArcanaBadgeComponent],
   template: \`
-    <span arcanaShadcnBadge variant="green" [dot]="true">Active</span>
-    <span arcanaShadcnBadge variant="blue">12 records</span>
-    <span arcanaShadcnBadge variant="red" size="sm">Overdue</span>
+    <span arcanaBadge variant="green" [dot]="true">Active</span>
+    <span arcanaBadge variant="blue">12 records</span>
+    <span arcanaBadge variant="red" size="sm">Overdue</span>
   \`
 })
 export class StatusesComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnBadge } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaBadge } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ShadcnBadge variant="green" dot>Active</ShadcnBadge>
-<ShadcnBadge variant="blue">12 records</ShadcnBadge>
-<ShadcnBadge variant="red" size="sm">Overdue</ShadcnBadge>`
+<ArcanaBadge variant="green" dot>Active</ArcanaBadge>
+<ArcanaBadge variant="blue">12 records</ArcanaBadge>
+<ArcanaBadge variant="red" size="sm">Overdue</ArcanaBadge>`
   },
 
   input: {
     react: `import { useState } from 'react'
-import { ShadcnInput } from '@arcanalabs/ui-components/react'
+import { ArcanaInput } from '@arcanalabs/ui-components/react'
 
 export function Fields() {
   const [email, setEmail] = useState('')
   const [qty, setQty] = useState<number | null>(null)
   return (
     <>
-      <ShadcnInput value={email} onValueChange={(v) => setEmail(v as string)} type="email" placeholder="email@company.com" />
-      <ShadcnInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" min={0} max={99} />
+      <ArcanaInput value={email} onValueChange={(v) => setEmail(v as string)} type="email" placeholder="email@company.com" />
+      <ArcanaInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" min={0} max={99} />
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnInputComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaInputComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-fields',
   standalone: true,
-  imports: [ShadcnInputComponent],
+  imports: [ArcanaInputComponent],
   template: \`
-    <input arcanaShadcnInput [(value)]="email" type="email" placeholder="email@company.com" />
-    <input arcanaShadcnInput [(value)]="qty" type="number" [min]="0" [max]="99" />
+    <input arcanaInput [(value)]="email" type="email" placeholder="email@company.com" />
+    <input arcanaInput [(value)]="qty" type="number" [min]="0" [max]="99" />
   \`
 })
 export class FieldsComponent {
@@ -131,19 +131,19 @@ export class FieldsComponent {
   qty: string | number | null = null
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnInput } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaInput } from '@arcanalabs/ui-components/svelte'
 
   let email = $state('')
   let qty = $state<number | null>(null)
 </script>
 
-<ShadcnInput value={email} onValueChange={(v) => (email = v as string)} type="email" placeholder="email@company.com" />
-<ShadcnInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number" min={0} max={99} />`
+<ArcanaInput value={email} onValueChange={(v) => (email = v as string)} type="email" placeholder="email@company.com" />
+<ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number" min={0} max={99} />`
   },
 
   select: {
     react: `import { useState } from 'react'
-import { ShadcnSelect, type SelectOption } from '@arcanalabs/ui-components/react'
+import { ArcanaSelect, type SelectOption } from '@arcanalabs/ui-components/react'
 
 const options: SelectOption[] = [
   { label: 'Apple', value: 'apple' },
@@ -154,18 +154,18 @@ const options: SelectOption[] = [
 export function FruitPicker() {
   const [fruit, setFruit] = useState<string | null>(null)
   return (
-    <ShadcnSelect value={fruit} onValueChange={(v) => setFruit(v as string | null)} options={options} searchable placeholder="Pick a fruit" />
+    <ArcanaSelect value={fruit} onValueChange={(v) => setFruit(v as string | null)} options={options} searchable placeholder="Pick a fruit" />
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSelectComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaSelectComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-fruit-picker',
   standalone: true,
-  imports: [ShadcnSelectComponent],
+  imports: [ArcanaSelectComponent],
   template: \`
-    <div arcanaShadcnSelect [(value)]="fruit" [options]="options" [searchable]="true" placeholder="Pick a fruit"></div>
+    <div arcanaSelect [(value)]="fruit" [options]="options" [searchable]="true" placeholder="Pick a fruit"></div>
   \`
 })
 export class FruitPickerComponent {
@@ -177,7 +177,7 @@ export class FruitPickerComponent {
   ]
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSelect, type SelectOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSelect, type SelectOption } from '@arcanalabs/ui-components/svelte'
 
   let fruit = $state<string | null>(null)
   const options: SelectOption[] = [
@@ -187,61 +187,61 @@ export class FruitPickerComponent {
   ]
 </script>
 
-<ShadcnSelect value={fruit} onValueChange={(v) => (fruit = v as string | null)} {options} searchable placeholder="Pick a fruit" />`
+<ArcanaSelect value={fruit} onValueChange={(v) => (fruit = v as string | null)} {options} searchable placeholder="Pick a fruit" />`
   },
 
   checkbox: {
     react: `import { useState } from 'react'
-import { ShadcnCheckbox } from '@arcanalabs/ui-components/react'
+import { ArcanaCheckbox } from '@arcanalabs/ui-components/react'
 
 export function Terms() {
   const [accepted, setAccepted] = useState(false)
-  return <ShadcnCheckbox value={accepted} onValueChange={setAccepted} label="I accept the terms" />
+  return <ArcanaCheckbox value={accepted} onValueChange={setAccepted} label="I accept the terms" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnCheckboxComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaCheckboxComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-terms',
   standalone: true,
-  imports: [ShadcnCheckboxComponent],
-  template: \`<label arcanaShadcnCheckbox [(value)]="accepted" label="I accept the terms"></label>\`
+  imports: [ArcanaCheckboxComponent],
+  template: \`<label arcanaCheckbox [(value)]="accepted" label="I accept the terms"></label>\`
 })
 export class TermsComponent {
   accepted = false
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnCheckbox } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaCheckbox } from '@arcanalabs/ui-components/svelte'
   let accepted = $state(false)
 </script>
 
-<ShadcnCheckbox value={accepted} onValueChange={(v) => (accepted = v)} label="I accept the terms" />`
+<ArcanaCheckbox value={accepted} onValueChange={(v) => (accepted = v)} label="I accept the terms" />`
   },
 
   switch: {
     react: `import { useState } from 'react'
-import { ShadcnSwitch } from '@arcanalabs/ui-components/react'
+import { ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
 export function AutoRenew() {
   const [autoRenew, setAutoRenew] = useState(true)
   return (
     <label className="form-row">
       <span>Auto-renew</span>
-      <ShadcnSwitch value={autoRenew} onValueChange={setAutoRenew} ariaLabel="Auto-renew" />
+      <ArcanaSwitch value={autoRenew} onValueChange={setAutoRenew} ariaLabel="Auto-renew" />
     </label>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSwitchComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-auto-renew',
   standalone: true,
-  imports: [ShadcnSwitchComponent],
+  imports: [ArcanaSwitchComponent],
   template: \`
     <label class="form-row">
       <span>Auto-renew</span>
-      <button arcanaShadcnSwitch [(value)]="autoRenew" ariaLabel="Auto-renew"></button>
+      <button arcanaSwitch [(value)]="autoRenew" ariaLabel="Auto-renew"></button>
     </label>
   \`
 })
@@ -249,21 +249,21 @@ export class AutoRenewComponent {
   autoRenew = true
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSwitch } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
   let autoRenew = $state(true)
 </script>
 
 <label class="form-row">
   <span>Auto-renew</span>
-  <ShadcnSwitch value={autoRenew} onValueChange={(v) => (autoRenew = v)} ariaLabel="Auto-renew" />
+  <ArcanaSwitch value={autoRenew} onValueChange={(v) => (autoRenew = v)} ariaLabel="Auto-renew" />
 </label>`
   },
 
   tabs: {
     react: `import { useState } from 'react'
-import { ShadcnTabs, type ShadcnTabItem } from '@arcanalabs/ui-components/react'
+import { ArcanaTabs, type ArcanaTabItem } from '@arcanalabs/ui-components/react'
 
-const tabs: ShadcnTabItem[] = [
+const tabs: ArcanaTabItem[] = [
   { name: 'overview', label: 'Overview' },
   { name: 'activity', label: 'Activity', badge: 3 },
   { name: 'settings', label: 'Settings' },
@@ -272,7 +272,7 @@ const tabs: ShadcnTabItem[] = [
 export function Panel() {
   const [active, setActive] = useState<string | number>('overview')
   return (
-    <ShadcnTabs
+    <ArcanaTabs
       value={active}
       onValueChange={setActive}
       tabs={tabs}
@@ -286,14 +286,14 @@ export function Panel() {
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnTabsComponent, ArcanaTabPanelDirective, type ShadcnTabItem } from '@arcanalabs/ui-components/angular'
+import { ArcanaTabsComponent, ArcanaTabPanelDirective, type ArcanaTabItem } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-panel',
   standalone: true,
-  imports: [ShadcnTabsComponent, ArcanaTabPanelDirective],
+  imports: [ArcanaTabsComponent, ArcanaTabPanelDirective],
   template: \`
-    <div arcanaShadcnTabs [(value)]="active" [tabs]="tabs" variant="pills">
+    <div arcanaTabs [(value)]="active" [tabs]="tabs" variant="pills">
       <ng-container *arcanaTabPanel="'overview'">Overview…</ng-container>
       <ng-container *arcanaTabPanel="'activity'">Activity…</ng-container>
       <ng-container *arcanaTabPanel="'settings'">Settings…</ng-container>
@@ -302,17 +302,17 @@ import { ShadcnTabsComponent, ArcanaTabPanelDirective, type ShadcnTabItem } from
 })
 export class PanelComponent {
   active: string | number = 'overview'
-  tabs: ShadcnTabItem[] = [
+  tabs: ArcanaTabItem[] = [
     { name: 'overview', label: 'Overview' },
     { name: 'activity', label: 'Activity', badge: 3 },
     { name: 'settings', label: 'Settings' },
   ]
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnTabs, type ShadcnTabItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaTabs, type ArcanaTabItem } from '@arcanalabs/ui-components/svelte'
 
   let active = $state<string | number>('overview')
-  const tabs: ShadcnTabItem[] = [
+  const tabs: ArcanaTabItem[] = [
     { name: 'overview', label: 'Overview' },
     { name: 'activity', label: 'Activity', badge: 3 },
     { name: 'settings', label: 'Settings' },
@@ -323,75 +323,75 @@ export class PanelComponent {
 {#snippet activity()}<div>Activity…</div>{/snippet}
 {#snippet settings()}<div>Settings…</div>{/snippet}
 
-<ShadcnTabs value={active} onValueChange={(v) => (active = v)} {tabs} variant="pills" panels={{ overview, activity, settings }} />`
+<ArcanaTabs value={active} onValueChange={(v) => (active = v)} {tabs} variant="pills" panels={{ overview, activity, settings }} />`
   },
 
   dialog: {
     react: `import { useRef } from 'react'
-import { ShadcnDialog, ShadcnButton, type ShadcnDialogHandle } from '@arcanalabs/ui-components/react'
+import { ArcanaDialog, ArcanaButton, type ArcanaDialogHandle } from '@arcanalabs/ui-components/react'
 
 export function DeleteDialog() {
-  const dialog = useRef<ShadcnDialogHandle>(null)
+  const dialog = useRef<ArcanaDialogHandle>(null)
   return (
     <>
-      <ShadcnButton onClick={() => dialog.current?.show()}>Open</ShadcnButton>
+      <ArcanaButton onClick={() => dialog.current?.show()}>Open</ArcanaButton>
 
-      <ShadcnDialog
+      <ArcanaDialog
         ref={dialog}
         title="Delete workspace"
         description="This cannot be undone."
         footer={(hide) => (
           <>
-            <ShadcnButton variant="outline" onClick={hide}>Cancel</ShadcnButton>
-            <ShadcnButton variant="destructive" onClick={hide}>Delete</ShadcnButton>
+            <ArcanaButton variant="outline" onClick={hide}>Cancel</ArcanaButton>
+            <ArcanaButton variant="destructive" onClick={hide}>Delete</ArcanaButton>
           </>
         )}
       >
         <p>Body content…</p>
-      </ShadcnDialog>
+      </ArcanaDialog>
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnDialogComponent, ShadcnButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaDialogComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
-  imports: [ShadcnDialogComponent, ShadcnButtonComponent],
+  imports: [ArcanaDialogComponent, ArcanaButtonComponent],
   template: \`
-    <button arcanaShadcnButton (click)="d.show()">Open</button>
+    <button arcanaButton (click)="d.show()">Open</button>
 
-    <div arcanaShadcnDialog #d title="Delete workspace" description="This cannot be undone." [footerTemplate]="ft">
+    <div arcanaDialog #d title="Delete workspace" description="This cannot be undone." [footerTemplate]="ft">
       <p>Body content…</p>
     </div>
     <ng-template #ft let-hide>
-      <button arcanaShadcnButton variant="outline" (click)="hide()">Cancel</button>
-      <button arcanaShadcnButton variant="destructive" (click)="hide()">Delete</button>
+      <button arcanaButton variant="outline" (click)="hide()">Cancel</button>
+      <button arcanaButton variant="destructive" (click)="hide()">Delete</button>
     </ng-template>
   \`
 })
 export class DeleteDialogComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnDialog, ShadcnButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaDialog, ArcanaButton } from '@arcanalabs/ui-components/svelte'
 
-  let dialog: ShadcnDialog
+  let dialog: ArcanaDialog
 </script>
 
-<ShadcnButton onClick={() => dialog.show()}>Open</ShadcnButton>
+<ArcanaButton onClick={() => dialog.show()}>Open</ArcanaButton>
 
-<ShadcnDialog bind:this={dialog} title="Delete workspace" description="This cannot be undone.">
+<ArcanaDialog bind:this={dialog} title="Delete workspace" description="This cannot be undone.">
   <p>Body content…</p>
   {#snippet footer(hide)}
-    <ShadcnButton variant="outline" onClick={hide}>Cancel</ShadcnButton>
-    <ShadcnButton variant="destructive" onClick={hide}>Delete</ShadcnButton>
+    <ArcanaButton variant="outline" onClick={hide}>Cancel</ArcanaButton>
+    <ArcanaButton variant="destructive" onClick={hide}>Delete</ArcanaButton>
   {/snippet}
-</ShadcnDialog>`
+</ArcanaDialog>`
   },
 
   inputMask: {
     react: `import { useState } from 'react'
-import { ShadcnInputMask } from '@arcanalabs/ui-components/react'
+import { ArcanaInputMask } from '@arcanalabs/ui-components/react'
 // Masking is built into the component — no global directive needed.
 
 export function Document() {
@@ -399,22 +399,22 @@ export function Document() {
   const [phone, setPhone] = useState('')
   return (
     <>
-      <ShadcnInputMask value={cpf} onValueChange={setCpf} mask="###.###.###-##" placeholder="CPF" />
-      <ShadcnInputMask value={phone} onValueChange={setPhone} mask={['(##) ####-####', '(##) #####-####']} />
+      <ArcanaInputMask value={cpf} onValueChange={setCpf} mask="###.###.###-##" placeholder="CPF" />
+      <ArcanaInputMask value={phone} onValueChange={setPhone} mask={['(##) ####-####', '(##) #####-####']} />
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnInputMaskComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaInputMaskComponent } from '@arcanalabs/ui-components/angular'
 
 // Masking is built into the component — no global directive needed.
 @Component({
   selector: 'app-document',
   standalone: true,
-  imports: [ShadcnInputMaskComponent],
+  imports: [ArcanaInputMaskComponent],
   template: \`
-    <input arcanaShadcnInputMask [(value)]="cpf" mask="###.###.###-##" placeholder="CPF" />
-    <input arcanaShadcnInputMask [(value)]="phone" [mask]="['(##) ####-####', '(##) #####-####']" />
+    <input arcanaInputMask [(value)]="cpf" mask="###.###.###-##" placeholder="CPF" />
+    <input arcanaInputMask [(value)]="phone" [mask]="['(##) ####-####', '(##) #####-####']" />
   \`
 })
 export class DocumentComponent {
@@ -422,75 +422,75 @@ export class DocumentComponent {
   phone = ''
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnInputMask } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaInputMask } from '@arcanalabs/ui-components/svelte'
   // Masking is built into the component — no global directive needed.
   let cpf = $state('')
   let phone = $state('')
 </script>
 
-<ShadcnInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask="###.###.###-##" placeholder="CPF" />
-<ShadcnInputMask value={phone} onValueChange={(v) => (phone = v)} mask={['(##) ####-####', '(##) #####-####']} />`
+<ArcanaInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask="###.###.###-##" placeholder="CPF" />
+<ArcanaInputMask value={phone} onValueChange={(v) => (phone = v)} mask={['(##) ####-####', '(##) #####-####']} />`
   },
 
   inputBoolean: {
     react: `import { useState } from 'react'
-import { ShadcnInputBoolean } from '@arcanalabs/ui-components/react'
+import { ArcanaInputBoolean } from '@arcanalabs/ui-components/react'
 
 export function ActiveFilter() {
   const [active, setActive] = useState<unknown>(1)
-  return <ShadcnInputBoolean value={active} onValueChange={setActive} variation="status" clearable={false} />
+  return <ArcanaInputBoolean value={active} onValueChange={setActive} variation="status" clearable={false} />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnInputBooleanComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaInputBooleanComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-active-filter',
   standalone: true,
-  imports: [ShadcnInputBooleanComponent],
-  template: \`<div arcanaShadcnInputBoolean [(value)]="active" variation="status" [clearable]="false"></div>\`
+  imports: [ArcanaInputBooleanComponent],
+  template: \`<div arcanaInputBoolean [(value)]="active" variation="status" [clearable]="false"></div>\`
 })
 export class ActiveFilterComponent {
   active: unknown = 1
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnInputBoolean } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaInputBoolean } from '@arcanalabs/ui-components/svelte'
   let active = $state<unknown>(1)
 </script>
 
-<ShadcnInputBoolean value={active} onValueChange={(v) => (active = v)} variation="status" clearable={false} />`
+<ArcanaInputBoolean value={active} onValueChange={(v) => (active = v)} variation="status" clearable={false} />`
   },
 
   numberStepper: {
     react: `import { useState } from 'react'
-import { ShadcnNumberStepper } from '@arcanalabs/ui-components/react'
+import { ArcanaNumberStepper } from '@arcanalabs/ui-components/react'
 
 export function Quantity() {
   const [qty, setQty] = useState<number | null>(1)
-  return <ShadcnNumberStepper value={qty} onValueChange={setQty} min={0} max={10} ariaLabel="Quantity" />
+  return <ArcanaNumberStepper value={qty} onValueChange={setQty} min={0} max={10} ariaLabel="Quantity" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnNumberStepperComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaNumberStepperComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-quantity',
   standalone: true,
-  imports: [ShadcnNumberStepperComponent],
-  template: \`<div arcanaShadcnNumberStepper [(value)]="qty" [min]="0" [max]="10" ariaLabel="Quantity"></div>\`
+  imports: [ArcanaNumberStepperComponent],
+  template: \`<div arcanaNumberStepper [(value)]="qty" [min]="0" [max]="10" ariaLabel="Quantity"></div>\`
 })
 export class QuantityComponent {
   qty: number | null = 1
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnNumberStepper } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaNumberStepper } from '@arcanalabs/ui-components/svelte'
   let qty = $state<number | null>(1)
 </script>
 
-<ShadcnNumberStepper value={qty} onValueChange={(v) => (qty = v)} min={0} max={10} ariaLabel="Quantity" />`
+<ArcanaNumberStepper value={qty} onValueChange={(v) => (qty = v)} min={0} max={10} ariaLabel="Quantity" />`
   },
 
   multiSelectPopover: {
     react: `import { useState } from 'react'
-import { MultiSelectPopover, type MultiSelectTab } from '@arcanalabs/ui-components/react'
+import { ArcanaMultiSelectPopover, type MultiSelectTab } from '@arcanalabs/ui-components/react'
 
 const tabs: MultiSelectTab[] = [
   { key: 'USER', label: 'Users', icon: 'fa-solid fa-user', fetch: loadUsers },
@@ -499,15 +499,15 @@ const tabs: MultiSelectTab[] = [
 
 export function AssigneePicker() {
   const [selections, setSelections] = useState<Record<string, number[]>>({ USER: [], DEPARTMENT: [] })
-  return <MultiSelectPopover value={selections} onValueChange={setSelections} tabs={tabs} emptyLabel="Select people" />
+  return <ArcanaMultiSelectPopover value={selections} onValueChange={setSelections} tabs={tabs} emptyLabel="Select people" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { MultiSelectPopoverComponent, type MultiSelectTab } from '@arcanalabs/ui-components/angular'
+import { ArcanaMultiSelectPopoverComponent, type MultiSelectTab } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-assignee-picker',
   standalone: true,
-  imports: [MultiSelectPopoverComponent],
+  imports: [ArcanaMultiSelectPopoverComponent],
   template: \`<div arcanaMultiSelectPopover [(value)]="selections" [tabs]="tabs" emptyLabel="Select people"></div>\`
 })
 export class AssigneePickerComponent {
@@ -518,7 +518,7 @@ export class AssigneePickerComponent {
   ]
 }`,
     svelte: `<script lang="ts">
-  import { MultiSelectPopover, type MultiSelectTab } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaMultiSelectPopover, type MultiSelectTab } from '@arcanalabs/ui-components/svelte'
 
   let selections = $state<Record<string, number[]>>({ USER: [], DEPARTMENT: [] })
   const tabs: MultiSelectTab[] = [
@@ -527,12 +527,12 @@ export class AssigneePickerComponent {
   ]
 </script>
 
-<MultiSelectPopover value={selections} onValueChange={(v) => (selections = v)} {tabs} emptyLabel="Select people" />`
+<ArcanaMultiSelectPopover value={selections} onValueChange={(v) => (selections = v)} {tabs} emptyLabel="Select people" />`
   },
 
   radioCardGroup: {
     react: `import { useState } from 'react'
-import { ShadcnRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/react'
+import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/react'
 
 const options: RadioCardOption[] = [
   { label: 'Credit card', value: 'credit_card', description: 'Recurring charge.' },
@@ -541,16 +541,16 @@ const options: RadioCardOption[] = [
 
 export function PaymentMethod() {
   const [method, setMethod] = useState<string | number | boolean | null>('pix')
-  return <ShadcnRadioCardGroup value={method} onValueChange={setMethod} options={options} ariaLabel="Payment method" />
+  return <ArcanaRadioCardGroup value={method} onValueChange={setMethod} options={options} ariaLabel="Payment method" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnRadioCardGroupComponent, type RadioCardOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaRadioCardGroupComponent, type RadioCardOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-payment-method',
   standalone: true,
-  imports: [ShadcnRadioCardGroupComponent],
-  template: \`<div arcanaShadcnRadioCardGroup [(value)]="method" [options]="options" ariaLabel="Payment method"></div>\`
+  imports: [ArcanaRadioCardGroupComponent],
+  template: \`<div arcanaRadioCardGroup [(value)]="method" [options]="options" ariaLabel="Payment method"></div>\`
 })
 export class PaymentMethodComponent {
   method: string | number | boolean | null = 'pix'
@@ -560,7 +560,7 @@ export class PaymentMethodComponent {
   ]
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/svelte'
 
   let method = $state<string | number | boolean | null>('pix')
   const options: RadioCardOption[] = [
@@ -569,12 +569,12 @@ export class PaymentMethodComponent {
   ]
 </script>
 
-<ShadcnRadioCardGroup value={method} onValueChange={(v) => (method = v)} {options} ariaLabel="Payment method" />`
+<ArcanaRadioCardGroup value={method} onValueChange={(v) => (method = v)} {options} ariaLabel="Payment method" />`
   },
 
   segmentedOptions: {
     react: `import { useState } from 'react'
-import { ShadcnSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/react'
+import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/react'
 
 const options: SegmentedOption[] = [
   { label: 'List', value: 'list' },
@@ -583,16 +583,16 @@ const options: SegmentedOption[] = [
 
 export function ViewMode() {
   const [view, setView] = useState<string | number | null>('list')
-  return <ShadcnSegmentedOptions value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
+  return <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSegmentedOptionsComponent, type SegmentedOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaSegmentedOptionsComponent, type SegmentedOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-view-mode',
   standalone: true,
-  imports: [ShadcnSegmentedOptionsComponent],
-  template: \`<div arcanaShadcnSegmentedOptions [(value)]="view" [options]="options" ariaLabel="View mode"></div>\`
+  imports: [ArcanaSegmentedOptionsComponent],
+  template: \`<div arcanaSegmentedOptions [(value)]="view" [options]="options" ariaLabel="View mode"></div>\`
 })
 export class ViewModeComponent {
   view: string | number | null = 'list'
@@ -602,7 +602,7 @@ export class ViewModeComponent {
   ]
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/svelte'
 
   let view = $state<string | number | null>('list')
   const options: SegmentedOption[] = [
@@ -611,130 +611,92 @@ export class ViewModeComponent {
   ]
 </script>
 
-<ShadcnSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />`
+<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />`
   },
 
   datePicker: {
     react: `import { useState } from 'react'
-import { ShadcnDatePicker } from '@arcanalabs/ui-components/react'
+import { ArcanaDatePicker } from '@arcanalabs/ui-components/react'
 // Masking is built into the component — no global directive needed.
 
 export function BirthDate() {
   const [date, setDate] = useState<string | null>('2026-07-24')
-  return <ShadcnDatePicker value={date} onValueChange={setDate} />
+  return <ArcanaDatePicker value={date} onValueChange={setDate} />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnDatePickerComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaDatePickerComponent } from '@arcanalabs/ui-components/angular'
 
 // Masking is built into the component — no global directive needed.
 @Component({
   selector: 'app-birth-date',
   standalone: true,
-  imports: [ShadcnDatePickerComponent],
-  template: \`<div arcanaShadcnDatePicker [(value)]="date"></div>\`
+  imports: [ArcanaDatePickerComponent],
+  template: \`<div arcanaDatePicker [(value)]="date"></div>\`
 })
 export class BirthDateComponent {
   date: string | null = '2026-07-24'
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnDatePicker } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaDatePicker } from '@arcanalabs/ui-components/svelte'
   // Masking is built into the component — no global directive needed.
   let date = $state<string | null>('2026-07-24')
 </script>
 
-<ShadcnDatePicker value={date} onValueChange={(v) => (date = v)} />`
+<ArcanaDatePicker value={date} onValueChange={(v) => (date = v)} />`
   },
 
   inputCurrency: {
     react: `import { useState } from 'react'
-import { InputCurrency } from '@arcanalabs/ui-components/react'
+import { ArcanaInputCurrency } from '@arcanalabs/ui-components/react'
 
 export function Price() {
   const [price, setPrice] = useState('1500.00')
-  return <InputCurrency value={price} onValueChange={setPrice} shadcn />
+  return <ArcanaInputCurrency value={price} onValueChange={setPrice} shadcn />
 }`,
     angular: `import { Component } from '@angular/core'
-import { InputCurrencyComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaInputCurrencyComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-price',
   standalone: true,
-  imports: [InputCurrencyComponent],
+  imports: [ArcanaInputCurrencyComponent],
   template: \`<div arcanaInputCurrency [(value)]="price" [shadcn]="true"></div>\`
 })
 export class PriceComponent {
   price = '1500.00'
 }`,
     svelte: `<script lang="ts">
-  import { InputCurrency } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaInputCurrency } from '@arcanalabs/ui-components/svelte'
   let price = $state('1500.00')
 </script>
 
-<InputCurrency value={price} onValueChange={(v) => (price = v)} shadcn />`
-  },
-
-  labeledButton: {
-    react: `import { LabeledButton } from '@arcanalabs/ui-components/react'
-
-export function Actions() {
-  return (
-    <>
-      <LabeledButton shadcn label="Save" color="green-600" icon="fa-solid fa-check" onClick={save} />
-      <LabeledButton shadcn label="Saving…" color="green-600" loading={busy} />
-    </>
-  )
-}`,
-    angular: `import { Component } from '@angular/core'
-import { LabeledButtonComponent } from '@arcanalabs/ui-components/angular'
-
-@Component({
-  selector: 'app-actions',
-  standalone: true,
-  imports: [LabeledButtonComponent],
-  template: \`
-    <button arcanaLabeledButton [shadcn]="true" label="Save" color="green-600" icon="fa-solid fa-check" (click)="save()"></button>
-    <button arcanaLabeledButton [shadcn]="true" label="Saving…" color="green-600" [loading]="busy"></button>
-  \`
-})
-export class ActionsComponent {
-  busy = false
-  save() {}
-}`,
-    svelte: `<script lang="ts">
-  import { LabeledButton } from '@arcanalabs/ui-components/svelte'
-
-  let busy = $state(false)
-  function save() {}
-</script>
-
-<LabeledButton shadcn label="Save" color="green-600" icon="fa-solid fa-check" onClick={save} />
-<LabeledButton shadcn label="Saving…" color="green-600" loading={busy} />`
+<ArcanaInputCurrency value={price} onValueChange={(v) => (price = v)} shadcn />`
   },
 
   accordion: {
     react: `import { useState } from 'react'
-import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/react'
+import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/react'
 
 export function Faq() {
   const [open, setOpen] = useState<string | string[] | null>('shipping')
   return (
-    <ShadcnAccordion value={open} onValueChange={setOpen}>
-      <ShadcnAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ShadcnAccordionItem>
-      <ShadcnAccordionItem name="returns" title="Returns">30-day free returns.</ShadcnAccordionItem>
-    </ShadcnAccordion>
+    <ArcanaAccordion value={open} onValueChange={setOpen}>
+      <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
+      <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
+    </ArcanaAccordion>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnAccordionComponent, ShadcnAccordionItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaAccordionComponent, ArcanaAccordionItemComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [ShadcnAccordionComponent, ShadcnAccordionItemComponent],
+  imports: [ArcanaAccordionComponent, ArcanaAccordionItemComponent],
   template: \`
-    <div arcanaShadcnAccordion [(value)]="open">
-      <div arcanaShadcnAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</div>
-      <div arcanaShadcnAccordionItem name="returns" title="Returns">30-day free returns.</div>
+    <div arcanaAccordion [(value)]="open">
+      <div arcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</div>
+      <div arcanaAccordionItem name="returns" title="Returns">30-day free returns.</div>
     </div>
   \`
 })
@@ -742,42 +704,42 @@ export class FaqComponent {
   open: string | string[] | null = 'shipping'
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/svelte'
   let open = $state<string | string[] | null>('shipping')
 </script>
 
-<ShadcnAccordion value={open} onValueChange={(v) => (open = v)}>
-  <ShadcnAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ShadcnAccordionItem>
-  <ShadcnAccordionItem name="returns" title="Returns">30-day free returns.</ShadcnAccordionItem>
-</ShadcnAccordion>`
+<ArcanaAccordion value={open} onValueChange={(v) => (open = v)}>
+  <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
+  <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
+</ArcanaAccordion>`
   },
 
   accordionItem: {
     react: `import { useState } from 'react'
-import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/react'
+import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/react'
 
 export function Details() {
   // Multiple-open mode: value is an array of open names.
   const [open, setOpen] = useState<string[]>(['specs'])
   return (
-    <ShadcnAccordion value={open} onValueChange={(v) => setOpen(v as string[])} accordion={false}>
-      <ShadcnAccordionItem name="specs" title="Specifications">Weight, dimensions…</ShadcnAccordionItem>
-      <ShadcnAccordionItem name="care" title={<span>Care <strong>instructions</strong></span>}>Hand wash cold.</ShadcnAccordionItem>
-    </ShadcnAccordion>
+    <ArcanaAccordion value={open} onValueChange={(v) => setOpen(v as string[])} accordion={false}>
+      <ArcanaAccordionItem name="specs" title="Specifications">Weight, dimensions…</ArcanaAccordionItem>
+      <ArcanaAccordionItem name="care" title={<span>Care <strong>instructions</strong></span>}>Hand wash cold.</ArcanaAccordionItem>
+    </ArcanaAccordion>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnAccordionComponent, ShadcnAccordionItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaAccordionComponent, ArcanaAccordionItemComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [ShadcnAccordionComponent, ShadcnAccordionItemComponent],
+  imports: [ArcanaAccordionComponent, ArcanaAccordionItemComponent],
   template: \`
     <!-- Multiple-open mode: value is an array of open names. -->
-    <div arcanaShadcnAccordion [(value)]="open" [accordion]="false">
-      <div arcanaShadcnAccordionItem name="specs" title="Specifications">Weight, dimensions…</div>
-      <div arcanaShadcnAccordionItem name="care" title="Care instructions">Hand wash cold.</div>
+    <div arcanaAccordion [(value)]="open" [accordion]="false">
+      <div arcanaAccordionItem name="specs" title="Specifications">Weight, dimensions…</div>
+      <div arcanaAccordionItem name="care" title="Care instructions">Hand wash cold.</div>
     </div>
   \`
 })
@@ -785,43 +747,43 @@ export class DetailsComponent {
   open: string[] = ['specs']
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnAccordion, ShadcnAccordionItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/svelte'
   // Multiple-open mode: value is an array of open names.
   let open = $state<string[]>(['specs'])
 </script>
 
-<ShadcnAccordion value={open} onValueChange={(v) => (open = v as string[])} accordion={false}>
-  <ShadcnAccordionItem name="specs" title="Specifications">Weight, dimensions…</ShadcnAccordionItem>
-  <ShadcnAccordionItem name="care">
+<ArcanaAccordion value={open} onValueChange={(v) => (open = v as string[])} accordion={false}>
+  <ArcanaAccordionItem name="specs" title="Specifications">Weight, dimensions…</ArcanaAccordionItem>
+  <ArcanaAccordionItem name="care">
     {#snippet title()}Care <strong>instructions</strong>{/snippet}
     Hand wash cold.
-  </ShadcnAccordionItem>
-</ShadcnAccordion>`
+  </ArcanaAccordionItem>
+</ArcanaAccordion>`
   },
 
   dropdown: {
-    react: `import { ShadcnDropdown, ShadcnDropdownItem, ShadcnButton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function RowActions() {
   return (
-    <ShadcnDropdown placement="bottom-start" trigger={<ShadcnButton variant="outline">Actions ▾</ShadcnButton>}>
-      <ShadcnDropdownItem icon="fa-solid fa-pen" onClick={rename}>Rename</ShadcnDropdownItem>
-      <ShadcnDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ShadcnDropdownItem>
-    </ShadcnDropdown>
+    <ArcanaDropdown placement="bottom-start" trigger={<ArcanaButton variant="outline">Actions ▾</ArcanaButton>}>
+      <ArcanaDropdownItem icon="fa-solid fa-pen" onClick={rename}>Rename</ArcanaDropdownItem>
+      <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
+    </ArcanaDropdown>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnDropdownComponent, ShadcnDropdownItemComponent, ShadcnButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-row-actions',
   standalone: true,
-  imports: [ShadcnDropdownComponent, ShadcnDropdownItemComponent, ShadcnButtonComponent],
+  imports: [ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent],
   template: \`
-    <div arcanaShadcnDropdown placement="bottom-start">
-      <button arcanaDropdownTrigger arcanaShadcnButton variant="outline">Actions ▾</button>
-      <div arcanaShadcnDropdownItem icon="fa-solid fa-pen" (click)="rename()">Rename</div>
-      <div arcanaShadcnDropdownItem icon="fa-solid fa-trash" variant="danger" [divided]="true" (click)="del()">Delete</div>
+    <div arcanaDropdown placement="bottom-start">
+      <button arcanaDropdownTrigger arcanaButton variant="outline">Actions ▾</button>
+      <div arcanaDropdownItem icon="fa-solid fa-pen" (click)="rename()">Rename</div>
+      <div arcanaDropdownItem icon="fa-solid fa-trash" variant="danger" [divided]="true" (click)="del()">Delete</div>
     </div>
   \`
 })
@@ -830,43 +792,43 @@ export class RowActionsComponent {
   del() {}
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnDropdown, ShadcnDropdownItem, ShadcnButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/svelte'
   function rename() {}
   function del() {}
 </script>
 
-<ShadcnDropdown placement="bottom-start">
+<ArcanaDropdown placement="bottom-start">
   {#snippet trigger({ toggle })}
-    <ShadcnButton variant="outline" onClick={toggle}>Actions ▾</ShadcnButton>
+    <ArcanaButton variant="outline" onClick={toggle}>Actions ▾</ArcanaButton>
   {/snippet}
-  <ShadcnDropdownItem icon="fa-solid fa-pen" onClick={rename}>Rename</ShadcnDropdownItem>
-  <ShadcnDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ShadcnDropdownItem>
-</ShadcnDropdown>`
+  <ArcanaDropdownItem icon="fa-solid fa-pen" onClick={rename}>Rename</ArcanaDropdownItem>
+  <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
+</ArcanaDropdown>`
   },
 
   dropdownItem: {
-    react: `import { ShadcnDropdown, ShadcnDropdownItem } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaDropdown, ArcanaDropdownItem } from '@arcanalabs/ui-components/react'
 
 export function Menu() {
   return (
-    <ShadcnDropdown size="comfortable" trigger={<button>Menu ▾</button>}>
-      <ShadcnDropdownItem icon="fa-solid fa-user" suffix={<span>⌘P</span>}>Profile</ShadcnDropdownItem>
-      <ShadcnDropdownItem variant="danger" divided onClick={del}>Delete</ShadcnDropdownItem>
-    </ShadcnDropdown>
+    <ArcanaDropdown size="comfortable" trigger={<button>Menu ▾</button>}>
+      <ArcanaDropdownItem icon="fa-solid fa-user" suffix={<span>⌘P</span>}>Profile</ArcanaDropdownItem>
+      <ArcanaDropdownItem variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
+    </ArcanaDropdown>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnDropdownComponent, ShadcnDropdownItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaDropdownComponent, ArcanaDropdownItemComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [ShadcnDropdownComponent, ShadcnDropdownItemComponent],
+  imports: [ArcanaDropdownComponent, ArcanaDropdownItemComponent],
   template: \`
-    <div arcanaShadcnDropdown size="comfortable">
+    <div arcanaDropdown size="comfortable">
       <button arcanaDropdownTrigger>Menu ▾</button>
-      <div arcanaShadcnDropdownItem icon="fa-solid fa-user" suffix="⌘P">Profile</div>
-      <div arcanaShadcnDropdownItem variant="danger" [divided]="true" (click)="del()">Delete</div>
+      <div arcanaDropdownItem icon="fa-solid fa-user" suffix="⌘P">Profile</div>
+      <div arcanaDropdownItem variant="danger" [divided]="true" (click)="del()">Delete</div>
     </div>
   \`
 })
@@ -874,24 +836,24 @@ export class MenuComponent {
   del() {}
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnDropdown, ShadcnDropdownItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaDropdown, ArcanaDropdownItem } from '@arcanalabs/ui-components/svelte'
   function del() {}
 </script>
 
-<ShadcnDropdown size="comfortable">
+<ArcanaDropdown size="comfortable">
   {#snippet trigger({ toggle })}<button onclick={toggle}>Menu ▾</button>{/snippet}
-  <ShadcnDropdownItem icon="fa-solid fa-user">
+  <ArcanaDropdownItem icon="fa-solid fa-user">
     Profile
     {#snippet suffix()}⌘P{/snippet}
-  </ShadcnDropdownItem>
-  <ShadcnDropdownItem variant="danger" divided onClick={del}>Delete</ShadcnDropdownItem>
-</ShadcnDropdown>`
+  </ArcanaDropdownItem>
+  <ArcanaDropdownItem variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
+</ArcanaDropdown>`
   },
 
   table: {
-    react: `import { ShadcnTable, type ShadcnTableColumn } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaTable, type ArcanaTableColumn } from '@arcanalabs/ui-components/react'
 
-const columns: ShadcnTableColumn[] = [
+const columns: ArcanaTableColumn[] = [
   { key: 'sku', label: 'SKU', width: '96px' },
   { key: 'name', label: 'Product', render: ({ row }) => <strong>{row.name}</strong> },
   { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
@@ -900,26 +862,26 @@ const rows = [{ sku: 'GLP-13', name: 'Botijão P13', total: 260 }]
 
 export function ProductsTable() {
   return (
-    <ShadcnTable columns={columns} rows={rows} footer={
-      <tr><td colSpan={2}>Total</td><td className="shadcn-table__td--right">R$ 260,00</td></tr>
+    <ArcanaTable columns={columns} rows={rows} footer={
+      <tr><td colSpan={2}>Total</td><td className="arcana-table__td--right">R$ 260,00</td></tr>
     } />
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnTableComponent, type ShadcnTableColumn } from '@arcanalabs/ui-components/angular'
+import { ArcanaTableComponent, type ArcanaTableColumn } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-products-table',
   standalone: true,
-  imports: [ShadcnTableComponent],
+  imports: [ArcanaTableComponent],
   template: \`
-    <div arcanaShadcnTable [columns]="columns" [rows]="rows" [cellTemplates]="{ name: nameCell }" [footerTemplate]="foot"></div>
+    <div arcanaTable [columns]="columns" [rows]="rows" [cellTemplates]="{ name: nameCell }" [footerTemplate]="foot"></div>
     <ng-template #nameCell let-row="row"><strong>{{ row.name }}</strong></ng-template>
-    <ng-template #foot><tr><td colspan="2">Total</td><td class="shadcn-table__td--right">R$ 260,00</td></tr></ng-template>
+    <ng-template #foot><tr><td colspan="2">Total</td><td class="arcana-table__td--right">R$ 260,00</td></tr></ng-template>
   \`
 })
 export class ProductsTableComponent {
-  columns: ShadcnTableColumn[] = [
+  columns: ArcanaTableColumn[] = [
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product' },
     { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
@@ -927,9 +889,9 @@ export class ProductsTableComponent {
   rows = [{ sku: 'GLP-13', name: 'Botijão P13', total: 260 }]
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnTable, type ShadcnTableColumn } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaTable, type ArcanaTableColumn } from '@arcanalabs/ui-components/svelte'
 
-  const columns: ShadcnTableColumn[] = [
+  const columns: ArcanaTableColumn[] = [
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product', render: nameCell },
     { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
@@ -939,244 +901,244 @@ export class ProductsTableComponent {
 
 {#snippet nameCell({ row })}<strong>{row.name}</strong>{/snippet}
 
-<ShadcnTable {columns} {rows}>
-  {#snippet footer()}<tr><td colspan="2">Total</td><td class="shadcn-table__td--right">R$ 260,00</td></tr>{/snippet}
-</ShadcnTable>`
+<ArcanaTable {columns} {rows}>
+  {#snippet footer()}<tr><td colspan="2">Total</td><td class="arcana-table__td--right">R$ 260,00</td></tr>{/snippet}
+</ArcanaTable>`
   },
 
   specSheet: {
-    react: `import { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function OrgSheet() {
   return (
-    <ShadcnSpecSheet
+    <ArcanaSpecSheet
       docNum="Cadastro Nº 042"
       title="Popgás Distribuidora"
       metaLabel="Status"
-      meta={<span className="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>}
-      footer={<ShadcnButton variant="outline">Alterar Dados</ShadcnButton>}
+      meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>}
+      footer={<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>}
     >
-      <ShadcnSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-        <ShadcnSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
-        <ShadcnSpecSheetField label="CNPJ" value={form.document_number} />
-      </ShadcnSpecSheetSection>
-    </ShadcnSpecSheet>
+      <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
+        <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
+        <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+      </ArcanaSpecSheetSection>
+    </ArcanaSpecSheet>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSpecSheetComponent, ShadcnSpecSheetSectionComponent, ShadcnSpecSheetFieldComponent, ShadcnButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-org-sheet',
   standalone: true,
-  imports: [ShadcnSpecSheetComponent, ShadcnSpecSheetSectionComponent, ShadcnSpecSheetFieldComponent, ShadcnButtonComponent],
+  imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <article arcanaShadcnSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
-      <section arcanaShadcnSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-        <div arcanaShadcnSpecSheetField label="Razão Social" [value]="form.trading_name" [span]="2"></div>
-        <div arcanaShadcnSpecSheetField label="CNPJ" [value]="form.document_number"></div>
+    <article arcanaSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
+      <section arcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
+        <div arcanaSpecSheetField label="Razão Social" [value]="form.trading_name" [span]="2"></div>
+        <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
       </section>
     </article>
-    <ng-template #meta><span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span></ng-template>
-    <ng-template #foot><button arcanaShadcnButton variant="outline">Alterar Dados</button></ng-template>
+    <ng-template #meta><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></ng-template>
+    <ng-template #foot><button arcanaButton variant="outline">Alterar Dados</button></ng-template>
   \`
 })
 export class OrgSheetComponent {
   form = { trading_name: 'Popgás Distribuidora de Gás LTDA', document_number: '12.345.678/0001-90' }
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSpecSheet, ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
   const form = { trading_name: 'Popgás Distribuidora de Gás LTDA', document_number: '12.345.678/0001-90' }
 </script>
 
-<ShadcnSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status">
-  {#snippet meta()}<span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>{/snippet}
-  <ShadcnSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
-    <ShadcnSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
-    <ShadcnSpecSheetField label="CNPJ" value={form.document_number} />
-  </ShadcnSpecSheetSection>
-  {#snippet footer()}<ShadcnButton variant="outline">Alterar Dados</ShadcnButton>{/snippet}
-</ShadcnSpecSheet>`
+<ArcanaSpecSheet docNum="Cadastro Nº 042" title="Popgás Distribuidora" metaLabel="Status">
+  {#snippet meta()}<span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>{/snippet}
+  <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue">
+    <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} span={2} />
+    <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+  </ArcanaSpecSheetSection>
+  {#snippet footer()}<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>{/snippet}
+</ArcanaSpecSheet>`
   },
 
   specSheetSection: {
-    react: `import { ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
 
-// Nested inside a <ShadcnSpecSheet>.
+// Nested inside a <ArcanaSpecSheet>.
 export function Financials() {
   return (
-    <ShadcnSpecSheetSection
+    <ArcanaSpecSheetSection
       title="Financeiro"
       sectionNum="§ 03"
       icon="fa-solid fa-dollar-sign"
       iconColor="amber"
       columns={3}
-      actions={<ShadcnButton variant="ghost">Alterar</ShadcnButton>}
+      actions={<ArcanaButton variant="ghost">Alterar</ArcanaButton>}
     >
-      <ShadcnSpecSheetField label="Limite" value="R$ 5.000,00" />
-      <ShadcnSpecSheetField label="Saldo" value="R$ 1.240,00" />
-    </ShadcnSpecSheetSection>
+      <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
+      <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
+    </ArcanaSpecSheetSection>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSpecSheetSectionComponent, ShadcnSpecSheetFieldComponent, ShadcnButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-financials',
   standalone: true,
-  imports: [ShadcnSpecSheetSectionComponent, ShadcnSpecSheetFieldComponent, ShadcnButtonComponent],
+  imports: [ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <!-- Nested inside a <article arcanaShadcnSpecSheet> -->
-    <section arcanaShadcnSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
-      <div arcanaShadcnSpecSheetField label="Limite" value="R$ 5.000,00"></div>
-      <div arcanaShadcnSpecSheetField label="Saldo" value="R$ 1.240,00"></div>
+    <!-- Nested inside a <article arcanaSpecSheet> -->
+    <section arcanaSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
+      <div arcanaSpecSheetField label="Limite" value="R$ 5.000,00"></div>
+      <div arcanaSpecSheetField label="Saldo" value="R$ 1.240,00"></div>
     </section>
-    <ng-template #acts><button arcanaShadcnButton variant="ghost">Alterar</button></ng-template>
+    <ng-template #acts><button arcanaButton variant="ghost">Alterar</button></ng-template>
   \`
 })
 export class FinancialsComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnSpecSheetSection, ShadcnSpecSheetField, ShadcnButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<!-- Nested inside a <ShadcnSpecSheet> -->
-<ShadcnSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
-  {#snippet actions()}<ShadcnButton variant="ghost">Alterar</ShadcnButton>{/snippet}
-  <ShadcnSpecSheetField label="Limite" value="R$ 5.000,00" />
-  <ShadcnSpecSheetField label="Saldo" value="R$ 1.240,00" />
-</ShadcnSpecSheetSection>`
+<!-- Nested inside a <ArcanaSpecSheet> -->
+<ArcanaSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
+  {#snippet actions()}<ArcanaButton variant="ghost">Alterar</ArcanaButton>{/snippet}
+  <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
+  <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
+</ArcanaSpecSheetSection>`
   },
 
   specSheetField: {
-    react: `import { ShadcnSpecSheetField } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSpecSheetField } from '@arcanalabs/ui-components/react'
 
 export function Fields() {
   return (
     <>
-      <ShadcnSpecSheetField label="CNPJ" value={form.document_number} />
-      <ShadcnSpecSheetField label="Observações" value="" emptyText="Não informado" />
-      <ShadcnSpecSheetField label="Status" span={2}>
-        <span className="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>
-      </ShadcnSpecSheetField>
+      <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+      <ArcanaSpecSheetField label="Observações" value="" emptyText="Não informado" />
+      <ArcanaSpecSheetField label="Status" span={2}>
+        <span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
+      </ArcanaSpecSheetField>
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSpecSheetFieldComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSpecSheetFieldComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-fields',
   standalone: true,
-  imports: [ShadcnSpecSheetFieldComponent],
+  imports: [ArcanaSpecSheetFieldComponent],
   template: \`
-    <div arcanaShadcnSpecSheetField label="CNPJ" [value]="form.document_number"></div>
-    <div arcanaShadcnSpecSheetField label="Observações" value="" emptyText="Não informado"></div>
-    <div arcanaShadcnSpecSheetField label="Status" [span]="2" [valueTemplate]="status"></div>
-    <ng-template #status><span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span></ng-template>
+    <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
+    <div arcanaSpecSheetField label="Observações" value="" emptyText="Não informado"></div>
+    <div arcanaSpecSheetField label="Status" [span]="2" [valueTemplate]="status"></div>
+    <ng-template #status><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></ng-template>
   \`
 })
 export class FieldsComponent {
   form = { document_number: '12.345.678/0001-90' }
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSpecSheetField } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSpecSheetField } from '@arcanalabs/ui-components/svelte'
   const form = { document_number: '12.345.678/0001-90' }
 </script>
 
-<ShadcnSpecSheetField label="CNPJ" value={form.document_number} />
-<ShadcnSpecSheetField label="Observações" value="" emptyText="Não informado" />
-<ShadcnSpecSheetField label="Status" span={2}>
-  <span class="shadcn-spec-sheet-badge shadcn-spec-sheet-badge--active">Ativo</span>
-</ShadcnSpecSheetField>`
+<ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
+<ArcanaSpecSheetField label="Observações" value="" emptyText="Não informado" />
+<ArcanaSpecSheetField label="Status" span={2}>
+  <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
+</ArcanaSpecSheetField>`
   },
 
   summaryTiles: {
-    react: `import { ShadcnSummaryTiles, ShadcnSummaryTile } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/react'
 
 export function Kpis() {
   return (
-    <ShadcnSummaryTiles columns={3}>
-      <ShadcnSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-      <ShadcnSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
-      <ShadcnSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-    </ShadcnSummaryTiles>
+    <ArcanaSummaryTiles columns={3}>
+      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
+      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
+      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+    </ArcanaSummaryTiles>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSummaryTilesComponent, ShadcnSummaryTileComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-kpis',
   standalone: true,
-  imports: [ShadcnSummaryTilesComponent, ShadcnSummaryTileComponent],
+  imports: [ArcanaSummaryTilesComponent, ArcanaSummaryTileComponent],
   template: \`
-    <div arcanaShadcnSummaryTiles [columns]="3">
-      <div arcanaShadcnSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas"></div>
-      <div arcanaShadcnSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00"></div>
-      <div arcanaShadcnSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00"></div>
+    <div arcanaSummaryTiles [columns]="3">
+      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas"></div>
+      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00"></div>
+      <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00"></div>
     </div>
   \`
 })
 export class KpisComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnSummaryTiles, ShadcnSummaryTile } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSummaryTiles, ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ShadcnSummaryTiles columns={3}>
-  <ShadcnSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-  <ShadcnSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
-  <ShadcnSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-</ShadcnSummaryTiles>`
+<ArcanaSummaryTiles columns={3}>
+  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
+  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
+  <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+</ArcanaSummaryTiles>`
   },
 
   summaryTile: {
-    react: `import { ShadcnSummaryTile } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSummaryTile } from '@arcanalabs/ui-components/react'
 
 export function Approved() {
-  return <ShadcnSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />
+  return <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSummaryTileComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSummaryTileComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-approved',
   standalone: true,
-  imports: [ShadcnSummaryTileComponent],
-  template: \`<div arcanaShadcnSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje"></div>\`
+  imports: [ArcanaSummaryTileComponent],
+  template: \`<div arcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje"></div>\`
 })
 export class ApprovedComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnSummaryTile } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ShadcnSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />`
+<ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />`
   },
 
   settingsList: {
     react: `import { useState } from 'react'
-import { ShadcnSettingsList, ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/react'
+import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
 export function Settings() {
   const [popgas, setPopgas] = useState(true)
   return (
-    <ShadcnSettingsList>
-      <ShadcnSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-        <ShadcnSwitch value={popgas} onValueChange={setPopgas} ariaLabel="Modo PopGás" />
-      </ShadcnSettingsListItem>
-    </ShadcnSettingsList>
+    <ArcanaSettingsList>
+      <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
+        <ArcanaSwitch value={popgas} onValueChange={setPopgas} ariaLabel="Modo PopGás" />
+      </ArcanaSettingsListItem>
+    </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSettingsListComponent, ShadcnSettingsListItemComponent, ShadcnSwitchComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [ShadcnSettingsListComponent, ShadcnSettingsListItemComponent, ShadcnSwitchComponent],
+  imports: [ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
-    <div arcanaShadcnSettingsList>
-      <div arcanaShadcnSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-        <button arcanaShadcnSwitch [(value)]="popgas" ariaLabel="Modo PopGás"></button>
+    <div arcanaSettingsList>
+      <div arcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
+        <button arcanaSwitch [(value)]="popgas" ariaLabel="Modo PopGás"></button>
       </div>
     </div>
   \`
@@ -1185,78 +1147,78 @@ export class SettingsComponent {
   popgas = true
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSettingsList, ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
   let popgas = $state(true)
 </script>
 
-<ShadcnSettingsList>
-  <ShadcnSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
-    <ShadcnSwitch value={popgas} onValueChange={(v) => (popgas = v)} ariaLabel="Modo PopGás" />
-  </ShadcnSettingsListItem>
-</ShadcnSettingsList>`
+<ArcanaSettingsList>
+  <ArcanaSettingsListItem label="Modo PopGás" caption="Habilita recursos internos.">
+    <ArcanaSwitch value={popgas} onValueChange={(v) => (popgas = v)} ariaLabel="Modo PopGás" />
+  </ArcanaSettingsListItem>
+</ArcanaSettingsList>`
   },
 
   settingsListGroup: {
-    react: `import { ShadcnSettingsList, ShadcnSettingsListGroup, ShadcnSettingsListItem } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem } from '@arcanalabs/ui-components/react'
 
 export function OrderSettings() {
   return (
-    <ShadcnSettingsList>
-      <ShadcnSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-        <ShadcnSettingsListItem label="Aceitar pedidos">…</ShadcnSettingsListItem>
-      </ShadcnSettingsListGroup>
-    </ShadcnSettingsList>
+    <ArcanaSettingsList>
+      <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
+        <ArcanaSettingsListItem label="Aceitar pedidos">…</ArcanaSettingsListItem>
+      </ArcanaSettingsListGroup>
+    </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSettingsListComponent, ShadcnSettingsListGroupComponent, ShadcnSettingsListItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-order-settings',
   standalone: true,
-  imports: [ShadcnSettingsListComponent, ShadcnSettingsListGroupComponent, ShadcnSettingsListItemComponent],
+  imports: [ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent],
   template: \`
-    <div arcanaShadcnSettingsList>
-      <section arcanaShadcnSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-        <div arcanaShadcnSettingsListItem label="Aceitar pedidos">…</div>
+    <div arcanaSettingsList>
+      <section arcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
+        <div arcanaSettingsListItem label="Aceitar pedidos">…</div>
       </section>
     </div>
   \`
 })
 export class OrderSettingsComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnSettingsList, ShadcnSettingsListGroup, ShadcnSettingsListItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ShadcnSettingsList>
-  <ShadcnSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-    <ShadcnSettingsListItem label="Aceitar pedidos">…</ShadcnSettingsListItem>
-  </ShadcnSettingsListGroup>
-</ShadcnSettingsList>`
+<ArcanaSettingsList>
+  <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
+    <ArcanaSettingsListItem label="Aceitar pedidos">…</ArcanaSettingsListItem>
+  </ArcanaSettingsListGroup>
+</ArcanaSettingsList>`
   },
 
   settingsListItem: {
     react: `import { useState } from 'react'
-import { ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/react'
+import { ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
 export function EmailRow() {
   const [notifyEmail, setNotifyEmail] = useState(true)
   return (
-    <ShadcnSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-      <ShadcnSwitch value={notifyEmail} onValueChange={setNotifyEmail} ariaLabel="E-mail" />
-    </ShadcnSettingsListItem>
+    <ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
+      <ArcanaSwitch value={notifyEmail} onValueChange={setNotifyEmail} ariaLabel="E-mail" />
+    </ArcanaSettingsListItem>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSettingsListItemComponent, ShadcnSwitchComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListItemComponent, ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-email-row',
   standalone: true,
-  imports: [ShadcnSettingsListItemComponent, ShadcnSwitchComponent],
+  imports: [ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
-    <div arcanaShadcnSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-      <button arcanaShadcnSwitch [(value)]="notifyEmail" ariaLabel="E-mail"></button>
+    <div arcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
+      <button arcanaSwitch [(value)]="notifyEmail" ariaLabel="E-mail"></button>
     </div>
   \`
 })
@@ -1264,24 +1226,24 @@ export class EmailRowComponent {
   notifyEmail = true
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSettingsListItem, ShadcnSwitch } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
   let notifyEmail = $state(true)
 </script>
 
-<ShadcnSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-  <ShadcnSwitch value={notifyEmail} onValueChange={(v) => (notifyEmail = v)} ariaLabel="E-mail" />
-</ShadcnSettingsListItem>`
+<ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
+  <ArcanaSwitch value={notifyEmail} onValueChange={(v) => (notifyEmail = v)} ariaLabel="E-mail" />
+</ArcanaSettingsListItem>`
   },
 
   settingsEditableField: {
     react: `import { useState } from 'react'
-import { ShadcnSettingsList, ShadcnSettingsEditableField } from '@arcanalabs/ui-components/react'
+import { ArcanaSettingsList, ArcanaSettingsEditableField } from '@arcanalabs/ui-components/react'
 
 export function DiscountRow() {
   const [discount, setDiscount] = useState<string | number | boolean | null>('1500.00')
   return (
-    <ShadcnSettingsList>
-      <ShadcnSettingsEditableField
+    <ArcanaSettingsList>
+      <ArcanaSettingsEditableField
         label="Desconto 1ª compra"
         caption="Valor unitário aplicado."
         type="currency"
@@ -1289,19 +1251,19 @@ export function DiscountRow() {
         onValueChange={setDiscount}
         onSave={autoSave}
       />
-    </ShadcnSettingsList>
+    </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSettingsListComponent, ShadcnSettingsEditableFieldComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsEditableFieldComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-discount-row',
   standalone: true,
-  imports: [ShadcnSettingsListComponent, ShadcnSettingsEditableFieldComponent],
+  imports: [ArcanaSettingsListComponent, ArcanaSettingsEditableFieldComponent],
   template: \`
-    <div arcanaShadcnSettingsList>
-      <div arcanaShadcnSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" [(value)]="discount" (save)="autoSave($event)"></div>
+    <div arcanaSettingsList>
+      <div arcanaSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" [(value)]="discount" (save)="autoSave($event)"></div>
     </div>
   \`
 })
@@ -1310,14 +1272,14 @@ export class DiscountRowComponent {
   autoSave(value: unknown) { /* …persist */ }
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSettingsList, ShadcnSettingsEditableField } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsList, ArcanaSettingsEditableField } from '@arcanalabs/ui-components/svelte'
 
   let discount = $state<string | number | boolean | null>('1500.00')
   function autoSave(value: unknown) { /* …persist */ }
 </script>
 
-<ShadcnSettingsList>
-  <ShadcnSettingsEditableField
+<ArcanaSettingsList>
+  <ArcanaSettingsEditableField
     label="Desconto 1ª compra"
     caption="Valor unitário aplicado."
     type="currency"
@@ -1325,15 +1287,15 @@ export class DiscountRowComponent {
     onValueChange={(v) => (discount = v)}
     onSave={autoSave}
   />
-</ShadcnSettingsList>`
+</ArcanaSettingsList>`
   },
 
   sparkGridEmptyState: {
-    react: `import { SparkGridEmptyState } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/react'
 
 export function Products({ rows, loading, hasActiveFilter, openCreate }) {
   return (
-    <SparkGridEmptyState
+    <ArcanaGridEmptyState
       total={rows.length}
       loading={loading}
       filtered={hasActiveFilter}
@@ -1343,18 +1305,18 @@ export function Products({ rows, loading, hasActiveFilter, openCreate }) {
       onAction={openCreate}
     >
       <MyGrid rows={rows} />
-    </SparkGridEmptyState>
+    </ArcanaGridEmptyState>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { SparkGridEmptyStateComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaGridEmptyStateComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [SparkGridEmptyStateComponent],
+  imports: [ArcanaGridEmptyStateComponent],
   template: \`
-    <div arcanaSparkGridEmptyState
+    <div arcanaGridEmptyState
       [total]="rows.length" [loading]="loading" [filtered]="hasActiveFilter"
       icon="fa-solid fa-box-open" title="Nenhum produto cadastrado" actionLabel="Adicionar Produto"
       (action)="openCreate()">
@@ -1369,14 +1331,14 @@ export class ProductsComponent {
   openCreate() {}
 }`,
     svelte: `<script lang="ts">
-  import { SparkGridEmptyState } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaGridEmptyState } from '@arcanalabs/ui-components/svelte'
   export let rows: unknown[] = []
   export let loading = false
   export let hasActiveFilter = false
   export let openCreate: () => void
 </script>
 
-<SparkGridEmptyState
+<ArcanaGridEmptyState
   total={rows.length}
   loading={loading}
   filtered={hasActiveFilter}
@@ -1386,38 +1348,38 @@ export class ProductsComponent {
   onAction={openCreate}
 >
   <MyGrid {rows} />
-</SparkGridEmptyState>`
+</ArcanaGridEmptyState>`
   },
 
   notice: {
-    react: `import { ShadcnNotice } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaNotice } from '@arcanalabs/ui-components/react'
 
 export function Notices({ dismissed, onHide }) {
   return (
     <>
-      <ShadcnNotice variant="warning" title="Pagamento manual">
+      <ArcanaNotice variant="warning" title="Pagamento manual">
         Pix e Boleto geram um link novo de cobrança a cada ciclo.
-      </ShadcnNotice>
+      </ArcanaNotice>
       {!dismissed && (
-        <ShadcnNotice variant="destructive" title="Falha" dismissible onDismiss={onHide}>
+        <ArcanaNotice variant="destructive" title="Falha" dismissible onDismiss={onHide}>
           Tente novamente.
-        </ShadcnNotice>
+        </ArcanaNotice>
       )}
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnNoticeComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaNoticeComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-notices',
   standalone: true,
-  imports: [ShadcnNoticeComponent],
+  imports: [ArcanaNoticeComponent],
   template: \`
-    <div arcanaShadcnNotice variant="warning" title="Pagamento manual">
+    <div arcanaNotice variant="warning" title="Pagamento manual">
       Pix e Boleto geram um link novo de cobrança a cada ciclo.
     </div>
-    <div arcanaShadcnNotice variant="destructive" title="Falha" [dismissible]="true" (dismiss)="hide()">
+    <div arcanaNotice variant="destructive" title="Falha" [dismissible]="true" (dismiss)="hide()">
       Tente novamente.
     </div>
   \`
@@ -1426,24 +1388,24 @@ export class NoticesComponent {
   hide() {}
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnNotice } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaNotice } from '@arcanalabs/ui-components/svelte'
   function hide() {}
 </script>
 
-<ShadcnNotice variant="warning" title="Pagamento manual">
+<ArcanaNotice variant="warning" title="Pagamento manual">
   Pix e Boleto geram um link novo de cobrança a cada ciclo.
-</ShadcnNotice>
-<ShadcnNotice variant="destructive" title="Falha" dismissible onDismiss={hide}>
+</ArcanaNotice>
+<ArcanaNotice variant="destructive" title="Falha" dismissible onDismiss={hide}>
   Tente novamente.
-</ShadcnNotice>`
+</ArcanaNotice>`
   },
 
   editFieldModal: {
     react: `import { useRef, useState } from 'react'
-import { ShadcnEditFieldModal, ShadcnSelect, ShadcnButton, type ShadcnEditFieldModalHandle } from '@arcanalabs/ui-components/react'
+import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton, type ArcanaEditFieldModalHandle } from '@arcanalabs/ui-components/react'
 
 export function PlanRow({ planOptions }) {
-  const modal = useRef<ShadcnEditFieldModalHandle>(null)
+  const modal = useRef<ArcanaEditFieldModalHandle>(null)
   const [plan, setPlan] = useState('pro')
   function savePlan() {
     // …persist
@@ -1451,40 +1413,40 @@ export function PlanRow({ planOptions }) {
   }
   return (
     <>
-      <ShadcnButton onClick={() => modal.current?.show()}>Alterar Plano</ShadcnButton>
-      <ShadcnEditFieldModal ref={modal} title="Alterar Plano" onSave={savePlan}>
-        <ShadcnSelect value={plan} onValueChange={(v) => setPlan(v as string)} options={planOptions} />
-      </ShadcnEditFieldModal>
+      <ArcanaButton onClick={() => modal.current?.show()}>Alterar Plano</ArcanaButton>
+      <ArcanaEditFieldModal ref={modal} title="Alterar Plano" onSave={savePlan}>
+        <ArcanaSelect value={plan} onValueChange={(v) => setPlan(v as string)} options={planOptions} />
+      </ArcanaEditFieldModal>
     </>
   )
 }`,
     angular: `import { Component, Input } from '@angular/core'
-import { ShadcnEditFieldModalComponent, ShadcnSelectComponent, ShadcnButtonComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaEditFieldModalComponent, ArcanaSelectComponent, ArcanaButtonComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-plan-row',
   standalone: true,
-  imports: [ShadcnEditFieldModalComponent, ShadcnSelectComponent, ShadcnButtonComponent],
+  imports: [ArcanaEditFieldModalComponent, ArcanaSelectComponent, ArcanaButtonComponent],
   template: \`
-    <button arcanaShadcnButton (click)="m.show()">Alterar Plano</button>
-    <div arcanaShadcnEditFieldModal #m title="Alterar Plano" (save)="savePlan(m)">
-      <div arcanaShadcnSelect [(value)]="plan" [options]="planOptions"></div>
+    <button arcanaButton (click)="m.show()">Alterar Plano</button>
+    <div arcanaEditFieldModal #m title="Alterar Plano" (save)="savePlan(m)">
+      <div arcanaSelect [(value)]="plan" [options]="planOptions"></div>
     </div>
   \`
 })
 export class PlanRowComponent {
   @Input() planOptions: SelectOption[] = []
   plan = 'pro'
-  savePlan(m: ShadcnEditFieldModalComponent) {
+  savePlan(m: ArcanaEditFieldModalComponent) {
     // …persist
     m.hide()
   }
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnEditFieldModal, ShadcnSelect, ShadcnButton, type SelectOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaEditFieldModal, ArcanaSelect, ArcanaButton, type SelectOption } from '@arcanalabs/ui-components/svelte'
 
   let { planOptions }: { planOptions: SelectOption[] } = $props()
-  let modal: ShadcnEditFieldModal
+  let modal: ArcanaEditFieldModal
   let plan = $state('pro')
   function savePlan() {
     // …persist
@@ -1492,64 +1454,64 @@ export class PlanRowComponent {
   }
 </script>
 
-<ShadcnButton onClick={() => modal.show()}>Alterar Plano</ShadcnButton>
-<ShadcnEditFieldModal bind:this={modal} title="Alterar Plano" onSave={savePlan}>
-  <ShadcnSelect value={plan} onValueChange={(v) => (plan = v as string)} options={planOptions} />
-</ShadcnEditFieldModal>`
+<ArcanaButton onClick={() => modal.show()}>Alterar Plano</ArcanaButton>
+<ArcanaEditFieldModal bind:this={modal} title="Alterar Plano" onSave={savePlan}>
+  <ArcanaSelect value={plan} onValueChange={(v) => (plan = v as string)} options={planOptions} />
+</ArcanaEditFieldModal>`
   },
 
   requiredFieldsDialog: {
     react: `import { useRef } from 'react'
-import { ShadcnRequiredFieldsDialog, ShadcnButton, type ShadcnRequiredFieldsDialogHandle } from '@arcanalabs/ui-components/react'
+import { ArcanaRequiredFieldsDialog, ArcanaButton, type ArcanaRequiredFieldsDialogHandle } from '@arcanalabs/ui-components/react'
 
 export function CustomerForm({ form }) {
-  const dialog = useRef<ShadcnRequiredFieldsDialogHandle>(null)
+  const dialog = useRef<ArcanaRequiredFieldsDialogHandle>(null)
   const missing = REQUIRED.filter((f) => !f.check(form))
   function validate() {
     if (missing.length) dialog.current?.show()
   }
   return (
     <>
-      <ShadcnButton onClick={validate}>Validar formulário</ShadcnButton>
-      <ShadcnRequiredFieldsDialog ref={dialog} fields={missing} description="…antes de criar o cliente." />
+      <ArcanaButton onClick={validate}>Validar formulário</ArcanaButton>
+      <ArcanaRequiredFieldsDialog ref={dialog} fields={missing} description="…antes de criar o cliente." />
     </>
   )
 }`,
     angular: `import { Component, Input } from '@angular/core'
-import { ShadcnRequiredFieldsDialogComponent, ShadcnButtonComponent, type RequiredField } from '@arcanalabs/ui-components/angular'
+import { ArcanaRequiredFieldsDialogComponent, ArcanaButtonComponent, type RequiredField } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-customer-form',
   standalone: true,
-  imports: [ShadcnRequiredFieldsDialogComponent, ShadcnButtonComponent],
+  imports: [ArcanaRequiredFieldsDialogComponent, ArcanaButtonComponent],
   template: \`
-    <button arcanaShadcnButton (click)="missing.length && r.show()">Validar formulário</button>
-    <div arcanaShadcnRequiredFieldsDialog #r [fields]="missing" description="…antes de criar o cliente."></div>
+    <button arcanaButton (click)="missing.length && r.show()">Validar formulário</button>
+    <div arcanaRequiredFieldsDialog #r [fields]="missing" description="…antes de criar o cliente."></div>
   \`
 })
 export class CustomerFormComponent {
   @Input() missing: RequiredField[] = []
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnRequiredFieldsDialog, ShadcnButton, type RequiredField } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaRequiredFieldsDialog, ArcanaButton, type RequiredField } from '@arcanalabs/ui-components/svelte'
 
   let { missing = [] }: { missing: RequiredField[] } = $props()
-  let dialog: ShadcnRequiredFieldsDialog
+  let dialog: ArcanaRequiredFieldsDialog
   function validate() {
     if (missing.length) dialog.show()
   }
 </script>
 
-<ShadcnButton onClick={validate}>Validar formulário</ShadcnButton>
-<ShadcnRequiredFieldsDialog bind:this={dialog} fields={missing} description="…antes de criar o cliente." />`
+<ArcanaButton onClick={validate}>Validar formulário</ArcanaButton>
+<ArcanaRequiredFieldsDialog bind:this={dialog} fields={missing} description="…antes de criar o cliente." />`
   },
 
   onboardingPanel: {
-    react: `import { ShadcnOnboardingPanel } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/react'
 
 export function CertificateSetup({ openCreate }) {
   return (
-    <ShadcnOnboardingPanel
+    <ArcanaOnboardingPanel
       icon="fa-solid fa-file-shield"
       title="Configure seu certificado"
       description="O certificado A1 é necessário para emitir NF-e."
@@ -1559,14 +1521,14 @@ export function CertificateSetup({ openCreate }) {
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnOnboardingPanelComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaOnboardingPanelComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-certificate-setup',
   standalone: true,
-  imports: [ShadcnOnboardingPanelComponent],
+  imports: [ArcanaOnboardingPanelComponent],
   template: \`
-    <div arcanaShadcnOnboardingPanel
+    <div arcanaOnboardingPanel
       icon="fa-solid fa-file-shield"
       title="Configure seu certificado"
       description="O certificado A1 é necessário para emitir NF-e."
@@ -1578,11 +1540,11 @@ export class CertificateSetupComponent {
   openCreate() {}
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnOnboardingPanel } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/svelte'
   export let openCreate: () => void
 </script>
 
-<ShadcnOnboardingPanel
+<ArcanaOnboardingPanel
   icon="fa-solid fa-file-shield"
   title="Configure seu certificado"
   description="O certificado A1 é necessário para emitir NF-e."
@@ -1593,28 +1555,28 @@ export class CertificateSetupComponent {
 
   loadingOverlay: {
     react: `import { useState } from 'react'
-import { ShadcnLoadingOverlay } from '@arcanalabs/ui-components/react'
+import { ArcanaLoadingOverlay } from '@arcanalabs/ui-components/react'
 
 export function Card() {
   const [saving, setSaving] = useState(false)
   return (
     <div style={{ position: 'relative' }}>
       {/* card content */}
-      <ShadcnLoadingOverlay visible={saving} text="Salvando…" />
+      <ArcanaLoadingOverlay visible={saving} text="Salvando…" />
     </div>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnLoadingOverlayComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaLoadingOverlayComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ShadcnLoadingOverlayComponent],
+  imports: [ArcanaLoadingOverlayComponent],
   template: \`
     <div style="position: relative">
       <!-- card content -->
-      <div arcanaShadcnLoadingOverlay [visible]="saving" text="Salvando…"></div>
+      <div arcanaLoadingOverlay [visible]="saving" text="Salvando…"></div>
     </div>
   \`
 })
@@ -1622,132 +1584,132 @@ export class CardComponent {
   saving = false
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnLoadingOverlay } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaLoadingOverlay } from '@arcanalabs/ui-components/svelte'
   let saving = $state(false)
 </script>
 
 <div style="position: relative">
   <!-- card content -->
-  <ShadcnLoadingOverlay visible={saving} text="Salvando…" />
+  <ArcanaLoadingOverlay visible={saving} text="Salvando…" />
 </div>`
   },
 
   skeleton: {
-    react: `import { ShadcnSkeleton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSkeleton } from '@arcanalabs/ui-components/react'
 
 export function CardSkeleton() {
   return (
     <>
-      <ShadcnSkeleton width="40px" height="40px" rounded="full" />
-      <ShadcnSkeleton width="200px" height="14px" />
-      <ShadcnSkeleton width="60%" height="12px" />
+      <ArcanaSkeleton width="40px" height="40px" rounded="full" />
+      <ArcanaSkeleton width="200px" height="14px" />
+      <ArcanaSkeleton width="60%" height="12px" />
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSkeletonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSkeletonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-card-skeleton',
   standalone: true,
-  imports: [ShadcnSkeletonComponent],
+  imports: [ArcanaSkeletonComponent],
   template: \`
-    <span arcanaShadcnSkeleton width="40px" height="40px" rounded="full"></span>
-    <span arcanaShadcnSkeleton width="200px" height="14px"></span>
-    <span arcanaShadcnSkeleton width="60%" height="12px"></span>
+    <span arcanaSkeleton width="40px" height="40px" rounded="full"></span>
+    <span arcanaSkeleton width="200px" height="14px"></span>
+    <span arcanaSkeleton width="60%" height="12px"></span>
   \`
 })
 export class CardSkeletonComponent {}`,
     svelte: `<script lang="ts">
-  import { ShadcnSkeleton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSkeleton } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ShadcnSkeleton width="40px" height="40px" rounded="full" />
-<ShadcnSkeleton width="200px" height="14px" />
-<ShadcnSkeleton width="60%" height="12px" />`
+<ArcanaSkeleton width="40px" height="40px" rounded="full" />
+<ArcanaSkeleton width="200px" height="14px" />
+<ArcanaSkeleton width="60%" height="12px" />`
   },
 
   switchCard: {
     react: `import { useState } from 'react'
-import { ShadcnSwitchCard } from '@arcanalabs/ui-components/react'
+import { ArcanaSwitchCard } from '@arcanalabs/ui-components/react'
 
 export function TwoFactor() {
   const [twoFa, setTwoFa] = useState(true)
-  return <ShadcnSwitchCard value={twoFa} onValueChange={setTwoFa} icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP" />
+  return <ArcanaSwitchCard value={twoFa} onValueChange={setTwoFa} icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSwitchCardComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSwitchCardComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-two-factor',
   standalone: true,
-  imports: [ShadcnSwitchCardComponent],
-  template: \`<button arcanaShadcnSwitchCard [(value)]="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP"></button>\`
+  imports: [ArcanaSwitchCardComponent],
+  template: \`<button arcanaSwitchCard [(value)]="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP"></button>\`
 })
 export class TwoFactorComponent {
   twoFa = true
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSwitchCard } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSwitchCard } from '@arcanalabs/ui-components/svelte'
   let twoFa = $state(true)
 </script>
 
-<ShadcnSwitchCard value={twoFa} onValueChange={(v) => (twoFa = v)} icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP" />`
+<ArcanaSwitchCard value={twoFa} onValueChange={(v) => (twoFa = v)} icon="fa-solid fa-shield-halved" title="Autenticação 2FA" statusOn="ATIVO · TOTP" />`
   },
 
   switchRow: {
     react: `import { useState } from 'react'
-import { ShadcnSwitchRow } from '@arcanalabs/ui-components/react'
+import { ArcanaSwitchRow } from '@arcanalabs/ui-components/react'
 
 export function EmailPref() {
   const [email, setEmail] = useState(true)
-  return <ShadcnSwitchRow value={email} onValueChange={setEmail} label="Notificações por e-mail" description="Resumo diário das atividades." />
+  return <ArcanaSwitchRow value={email} onValueChange={setEmail} label="Notificações por e-mail" description="Resumo diário das atividades." />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSwitchRowComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSwitchRowComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-email-pref',
   standalone: true,
-  imports: [ShadcnSwitchRowComponent],
-  template: \`<button arcanaShadcnSwitchRow [(value)]="email" label="Notificações por e-mail" description="Resumo diário das atividades."></button>\`
+  imports: [ArcanaSwitchRowComponent],
+  template: \`<button arcanaSwitchRow [(value)]="email" label="Notificações por e-mail" description="Resumo diário das atividades."></button>\`
 })
 export class EmailPrefComponent {
   email = true
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSwitchRow } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSwitchRow } from '@arcanalabs/ui-components/svelte'
   let email = $state(true)
 </script>
 
-<ShadcnSwitchRow value={email} onValueChange={(v) => (email = v)} label="Notificações por e-mail" description="Resumo diário das atividades." />`
+<ArcanaSwitchRow value={email} onValueChange={(v) => (email = v)} label="Notificações por e-mail" description="Resumo diário das atividades." />`
   },
 
   switchSegmented: {
     react: `import { useState } from 'react'
-import { ShadcnSwitchSegmented } from '@arcanalabs/ui-components/react'
+import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/react'
 
 export function BillingCycle() {
   const [yearly, setYearly] = useState(false)
-  return <ShadcnSwitchSegmented value={yearly} onValueChange={setYearly} offLabel="Mensal" onLabel="Anual · −20%" />
+  return <ArcanaSwitchSegmented value={yearly} onValueChange={setYearly} offLabel="Mensal" onLabel="Anual · −20%" />
 }`,
     angular: `import { Component } from '@angular/core'
-import { ShadcnSwitchSegmentedComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSwitchSegmentedComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-billing-cycle',
   standalone: true,
-  imports: [ShadcnSwitchSegmentedComponent],
-  template: \`<div arcanaShadcnSwitchSegmented [(value)]="yearly" offLabel="Mensal" onLabel="Anual · −20%"></div>\`
+  imports: [ArcanaSwitchSegmentedComponent],
+  template: \`<div arcanaSwitchSegmented [(value)]="yearly" offLabel="Mensal" onLabel="Anual · −20%"></div>\`
 })
 export class BillingCycleComponent {
   yearly = false
 }`,
     svelte: `<script lang="ts">
-  import { ShadcnSwitchSegmented } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/svelte'
   let yearly = $state(false)
 </script>
 
-<ShadcnSwitchSegmented value={yearly} onValueChange={(v) => (yearly = v)} offLabel="Mensal" onLabel="Anual · −20%" />`
+<ArcanaSwitchSegmented value={yearly} onValueChange={(v) => (yearly = v)} offLabel="Mensal" onLabel="Anual · −20%" />`
   }
 };

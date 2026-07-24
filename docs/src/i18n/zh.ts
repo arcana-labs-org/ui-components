@@ -59,7 +59,7 @@ export const zh: Messages = {
     },
     maska: {
       title: "注册 v-maska",
-      p1: "少数组件（<c>ShadcnInputMask</c>、<c>ShadcnDatePicker</c>）依赖来自 <c>maska</c> 包的 <c>v-maska</c> 指令。创建应用时全局注册一次即可。",
+      p1: "少数组件（<c>ArcanaInputMask</c>、<c>ArcanaDatePicker</c>）依赖来自 <c>maska</c> 包的 <c>v-maska</c> 指令。创建应用时全局注册一次即可。",
       p2: "不使用掩码的组件无需额外设置——只有渲染带掩码的输入框时才需要此步骤。"
     }
   },
@@ -91,7 +91,7 @@ export const zh: Messages = {
       blurb: "完全自定义的选择框（无 Element Plus），传送到 <c>&lt;body&gt;</c>，支持单选/<c>multiple</c>、<c>searchable</c>、<c>clearable</c> 和键盘导航。"
     },
     checkbox: {
-      blurb: "包裹真实原生 <c>&lt;input type=\"checkbox\"&gt;</c> 的二元复选框，带 <c>indeterminate</c> 状态；如需切换设置项请用 <c>ShadcnSwitch</c>。"
+      blurb: "包裹真实原生 <c>&lt;input type=\"checkbox\"&gt;</c> 的二元复选框，带 <c>indeterminate</c> 状态；如需切换设置项请用 <c>ArcanaSwitch</c>。"
     },
     switch: {
       blurb: "二元开/关切换（WAI-ARIA switch），以红/绿配色，并可选隐藏复选框以适配原生表单。"
@@ -126,20 +126,17 @@ export const zh: Messages = {
     inputCurrency: {
       blurb: "基于 <c>v-money3</c> 的货币输入框，输入时即时格式化，小数位可配置并按 <c>min</c>/<c>max</c> 钳制；默认 BRL。"
     },
-    labeledButton: {
-      blurb: "带 <c>label</c>、可选 <c>icon</c> 和 <c>loading</c> 加载状态的基础按钮；<c>shadcn</c> 标志将旧版颜色映射为语义变体。"
-    },
     accordion: {
-      blurb: "可折叠 <c>ShadcnAccordionItem</c> 的容器，通过 <c>v-model</c> 绑定单开或多开模式。"
+      blurb: "可折叠 <c>ArcanaAccordionItem</c> 的容器，通过 <c>v-model</c> 绑定单开或多开模式。"
     },
     accordionItem: {
-      blurb: "<c>ShadcnAccordion</c> 内的单个可折叠面板，由 <c>name</c> 标识，带 <c>title</c> 标题头和插槽内容。"
+      blurb: "<c>ArcanaAccordion</c> 内的单个可折叠面板，由 <c>name</c> 标识，带 <c>title</c> 标题头和插槽内容。"
     },
     dropdown: {
       blurb: "传送到 <c>&lt;body&gt;</c> 的 shadcn 下拉菜单，自动定位并在外部点击、按 Escape 或选择后关闭。"
     },
     dropdownItem: {
-      blurb: "<c>ShadcnDropdown</c> 内的一行——可选 <c>icon</c>、标签和 <c>suffix</c>——可着色，并带 <c>divided</c> 分隔线用于危险操作。"
+      blurb: "<c>ArcanaDropdown</c> 内的一行——可选 <c>icon</c>、标签和 <c>suffix</c>——可着色，并带 <c>divided</c> 分隔线用于危险操作。"
     },
     table: {
       blurb: "用于内存数组的静态 shadcn 表格；列声明 <c>{ key, label, width?, align?, valueGetter? }</c>，带单元格和表尾插槽。"
@@ -148,7 +145,7 @@ export const zh: Messages = {
       blurb: "用于正式记录的只读编辑式\"规格表\"，带 <c>docNum</c> 眉标、<c>title</c> 和分区子项。"
     },
     specSheetSection: {
-      blurb: "<c>ShadcnSpecSheet</c> 内的一个分区——强调 <c>icon</c>、<c>title</c> 和 <c>sectionNum</c>，置于字段的 <c>columns</c> 网格之上。"
+      blurb: "<c>ArcanaSpecSheet</c> 内的一个分区——强调 <c>icon</c>、<c>title</c> 和 <c>sectionNum</c>，置于字段的 <c>columns</c> 网格之上。"
     },
     specSheetField: {
       blurb: "单个标签/值对；值为空时显示 <c>emptyText</c>，使空缺看起来是刻意的，<c>span</c> 可加宽它。"
@@ -163,7 +160,7 @@ export const zh: Messages = {
       blurb: "iOS 设置风格的细线分隔行容器，每行带标签 + 说明和右对齐控件。"
     },
     settingsListGroup: {
-      blurb: "<c>ShadcnSettingsList</c> 内带标题、可选 <c>collapsible</c> 的分区，带图标、<c>sectionNum</c> 和 <c>meta</c>。"
+      blurb: "<c>ArcanaSettingsList</c> 内带标题、可选 <c>collapsible</c> 的分区，带图标、<c>sectionNum</c> 和 <c>meta</c>。"
     },
     settingsListItem: {
       blurb: "单个设置行——左侧 <c>label</c> + <c>caption</c>，右侧为你的控件。"

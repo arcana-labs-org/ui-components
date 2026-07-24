@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 import { createApp, defineComponent, h, type Component as VueComponent } from "vue";
 // The maska plugin registers the global `v-maska` directive, so any demo (now or
-// in a future batch) that renders ShadcnInputMask / ShadcnDatePicker just works.
+// in a future batch) that renders ArcanaInputMask / ArcanaDatePicker just works.
 import Maska from "maska";
-// ShadcnInputBoolean renders `<ShadcnSelect>` by GLOBAL name (its SFC does not
+// ArcanaInputBoolean renders `<ArcanaSelect>` by GLOBAL name (its SFC does not
 // import it locally — in the host app it is registered globally). We mirror that
 // here so the boolean-select demo resolves the component.
-import ShadcnSelect from "../../../src/vue/components/ShadcnSelect.vue";
+import ArcanaSelect from "../../../src/vue/components/ArcanaSelect.vue";
 
 /**
- * A tiny stand-in for Element Plus's `<el-tooltip>` — ShadcnTabs references it in
+ * A tiny stand-in for Element Plus's `<el-tooltip>` — ArcanaTabs references it in
  * its template (only active when `tooltipPlacement` is set). We are not shipping
  * Element Plus into the docs, so we register a transparent stub that simply
  * renders its default slot. That keeps the tabs demo warning-free.
@@ -22,7 +22,7 @@ const ElTooltipStub = defineComponent({
 });
 
 /**
- * A stand-in for Element Plus's `<el-date-picker>`. ShadcnDatePicker's composite
+ * A stand-in for Element Plus's `<el-date-picker>`. ArcanaDatePicker's composite
  * `type="date"` mode layers an invisible `<el-date-picker>` behind a masked text
  * input purely to host the calendar popover — the visible, interactive part is the
  * masked input, which works on its own. We are not shipping Element Plus into the
@@ -40,7 +40,7 @@ const ElDatePickerStub = defineComponent({
 
 /**
  * A stand-in for the host app's `<FormGroup>` — a labelled field wrapper.
- * `ShadcnSettingsEditableField` renders `<FormGroup md="12" :label="…">` inside its
+ * `ArcanaSettingsEditableField` renders `<FormGroup md="12" :label="…">` inside its
  * teleported edit modal by GLOBAL name (the SFC does not import it locally). We are not
  * shipping the host's form kit into the docs, so we register a small transparent wrapper
  * that renders the label above its default slot — enough to make the editable-field demo
@@ -77,7 +77,7 @@ export function VueDemo({ component, className }: { component: VueComponent; cla
     app.use(Maska);
     app.component("el-tooltip", ElTooltipStub);
     app.component("el-date-picker", ElDatePickerStub);
-    app.component("ShadcnSelect", ShadcnSelect);
+    app.component("ArcanaSelect", ArcanaSelect);
     app.component("FormGroup", FormGroupStub);
     app.mount(hostRef.current);
     return () => app.unmount();

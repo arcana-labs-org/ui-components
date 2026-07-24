@@ -1,14 +1,14 @@
 /**
- * Stack global de z-index para overlays modais (ShadcnDialog, Modal legacy).
+ * Stack global de z-index para overlays modais (ArcanaDialog, Modal legacy).
  *
  * Por que existe:
- * - Vários componentes de modal teleportam pro <body> (ShadcnDialog, Modal legacy via
+ * - Vários componentes de modal teleportam pro <body> (ArcanaDialog, Modal legacy via
  *   Bootstrap-style). Como viram siblings no body, o z-index precisa ser dinamico pra
  *   garantir que o ULTIMO aberto fique POR CIMA — desempate por DOM order nao funciona
  *   quando um modal e aberto a partir de DENTRO de outro (ex: TaskDetailsModal aberto
- *   de dentro de um ShadcnDialog).
- * - Antes: cada componente tinha seu proprio counter local. ShadcnDialog comecava em
- *   10000+, Modal usava z-index hardcoded 9998 → Modal aberto de dentro de ShadcnDialog
+ *   de dentro de um ArcanaDialog).
+ * - Antes: cada componente tinha seu proprio counter local. ArcanaDialog comecava em
+ *   10000+, Modal usava z-index hardcoded 9998 → Modal aberto de dentro de ArcanaDialog
  *   ficava ATRAS porque 9998 < 10000.
  * - Agora: counter unico compartilhado. Todo modal/dialog aberto pega o proximo slot
  *   de z-index (BASE + 2*N) e libera ao fechar. Reseta pro BASE quando todos fecham
@@ -52,7 +52,7 @@ let openCount = 0
  * Atualiza --el-index-popper pra ficar sempre acima do counter atual.
  * Element Plus le essa CSS variable como base do z-index dos popovers, e
  * a regra `.el-popper { z-index: var(--el-index-popper) !important }` no
- * ShadcnDialog garante que TODOS os popovers ja abertos e os futuros pegam
+ * ArcanaDialog garante que TODOS os popovers ja abertos e os futuros pegam
  * esse valor instantaneamente.
  */
 function syncPopperZIndex(): void {
