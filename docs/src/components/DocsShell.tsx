@@ -19,6 +19,8 @@ export interface DocsSection {
   previewLabel?: string;
   /** Optional per-framework code. Omitted for stub ("coming soon") sections. */
   code?: Record<Framework, SectionCode>;
+  /** Optional props/events reference, shown in its own tab. */
+  reference?: ReactNode;
 }
 
 export interface DocsGroup {
@@ -131,25 +133,35 @@ function GithubStars() {
   </span>;
 }
 
+type WorkbenchTab = "preview" | "code" | "reference";
+
+const PreviewIcon = () => <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>;
+const CodeIcon = () => <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>;
+const ReferenceIcon = () => <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></svg>;
+
 function SectionWorkbench({ section, framework }: { section: DocsSection; framework: Framework }) {
   const { msg } = useLang();
-  const [tab, setTab] = useState<"preview" | "code">("preview");
+  const tabs: WorkbenchTab[] = [];
+  if (section.preview) tabs.push("preview");
+  if (section.code) tabs.push("code");
+  if (section.reference) tabs.push("reference");
+  const [tab, setTab] = useState<WorkbenchTab>(tabs[0] ?? "preview");
   const id = useId();
 
-  // Stub sections carry neither preview nor code.
-  if (!section.preview && !section.code) return null;
+  // Stub sections carry no interactive surface.
+  if (tabs.length === 0) return null;
 
-  // Code-only sections (e.g. installation) — no preview tab.
-  if (!section.preview && section.code) {
-    const activeCode = section.code[framework];
+  // Code-only sections (e.g. installation) — no tabs to toggle.
+  if (tabs.length === 1 && tabs[0] === "code") {
+    const activeCode = section.code![framework];
     return <div className="section-code-only">
       <div className="section-code-label">{msg.shell.codeOnlyLabel}<span className="seg-fw-badge">{FW_BADGE[framework]}</span></div>
       <CodeBlock key={`${section.id}-${framework}`} file={activeCode.file} code={activeCode.code} />
     </div>;
   }
 
-  // Preview-only sections — no code to toggle.
-  if (section.preview && !section.code) {
+  // Preview-only sections — nothing to toggle.
+  if (tabs.length === 1 && tabs[0] === "preview") {
     return <div className="section-workbench">
       <div className="section-workbench-header">
         <span className="section-preview-caption">{section.previewLabel ?? msg.shell.defaultPreviewCaption}</span>
@@ -160,26 +172,27 @@ function SectionWorkbench({ section, framework }: { section: DocsSection; framew
     </div>;
   }
 
-  const activeCode = section.code![framework];
+  // Guard the active tab against sections that lack it (should not happen, but keeps types honest).
+  const activeTab = tabs.includes(tab) ? tab : tabs[0];
+  const tabLabel: Record<WorkbenchTab, string> = { preview: msg.shell.previewTab, code: msg.shell.codeTab, reference: msg.shell.referenceTab };
+  const tabIcon: Record<WorkbenchTab, ReactNode> = { preview: <PreviewIcon />, code: <CodeIcon />, reference: <ReferenceIcon /> };
+  const activeCode = section.code?.[framework];
+
   return <div className="section-workbench">
     <div className="section-workbench-header">
       <span className="section-preview-caption">{section.previewLabel ?? msg.shell.defaultPreviewCaption}</span>
       <div className="section-seg" role="tablist" aria-label={fmt(msg.shell.sectionExampleAria, { title: section.title })}>
-        <button id={`${id}-preview-tab`} type="button" role="tab" aria-selected={tab === "preview"} aria-controls={`${id}-panel`} onClick={() => setTab("preview")}>
-          <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
-          {msg.shell.previewTab}
-        </button>
-        <button id={`${id}-code-tab`} type="button" role="tab" aria-selected={tab === "code"} aria-controls={`${id}-panel`} onClick={() => setTab("code")}>
-          <svg className="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
-          {msg.shell.codeTab}
-          <span className="seg-fw-badge">{FW_BADGE[framework]}</span>
-        </button>
+        {tabs.map((key) => <button key={key} id={`${id}-${key}-tab`} type="button" role="tab" aria-selected={activeTab === key} aria-controls={`${id}-panel`} onClick={() => setTab(key)}>
+          {tabIcon[key]}
+          {tabLabel[key]}
+          {key === "code" ? <span className="seg-fw-badge">{FW_BADGE[framework]}</span> : null}
+        </button>)}
       </div>
     </div>
-    <div id={`${id}-panel`} className={`section-panel section-panel--${tab}`} role="tabpanel" aria-labelledby={`${id}-${tab}-tab`}>
-      {tab === "preview"
-        ? <div className="section-preview-body">{section.preview}</div>
-        : <CodeBlock key={`${section.id}-${framework}`} file={activeCode.file} code={activeCode.code} />}
+    <div id={`${id}-panel`} className={`section-panel section-panel--${activeTab}`} role="tabpanel" aria-labelledby={`${id}-${activeTab}-tab`}>
+      {activeTab === "preview" ? <div className="section-preview-body">{section.preview}</div>
+        : activeTab === "reference" ? <div className="section-reference-body">{section.reference}</div>
+        : <CodeBlock key={`${section.id}-${framework}`} file={activeCode!.file} code={activeCode!.code} />}
     </div>
   </div>;
 }

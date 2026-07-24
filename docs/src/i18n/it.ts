@@ -19,6 +19,7 @@ export const it: Messages = {
     noSectionsFound: "Nessun componente trovato.",
     previewTab: "Anteprima",
     codeTab: "Codice",
+    referenceTab: "Props ed Eventi",
     codeOnlyLabel: "Codice",
     defaultPreviewCaption: "componente dal vivo · interagisci con esso",
     sectionExampleAria: "Esempio di {title}",

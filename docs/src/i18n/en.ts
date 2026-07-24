@@ -19,6 +19,7 @@ export const en: Messages = {
     noSectionsFound: "No components found.",
     previewTab: "Preview",
     codeTab: "Code",
+    referenceTab: "Props & Events",
     codeOnlyLabel: "Code",
     defaultPreviewCaption: "live component · interact with it",
     sectionExampleAria: "{title} example",

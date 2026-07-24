@@ -672,6 +672,9 @@ table.ref-table td .t-type {
   min-width: 0;
 }
 .section-preview-body .arcana-grid { font-family: var(--font-body); }
+.section-reference-body { padding: 18px; min-width: 0; }
+.section-reference-body > .ref-table-wrap:first-child { margin-top: 0; }
+.section-reference-body > .events-block:last-child { margin-bottom: 0; }
 .section-panel--code { background: var(--code-bg); }
 .section-panel--code .code-block { border-radius: 0; }
 .section-panel--code .code-block pre {

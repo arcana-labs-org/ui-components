@@ -19,6 +19,7 @@ export const de: Messages = {
     noSectionsFound: "Keine Komponenten gefunden.",
     previewTab: "Vorschau",
     codeTab: "Code",
+    referenceTab: "Props & Events",
     codeOnlyLabel: "Code",
     defaultPreviewCaption: "Live-Komponente · interagiere damit",
     sectionExampleAria: "Beispiel für {title}",

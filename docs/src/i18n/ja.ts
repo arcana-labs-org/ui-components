@@ -19,6 +19,7 @@ export const ja: Messages = {
     noSectionsFound: "コンポーネントが見つかりません。",
     previewTab: "プレビュー",
     codeTab: "コード",
+    referenceTab: "Props とイベント",
     codeOnlyLabel: "コード",
     defaultPreviewCaption: "ライブコンポーネント · 操作できます",
     sectionExampleAria: "{title} の例",

@@ -100,6 +100,7 @@ export interface Messages {
     noSectionsFound: string;
     previewTab: string;
     codeTab: string;
+    referenceTab: string;
     codeOnlyLabel: string;
     defaultPreviewCaption: string;
     /** aria-label of a section's Preview/Code tablist; {title} placeholder. */

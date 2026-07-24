@@ -83,13 +83,11 @@ function buildGroups(msg: Messages): DocsGroup[] {
         const section: DocsSection = {
           id: entry.id,
           title: entry.name,
-          body: <>
-            <P>{prose.blurb}</P>
-            <PropsTable rows={doc.props} events={doc.events} msg={msg} />
-          </>,
+          body: <P>{prose.blurb}</P>,
           preview: <VueDemo component={doc.demo} />,
           previewLabel: msg.demoCaption,
-          code: frameworkCode(entry.name, { vue: doc.vueSnippet, ...FRAMEWORK_SNIPPETS[entry.docKey] })
+          code: frameworkCode(entry.name, { vue: doc.vueSnippet, ...FRAMEWORK_SNIPPETS[entry.docKey] }),
+          reference: <PropsTable rows={doc.props} events={doc.events} msg={msg} />
         };
         return section;
       }

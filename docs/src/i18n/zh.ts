@@ -19,6 +19,7 @@ export const zh: Messages = {
     noSectionsFound: "未找到组件。",
     previewTab: "预览",
     codeTab: "代码",
+    referenceTab: "属性与事件",
     codeOnlyLabel: "代码",
     defaultPreviewCaption: "实时组件 · 可交互",
     sectionExampleAria: "{title} 示例",

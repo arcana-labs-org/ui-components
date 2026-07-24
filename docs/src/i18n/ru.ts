@@ -19,6 +19,7 @@ export const ru: Messages = {
     noSectionsFound: "Компоненты не найдены.",
     previewTab: "Превью",
     codeTab: "Код",
+    referenceTab: "Свойства и события",
     codeOnlyLabel: "Код",
     defaultPreviewCaption: "живой компонент · взаимодействуйте с ним",
     sectionExampleAria: "Пример {title}",

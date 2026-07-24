@@ -19,6 +19,7 @@ export const es: Messages = {
     noSectionsFound: "No se encontraron componentes.",
     previewTab: "Vista previa",
     codeTab: "Código",
+    referenceTab: "Props y Eventos",
     codeOnlyLabel: "Código",
     defaultPreviewCaption: "componente en vivo · interactúa con él",
     sectionExampleAria: "Ejemplo de {title}",
