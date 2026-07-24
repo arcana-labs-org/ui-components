@@ -195,5 +195,197 @@ export const de: Messages = {
     switchSegmented: {
       blurb: "Ein binärer Toggle in Form einer segmentierten Kapsel mit gleitendem Indikator, der sich als \"A oder B\" statt an/aus liest."
     }
+  },
+
+  demos: {
+    // ── shared ──
+    lastAction: "letzte Aktion",
+    timesSuffix: "Mal",
+    disabledLabel: "Deaktiviert",
+
+    // ── button ──
+    btnPrimary: "Primär",
+    btnSecondary: "Sekundär",
+    btnOutline: "Umriss",
+    btnGhost: "Ghost",
+    btnSuccess: "Erfolg",
+    btnIndigo: "Indigo",
+    btnDestructive: "Destruktiv",
+    btnOutlineDanger: "Umriss Gefahr",
+    primaryClickedPrefix: "Geklickt",
+
+    // ── badge ──
+    badgeNeutral: "neutral",
+    badgeBlue: "blau",
+    badgeGreen: "grün",
+    badgeRed: "rot",
+    badgeAmber: "bernstein",
+    badgeViolet: "violett",
+    badgeActive: "Aktiv",
+    badgeOffline: "Offline",
+    badgeSmSize: "sm Größe",
+    badgeClickable: "klickbar",
+
+    // ── input ──
+    quantity: "Menge",
+    inputReadonly: "Schreibgeschützt",
+    inputLockedValue: "Gesperrter Wert",
+    inputEmailLabel: "E-Mail",
+    inputQtyLabel: "Menge",
+
+    // ── select ──
+    selectPickFruit: "Obst auswählen",
+    selectPickSeveral: "Mehrere auswählen",
+    fruitApple: "Apfel",
+    fruitBanana: "Banane",
+    fruitCherry: "Kirsche",
+    fruitCherryDesc: "saisonal",
+    fruitDurian: "Durian",
+    fruitElderberry: "Holunderbeere",
+    selectSingleLabel: "einzeln",
+    selectMultipleLabel: "mehrfach",
+
+    // ── checkbox ──
+    checkboxSelectAll: "Alle auswählen",
+    checkboxInvoices: "Rechnungen",
+    checkboxReceipts: "Belege",
+    checkboxStatements: "Kontoauszüge",
+    checkboxArchivedDisabled: "Archiviert (deaktiviert)",
+
+    // ── switch ──
+    switchNotifications: "Benachrichtigungen",
+    switchBetaFeatures: "Beta-Funktionen",
+
+    // ── tabs ──
+    tabOverview: "Übersicht",
+    tabActivity: "Aktivität",
+    tabSettings: "Einstellungen",
+    tabOverviewPanel: "Das Übersichtsfeld ist aktiv.",
+    tabActivityPanel: "3 neue Einträge in Aktivität.",
+    tabSettingsPanel: "Passen Sie hier Ihre Einstellungen an.",
+
+    // ── dialog ──
+    dialogOpen: "Dialog öffnen",
+    dialogTitle: "Arbeitsbereich löschen",
+    dialogDescription: "Diese Aktion kann nicht rückgängig gemacht werden.",
+    dialogBody: "Das Entfernen dieses Arbeitsbereichs löscht jedes Projekt und jede Einladung darin. Geben Sie den Namen zur Bestätigung in einem echten Formular ein — hier schließen Sie einfach den Dialog.",
+    dialogCancel: "Abbrechen",
+    dialogDelete: "Löschen",
+
+    // ── input mask ──
+    maskPhone: "Telefon",
+    cpfRaw: "CPF (roh)",
+    phoneRaw: "Telefon (roh)",
+
+    // ── input boolean ──
+    boolYesNo: "Ja / Nein",
+    boolHasValue: "Hat Wert?",
+    boolYesNoLabel: "ja/nein",
+    boolStatusLabel: "Status",
+    boolNullableLabel: "nullbar",
+
+    // ── number stepper ──
+    stepperQtyLabel: "Menge (0–10)",
+    stepperWeightLabel: "Gewicht (Schritt 5)",
+
+    // ── multi-select popover ──
+    mspUsers: "Benutzer",
+    mspDepartments: "Abteilungen",
+    mspSales: "Vertrieb",
+    mspSupport: "Support",
+    mspEmptyLabel: "Personen oder Abteilungen auswählen",
+    mspUsersLabel: "Benutzer",
+    mspDepartmentsLabel: "Abteilungen",
+
+    // ── radio card group ──
+    payCreditCard: "Kreditkarte",
+    payCreditCardDesc: "Automatische wiederkehrende Abbuchung.",
+    payPix: "Pix",
+    payPixDesc: "Sofort, keine Gebühren.",
+    payPixBadge: "Empfohlen",
+    payBoleto: "Boleto",
+    payBoletoDesc: "Fällig in 3 Werktagen.",
+    payCash: "Barzahlung bei Lieferung",
+    selectedLabel: "ausgewählt",
+
+    // ── segmented options ──
+    segList: "Liste",
+    segGrid: "Raster",
+    segBoard: "Board",
+    viewLabel: "Ansicht",
+
+    // ── date picker ──
+    datePickerValueLabel: "Wert (YYYY-MM-DD)",
+    datePickerTypeHint: "DD/MM/AAAA eingeben",
+
+    // ── input currency ──
+    priceRaw: "Preis (roh)",
+
+    // ── accordion ──
+    accShipping: "Versand",
+    accShippingBody: "Versand in 2–3 Werktagen.",
+    accReturns: "Rückgabe",
+    accReturnsBody: "30 Tage kostenlose Rückgabe, ohne Wenn und Aber.",
+    accWarranty: "Garantie (deaktiviert)",
+    accWarrantyBody: "Demnächst verfügbar.",
+    accOpenSingleLabel: "geöffnet (Einzelmodus)",
+
+    // ── accordion item ──
+    accSpecifications: "Spezifikationen",
+    accSpecificationsBody: "Gewicht, Abmessungen und Materialien.",
+    accCareTitle: "Pflegehinweise",
+    accCareBody: "Kalt handwaschen, nicht im Trockner trocknen.",
+    accOpenMultipleLabel: "geöffnet (Mehrfachmodus)",
+
+    // ── dropdown ──
+    dropdownActions: "Aktionen",
+    ddRename: "Umbenennen",
+    ddDuplicate: "Duplizieren",
+    ddDelete: "Löschen",
+
+    // ── dropdown item ──
+    dropdownOpenMenu: "Menü öffnen",
+    ddProfile: "Profil",
+    ddApprove: "Genehmigen",
+    ddFlag: "Markieren",
+    ddFlagLabel: "Zur Überprüfung markieren",
+
+    // ── table ──
+    colSku: "SKU",
+    colProduct: "Produkt",
+    colQty: "Menge",
+    colTotal: "Gesamt",
+    tableLow: "niedrig",
+    tableInStock: "auf Lager",
+    tableTotalItems: "Gesamt (3 Artikel)",
+
+    // ── settings editable field ──
+    editableFieldHintPrefix: "Klicken Sie",
+    editableFieldHintSuffix: "in einer beliebigen Zeile, um ihr Bearbeitungsmodal zu öffnen.",
+
+    // ── notice ──
+    noticeDismissedHint: "Der destruktive Hinweis wurde geschlossen — laden Sie die Vorschau neu, um ihn zurückzuholen.",
+
+    // ── edit field modal ──
+    savedValue: "gespeicherter Wert",
+
+    // ── onboarding panel ──
+    onboardingPrimary: "primär",
+    onboardingSecondary: "sekundär",
+
+    // ── loading overlay ──
+    loadingOverlayHint: "Klicken Sie auf \"Salvar\", um diese Karte für ~1,6 s mit dem Overlay zu bedecken.",
+
+    // ── switch card ──
+    switchCard2faLabel: "2FA",
+    switchCardMaintenanceLabel: "Wartung",
+
+    // ── switch row ──
+    switchRowEmailLabel: "E-Mail",
+    switchRowPushLabel: "Push",
+
+    // ── switch segmented ──
+    switchSegCycleLabel: "Zyklus",
+    switchSegEnvLabel: "Umgebung"
   }
 };

@@ -195,5 +195,197 @@ export const zh: Messages = {
     switchSegmented: {
       blurb: "形似分段胶囊、带滑动指示器的二元切换，读起来像\"A 或 B\"而非开/关。"
     }
+  },
+
+  demos: {
+    // ── shared ──
+    lastAction: "最近操作",
+    timesSuffix: "次",
+    disabledLabel: "已禁用",
+
+    // ── button ──
+    btnPrimary: "主要",
+    btnSecondary: "次要",
+    btnOutline: "描边",
+    btnGhost: "幽灵",
+    btnSuccess: "成功",
+    btnIndigo: "靛蓝",
+    btnDestructive: "危险",
+    btnOutlineDanger: "描边危险",
+    primaryClickedPrefix: "已点击",
+
+    // ── badge ──
+    badgeNeutral: "中性",
+    badgeBlue: "蓝色",
+    badgeGreen: "绿色",
+    badgeRed: "红色",
+    badgeAmber: "琥珀色",
+    badgeViolet: "紫罗兰",
+    badgeActive: "启用",
+    badgeOffline: "离线",
+    badgeSmSize: "小尺寸",
+    badgeClickable: "可点击",
+
+    // ── input ──
+    quantity: "数量",
+    inputReadonly: "只读",
+    inputLockedValue: "锁定值",
+    inputEmailLabel: "邮箱",
+    inputQtyLabel: "数量",
+
+    // ── select ──
+    selectPickFruit: "选择一种水果",
+    selectPickSeveral: "选择多个",
+    fruitApple: "苹果",
+    fruitBanana: "香蕉",
+    fruitCherry: "樱桃",
+    fruitCherryDesc: "应季",
+    fruitDurian: "榴莲",
+    fruitElderberry: "接骨木莓",
+    selectSingleLabel: "单选",
+    selectMultipleLabel: "多选",
+
+    // ── checkbox ──
+    checkboxSelectAll: "全选",
+    checkboxInvoices: "发票",
+    checkboxReceipts: "收据",
+    checkboxStatements: "对账单",
+    checkboxArchivedDisabled: "已归档（禁用）",
+
+    // ── switch ──
+    switchNotifications: "通知",
+    switchBetaFeatures: "测试功能",
+
+    // ── tabs ──
+    tabOverview: "概览",
+    tabActivity: "活动",
+    tabSettings: "设置",
+    tabOverviewPanel: "概览面板已激活。",
+    tabActivityPanel: "活动中有 3 个新项目。",
+    tabSettingsPanel: "在此调整您的设置。",
+
+    // ── dialog ──
+    dialogOpen: "打开对话框",
+    dialogTitle: "删除工作区",
+    dialogDescription: "此操作无法撤销。",
+    dialogBody: "删除此工作区将删除其中的所有项目和邀请。在真实表单中需输入名称以确认——此处只需关闭对话框。",
+    dialogCancel: "取消",
+    dialogDelete: "删除",
+
+    // ── input mask ──
+    maskPhone: "电话",
+    cpfRaw: "CPF（原始值）",
+    phoneRaw: "电话（原始值）",
+
+    // ── input boolean ──
+    boolYesNo: "是 / 否",
+    boolHasValue: "有值吗？",
+    boolYesNoLabel: "是/否",
+    boolStatusLabel: "状态",
+    boolNullableLabel: "可为空",
+
+    // ── number stepper ──
+    stepperQtyLabel: "数量（0–10）",
+    stepperWeightLabel: "重量（步长 5）",
+
+    // ── multi-select popover ──
+    mspUsers: "用户",
+    mspDepartments: "部门",
+    mspSales: "销售",
+    mspSupport: "支持",
+    mspEmptyLabel: "选择人员或部门",
+    mspUsersLabel: "用户",
+    mspDepartmentsLabel: "部门",
+
+    // ── radio card group ──
+    payCreditCard: "信用卡",
+    payCreditCardDesc: "自动定期扣款。",
+    payPix: "Pix",
+    payPixDesc: "即时到账，免手续费。",
+    payPixBadge: "推荐",
+    payBoleto: "Boleto",
+    payBoletoDesc: "3 个工作日内到期。",
+    payCash: "货到付款",
+    selectedLabel: "已选择",
+
+    // ── segmented options ──
+    segList: "列表",
+    segGrid: "网格",
+    segBoard: "看板",
+    viewLabel: "视图",
+
+    // ── date picker ──
+    datePickerValueLabel: "值（YYYY-MM-DD）",
+    datePickerTypeHint: "输入 DD/MM/AAAA",
+
+    // ── input currency ──
+    priceRaw: "价格（原始值）",
+
+    // ── accordion ──
+    accShipping: "配送",
+    accShippingBody: "2–3 个工作日内发货。",
+    accReturns: "退货",
+    accReturnsBody: "30 天免费退货，无需理由。",
+    accWarranty: "保修（禁用）",
+    accWarrantyBody: "即将推出。",
+    accOpenSingleLabel: "展开（单个模式）",
+
+    // ── accordion item ──
+    accSpecifications: "规格",
+    accSpecificationsBody: "重量、尺寸和材质。",
+    accCareTitle: "护理说明",
+    accCareBody: "冷水手洗，请勿烘干。",
+    accOpenMultipleLabel: "展开（多个模式）",
+
+    // ── dropdown ──
+    dropdownActions: "操作",
+    ddRename: "重命名",
+    ddDuplicate: "复制",
+    ddDelete: "删除",
+
+    // ── dropdown item ──
+    dropdownOpenMenu: "打开菜单",
+    ddProfile: "个人资料",
+    ddApprove: "批准",
+    ddFlag: "标记",
+    ddFlagLabel: "标记以供审核",
+
+    // ── table ──
+    colSku: "SKU",
+    colProduct: "产品",
+    colQty: "数量",
+    colTotal: "合计",
+    tableLow: "库存不足",
+    tableInStock: "有货",
+    tableTotalItems: "合计（3 项）",
+
+    // ── settings editable field ──
+    editableFieldHintPrefix: "点击",
+    editableFieldHintSuffix: "任意行以打开其编辑弹窗。",
+
+    // ── notice ──
+    noticeDismissedHint: "危险提示已被关闭——重新加载预览以恢复。",
+
+    // ── edit field modal ──
+    savedValue: "已保存的值",
+
+    // ── onboarding panel ──
+    onboardingPrimary: "主要",
+    onboardingSecondary: "次要",
+
+    // ── loading overlay ──
+    loadingOverlayHint: "点击 \"Salvar\" 用遮罩覆盖此卡片约 1.6 秒。",
+
+    // ── switch card ──
+    switchCard2faLabel: "双重验证",
+    switchCardMaintenanceLabel: "维护",
+
+    // ── switch row ──
+    switchRowEmailLabel: "电子邮件",
+    switchRowPushLabel: "推送",
+
+    // ── switch segmented ──
+    switchSegCycleLabel: "周期",
+    switchSegEnvLabel: "环境"
   }
 };

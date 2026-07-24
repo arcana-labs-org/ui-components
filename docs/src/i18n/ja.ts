@@ -195,5 +195,197 @@ export const ja: Messages = {
     switchSegmented: {
       blurb: "スライドするインジケーター付きのセグメンテッドカプセル形の二値トグルで、オン/オフではなく\"A か B\"として読めます。"
     }
+  },
+
+  demos: {
+    // ── shared ──
+    lastAction: "最後の操作",
+    timesSuffix: "回",
+    disabledLabel: "無効",
+
+    // ── button ──
+    btnPrimary: "プライマリ",
+    btnSecondary: "セカンダリ",
+    btnOutline: "アウトライン",
+    btnGhost: "ゴースト",
+    btnSuccess: "成功",
+    btnIndigo: "インディゴ",
+    btnDestructive: "破壊的",
+    btnOutlineDanger: "アウトライン（危険）",
+    primaryClickedPrefix: "クリック",
+
+    // ── badge ──
+    badgeNeutral: "ニュートラル",
+    badgeBlue: "青",
+    badgeGreen: "緑",
+    badgeRed: "赤",
+    badgeAmber: "アンバー",
+    badgeViolet: "バイオレット",
+    badgeActive: "アクティブ",
+    badgeOffline: "オフライン",
+    badgeSmSize: "smサイズ",
+    badgeClickable: "クリック可能",
+
+    // ── input ──
+    quantity: "数量",
+    inputReadonly: "読み取り専用",
+    inputLockedValue: "ロックされた値",
+    inputEmailLabel: "メール",
+    inputQtyLabel: "数量",
+
+    // ── select ──
+    selectPickFruit: "フルーツを選択",
+    selectPickSeveral: "複数選択",
+    fruitApple: "りんご",
+    fruitBanana: "バナナ",
+    fruitCherry: "さくらんぼ",
+    fruitCherryDesc: "季節限定",
+    fruitDurian: "ドリアン",
+    fruitElderberry: "エルダーベリー",
+    selectSingleLabel: "単一",
+    selectMultipleLabel: "複数",
+
+    // ── checkbox ──
+    checkboxSelectAll: "すべて選択",
+    checkboxInvoices: "請求書",
+    checkboxReceipts: "領収書",
+    checkboxStatements: "明細書",
+    checkboxArchivedDisabled: "アーカイブ済み（無効）",
+
+    // ── switch ──
+    switchNotifications: "通知",
+    switchBetaFeatures: "ベータ機能",
+
+    // ── tabs ──
+    tabOverview: "概要",
+    tabActivity: "アクティビティ",
+    tabSettings: "設定",
+    tabOverviewPanel: "概要パネルがアクティブです。",
+    tabActivityPanel: "アクティビティに新着3件。",
+    tabSettingsPanel: "ここで設定を調整します。",
+
+    // ── dialog ──
+    dialogOpen: "ダイアログを開く",
+    dialogTitle: "ワークスペースを削除",
+    dialogDescription: "この操作は取り消せません。",
+    dialogBody: "このワークスペースを削除すると、内部のすべてのプロジェクトと招待が削除されます。実際のフォームでは名前を入力して確認しますが、ここではダイアログを閉じるだけです。",
+    dialogCancel: "キャンセル",
+    dialogDelete: "削除",
+
+    // ── input mask ──
+    maskPhone: "電話番号",
+    cpfRaw: "cpf（生値）",
+    phoneRaw: "電話番号（生値）",
+
+    // ── input boolean ──
+    boolYesNo: "はい / いいえ",
+    boolHasValue: "値がありますか？",
+    boolYesNoLabel: "はい/いいえ",
+    boolStatusLabel: "ステータス",
+    boolNullableLabel: "null許容",
+
+    // ── number stepper ──
+    stepperQtyLabel: "数量 (0–10)",
+    stepperWeightLabel: "重量（5刻み）",
+
+    // ── multi-select popover ──
+    mspUsers: "ユーザー",
+    mspDepartments: "部門",
+    mspSales: "営業",
+    mspSupport: "サポート",
+    mspEmptyLabel: "ユーザーまたは部門を選択",
+    mspUsersLabel: "ユーザー",
+    mspDepartmentsLabel: "部門",
+
+    // ── radio card group ──
+    payCreditCard: "クレジットカード",
+    payCreditCardDesc: "自動継続課金。",
+    payPix: "Pix",
+    payPixDesc: "即時、手数料無料。",
+    payPixBadge: "おすすめ",
+    payBoleto: "Boleto",
+    payBoletoDesc: "3営業日以内に支払い。",
+    payCash: "代金引換",
+    selectedLabel: "選択済み",
+
+    // ── segmented options ──
+    segList: "リスト",
+    segGrid: "グリッド",
+    segBoard: "ボード",
+    viewLabel: "表示",
+
+    // ── date picker ──
+    datePickerValueLabel: "値 (YYYY-MM-DD)",
+    datePickerTypeHint: "DD/MM/AAAA を入力",
+
+    // ── input currency ──
+    priceRaw: "価格（生値）",
+
+    // ── accordion ──
+    accShipping: "配送",
+    accShippingBody: "2～3営業日で発送します。",
+    accReturns: "返品",
+    accReturnsBody: "30日間、無条件で無料返品。",
+    accWarranty: "保証（無効）",
+    accWarrantyBody: "近日公開。",
+    accOpenSingleLabel: "開く（単一モード）",
+
+    // ── accordion item ──
+    accSpecifications: "仕様",
+    accSpecificationsBody: "重量、寸法、素材。",
+    accCareTitle: "お手入れ方法",
+    accCareBody: "冷水で手洗い、乾燥機不可。",
+    accOpenMultipleLabel: "開く（複数モード）",
+
+    // ── dropdown ──
+    dropdownActions: "アクション",
+    ddRename: "名前を変更",
+    ddDuplicate: "複製",
+    ddDelete: "削除",
+
+    // ── dropdown item ──
+    dropdownOpenMenu: "メニューを開く",
+    ddProfile: "プロフィール",
+    ddApprove: "承認",
+    ddFlag: "フラグ",
+    ddFlagLabel: "レビュー用にフラグを立てる",
+
+    // ── table ──
+    colSku: "SKU",
+    colProduct: "商品",
+    colQty: "数量",
+    colTotal: "合計",
+    tableLow: "残りわずか",
+    tableInStock: "在庫あり",
+    tableTotalItems: "合計（3点）",
+
+    // ── settings editable field ──
+    editableFieldHintPrefix: "クリック",
+    editableFieldHintSuffix: "して、任意の行の編集モーダルを開きます。",
+
+    // ── notice ──
+    noticeDismissedHint: "破壊的な通知は閉じられました。プレビューを再読み込みすると再表示されます。",
+
+    // ── edit field modal ──
+    savedValue: "保存された値",
+
+    // ── onboarding panel ──
+    onboardingPrimary: "プライマリ",
+    onboardingSecondary: "セカンダリ",
+
+    // ── loading overlay ──
+    loadingOverlayHint: "「Salvar」をクリックすると、約1.6秒間このカードがオーバーレイで覆われます。",
+
+    // ── switch card ──
+    switchCard2faLabel: "2FA",
+    switchCardMaintenanceLabel: "メンテナンス",
+
+    // ── switch row ──
+    switchRowEmailLabel: "メール",
+    switchRowPushLabel: "プッシュ",
+
+    // ── switch segmented ──
+    switchSegCycleLabel: "サイクル",
+    switchSegEnvLabel: "環境"
   }
 };

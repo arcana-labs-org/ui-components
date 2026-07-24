@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createApp, defineComponent, h, type Component as VueComponent } from "vue";
+import { useLang } from "../i18n";
 // The maska plugin registers the global `v-maska` directive, so any demo (now or
 // in a future batch) that renders ArcanaInputMask / ArcanaDatePicker just works.
 import Maska from "maska";
@@ -70,10 +71,15 @@ const FormGroupStub = defineComponent({
  */
 export function VueDemo({ component, className }: { component: VueComponent; className?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);
+  // Demo "chrome" strings (status lines, notes, affordance labels) live in the
+  // i18n dictionaries under `demos`; templates read them via the global `$dt`.
+  const { msg } = useLang();
+  const demoStrings = msg.demos;
 
   useEffect(() => {
     if (!hostRef.current) return;
     const app = createApp(component);
+    app.config.globalProperties.$dt = demoStrings;
     app.use(Maska);
     app.component("el-tooltip", ElTooltipStub);
     app.component("el-date-picker", ElDatePickerStub);
@@ -81,7 +87,7 @@ export function VueDemo({ component, className }: { component: VueComponent; cla
     app.component("FormGroup", FormGroupStub);
     app.mount(hostRef.current);
     return () => app.unmount();
-  }, [component]);
+  }, [component, demoStrings]);
 
   return <div ref={hostRef} className={className ? `vue-demo ${className}` : "vue-demo"} />;
 }

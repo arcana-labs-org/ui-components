@@ -195,5 +195,197 @@ export const ru: Messages = {
     switchSegmented: {
       blurb: "Бинарный переключатель в форме сегментированной капсулы со скользящим индикатором, читающийся как «A или B», а не вкл/выкл."
     }
+  },
+
+  demos: {
+    // ── shared ──
+    lastAction: "последнее действие",
+    timesSuffix: "раз",
+    disabledLabel: "Отключено",
+
+    // ── button ──
+    btnPrimary: "Основная",
+    btnSecondary: "Вторичная",
+    btnOutline: "Контурная",
+    btnGhost: "Прозрачная",
+    btnSuccess: "Успех",
+    btnIndigo: "Индиго",
+    btnDestructive: "Опасная",
+    btnOutlineDanger: "Контурная опасная",
+    primaryClickedPrefix: "Нажато",
+
+    // ── badge ──
+    badgeNeutral: "нейтральный",
+    badgeBlue: "синий",
+    badgeGreen: "зелёный",
+    badgeRed: "красный",
+    badgeAmber: "янтарный",
+    badgeViolet: "фиолетовый",
+    badgeActive: "Активен",
+    badgeOffline: "Не в сети",
+    badgeSmSize: "размер sm",
+    badgeClickable: "кликабельный",
+
+    // ── input ──
+    quantity: "Количество",
+    inputReadonly: "Только чтение",
+    inputLockedValue: "Заблокированное значение",
+    inputEmailLabel: "эл. почта",
+    inputQtyLabel: "кол-во",
+
+    // ── select ──
+    selectPickFruit: "Выберите фрукт",
+    selectPickSeveral: "Выберите несколько",
+    fruitApple: "Яблоко",
+    fruitBanana: "Банан",
+    fruitCherry: "Вишня",
+    fruitCherryDesc: "сезонный",
+    fruitDurian: "Дуриан",
+    fruitElderberry: "Бузина",
+    selectSingleLabel: "одиночный",
+    selectMultipleLabel: "множественный",
+
+    // ── checkbox ──
+    checkboxSelectAll: "Выбрать всё",
+    checkboxInvoices: "Счета",
+    checkboxReceipts: "Квитанции",
+    checkboxStatements: "Выписки",
+    checkboxArchivedDisabled: "Архивные (отключено)",
+
+    // ── switch ──
+    switchNotifications: "Уведомления",
+    switchBetaFeatures: "Бета-функции",
+
+    // ── tabs ──
+    tabOverview: "Обзор",
+    tabActivity: "Активность",
+    tabSettings: "Настройки",
+    tabOverviewPanel: "Панель «Обзор» активна.",
+    tabActivityPanel: "3 новых элемента в Активности.",
+    tabSettingsPanel: "Настройте параметры здесь.",
+
+    // ── dialog ──
+    dialogOpen: "Открыть диалог",
+    dialogTitle: "Удалить рабочее пространство",
+    dialogDescription: "Это действие нельзя отменить.",
+    dialogBody: "Удаление этого рабочего пространства удалит все проекты и приглашения внутри него. В реальной форме введите имя для подтверждения — здесь просто закройте диалог.",
+    dialogCancel: "Отмена",
+    dialogDelete: "Удалить",
+
+    // ── input mask ──
+    maskPhone: "Телефон",
+    cpfRaw: "cpf (без маски)",
+    phoneRaw: "телефон (без маски)",
+
+    // ── input boolean ──
+    boolYesNo: "Да / Нет",
+    boolHasValue: "Есть значение?",
+    boolYesNoLabel: "да/нет",
+    boolStatusLabel: "статус",
+    boolNullableLabel: "обнуляемый",
+
+    // ── number stepper ──
+    stepperQtyLabel: "кол-во (0–10)",
+    stepperWeightLabel: "вес (шаг 5)",
+
+    // ── multi-select popover ──
+    mspUsers: "Пользователи",
+    mspDepartments: "Отделы",
+    mspSales: "Продажи",
+    mspSupport: "Поддержка",
+    mspEmptyLabel: "Выберите людей или отделы",
+    mspUsersLabel: "пользователи",
+    mspDepartmentsLabel: "отделы",
+
+    // ── radio card group ──
+    payCreditCard: "Кредитная карта",
+    payCreditCardDesc: "Автоматическое регулярное списание.",
+    payPix: "Pix",
+    payPixDesc: "Мгновенно, без комиссии.",
+    payPixBadge: "Рекомендуется",
+    payBoleto: "Boleto",
+    payBoletoDesc: "Срок оплаты — 3 рабочих дня.",
+    payCash: "Оплата при доставке",
+    selectedLabel: "выбрано",
+
+    // ── segmented options ──
+    segList: "Список",
+    segGrid: "Сетка",
+    segBoard: "Доска",
+    viewLabel: "вид",
+
+    // ── date picker ──
+    datePickerValueLabel: "значение (YYYY-MM-DD)",
+    datePickerTypeHint: "введите DD/MM/AAAA",
+
+    // ── input currency ──
+    priceRaw: "цена (без маски)",
+
+    // ── accordion ──
+    accShipping: "Доставка",
+    accShippingBody: "Отправка в течение 2–3 рабочих дней.",
+    accReturns: "Возврат",
+    accReturnsBody: "Бесплатный возврат в течение 30 дней, без вопросов.",
+    accWarranty: "Гарантия (отключено)",
+    accWarrantyBody: "Скоро.",
+    accOpenSingleLabel: "открыто (одиночный режим)",
+
+    // ── accordion item ──
+    accSpecifications: "Характеристики",
+    accSpecificationsBody: "Вес, размеры и материалы.",
+    accCareTitle: "Инструкция по уходу",
+    accCareBody: "Ручная стирка в холодной воде, не сушить в барабане.",
+    accOpenMultipleLabel: "открыто (множественный режим)",
+
+    // ── dropdown ──
+    dropdownActions: "Действия",
+    ddRename: "Переименовать",
+    ddDuplicate: "Дублировать",
+    ddDelete: "Удалить",
+
+    // ── dropdown item ──
+    dropdownOpenMenu: "Открыть меню",
+    ddProfile: "Профиль",
+    ddApprove: "Одобрить",
+    ddFlag: "Отметить",
+    ddFlagLabel: "Отметить на проверку",
+
+    // ── table ──
+    colSku: "SKU",
+    colProduct: "Товар",
+    colQty: "Кол-во",
+    colTotal: "Итого",
+    tableLow: "мало",
+    tableInStock: "в наличии",
+    tableTotalItems: "Итого (3 позиции)",
+
+    // ── settings editable field ──
+    editableFieldHintPrefix: "Нажмите",
+    editableFieldHintSuffix: "в любой строке, чтобы открыть окно редактирования.",
+
+    // ── notice ──
+    noticeDismissedHint: "Уведомление об опасном действии было закрыто — перезагрузите предпросмотр, чтобы вернуть его.",
+
+    // ── edit field modal ──
+    savedValue: "сохранённое значение",
+
+    // ── onboarding panel ──
+    onboardingPrimary: "основной",
+    onboardingSecondary: "вторичный",
+
+    // ── loading overlay ──
+    loadingOverlayHint: "Нажмите «Salvar», чтобы накрыть эту карточку оверлеем на ~1,6 с.",
+
+    // ── switch card ──
+    switchCard2faLabel: "2FA",
+    switchCardMaintenanceLabel: "обслуживание",
+
+    // ── switch row ──
+    switchRowEmailLabel: "эл. почта",
+    switchRowPushLabel: "push",
+
+    // ── switch segmented ──
+    switchSegCycleLabel: "цикл",
+    switchSegEnvLabel: "окружение"
   }
 };

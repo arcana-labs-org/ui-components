@@ -147,4 +147,11 @@ export interface Messages {
 
   /** Per-component prose (the heading is the component name, untranslated). */
   components: Record<DocumentedKey, { blurb: string }>;
+
+  /**
+   * "Chrome" strings for the live demos (status lines, notes, affordance labels
+   * like "Open dialog", "last action", etc.). Injected into each mounted Vue
+   * demo as the global `$dt`, read in templates via `{{ $dt.someKey }}`.
+   */
+  demos: Record<string, string>;
 }

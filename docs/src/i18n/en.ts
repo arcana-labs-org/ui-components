@@ -195,5 +195,197 @@ export const en: Messages = {
     switchSegmented: {
       blurb: "A binary toggle shaped like a segmented capsule with a sliding indicator, reading as \"A or B\" rather than on/off."
     }
+  },
+
+  demos: {
+    // ── shared ──
+    lastAction: "last action",
+    timesSuffix: "time(s)",
+    disabledLabel: "Disabled",
+
+    // ── button ──
+    btnPrimary: "Primary",
+    btnSecondary: "Secondary",
+    btnOutline: "Outline",
+    btnGhost: "Ghost",
+    btnSuccess: "Success",
+    btnIndigo: "Indigo",
+    btnDestructive: "Destructive",
+    btnOutlineDanger: "Outline danger",
+    primaryClickedPrefix: "Primary clicked",
+
+    // ── badge ──
+    badgeNeutral: "neutral",
+    badgeBlue: "blue",
+    badgeGreen: "green",
+    badgeRed: "red",
+    badgeAmber: "amber",
+    badgeViolet: "violet",
+    badgeActive: "Active",
+    badgeOffline: "Offline",
+    badgeSmSize: "sm size",
+    badgeClickable: "clickable",
+
+    // ── input ──
+    quantity: "Quantity",
+    inputReadonly: "Read-only",
+    inputLockedValue: "Locked value",
+    inputEmailLabel: "email",
+    inputQtyLabel: "qty",
+
+    // ── select ──
+    selectPickFruit: "Pick a fruit",
+    selectPickSeveral: "Pick several",
+    fruitApple: "Apple",
+    fruitBanana: "Banana",
+    fruitCherry: "Cherry",
+    fruitCherryDesc: "seasonal",
+    fruitDurian: "Durian",
+    fruitElderberry: "Elderberry",
+    selectSingleLabel: "single",
+    selectMultipleLabel: "multiple",
+
+    // ── checkbox ──
+    checkboxSelectAll: "Select all",
+    checkboxInvoices: "Invoices",
+    checkboxReceipts: "Receipts",
+    checkboxStatements: "Statements",
+    checkboxArchivedDisabled: "Archived (disabled)",
+
+    // ── switch ──
+    switchNotifications: "Notifications",
+    switchBetaFeatures: "Beta features",
+
+    // ── tabs ──
+    tabOverview: "Overview",
+    tabActivity: "Activity",
+    tabSettings: "Settings",
+    tabOverviewPanel: "The Overview panel is active.",
+    tabActivityPanel: "3 new items in Activity.",
+    tabSettingsPanel: "Adjust your Settings here.",
+
+    // ── dialog ──
+    dialogOpen: "Open dialog",
+    dialogTitle: "Delete workspace",
+    dialogDescription: "This action cannot be undone.",
+    dialogBody: "Removing this workspace deletes every project and invite inside it. Type the name to confirm in a real form — here, just close the dialog.",
+    dialogCancel: "Cancel",
+    dialogDelete: "Delete",
+
+    // ── input mask ──
+    maskPhone: "Phone",
+    cpfRaw: "cpf (raw)",
+    phoneRaw: "phone (raw)",
+
+    // ── input boolean ──
+    boolYesNo: "Yes / No",
+    boolHasValue: "Has value?",
+    boolYesNoLabel: "yes/no",
+    boolStatusLabel: "status",
+    boolNullableLabel: "nullable",
+
+    // ── number stepper ──
+    stepperQtyLabel: "qty (0–10)",
+    stepperWeightLabel: "weight (step 5)",
+
+    // ── multi-select popover ──
+    mspUsers: "Users",
+    mspDepartments: "Departments",
+    mspSales: "Sales",
+    mspSupport: "Support",
+    mspEmptyLabel: "Select people or departments",
+    mspUsersLabel: "users",
+    mspDepartmentsLabel: "departments",
+
+    // ── radio card group ──
+    payCreditCard: "Credit card",
+    payCreditCardDesc: "Automatic recurring charge.",
+    payPix: "Pix",
+    payPixDesc: "Instant, no fees.",
+    payPixBadge: "Recommended",
+    payBoleto: "Boleto",
+    payBoletoDesc: "Due in 3 business days.",
+    payCash: "Cash on delivery",
+    selectedLabel: "selected",
+
+    // ── segmented options ──
+    segList: "List",
+    segGrid: "Grid",
+    segBoard: "Board",
+    viewLabel: "view",
+
+    // ── date picker ──
+    datePickerValueLabel: "value (YYYY-MM-DD)",
+    datePickerTypeHint: "type DD/MM/AAAA",
+
+    // ── input currency ──
+    priceRaw: "price (raw)",
+
+    // ── accordion ──
+    accShipping: "Shipping",
+    accShippingBody: "Ships in 2–3 business days.",
+    accReturns: "Returns",
+    accReturnsBody: "30-day free returns, no questions asked.",
+    accWarranty: "Warranty (disabled)",
+    accWarrantyBody: "Coming soon.",
+    accOpenSingleLabel: "open (single mode)",
+
+    // ── accordion item ──
+    accSpecifications: "Specifications",
+    accSpecificationsBody: "Weight, dimensions and materials.",
+    accCareTitle: "Care instructions",
+    accCareBody: "Hand wash cold, do not tumble dry.",
+    accOpenMultipleLabel: "open (multiple mode)",
+
+    // ── dropdown ──
+    dropdownActions: "Actions",
+    ddRename: "Rename",
+    ddDuplicate: "Duplicate",
+    ddDelete: "Delete",
+
+    // ── dropdown item ──
+    dropdownOpenMenu: "Open menu",
+    ddProfile: "Profile",
+    ddApprove: "Approve",
+    ddFlag: "Flag",
+    ddFlagLabel: "Flag for review",
+
+    // ── table ──
+    colSku: "SKU",
+    colProduct: "Product",
+    colQty: "Qty",
+    colTotal: "Total",
+    tableLow: "low",
+    tableInStock: "in stock",
+    tableTotalItems: "Total (3 items)",
+
+    // ── settings editable field ──
+    editableFieldHintPrefix: "Click",
+    editableFieldHintSuffix: "on any row to open its edit modal.",
+
+    // ── notice ──
+    noticeDismissedHint: "The destructive notice was dismissed — reload the preview to bring it back.",
+
+    // ── edit field modal ──
+    savedValue: "saved value",
+
+    // ── onboarding panel ──
+    onboardingPrimary: "primary",
+    onboardingSecondary: "secondary",
+
+    // ── loading overlay ──
+    loadingOverlayHint: "Click \"Salvar\" to cover this card with the overlay for ~1.6s.",
+
+    // ── switch card ──
+    switchCard2faLabel: "2FA",
+    switchCardMaintenanceLabel: "maintenance",
+
+    // ── switch row ──
+    switchRowEmailLabel: "e-mail",
+    switchRowPushLabel: "push",
+
+    // ── switch segmented ──
+    switchSegCycleLabel: "cycle",
+    switchSegEnvLabel: "env"
   }
 };

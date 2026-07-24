@@ -69,15 +69,15 @@ const ButtonDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <div class="demo-row">
-        <ArcanaButton @click="clicks++">Primary</ArcanaButton>
-        <ArcanaButton variant="secondary">Secondary</ArcanaButton>
-        <ArcanaButton variant="outline">Outline</ArcanaButton>
-        <ArcanaButton variant="ghost">Ghost</ArcanaButton>
-        <ArcanaButton variant="success">Success</ArcanaButton>
-        <ArcanaButton variant="indigo">Indigo</ArcanaButton>
-        <ArcanaButton variant="destructive">Destructive</ArcanaButton>
-        <ArcanaButton variant="outline-danger">Outline danger</ArcanaButton>
-        <ArcanaButton :disabled="true">Disabled</ArcanaButton>
+        <ArcanaButton @click="clicks++">{{ $dt.btnPrimary }}</ArcanaButton>
+        <ArcanaButton variant="secondary">{{ $dt.btnSecondary }}</ArcanaButton>
+        <ArcanaButton variant="outline">{{ $dt.btnOutline }}</ArcanaButton>
+        <ArcanaButton variant="ghost">{{ $dt.btnGhost }}</ArcanaButton>
+        <ArcanaButton variant="success">{{ $dt.btnSuccess }}</ArcanaButton>
+        <ArcanaButton variant="indigo">{{ $dt.btnIndigo }}</ArcanaButton>
+        <ArcanaButton variant="destructive">{{ $dt.btnDestructive }}</ArcanaButton>
+        <ArcanaButton variant="outline-danger">{{ $dt.btnOutlineDanger }}</ArcanaButton>
+        <ArcanaButton :disabled="true">{{ $dt.disabledLabel }}</ArcanaButton>
       </div>
       <div class="demo-row">
         <ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> Novo</ArcanaButton>
@@ -91,7 +91,7 @@ const ButtonDemo: Component = {
         <ArcanaButton variant="primary" aria-label="Adicionar"><i class="fa-solid fa-plus"></i></ArcanaButton>
         <ArcanaButton variant="destructive" aria-label="Excluir"><i class="fa-solid fa-trash"></i></ArcanaButton>
       </div>
-      <p class="demo-note">Primary clicked <strong>{{ clicks }}</strong> time(s)</p>
+      <p class="demo-note">{{ $dt.primaryClickedPrefix }} <strong>{{ clicks }}</strong> {{ $dt.timesSuffix }}</p>
     </div>
   `
 };
@@ -103,18 +103,18 @@ const BadgeDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <div class="demo-row">
-        <ArcanaBadge>neutral</ArcanaBadge>
-        <ArcanaBadge variant="blue">blue</ArcanaBadge>
-        <ArcanaBadge variant="green">green</ArcanaBadge>
-        <ArcanaBadge variant="red">red</ArcanaBadge>
-        <ArcanaBadge variant="amber">amber</ArcanaBadge>
-        <ArcanaBadge variant="violet">violet</ArcanaBadge>
+        <ArcanaBadge>{{ $dt.badgeNeutral }}</ArcanaBadge>
+        <ArcanaBadge variant="blue">{{ $dt.badgeBlue }}</ArcanaBadge>
+        <ArcanaBadge variant="green">{{ $dt.badgeGreen }}</ArcanaBadge>
+        <ArcanaBadge variant="red">{{ $dt.badgeRed }}</ArcanaBadge>
+        <ArcanaBadge variant="amber">{{ $dt.badgeAmber }}</ArcanaBadge>
+        <ArcanaBadge variant="violet">{{ $dt.badgeViolet }}</ArcanaBadge>
       </div>
       <div class="demo-row">
-        <ArcanaBadge variant="green" :dot="true">Active</ArcanaBadge>
-        <ArcanaBadge variant="red" :dot="true">Offline</ArcanaBadge>
-        <ArcanaBadge variant="blue" size="sm">sm size</ArcanaBadge>
-        <ArcanaBadge variant="violet" :clickable="true">clickable</ArcanaBadge>
+        <ArcanaBadge variant="green" :dot="true">{{ $dt.badgeActive }}</ArcanaBadge>
+        <ArcanaBadge variant="red" :dot="true">{{ $dt.badgeOffline }}</ArcanaBadge>
+        <ArcanaBadge variant="blue" size="sm">{{ $dt.badgeSmSize }}</ArcanaBadge>
+        <ArcanaBadge variant="violet" :clickable="true">{{ $dt.badgeClickable }}</ArcanaBadge>
       </div>
     </div>
   `
@@ -128,9 +128,9 @@ const InputDemo: Component = {
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
       <ArcanaInput v-model="email" type="email" placeholder="email@company.com" />
-      <ArcanaInput v-model="qty" type="number" placeholder="Quantity" :min="0" :max="99" />
-      <ArcanaInput placeholder="Read-only" model-value="Locked value" :readonly="true" />
-      <p class="demo-note">email: <strong>{{ email || "—" }}</strong> · qty: <strong>{{ qty === null ? "null" : qty }}</strong> ({{ qty === null ? "empty" : typeof qty }})</p>
+      <ArcanaInput v-model="qty" type="number" :placeholder="$dt.quantity" :min="0" :max="99" />
+      <ArcanaInput :placeholder="$dt.inputReadonly" :model-value="$dt.inputLockedValue" :readonly="true" />
+      <p class="demo-note">{{ $dt.inputEmailLabel }}: <strong>{{ email || "—" }}</strong> · {{ $dt.inputQtyLabel }}: <strong>{{ qty === null ? "null" : qty }}</strong> ({{ qty === null ? "empty" : typeof qty }})</p>
     </div>
   `
 };
@@ -139,22 +139,25 @@ const InputDemo: Component = {
 
 const SelectDemo: Component = {
   components: { ArcanaSelect },
-  data: () => ({
-    single: null as string | null,
-    many: [] as string[],
-    fruits: [
-      { label: "Apple", value: "apple" },
-      { label: "Banana", value: "banana" },
-      { label: "Cherry", value: "cherry", description: "seasonal" },
-      { label: "Durian", value: "durian", disabled: true },
-      { label: "Elderberry", value: "elderberry" }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      single: null as string | null,
+      many: [] as string[],
+      fruits: [
+        { label: $dt.fruitApple, value: "apple" },
+        { label: $dt.fruitBanana, value: "banana" },
+        { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc },
+        { label: $dt.fruitDurian, value: "durian", disabled: true },
+        { label: $dt.fruitElderberry, value: "elderberry" }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaSelect v-model="single" :options="fruits" placeholder="Pick a fruit" searchable />
-      <ArcanaSelect v-model="many" :options="fruits" placeholder="Pick several" multiple />
-      <p class="demo-note">single: <strong>{{ single ?? "null" }}</strong> · multiple: <strong>[{{ many.join(", ") }}]</strong></p>
+      <ArcanaSelect v-model="single" :options="fruits" :placeholder="$dt.selectPickFruit" searchable />
+      <ArcanaSelect v-model="many" :options="fruits" :placeholder="$dt.selectPickSeveral" multiple />
+      <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
     </div>
   `
 };
@@ -185,14 +188,14 @@ const CheckboxDemo: Component = {
       <ArcanaCheckbox
         :model-value="allChecked"
         :indeterminate="someChecked"
-        label="Select all"
+        :label="$dt.checkboxSelectAll"
         @update:modelValue="toggleAll"
       />
       <div class="demo-stack" style="padding-left: 22px; gap: 6px">
-        <ArcanaCheckbox v-model="items.a" label="Invoices" />
-        <ArcanaCheckbox v-model="items.b" label="Receipts" />
-        <ArcanaCheckbox v-model="items.c" label="Statements" />
-        <ArcanaCheckbox :model-value="false" :disabled="true" label="Archived (disabled)" />
+        <ArcanaCheckbox v-model="items.a" :label="$dt.checkboxInvoices" />
+        <ArcanaCheckbox v-model="items.b" :label="$dt.checkboxReceipts" />
+        <ArcanaCheckbox v-model="items.c" :label="$dt.checkboxStatements" />
+        <ArcanaCheckbox :model-value="false" :disabled="true" :label="$dt.checkboxArchivedDisabled" />
       </div>
     </div>
   `
@@ -205,8 +208,8 @@ const SwitchDemo: Component = {
   data: () => ({ on: true, off: false }),
   template: /* html */ `
     <div class="demo-stack">
-      <label class="demo-switch-row"><ArcanaSwitch v-model="on" aria-label="Notifications" /> <span>Notifications ({{ on ? "on" : "off" }})</span></label>
-      <label class="demo-switch-row"><ArcanaSwitch v-model="off" aria-label="Beta features" /> <span>Beta features ({{ off ? "on" : "off" }})</span></label>
+      <label class="demo-switch-row"><ArcanaSwitch v-model="on" :aria-label="$dt.switchNotifications" /> <span>{{ $dt.switchNotifications }} ({{ on ? "on" : "off" }})</span></label>
+      <label class="demo-switch-row"><ArcanaSwitch v-model="off" :aria-label="$dt.switchBetaFeatures" /> <span>{{ $dt.switchBetaFeatures }} ({{ off ? "on" : "off" }})</span></label>
       <div class="demo-row" style="align-items: center">
         <ArcanaSwitch v-model="on" size="sm" aria-label="small" />
         <ArcanaSwitch v-model="on" size="md" aria-label="medium" />
@@ -221,15 +224,18 @@ const SwitchDemo: Component = {
 
 const TabsDemo: Component = {
   components: { ArcanaTabs },
-  data: () => ({
-    active: "overview",
-    variant: "pills" as string,
-    tabs: [
-      { name: "overview", label: "Overview" },
-      { name: "activity", label: "Activity", badge: 3 },
-      { name: "settings", label: "Settings" }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      active: "overview",
+      variant: "pills" as string,
+      tabs: [
+        { name: "overview", label: $dt.tabOverview },
+        { name: "activity", label: $dt.tabActivity, badge: 3 },
+        { name: "settings", label: $dt.tabSettings }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack">
       <div class="demo-row">
@@ -243,9 +249,9 @@ const TabsDemo: Component = {
         >{{ v }}</button>
       </div>
       <ArcanaTabs v-model="active" :tabs="tabs" :variant="variant" aria-label="Demo tabs">
-        <template #overview><div class="demo-panel">The <strong>Overview</strong> panel is active.</div></template>
-        <template #activity><div class="demo-panel">3 new items in <strong>Activity</strong>.</div></template>
-        <template #settings><div class="demo-panel">Adjust your <strong>Settings</strong> here.</div></template>
+        <template #overview><div class="demo-panel">{{ $dt.tabOverviewPanel }}</div></template>
+        <template #activity><div class="demo-panel">{{ $dt.tabActivityPanel }}</div></template>
+        <template #settings><div class="demo-panel">{{ $dt.tabSettingsPanel }}</div></template>
       </ArcanaTabs>
     </div>
   `
@@ -262,15 +268,14 @@ const DialogDemo: Component = {
   },
   template: /* html */ `
     <div>
-      <ArcanaButton @click="open">Open dialog</ArcanaButton>
-      <ArcanaDialog ref="dialog" title="Delete workspace" description="This action cannot be undone.">
+      <ArcanaButton @click="open">{{ $dt.dialogOpen }}</ArcanaButton>
+      <ArcanaDialog ref="dialog" :title="$dt.dialogTitle" :description="$dt.dialogDescription">
         <p style="font-size: 13px; color: #52525b; line-height: 1.6">
-          Removing this workspace deletes every project and invite inside it.
-          Type the name to confirm in a real form — here, just close the dialog.
+          {{ $dt.dialogBody }}
         </p>
         <template #footer="{ hide }">
-          <ArcanaButton variant="outline" @click="hide">Cancel</ArcanaButton>
-          <ArcanaButton variant="destructive" @click="hide">Delete</ArcanaButton>
+          <ArcanaButton variant="outline" @click="hide">{{ $dt.dialogCancel }}</ArcanaButton>
+          <ArcanaButton variant="destructive" @click="hide">{{ $dt.dialogDelete }}</ArcanaButton>
         </template>
       </ArcanaDialog>
     </div>
@@ -285,8 +290,8 @@ const InputMaskDemo: Component = {
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
       <ArcanaInputMask v-model="cpf" mask="###.###.###-##" placeholder="CPF" />
-      <ArcanaInputMask v-model="phone" :mask="['(##) ####-####', '(##) #####-####']" placeholder="Phone" />
-      <p class="demo-note">cpf (raw): <strong>{{ cpf || "—" }}</strong> · phone (raw): <strong>{{ phone || "—" }}</strong></p>
+      <ArcanaInputMask v-model="phone" :mask="['(##) ####-####', '(##) #####-####']" :placeholder="$dt.maskPhone" />
+      <p class="demo-note">{{ $dt.cpfRaw }}: <strong>{{ cpf || "—" }}</strong> · {{ $dt.phoneRaw }}: <strong>{{ phone || "—" }}</strong></p>
     </div>
   `
 };
@@ -298,10 +303,10 @@ const InputBooleanDemo: Component = {
   data: () => ({ answer: null as unknown, status: 1 as unknown, filter: null as unknown }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaInputBoolean v-model="answer" placeholder="Yes / No" />
+      <ArcanaInputBoolean v-model="answer" :placeholder="$dt.boolYesNo" />
       <ArcanaInputBoolean v-model="status" variation="status" />
-      <ArcanaInputBoolean v-model="filter" variation="nullable" placeholder="Has value?" />
-      <p class="demo-note">yes/no: <strong>{{ answer ?? "null" }}</strong> · status: <strong>{{ status ?? "null" }}</strong> · nullable: <strong>{{ filter ?? "null" }}</strong></p>
+      <ArcanaInputBoolean v-model="filter" variation="nullable" :placeholder="$dt.boolHasValue" />
+      <p class="demo-note">{{ $dt.boolYesNoLabel }}: <strong>{{ answer ?? "null" }}</strong> · {{ $dt.boolStatusLabel }}: <strong>{{ status ?? "null" }}</strong> · {{ $dt.boolNullableLabel }}: <strong>{{ filter ?? "null" }}</strong></p>
     </div>
   `
 };
@@ -316,7 +321,7 @@ const NumberStepperDemo: Component = {
       <ArcanaNumberStepper v-model="qty" :min="0" :max="10" aria-label="Quantity" />
       <ArcanaNumberStepper v-model="weight" :min="0" :max="100" :step="5" aria-label="Weight" />
       <ArcanaNumberStepper :model-value="5" :disabled="true" aria-label="Disabled" />
-      <p class="demo-note">qty (0–10): <strong>{{ qty }}</strong> · weight (step 5): <strong>{{ weight }}</strong></p>
+      <p class="demo-note">{{ $dt.stepperQtyLabel }}: <strong>{{ qty }}</strong> · {{ $dt.stepperWeightLabel }}: <strong>{{ weight }}</strong></p>
     </div>
   `
 };
@@ -325,17 +330,20 @@ const NumberStepperDemo: Component = {
 
 const ArcanaMultiSelectPopoverDemo: Component = {
   components: { ArcanaMultiSelectPopover },
-  data: () => ({
-    selections: { USER: [] as number[], DEPARTMENT: [] as number[] } as Record<string, number[]>,
-    tabs: [
-      { key: "USER", label: "Users", icon: "fa-solid fa-user", fetch: () => Promise.resolve([{ id: 1, name: "Ana" }, { id: 2, name: "Bruno" }, { id: 3, name: "Carla" }]) },
-      { key: "DEPARTMENT", label: "Departments", icon: "fa-solid fa-sitemap", fetch: () => Promise.resolve([{ id: 10, name: "Sales" }, { id: 11, name: "Support" }]) }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      selections: { USER: [] as number[], DEPARTMENT: [] as number[] } as Record<string, number[]>,
+      tabs: [
+        { key: "USER", label: $dt.mspUsers, icon: "fa-solid fa-user", fetch: () => Promise.resolve([{ id: 1, name: "Ana" }, { id: 2, name: "Bruno" }, { id: 3, name: "Carla" }]) },
+        { key: "DEPARTMENT", label: $dt.mspDepartments, icon: "fa-solid fa-sitemap", fetch: () => Promise.resolve([{ id: 10, name: $dt.mspSales }, { id: 11, name: $dt.mspSupport }]) }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaMultiSelectPopover v-model="selections" :tabs="tabs" empty-label="Select people or departments" />
-      <p class="demo-note">users: [{{ selections.USER.join(", ") }}] · departments: [{{ selections.DEPARTMENT.join(", ") }}]</p>
+      <ArcanaMultiSelectPopover v-model="selections" :tabs="tabs" :empty-label="$dt.mspEmptyLabel" />
+      <p class="demo-note">{{ $dt.mspUsersLabel }}: [{{ selections.USER.join(", ") }}] · {{ $dt.mspDepartmentsLabel }}: [{{ selections.DEPARTMENT.join(", ") }}]</p>
     </div>
   `
 };
@@ -344,19 +352,22 @@ const ArcanaMultiSelectPopoverDemo: Component = {
 
 const RadioCardGroupDemo: Component = {
   components: { ArcanaRadioCardGroup },
-  data: () => ({
-    method: "pix",
-    options: [
-      { label: "Credit card", value: "credit_card", description: "Automatic recurring charge." },
-      { label: "Pix", value: "pix", description: "Instant, no fees.", badge: "Recommended" },
-      { label: "Boleto", value: "boleto", description: "Due in 3 business days." },
-      { label: "Cash on delivery", value: "cash", disabled: true }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      method: "pix",
+      options: [
+        { label: $dt.payCreditCard, value: "credit_card", description: $dt.payCreditCardDesc },
+        { label: $dt.payPix, value: "pix", description: $dt.payPixDesc, badge: $dt.payPixBadge },
+        { label: $dt.payBoleto, value: "boleto", description: $dt.payBoletoDesc },
+        { label: $dt.payCash, value: "cash", disabled: true }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaRadioCardGroup v-model="method" :options="options" aria-label="Payment method" />
-      <p class="demo-note">selected: <strong>{{ method }}</strong></p>
+      <p class="demo-note">{{ $dt.selectedLabel }}: <strong>{{ method }}</strong></p>
     </div>
   `
 };
@@ -365,19 +376,22 @@ const RadioCardGroupDemo: Component = {
 
 const SegmentedOptionsDemo: Component = {
   components: { ArcanaSegmentedOptions },
-  data: () => ({
-    view: "list",
-    options: [
-      { label: "List", value: "list" },
-      { label: "Grid", value: "grid" },
-      { label: "Board", value: "board" }
-    ]
-  }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      view: "list",
+      options: [
+        { label: $dt.segList, value: "list" },
+        { label: $dt.segGrid, value: "grid" },
+        { label: $dt.segBoard, value: "board" }
+      ]
+    };
+  },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSegmentedOptions v-model="view" :options="options" aria-label="View mode" />
       <ArcanaSegmentedOptions v-model="view" :options="options" :compact="true" :squared="true" />
-      <p class="demo-note">view: <strong>{{ view }}</strong></p>
+      <p class="demo-note">{{ $dt.viewLabel }}: <strong>{{ view }}</strong></p>
     </div>
   `
 };
@@ -390,7 +404,7 @@ const DatePickerDemo: Component = {
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
       <ArcanaDatePicker v-model="date" />
-      <p class="demo-note">value (YYYY-MM-DD): <strong>{{ date ?? "null" }}</strong> · type DD/MM/AAAA</p>
+      <p class="demo-note">{{ $dt.datePickerValueLabel }}: <strong>{{ date ?? "null" }}</strong> · {{ $dt.datePickerTypeHint }}</p>
     </div>
   `
 };
@@ -404,7 +418,7 @@ const ArcanaInputCurrencyDemo: Component = {
     <div class="demo-stack" style="max-width: 340px">
       <ArcanaInputCurrency v-model="price" :shadcn="true" />
       <ArcanaInputCurrency v-model="cost" :shadcn="true" :disabled="true" />
-      <p class="demo-note">price (raw): <strong>{{ price }}</strong></p>
+      <p class="demo-note">{{ $dt.priceRaw }}: <strong>{{ price }}</strong></p>
     </div>
   `
 };
@@ -417,11 +431,11 @@ const AccordionDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaAccordion v-model="open">
-        <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 business days.</ArcanaAccordionItem>
-        <ArcanaAccordionItem name="returns" title="Returns">30-day free returns, no questions asked.</ArcanaAccordionItem>
-        <ArcanaAccordionItem name="warranty" title="Warranty (disabled)" :disabled="true">Coming soon.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="shipping" :title="$dt.accShipping">{{ $dt.accShippingBody }}</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="returns" :title="$dt.accReturns">{{ $dt.accReturnsBody }}</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="warranty" :title="$dt.accWarranty" :disabled="true">{{ $dt.accWarrantyBody }}</ArcanaAccordionItem>
       </ArcanaAccordion>
-      <p class="demo-note">open (single mode): <strong>{{ open ?? "null" }}</strong></p>
+      <p class="demo-note">{{ $dt.accOpenSingleLabel }}: <strong>{{ open ?? "null" }}</strong></p>
     </div>
   `
 };
@@ -432,13 +446,13 @@ const AccordionItemDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaAccordion v-model="open" :accordion="false">
-        <ArcanaAccordionItem name="specs" title="Specifications">Weight, dimensions and materials.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="specs" :title="$dt.accSpecifications">{{ $dt.accSpecificationsBody }}</ArcanaAccordionItem>
         <ArcanaAccordionItem name="care">
-          <template #title><span>Care <strong>instructions</strong></span></template>
-          Hand wash cold, do not tumble dry.
+          <template #title><span>{{ $dt.accCareTitle }}</span></template>
+          {{ $dt.accCareBody }}
         </ArcanaAccordionItem>
       </ArcanaAccordion>
-      <p class="demo-note">open (multiple mode): [{{ open.join(", ") }}]</p>
+      <p class="demo-note">{{ $dt.accOpenMultipleLabel }}: [{{ open.join(", ") }}]</p>
     </div>
   `
 };
@@ -452,13 +466,13 @@ const DropdownDemo: Component = {
     <div class="demo-stack">
       <ArcanaDropdown placement="bottom-start">
         <template #trigger>
-          <ArcanaButton variant="outline">Actions ▾</ArcanaButton>
+          <ArcanaButton variant="outline">{{ $dt.dropdownActions }} ▾</ArcanaButton>
         </template>
-        <ArcanaDropdownItem icon="fa-solid fa-pen" @click="last = 'Rename'">Rename</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-copy" @click="last = 'Duplicate'">Duplicate</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-pen" @click="last = $dt.ddRename">{{ $dt.ddRename }}</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-copy" @click="last = $dt.ddDuplicate">{{ $dt.ddDuplicate }}</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = $dt.ddDelete">{{ $dt.ddDelete }}</ArcanaDropdownItem>
       </ArcanaDropdown>
-      <p class="demo-note">last action: <strong>{{ last }}</strong></p>
+      <p class="demo-note">{{ $dt.lastAction }}: <strong>{{ last }}</strong></p>
     </div>
   `
 };
@@ -470,17 +484,17 @@ const DropdownItemDemo: Component = {
     <div class="demo-stack">
       <ArcanaDropdown placement="bottom-start" size="comfortable">
         <template #trigger>
-          <ArcanaButton variant="outline">Open menu ▾</ArcanaButton>
+          <ArcanaButton variant="outline">{{ $dt.dropdownOpenMenu }} ▾</ArcanaButton>
         </template>
-        <ArcanaDropdownItem icon="fa-solid fa-user" @click="last = 'Profile'">
-          Profile
+        <ArcanaDropdownItem icon="fa-solid fa-user" @click="last = $dt.ddProfile">
+          {{ $dt.ddProfile }}
           <template #suffix>⌘P</template>
         </ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-check" variant="success" @click="last = 'Approve'">Approve</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-flag" variant="warning" @click="last = 'Flag'">Flag for review</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = 'Delete'">Delete</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-check" variant="success" @click="last = $dt.ddApprove">{{ $dt.ddApprove }}</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-flag" variant="warning" @click="last = $dt.ddFlag">{{ $dt.ddFlagLabel }}</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = $dt.ddDelete">{{ $dt.ddDelete }}</ArcanaDropdownItem>
       </ArcanaDropdown>
-      <p class="demo-note">last action: <strong>{{ last }}</strong></p>
+      <p class="demo-note">{{ $dt.lastAction }}: <strong>{{ last }}</strong></p>
     </div>
   `
 };
@@ -489,27 +503,30 @@ const DropdownItemDemo: Component = {
 
 const TableDemo: Component = {
   components: { ArcanaTable, ArcanaBadge },
-  data: () => ({
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
     columns: [
-      { key: "sku", label: "SKU", width: "96px" },
-      { key: "name", label: "Product" },
-      { key: "qty", label: "Qty", align: "right" },
-      { key: "total", label: "Total", align: "right", valueGetter: (v: number) => "R$ " + v.toFixed(2) }
+      { key: "sku", label: $dt.colSku, width: "96px" },
+      { key: "name", label: $dt.colProduct },
+      { key: "qty", label: $dt.colQty, align: "right" },
+      { key: "total", label: $dt.colTotal, align: "right", valueGetter: (v: number) => "R$ " + v.toFixed(2) }
     ],
     rows: [
       { sku: "GLP-13", name: "Botijão P13", qty: 2, total: 260, status: "in" },
       { sku: "GLP-45", name: "Botijão P45", qty: 1, total: 480, status: "low" },
       { sku: "AGUA-20", name: "Galão 20L", qty: 5, total: 45, status: "in" }
     ]
-  }),
+    };
+  },
   template: /* html */ `
     <ArcanaTable :columns="columns" :rows="rows">
       <template #cell-name="{ row }">
         <strong>{{ row.name }}</strong>
-        <ArcanaBadge :variant="row.status === 'low' ? 'amber' : 'green'" size="sm" style="margin-left: 6px">{{ row.status === 'low' ? 'low' : 'in stock' }}</ArcanaBadge>
+        <ArcanaBadge :variant="row.status === 'low' ? 'amber' : 'green'" size="sm" style="margin-left: 6px">{{ row.status === 'low' ? $dt.tableLow : $dt.tableInStock }}</ArcanaBadge>
       </template>
       <template #footer>
-        <tr><td colspan="3">Total (3 items)</td><td class="arcana-table__td--right">R$ 785,00</td></tr>
+        <tr><td colspan="3">{{ $dt.tableTotalItems }}</td><td class="arcana-table__td--right">R$ 785,00</td></tr>
       </template>
     </ArcanaTable>
   `
@@ -686,7 +703,7 @@ const SettingsEditableFieldDemo: Component = {
         <ArcanaSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" v-model="discount" />
         <ArcanaSettingsEditableField label="Plano" caption="Recursos habilitados." type="select" :options="planOptions" v-model="plan" />
       </ArcanaSettingsList>
-      <p class="demo-note">Click <strong>Alterar</strong> on any row to open its edit modal.</p>
+      <p class="demo-note">{{ $dt.editableFieldHintPrefix }} <strong>Alterar</strong> {{ $dt.editableFieldHintSuffix }}</p>
     </div>
   `
 };
@@ -704,7 +721,7 @@ const NoticeDemo: Component = {
       <ArcanaNotice variant="warning" title="Pagamento manual">Pix e Boleto geram um link novo de cobrança a cada ciclo.</ArcanaNotice>
       <ArcanaNotice variant="pending" title="Aguardando ativação no Stripe">Clique em "Sincronizar" para criar a assinatura no gateway.</ArcanaNotice>
       <ArcanaNotice v-if="!dismissed" variant="destructive" title="Falha ao carregar" :dismissible="true" @dismiss="dismissed = true">Não foi possível buscar os dados.</ArcanaNotice>
-      <p v-else class="demo-note">The destructive notice was dismissed — reload the preview to bring it back.</p>
+      <p v-else class="demo-note">{{ $dt.noticeDismissedHint }}</p>
     </div>
   `
 };
@@ -727,7 +744,7 @@ const EditFieldModalDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaButton @click="open">Alterar nome</ArcanaButton>
-      <p class="demo-note">saved value: <strong>{{ saved }}</strong></p>
+      <p class="demo-note">{{ $dt.savedValue }}: <strong>{{ saved }}</strong></p>
       <ArcanaEditFieldModal ref="modal" title="Alterar Nome" description="Atualize o nome da unidade." @save="save">
         <ArcanaInput v-model="value" placeholder="Nome da unidade" />
       </ArcanaEditFieldModal>
@@ -779,10 +796,10 @@ const OnboardingPanelDemo: Component = {
         secondary-action-icon="fa-solid fa-circle-info"
         sub-hint="O arquivo é encriptado antes de ser armazenado."
         sub-hint-icon="fa-solid fa-lock"
-        @action="last = 'primary'"
-        @secondary-action="last = 'secondary'"
+        @action="last = $dt.onboardingPrimary"
+        @secondary-action="last = $dt.onboardingSecondary"
       />
-      <p class="demo-note">last action: <strong>{{ last }}</strong></p>
+      <p class="demo-note">{{ $dt.lastAction }}: <strong>{{ last }}</strong></p>
     </div>
   `
 };
@@ -803,7 +820,7 @@ const LoadingOverlayDemo: Component = {
     <div class="demo-stack">
       <div style="position: relative; border: 1px solid #e4e4e7; border-radius: 10px; padding: 22px; min-height: 118px; background: #fff">
         <p style="font-size: 13px; font-weight: 600; color: #18181b; margin: 0 0 6px">Resumo do pedido</p>
-        <p class="demo-note" style="margin: 0">Click "Salvar" to cover this card with the overlay for ~1.6s.</p>
+        <p class="demo-note" style="margin: 0">{{ $dt.loadingOverlayHint }}</p>
         <ArcanaLoadingOverlay :visible="loading" text="Salvando…" />
       </div>
       <ArcanaButton @click="run" :disabled="loading">Salvar</ArcanaButton>
@@ -842,7 +859,7 @@ const SwitchCardDemo: Component = {
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSwitchCard v-model="twoFa" icon="fa-solid fa-shield-halved" title="Autenticação 2FA" status-on="ATIVO · TOTP" status-off="DESLIGADO" />
       <ArcanaSwitchCard v-model="maintenance" icon="fa-solid fa-screwdriver-wrench" title="Modo manutenção" />
-      <p class="demo-note">2FA: <strong>{{ twoFa }}</strong> · maintenance: <strong>{{ maintenance }}</strong></p>
+      <p class="demo-note">{{ $dt.switchCard2faLabel }}: <strong>{{ twoFa }}</strong> · {{ $dt.switchCardMaintenanceLabel }}: <strong>{{ maintenance }}</strong></p>
     </div>
   `
 };
@@ -856,7 +873,7 @@ const SwitchRowDemo: Component = {
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSwitchRow v-model="email" label="Notificações por e-mail" description="Resumo diário das atividades da organização." />
       <ArcanaSwitchRow v-model="push" label="Notificações push" description="Alertas em tempo real no dispositivo." />
-      <p class="demo-note">e-mail: <strong>{{ email }}</strong> · push: <strong>{{ push }}</strong></p>
+      <p class="demo-note">{{ $dt.switchRowEmailLabel }}: <strong>{{ email }}</strong> · {{ $dt.switchRowPushLabel }}: <strong>{{ push }}</strong></p>
     </div>
   `
 };
@@ -870,7 +887,7 @@ const SwitchSegmentedDemo: Component = {
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSwitchSegmented v-model="yearly" off-label="Mensal" on-label="Anual · −20%" />
       <ArcanaSwitchSegmented v-model="env" off-label="Sandbox" on-label="Produção" :compact="true" :squared="true" />
-      <p class="demo-note">cycle: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · env: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
+      <p class="demo-note">{{ $dt.switchSegCycleLabel }}: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · {{ $dt.switchSegEnvLabel }}: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
     </div>
   `
 };
