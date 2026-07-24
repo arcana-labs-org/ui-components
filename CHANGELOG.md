@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0 — 2026-07-24
+
+### Novos recursos
+- **DatePicker com calendário próprio** (`ArcanaDatePicker`): popover de calendário auto-contido, sem Element Plus — o clique no ícone agora abre o calendário. Cinco modos via `type`: `date` (`YYYY-MM-DD`), `month` (`YYYY-MM`), `year` (`YYYY`), `daterange` (`[YYYY-MM-DD, YYYY-MM-DD]`) e `datetime` (`YYYY-MM-DD HH:mm`, confirma no botão). Multilíngue via `locale` (nomes de mês/dia por Intl) e customizável via `messages`.
+- **`ArcanaSettingsEditableField`**: nova prop `editLabel` (default `'Alterar'`) para o rótulo do botão de edição/prefixo do título (permite i18n); o input de moeda (`type="currency"`) agora usa o estilo arcana.
+
+### Alterações que exigem atenção
+- **`ArcanaEditFieldModal` renomeado para `ArcanaEditFieldDialog`** (arquivo, export e selector Angular `arcanaEditFieldDialog`). Os botões do rodapé agora são Cancelar `outline-danger` + ícone e Salvar `success` (verde) + ícone.
+
+### Correções
+- Alinhamento vertical de ícone + título nos cabeçalhos do `ArcanaSpecSheet`/`ArcanaOnboardingPanel` (blindado contra margens globais de `h*` do app consumidor).
+
 ## 1.0.0 — 2026-07-24
 
 Primeira versão pública da biblioteca de componentes.
