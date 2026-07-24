@@ -29,6 +29,19 @@ import ShadcnNoticeComponent from "./svelte/ShadcnNotice.svelte";
 import ShadcnTabsComponent from "./svelte/ShadcnTabs.svelte";
 import ShadcnAccordionComponent from "./svelte/ShadcnAccordion.svelte";
 import ShadcnAccordionItemComponent from "./svelte/ShadcnAccordionItem.svelte";
+import ShadcnSelectComponent from "./svelte/ShadcnSelect.svelte";
+import ShadcnInputBooleanComponent from "./svelte/ShadcnInputBoolean.svelte";
+import ShadcnNumberStepperComponent from "./svelte/ShadcnNumberStepper.svelte";
+import ShadcnRadioCardGroupComponent from "./svelte/ShadcnRadioCardGroup.svelte";
+import ShadcnSwitchSegmentedComponent from "./svelte/ShadcnSwitchSegmented.svelte";
+import MultiSelectPopoverComponent from "./svelte/MultiSelectPopover.svelte";
+import ShadcnInputMaskComponent from "./svelte/ShadcnInputMask.svelte";
+import InputCurrencyComponent from "./svelte/InputCurrency.svelte";
+import ShadcnDatePickerComponent from "./svelte/ShadcnDatePicker.svelte";
+import ShadcnTableComponent from "./svelte/ShadcnTable.svelte";
+import ShadcnSummaryTileComponent from "./svelte/ShadcnSummaryTile.svelte";
+import ShadcnSummaryTilesComponent from "./svelte/ShadcnSummaryTiles.svelte";
+import ShadcnLoadingOverlayComponent from "./svelte/ShadcnLoadingOverlay.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
@@ -263,3 +276,238 @@ export interface ShadcnAccordionItemProps {
   children?: Snippet;
 }
 export const ShadcnAccordionItem = ShadcnAccordionItemComponent as unknown as Component<ShadcnAccordionItemProps>;
+
+/* ── ShadcnSelect ─────────────────────────────────────────────────────────── */
+export interface SelectOption {
+  label: string;
+  value: string | number | boolean | null;
+  disabled?: boolean;
+  description?: string;
+}
+export interface ShadcnSelectProps {
+  value?: unknown;
+  options?: SelectOption[] | string[] | number[];
+  placeholder?: string;
+  disabled?: boolean;
+  size?: "sm" | "md" | "lg";
+  multiple?: boolean;
+  clearable?: boolean;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  onValueChange?: (value: unknown) => void;
+  onChange?: (value: unknown) => void;
+  class?: string;
+}
+export const ShadcnSelect = ShadcnSelectComponent as unknown as Component<ShadcnSelectProps>;
+
+/* ── ShadcnInputBoolean ───────────────────────────────────────────────────── */
+export interface ShadcnInputBooleanProps {
+  value?: unknown;
+  variation?: "" | "status" | "nullable" | string;
+  disabled?: boolean | number;
+  clearable?: boolean;
+  placeholder?: string;
+  onValueChange?: (value: unknown) => void;
+  onChange?: (value: unknown) => void;
+  class?: string;
+}
+export const ShadcnInputBoolean = ShadcnInputBooleanComponent as unknown as Component<ShadcnInputBooleanProps>;
+
+/* ── ShadcnNumberStepper ──────────────────────────────────────────────────── */
+export interface ShadcnNumberStepperProps {
+  value?: number | string | null;
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+  ariaLabel?: string;
+  onValueChange?: (value: number | null) => void;
+  onChange?: (value: number) => void;
+  class?: string;
+}
+export const ShadcnNumberStepper = ShadcnNumberStepperComponent as unknown as Component<ShadcnNumberStepperProps>;
+
+/* ── ShadcnRadioCardGroup ─────────────────────────────────────────────────── */
+export interface RadioCardOption {
+  label: string;
+  value: string | number | boolean | null;
+  description?: string;
+  icon?: string;
+  badge?: string;
+  disabled?: boolean;
+  iconBg?: string;
+  iconColor?: string;
+  iconBorder?: string;
+}
+export interface ShadcnRadioCardGroupProps {
+  value?: string | number | boolean | null;
+  options: RadioCardOption[];
+  name?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+  inline?: boolean;
+  columns?: number;
+  radioPosition?: "start" | "end";
+  onValueChange?: (value: string | number | boolean | null) => void;
+  onChange?: (value: string | number | boolean | null) => void;
+  class?: string;
+}
+export const ShadcnRadioCardGroup = ShadcnRadioCardGroupComponent as unknown as Component<ShadcnRadioCardGroupProps>;
+
+/* ── ShadcnSwitchSegmented ────────────────────────────────────────────────── */
+export interface ShadcnSwitchSegmentedProps {
+  value?: boolean;
+  offLabel?: string;
+  onLabel?: string;
+  disabled?: boolean;
+  ariaLabel?: string;
+  compact?: boolean;
+  squared?: boolean;
+  activeColor?: string;
+  radio?: boolean;
+  offSlot?: Snippet;
+  onSlot?: Snippet;
+  onValueChange?: (value: boolean) => void;
+  onChange?: (value: boolean) => void;
+  class?: string;
+}
+export const ShadcnSwitchSegmented = ShadcnSwitchSegmentedComponent as unknown as Component<ShadcnSwitchSegmentedProps>;
+
+/* ── MultiSelectPopover ───────────────────────────────────────────────────── */
+export interface MultiSelectTab {
+  key: string;
+  label: string;
+  icon?: string;
+  placeholder?: string;
+  fetch: () => Promise<unknown[]>;
+  searchFields?: string[];
+  countLabel?: string;
+}
+export interface MultiSelectTriggerContext {
+  open: () => void;
+  toggle: () => void;
+  isOpen: boolean;
+  summary: string;
+  isEmpty: boolean;
+  selectedCount: number;
+}
+export interface MultiSelectPopoverProps {
+  value?: Record<string, number[]>;
+  tabs: MultiSelectTab[];
+  emptyLabel?: string;
+  triggerIcon?: string;
+  defaultTab?: string;
+  onValueChange?: (value: Record<string, number[]>) => void;
+  onChange?: (value: Record<string, number[]>) => void;
+  onOpen?: () => void;
+  onClose?: () => void;
+  renderTrigger?: Snippet<[MultiSelectTriggerContext]>;
+  renderItem?: Snippet<[{ item: unknown; tab?: MultiSelectTab; selected: boolean }]>;
+  class?: string;
+}
+export const MultiSelectPopover = MultiSelectPopoverComponent as unknown as Component<MultiSelectPopoverProps>;
+
+/* ── ShadcnInputMask ──────────────────────────────────────────────────────── */
+export interface ShadcnInputMaskProps {
+  value?: string | number | null;
+  mask: string | string[];
+  placeholder?: string;
+  disabled?: boolean;
+  readonly?: boolean;
+  name?: string;
+  size?: "sm" | "md" | "lg";
+  onValueChange?: (value: string) => void;
+  onBlur?: (ev: FocusEvent) => void;
+  onFocus?: (ev: FocusEvent) => void;
+  class?: string;
+}
+export const ShadcnInputMask = ShadcnInputMaskComponent as unknown as Component<ShadcnInputMaskProps>;
+
+/* ── InputCurrency ────────────────────────────────────────────────────────── */
+export interface InputCurrencyProps {
+  value?: string | number;
+  disabled?: boolean | number;
+  allowBlank?: boolean;
+  fraction?: number;
+  name?: string;
+  showIcon?: boolean;
+  prefix?: string;
+  icon?: string;
+  max?: number;
+  min?: number;
+  formatCurrency?: boolean;
+  shadcn?: boolean;
+  prepend?: Snippet;
+  append?: Snippet;
+  onValueChange?: (value: string) => void;
+  onChange?: (ev: unknown) => void;
+  onEnter?: (ev: KeyboardEvent) => void;
+  onBlur?: (ev: FocusEvent) => void;
+  class?: string;
+}
+export const InputCurrency = InputCurrencyComponent as unknown as Component<InputCurrencyProps>;
+
+/* ── ShadcnDatePicker ─────────────────────────────────────────────────────── */
+export interface ShadcnDatePickerProps {
+  value?: string | string[] | null;
+  type?: string;
+  disabled?: boolean;
+  clearable?: boolean;
+  editable?: boolean;
+  placeholder?: string;
+  size?: "sm" | "md" | "lg";
+  onValueChange?: (value: string | null) => void;
+  onChange?: (value: string | null) => void;
+  onBlur?: (ev: FocusEvent) => void;
+  onFocus?: (ev: FocusEvent) => void;
+  class?: string;
+}
+export const ShadcnDatePicker = ShadcnDatePickerComponent as unknown as Component<ShadcnDatePickerProps>;
+
+/* ── ShadcnTable ──────────────────────────────────────────────────────────── */
+export interface ShadcnTableColumn {
+  key: string;
+  label: string;
+  width?: string;
+  align?: "left" | "right";
+  valueGetter?: (value: unknown, row: unknown, index: number) => unknown;
+  render?: Snippet<[{ row: unknown; value: unknown; index: number }]>;
+}
+export interface ShadcnTableProps {
+  columns: ShadcnTableColumn[];
+  rows?: unknown[];
+  emptyText?: string;
+  footer?: Snippet;
+  class?: string;
+}
+export const ShadcnTable = ShadcnTableComponent as unknown as Component<ShadcnTableProps>;
+
+/* ── ShadcnSummaryTile (+Tiles) ───────────────────────────────────────────── */
+export type SummaryTileTone = "neutral" | "positive" | "negative" | "indigo";
+export interface ShadcnSummaryTileProps {
+  label: string;
+  value?: string | number | null;
+  icon?: string;
+  sub?: string;
+  tone?: SummaryTileTone;
+  valueSlot?: Snippet;
+  subSlot?: Snippet;
+  class?: string;
+  style?: string;
+}
+export const ShadcnSummaryTile = ShadcnSummaryTileComponent as unknown as Component<ShadcnSummaryTileProps>;
+
+export interface ShadcnSummaryTilesProps {
+  columns?: number | string;
+  children?: Snippet;
+  class?: string;
+}
+export const ShadcnSummaryTiles = ShadcnSummaryTilesComponent as unknown as Component<ShadcnSummaryTilesProps>;
+
+/* ── ShadcnLoadingOverlay ─────────────────────────────────────────────────── */
+export interface ShadcnLoadingOverlayProps {
+  visible?: boolean;
+  text?: string;
+  class?: string;
+}
+export const ShadcnLoadingOverlay = ShadcnLoadingOverlayComponent as unknown as Component<ShadcnLoadingOverlayProps>;
