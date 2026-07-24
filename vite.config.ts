@@ -8,7 +8,9 @@ export default defineConfig({
   plugins: [
     vue(),
     react(),
-    dts({ include: ["src"], tsconfigPath: "./tsconfig.json" })
+    // A entry Angular é compilada pelo `ngc` (npm run build:angular), não por
+    // este bundle — ver tsconfig.angular.json.
+    dts({ include: ["src"], exclude: ["src/angular", "src/angular.ts"], tsconfigPath: "./tsconfig.json" })
   ],
   build: {
     minify: "oxc",
