@@ -79,127 +79,127 @@ export const en: Messages = {
 
   components: {
     button: {
-      blurb: "A pressable button that mirrors the shadcn button geometry (13px / weight 500 / radius 6). Fifteen semantic variants cover primary actions, destructive flows, neutral outlines and status accents. The label is provided through the default slot; clicks are surfaced through the <c>click</c> event."
+      blurb: "A pressable button in fifteen semantic variants; label via the default slot, clicks via the <c>click</c> event."
     },
     badge: {
-      blurb: "A compact pill for counts, statuses and tags. Six colour variants pair with an optional leading <c>dot</c> indicator, two sizes, and a <c>clickable</c> mode that adds pointer affordance for actionable badges. Content comes from the default slot."
+      blurb: "A compact pill for counts, statuses and tags — six colours, two sizes, optional <c>dot</c> and <c>clickable</c> mode."
     },
     input: {
-      blurb: "A native <c>&lt;input&gt;</c> with shadcn styling and a number-aware <c>v-model</c> (an empty <c>type=\"number\"</c> emits <c>null</c>, a valid one emits a real number). Standard HTML attributes — <c>placeholder</c>, <c>readonly</c>, <c>min/max/step</c>, <c>maxlength</c>, <c>autocomplete</c> — pass straight through."
+      blurb: "A native <c>&lt;input&gt;</c> with shadcn styling and a number-aware <c>v-model</c>; standard HTML attributes pass straight through."
     },
     select: {
-      blurb: "A fully custom select — no Element Plus underneath. The dropdown is teleported to <c>&lt;body&gt;</c> with auto-flip positioning, and supports single or <c>multiple</c> selection, a built-in <c>searchable</c> filter, a hover <c>clearable</c> affordance and full keyboard navigation. Options accept plain strings or <c>{ label, value, disabled?, description? }</c> objects."
+      blurb: "A fully custom select (no Element Plus) teleported to <c>&lt;body&gt;</c>, with single/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> and keyboard navigation."
     },
     checkbox: {
-      blurb: "A binary checkbox that wraps a <b>real</b> native <c>&lt;input type=\"checkbox\"&gt;</c> — so it is keyboard- and test-driver-friendly (Dusk <c>check()</c>/<c>uncheck()</c> work). Use it to pick items from a list; an <c>indeterminate</c> state renders the classic \"some selected\" dash. Reach for <c>ShadcnSwitch</c> instead when toggling a setting on/off."
+      blurb: "A binary checkbox wrapping a real native <c>&lt;input type=\"checkbox\"&gt;</c> with an <c>indeterminate</c> state; use <c>ShadcnSwitch</c> to toggle a setting."
     },
     switch: {
-      blurb: "A binary on/off toggle following the WAI-ARIA switch pattern (<c>role=\"switch\"</c> + <c>aria-checked</c>, Space/Enter activate). The track is colour-coded for scannability — red when off, green when on — and an optional hidden checkbox (<c>name</c>) integrates with native form submission."
+      blurb: "A binary on/off toggle (WAI-ARIA switch), colour-coded red/green, with an optional hidden checkbox for native forms."
     },
     tabs: {
-      blurb: "Custom tabs driven by a <c>tabs</c> array and a <c>v-model</c> holding the active tab name. Each tab becomes a named slot. Six visual variants — <c>pills</c>, <c>underline</c>, <c>boxed</c>, <c>sidebar</c>, <c>sidebar-soft</c>, <c>segmented</c> — cover everything from compact modal tabs to full sidebar navigation, with optional icons, badges and a <c>keepAlive</c> mode that preserves inactive panels."
+      blurb: "Custom tabs driven by a <c>tabs</c> array and <c>v-model</c>, with six variants from pills to full sidebar navigation."
     },
     dialog: {
-      blurb: "A shadcn-style modal with a ref-based API — call <c>show()</c> / <c>hide()</c> on the component ref rather than binding <c>v-model</c>. It teleports to <c>&lt;body&gt;</c>, traps focus, closes on Escape (and optionally on overlay click), and layers correctly when nested. Size presets run <c>sm → full</c>; the <c>header</c> and <c>footer</c> slots are optional (the footer slot receives <c>{ hide }</c>)."
+      blurb: "A shadcn modal with a ref-based <c>show()</c>/<c>hide()</c> API — teleports to <c>&lt;body&gt;</c>, traps focus and closes on Escape."
     },
     inputMask: {
-      blurb: "A masked text input built on the <c>v-maska</c> directive and styled to match <c>ShadcnInput</c>. Pass a <c>mask</c> string, or an array of strings for length-driven dynamic masks (e.g. landline vs. mobile phone). The <c>v-model</c> always holds the <b>raw</b> value — no mask characters — so CPF, CNPJ, CEP or phone numbers reach your backend unformatted while the field shows the formatted display. Requires <c>v-maska</c> registered globally."
+      blurb: "A masked text input on <c>v-maska</c> whose <c>v-model</c> always holds the <b>raw</b> value (CPF, CNPJ, phone…); requires <c>v-maska</c> registered globally."
     },
     inputBoolean: {
-      blurb: "A yes/no select for boolean fields, rendered as a <c>ShadcnSelect</c>. It normalises the usual boolean shapes — <c>true</c>/<c>1</c>, <c>false</c>/<c>0</c>, <c>null</c>. A <c>variation</c> switches the labels to <c>status</c> (Ativo/Inativo) or to SQL-like <c>nullable</c> values (<c>IS_NOT_NULL</c>/<c>IS_NULL</c>) for filters. When <c>clearable</c> (default), a leading \"Todos\" option resets the value to <c>null</c>."
+      blurb: "A yes/no select for boolean fields that normalises <c>true</c>/<c>false</c>/<c>null</c>, with status and SQL-like label variations."
     },
     numberStepper: {
-      blurb: "A numeric input flanked by <c>−</c> / <c>+</c> buttons for fine quantity adjustments. The buttons respect <c>min</c> / <c>max</c> / <c>step</c> and disable at the limits; Arrow Up/Down work from the keyboard, and an empty or invalid entry is coerced to <c>min</c> on blur. Native spinners are hidden in favour of the custom buttons."
+      blurb: "A numeric input flanked by <c>−</c>/<c>+</c> buttons that respect <c>min</c>/<c>max</c>/<c>step</c> and the keyboard arrows."
     },
     multiSelectPopover: {
-      blurb: "A generic body-teleported popover with configurable tabs and checkbox multi-selection — a reusable base for pickers that span several buckets (users + departments, branches, machines…). The <c>v-model</c> is a <c>{ [tabKey]: number[] }</c> map, one selected-id array per tab. Each tab supplies an async <c>fetch()</c> whose result is cached for the component's lifetime; the panel flips and shifts to stay in the viewport. The <c>trigger</c> and <c>item</c> slots customise rendering."
+      blurb: "A body-teleported popover with tabbed checkbox multi-selection; the <c>v-model</c> is a <c>{ [tabKey]: number[] }</c> map, each tab fed by an async <c>fetch()</c>."
     },
     radioCardGroup: {
-      blurb: "A group of selectable cards backed by real <c>&lt;input type=\"radio\"&gt;</c> elements — more tactile than a select when there are a handful of options that each carry a description, icon or badge. Options are <c>{ label, value, description?, icon?, badge?, disabled? }</c> objects. Lay them out stacked, <c>inline</c>, or in a fixed number of <c>columns</c>, and move the radio to the <c>end</c> when a leading icon should carry the visual weight."
+      blurb: "Selectable cards backed by real <c>&lt;input type=\"radio\"&gt;</c>, each with a description, icon or badge; lay out stacked, <c>inline</c> or in <c>columns</c>."
     },
     segmentedOptions: {
-      blurb: "A segmented control for N mutually-exclusive options rendered inside a pill — the multi-option sibling of the binary <c>ShadcnSwitchSegmented</c>. The active segment is highlighted; options accept an optional <c>icon</c> and a per-option <c>disabled</c>. <c>compact</c> and <c>squared</c> tune the geometry, <c>activeColor</c> overrides the active fill, and <c>autoSelectFirst</c> picks the first enabled option when nothing is selected (handy for dynamic lists)."
+      blurb: "A segmented control for N mutually-exclusive options inside a pill, with per-option icons and disabling."
     },
     datePicker: {
-      blurb: "A shadcn-styled date field. For <c>type=\"date\"</c> it composes a live-masked <c>DD/MM/AAAA</c> text input (via <c>v-maska</c>) with an Element Plus calendar popover opened by the calendar icon; other types (<c>daterange</c>, <c>month</c>, <c>year</c>) use the calendar directly. The <c>v-model</c> is an ISO <c>YYYY-MM-DD</c> string (or a tuple for ranges), and typed dates are strictly validated (31/02 is rejected)."
+      blurb: "A shadcn date field pairing a masked <c>DD/MM/AAAA</c> input with a calendar popover; the <c>v-model</c> is an ISO <c>YYYY-MM-DD</c> string."
     },
     inputCurrency: {
-      blurb: "A currency input built on <c>v-money3</c> that formats as the user types — thousands separator, decimal comma and a configurable <c>fraction</c> of decimal places (BRL by default). Enable the <c>shadcn</c> flag for the zinc-styled field with a leading currency icon; <c>min</c> / <c>max</c> clamp the value and <c>allowBlank</c> permits an empty field. The <c>v-model</c> carries the formatted string; the disabled state shows a read-only formatted value."
+      blurb: "A currency input (on <c>v-money3</c>) that formats as you type, with configurable decimals and <c>min</c>/<c>max</c> clamping; BRL by default."
     },
     labeledButton: {
-      blurb: "The base button behind the higher-level button wrappers: a <c>label</c>, an optional leading <c>icon</c> (FontAwesome class) and a <c>loading</c> state that swaps the icon for a spinner and disables the button. Set the <c>shadcn</c> flag to map the legacy <c>color</c> prop onto a semantic shadcn variant (danger → destructive, grey → ghost, blue → info, …); without it the legacy Bootstrap styling is kept. <c>centerLabel</c> / <c>centerContent</c> control alignment in full-width buttons."
+      blurb: "The base button with a <c>label</c>, optional <c>icon</c> and a <c>loading</c> spinner state; the <c>shadcn</c> flag maps legacy colours to semantic variants."
     },
     accordion: {
-      blurb: "The container for a set of collapsible <c>ShadcnAccordionItem</c>s. It provides the open/close state to its children through provide/inject and binds to a <c>v-model</c>. In the default single (<c>accordion</c>) mode the model is the open item's <c>name</c> (or <c>null</c>); set <c>:accordion=\"false\"</c> for multiple-open mode, where the model becomes an array of open names."
+      blurb: "The container for collapsible <c>ShadcnAccordionItem</c>s, binding a <c>v-model</c> for single- or multiple-open mode."
     },
     accordionItem: {
-      blurb: "A single collapsible panel inside a <c>ShadcnAccordion</c>, identified by a required <c>name</c>. The header shows the <c>title</c> prop (or a <c>title</c> slot for rich headers) plus a chevron that rotates when open; the default slot is the collapsible body. <c>disabled</c> blocks toggling. It reads its open state from the parent accordion — it only works nested inside one."
+      blurb: "A single collapsible panel inside a <c>ShadcnAccordion</c>, identified by a <c>name</c>, with a <c>title</c> header and slot body."
     },
     dropdown: {
-      blurb: "A shadcn-style dropdown menu that replaces <c>el-dropdown</c>. The <c>trigger</c> slot holds whatever opens it; the default slot holds <c>ShadcnDropdownItem</c>s (and receives a <c>close</c> helper). The menu teleports to <c>&lt;body&gt;</c> to escape ancestor <c>overflow:hidden</c>, positions itself with automatic flip/shift, and closes on outside click, Escape or item selection. <c>placement</c> and a <c>size</c> density (propagated to items) tune it."
+      blurb: "A shadcn dropdown menu that teleports to <c>&lt;body&gt;</c>, auto-positions and closes on outside click, Escape or selection."
     },
     dropdownItem: {
-      blurb: "A row inside a <c>ShadcnDropdown</c>: an optional <c>icon</c>, the label (default slot) and an optional <c>suffix</c> slot (e.g. a shortcut). <c>variant</c> colours it <c>default</c>, <c>danger</c>, <c>success</c> or <c>warning</c>; <c>divided</c> draws a separator above it to fence destructive actions off. On click it emits <c>click</c> and — unless <c>closeOnClick</c> is false — asks the parent dropdown to close via a bubbling custom event."
+      blurb: "A row inside a <c>ShadcnDropdown</c> — optional <c>icon</c>, label and <c>suffix</c> — colourable, with a <c>divided</c> separator for destructive actions."
     },
     table: {
-      blurb: "A static shadcn-style table for arrays you already hold in memory (unlike <c>SparkGrid</c>, which fetches and paginates via the backend). Columns declare <c>{ key, label, width?, align?, valueGetter? }</c>; a <c>#cell-&lt;key&gt;</c> slot takes over any cell's render, and a <c>#footer</c> slot fills a <c>&lt;tfoot&gt;</c> for totals."
+      blurb: "A static shadcn table for in-memory arrays; columns declare <c>{ key, label, width?, align?, valueGetter? }</c>, with cell and footer slots."
     },
     specSheet: {
-      blurb: "A read-only, editorial \"spec sheet\" for formal records — think SEC filings and datasheets. A mono <c>docNum</c> eyebrow sits over the <c>title</c> and an optional <c>meta</c> badge; <c>&lt;ShadcnSpecSheetSection&gt;</c> children hold the fields and a <c>#footer</c> slot carries edit actions. Set <c>flat</c> to drop the card chrome when embedding it inside another card."
+      blurb: "A read-only, editorial \"spec sheet\" for formal records, with a <c>docNum</c> eyebrow, a <c>title</c> and section children."
     },
     specSheetSection: {
-      blurb: "A section inside a <c>ShadcnSpecSheet</c>: an optional boxed accent <c>icon</c> (eight colours) + <c>title</c> + a right-aligned <c>sectionNum</c>, over a configurable <c>columns</c> grid of <c>&lt;ShadcnSpecSheetField&gt;</c>s. An <c>#actions</c> slot hosts header buttons; <c>noRowDividers</c> and <c>compact</c> tune the layout."
+      blurb: "A section inside a <c>ShadcnSpecSheet</c> — accent <c>icon</c>, <c>title</c> and <c>sectionNum</c> over a <c>columns</c> grid of fields."
     },
     specSheetField: {
-      blurb: "A single label/value pair inside a section. The <c>label</c> renders uppercase mono, the <c>value</c> in Inter; an empty value (<c>null</c>/<c>undefined</c>/'') shows <c>emptyText</c> in italic muted so gaps read as intentional. Use <c>span</c> to widen a field, or the default slot for badges, links and other rich values."
+      blurb: "A single label/value pair; an empty value shows <c>emptyText</c> so gaps read as intentional, and <c>span</c> widens it."
     },
     summaryTiles: {
-      blurb: "The responsive grid container for a row of KPI tiles. Set <c>columns</c> (default 3); below 880px it always collapses to a single column. Drop as many <c>&lt;ShadcnSummaryTile&gt;</c> children as you need."
+      blurb: "The responsive grid container for KPI tiles; set <c>columns</c> (default 3), collapsing to one below 880px."
     },
     summaryTile: {
-      blurb: "A compact KPI stat laid out as <c>[icon] [label + sub] [value]</c> in ~52px of height. Four <c>tone</c>s — <c>neutral</c>, <c>positive</c>, <c>negative</c>, <c>indigo</c> — colour it for scannability. The <c>#value</c> and <c>#sub</c> slots override the plain props for inline badges or richer content."
+      blurb: "A compact KPI stat laid out as <c>[icon] [label + sub] [value]</c>, in four scannable <c>tone</c>s."
     },
     settingsList: {
-      blurb: "An iOS-Settings-style container: rows separated by hairlines, each with a label + caption on the left and a control on the right. Fill it with <c>&lt;ShadcnSettingsListItem&gt;</c>, <c>&lt;ShadcnSettingsListGroup&gt;</c> or the smart <c>&lt;ShadcnSettingsEditableField&gt;</c>."
+      blurb: "An iOS-Settings-style container of hairline-separated rows, each with a label + caption and a right-aligned control."
     },
     settingsListGroup: {
-      blurb: "A titled section inside a <c>ShadcnSettingsList</c> for grouping related rows. The header carries an optional boxed <c>icon</c> (eight colours), a <c>sectionNum</c> and right-aligned <c>meta</c>. Set <c>collapsible</c> to make the header a toggle (with <c>defaultCollapsed</c>), and <c>compact</c> for denser spacing."
+      blurb: "A titled, optionally <c>collapsible</c> section inside a <c>ShadcnSettingsList</c>, with an icon, <c>sectionNum</c> and <c>meta</c>."
     },
     settingsListItem: {
-      blurb: "A single row of a <c>ShadcnSettingsList</c>: <c>label</c> + <c>caption</c> on the left, your control in the default slot on the right. The <c>#label</c> slot lets you inline a status badge; <c>nested</c> applies sub-item styling for toggles that only matter when a parent is on; <c>disabled</c> dims and locks the row."
+      blurb: "A single settings row — <c>label</c> + <c>caption</c> on the left, your control on the right."
     },
     settingsEditableField: {
-      blurb: "A smart row that folds a read-only value, an \"Alterar\" button and its edit modal into one tag. Pick a <c>type</c> — <c>text</c>, <c>currency</c>, <c>number</c> or <c>select</c> — and it renders the right input inside a teleported modal. Edits are buffered: cancel discards them, save emits both <c>update:modelValue</c> and <c>save</c> (for auto-save)."
+      blurb: "A smart row folding a read-only value, an \"Alterar\" button and its edit modal into one tag (<c>text</c>/<c>currency</c>/<c>number</c>/<c>select</c>)."
     },
     sparkGridEmptyState: {
-      blurb: "A wrapper that swaps a grid's contents for a <c>ShadcnOnboardingPanel</c> when there is genuinely nothing to show. It waits for <c>loading</c> to settle (true → false) and only reveals the panel when <c>total</c> is 0 and no filter is active — so a filtered-to-empty list keeps its toolbar. It emits <c>panel-visible</c> so the host can hide header actions."
+      blurb: "A wrapper that swaps a grid's contents for an onboarding panel only when <c>total</c> is 0 and no filter is active."
     },
     notice: {
-      blurb: "An inline banner with semantic variants — <c>info</c>, <c>blue</c>, <c>success</c>, <c>warning</c>, <c>pending</c> and <c>destructive</c> — each with a matching default icon. Use it for contextual advisories, status cards and non-blocking errors. Add <c>dismissible</c> for a close button that emits <c>dismiss</c>; the title, body and icon are all slot-overridable."
+      blurb: "An inline banner in six semantic variants with matching icons, optionally <c>dismissible</c>, for advisories and non-blocking errors."
     },
     editFieldModal: {
-      blurb: "A generic \"Alterar X\" modal wrapper for settings lists. It supplies the chrome (header, footer, save/cancel) and takes the field input through its default slot, so one component serves every editable row instead of a file per modal. It is ref-driven (<c>show()</c> / <c>hide()</c>) and emits <c>save</c> without auto-closing, so you can validate first."
+      blurb: "A generic ref-driven \"Alterar X\" modal wrapper that supplies the chrome and takes the field input through its slot."
     },
     requiredFieldsDialog: {
-      blurb: "An amber warning dialog that lists the required fields still missing from a multi-step form. Pass a <c>fields</c> array of <c>{ key, label, hint }</c> — each <c>hint</c> points to the step to fix — and open it with a ref (<c>show()</c>). It replaces the old \"one <c>Alert.info</c> at a time\" pattern with a single, scannable list."
+      blurb: "An amber dialog listing the required fields still missing from a multi-step form, each hint pointing to the step to fix."
     },
     onboardingPanel: {
-      blurb: "A polished empty-state / CTA panel for first-time setup: a gradient icon inside pulsing rings, a title + description, a primary CTA and an optional secondary button and footer hint. Drive it entirely through props, or reach for the <c>#action</c> and <c>#sub-hint</c> slots for custom buttons and rich copy. It emits <c>action</c> / <c>secondary-action</c>."
+      blurb: "A polished empty-state / CTA panel for first-time setup — gradient icon, title, description and a primary call to action."
     },
     loadingOverlay: {
-      blurb: "A scoped loading overlay — a spinner + text over a translucent, blurred backdrop that covers its nearest positioned ancestor (the parent needs <c>position: relative</c>). Toggle it with <c>visible</c> for card- or section-level async feedback instead of a full-screen loader."
+      blurb: "A scoped spinner overlay over a blurred backdrop, covering its nearest positioned ancestor; toggle it with <c>visible</c>."
     },
     skeleton: {
-      blurb: "A shimmering placeholder block for loading states. Set <c>width</c> / <c>height</c> to any CSS value and pick a <c>rounded</c> preset (<c>full</c> for avatars). It is <c>aria-hidden</c> (visual only) and honours <c>prefers-reduced-motion</c> — the shimmer stops but the block stays. Prefer it over fake placeholders that flicker when real data lands."
+      blurb: "A shimmering placeholder block for loading states; set <c>width</c>/<c>height</c>, pick a <c>rounded</c> preset, honours reduced-motion."
     },
     switchCard: {
-      blurb: "A high-impact, full-width toggle: when on, the whole card turns emerald with an inverted internal switch — you can read its state across the room. Reserve it for weighty settings (2FA, maintenance mode, premium features). A boxed <c>icon</c>, <c>title</c> and mono <c>statusOn</c>/<c>statusOff</c> lines describe it."
+      blurb: "A high-impact full-width toggle that turns the whole card emerald when on — reserve it for weighty settings."
     },
     switchRow: {
-      blurb: "A full-width \"settings row\" toggle: a title + optional description on the left, a compact switch on the right, and the whole row is clickable for a generous touch target. It is the calm middle ground between a bare <c>ShadcnSwitch</c> and the loud <c>ShadcnSwitchCard</c> — ideal for lists of related preferences."
+      blurb: "A full-width settings-row toggle — title + description on the left, a compact switch on the right, whole row clickable."
     },
     switchSegmented: {
-      blurb: "A binary toggle shaped like a segmented capsule: two clickable halves with a sliding indicator, so it reads as \"A or B\" rather than on/off. Great for labelled either/or choices (monthly / annual, sandbox / production). <c>compact</c> and <c>squared</c> tune the geometry, <c>activeColor</c> recolours the indicator, and Arrow keys move between sides."
+      blurb: "A binary toggle shaped like a segmented capsule with a sliding indicator, reading as \"A or B\" rather than on/off."
     }
   }
 };
