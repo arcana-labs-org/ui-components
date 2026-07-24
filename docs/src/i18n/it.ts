@@ -6,7 +6,7 @@ export const it: Messages = {
 
   shell: {
     kicker: "Documentazione · v0.x",
-    lead: "Una libreria di componenti tipizzata, in stile shadcn. Vue 3 è già disponibile; gli adattatori per React, Angular e Svelte sono in arrivo — stessa API, stesso aspetto, in qualsiasi framework.",
+    lead: "Una libreria di componenti tipizzata, in stile shadcn — Vue 3, React, Angular e Svelte, con la stessa API e lo stesso aspetto in qualsiasi framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
     searchPlaceholder: "Cerca componenti… (⌘K)",
@@ -44,7 +44,7 @@ export const it: Messages = {
     install: {
       title: "Installazione",
       p1: "La libreria è distribuita come un unico pacchetto npm. Installala con il gestore che preferisci — <c>vue</c> (3.4+) è l'unica peer dependency.",
-      p2: "Tutti i componenti Vue sono esportati dal subpath <c>@arcanalabs/ui-components/vue</c> come SFC autonomi; importa solo quelli che usi."
+      p2: "Ogni componente è pubblicato per tutti e quattro i framework in un subpath dedicato — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> e <c>/svelte</c>; importa solo quelli che usi."
     },
     usage: {
       title: "Utilizzo",
@@ -73,8 +73,8 @@ export const it: Messages = {
   },
 
   demoCaption: "componente dal vivo · interagisci con esso",
-  comingSoon: "La documentazione completa di questo componente arriverà in un lotto successivo. È già esportato da <c>@arcanalabs/ui-components/vue</c> ed è pronto all'uso.",
-  frameworkSoon: "// Gli adattatori React · Angular · Svelte arriveranno presto.\n// Vue 3 è già disponibile — imposta il selettore del framework su Vue.",
+  comingSoon: "La documentazione completa di questo componente arriverà in un lotto successivo. È già pubblicato per Vue, React, Angular e Svelte ed è pronto all'uso.",
+  frameworkSoon: "// Vue, React, Angular e Svelte offrono lo stesso componente — scegli un framework sopra per vederne l'uso.",
 
   components: {
     button: {

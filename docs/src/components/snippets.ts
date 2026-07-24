@@ -1,18 +1,24 @@
 import type { Framework, SectionCode } from "./DocsShell";
 
+/** `ShadcnButton` → `shadcn-button` (Angular file-name convention). */
+function kebab(name: string): string {
+  return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
 /**
- * Builds the per-framework code record for a section. Only the Vue variant
- * carries real code in this batch; the React / Angular / Svelte ports land in a
- * later batch, so their tab shows the translated "coming soon" placeholder while
- * the framework toggle keeps working.
+ * Builds the per-framework code record for a documented component section. Each
+ * framework now carries its own real usage snippet (see `frameworkSnippets.ts`
+ * for React / Angular / Svelte, and `componentDocs.ts` for Vue).
  */
-export function vueOnly(file: string, vueCode: string, placeholder: string): Record<Framework, SectionCode> {
-  const soon: SectionCode = { file: "adapter.soon", code: placeholder };
+export function frameworkCode(
+  name: string,
+  code: { vue: string; react: string; angular: string; svelte: string }
+): Record<Framework, SectionCode> {
   return {
-    vue: { file, code: vueCode },
-    react: soon,
-    angular: soon,
-    svelte: soon
+    vue: { file: `${name}.vue`, code: code.vue },
+    react: { file: `${name}.tsx`, code: code.react },
+    angular: { file: `${kebab(name)}.component.ts`, code: code.angular },
+    svelte: { file: `${name}.svelte`, code: code.svelte }
   };
 }
 
@@ -24,34 +30,179 @@ export function sameForAll(file: string, code: string): Record<Framework, Sectio
 
 export const installCode = "npm i @arcanalabs/ui-components";
 
-export const usageCode = [
-  "<script setup lang=\"ts\">",
-  "import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/vue'",
-  "</script>",
-  "",
-  "<template>",
-  "  <ShadcnButton variant=\"primary\">Save</ShadcnButton>",
-  "  <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
-  "</template>"
-].join("\n");
+/* ─────────────────────────── Usage (per framework) ─────────────────────────── */
 
-export const stylesCode = [
-  "// main.ts — once, at the application entrypoint",
-  "import { createApp } from 'vue'",
-  "import App from './App.vue'",
-  "import '@arcanalabs/ui-components/styles.css'",
-  "",
-  "createApp(App).mount('#app')"
-].join("\n");
+export const usageSnippets: Record<Framework, SectionCode> = {
+  vue: {
+    file: "App.vue",
+    code: [
+      "<script setup lang=\"ts\">",
+      "import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <ShadcnButton variant=\"primary\">Save</ShadcnButton>",
+      "  <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
+      "</template>"
+    ].join("\n")
+  },
+  react: {
+    file: "Toolbar.tsx",
+    code: [
+      "import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/react'",
+      "",
+      "export function Toolbar() {",
+      "  return (",
+      "    <>",
+      "      <ShadcnButton variant=\"primary\">Save</ShadcnButton>",
+      "      <ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>",
+      "    </>",
+      "  )",
+      "}"
+    ].join("\n")
+  },
+  angular: {
+    file: "toolbar.component.ts",
+    code: [
+      "import { Component } from '@angular/core'",
+      "import { ShadcnButtonComponent, ShadcnBadgeComponent } from '@arcanalabs/ui-components/angular'",
+      "",
+      "// Every component is standalone — add it to the host component's `imports`.",
+      "@Component({",
+      "  selector: 'app-toolbar',",
+      "  standalone: true,",
+      "  imports: [ShadcnButtonComponent, ShadcnBadgeComponent],",
+      "  template: `",
+      "    <button arcanaShadcnButton variant=\"primary\">Save</button>",
+      "    <span arcanaShadcnBadge variant=\"green\" [dot]=\"true\">Active</span>",
+      "  `",
+      "})",
+      "export class ToolbarComponent {}"
+    ].join("\n")
+  },
+  svelte: {
+    file: "Toolbar.svelte",
+    code: [
+      "<script lang=\"ts\">",
+      "  import { ShadcnButton, ShadcnBadge } from '@arcanalabs/ui-components/svelte'",
+      "</script>",
+      "",
+      "<ShadcnButton variant=\"primary\">Save</ShadcnButton>",
+      "<ShadcnBadge variant=\"green\" dot>Active</ShadcnBadge>"
+    ].join("\n")
+  }
+};
 
-export const maskaCode = [
-  "// main.ts",
-  "import { createApp } from 'vue'",
-  "import Maska from 'maska'",
-  "import App from './App.vue'",
-  "import '@arcanalabs/ui-components/styles.css'",
-  "",
-  "const app = createApp(App)",
-  "app.use(Maska) // registers the global v-maska directive",
-  "app.mount('#app')"
-].join("\n");
+/* ─────────────────────────── Styles (per framework) ─────────────────────────── */
+
+export const stylesSnippets: Record<Framework, SectionCode> = {
+  vue: {
+    file: "main.ts",
+    code: [
+      "// main.ts — once, at the application entrypoint",
+      "import { createApp } from 'vue'",
+      "import App from './App.vue'",
+      "import '@arcanalabs/ui-components/styles.css'",
+      "",
+      "createApp(App).mount('#app')"
+    ].join("\n")
+  },
+  react: {
+    file: "main.tsx",
+    code: [
+      "// main.tsx — once, at the application entrypoint",
+      "import { StrictMode } from 'react'",
+      "import { createRoot } from 'react-dom/client'",
+      "import { App } from './App'",
+      "import '@arcanalabs/ui-components/styles.css'",
+      "",
+      "createRoot(document.getElementById('root')!).render(",
+      "  <StrictMode><App /></StrictMode>",
+      ")"
+    ].join("\n")
+  },
+  angular: {
+    file: "main.ts",
+    code: [
+      "// main.ts — once, at the application entrypoint",
+      "import { bootstrapApplication } from '@angular/platform-browser'",
+      "import { AppComponent } from './app/app.component'",
+      "import '@arcanalabs/ui-components/styles.css'",
+      "",
+      "bootstrapApplication(AppComponent)"
+    ].join("\n")
+  },
+  svelte: {
+    file: "main.ts",
+    code: [
+      "// main.ts — once, at the application entrypoint",
+      "import { mount } from 'svelte'",
+      "import App from './App.svelte'",
+      "import '@arcanalabs/ui-components/styles.css'",
+      "",
+      "mount(App, { target: document.getElementById('app')! })"
+    ].join("\n")
+  }
+};
+
+/* ───────────────── Masking — Vue registers v-maska; others built-in ──────────── */
+
+export const maskaSnippets: Record<Framework, SectionCode> = {
+  vue: {
+    file: "main.ts",
+    code: [
+      "// main.ts — Vue needs the global v-maska directive registered once.",
+      "import { createApp } from 'vue'",
+      "import Maska from 'maska'",
+      "import App from './App.vue'",
+      "import '@arcanalabs/ui-components/styles.css'",
+      "",
+      "const app = createApp(App)",
+      "app.use(Maska) // registers the global v-maska directive",
+      "app.mount('#app')"
+    ].join("\n")
+  },
+  react: {
+    file: "CpfField.tsx",
+    code: [
+      "// No global setup in React — masking is built into ShadcnInputMask.",
+      "import { useState } from 'react'",
+      "import { ShadcnInputMask } from '@arcanalabs/ui-components/react'",
+      "",
+      "export function CpfField() {",
+      "  const [cpf, setCpf] = useState('')",
+      "  return <ShadcnInputMask value={cpf} onValueChange={setCpf} mask=\"###.###.###-##\" />",
+      "}"
+    ].join("\n")
+  },
+  angular: {
+    file: "cpf-field.component.ts",
+    code: [
+      "// No global setup in Angular — masking is built into ShadcnInputMask.",
+      "import { Component } from '@angular/core'",
+      "import { ShadcnInputMaskComponent } from '@arcanalabs/ui-components/angular'",
+      "",
+      "@Component({",
+      "  selector: 'app-cpf-field',",
+      "  standalone: true,",
+      "  imports: [ShadcnInputMaskComponent],",
+      "  template: `<input arcanaShadcnInputMask [(value)]=\"cpf\" mask=\"###.###.###-##\" />`",
+      "})",
+      "export class CpfFieldComponent {",
+      "  cpf = ''",
+      "}"
+    ].join("\n")
+  },
+  svelte: {
+    file: "CpfField.svelte",
+    code: [
+      "<script lang=\"ts\">",
+      "  // No global setup in Svelte — masking is built into ShadcnInputMask.",
+      "  import { ShadcnInputMask } from '@arcanalabs/ui-components/svelte'",
+      "  let cpf = $state('')",
+      "</script>",
+      "",
+      "<ShadcnInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask=\"###.###.###-##\" />"
+    ].join("\n")
+  }
+};

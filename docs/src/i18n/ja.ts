@@ -6,7 +6,7 @@ export const ja: Messages = {
 
   shell: {
     kicker: "ドキュメント · v0.x",
-    lead: "型付きの shadcn スタイルのコンポーネントライブラリです。Vue 3 は今すぐ利用でき、React・Angular・Svelte のアダプターも準備中です — 同じ API、同じ見た目を、どのフレームワークでも。",
+    lead: "型付きの shadcn スタイルのコンポーネントライブラリです — Vue 3・React・Angular・Svelte で、同じ API、同じ見た目を、どのフレームワークでも。",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
     searchPlaceholder: "コンポーネントを検索…（⌘K）",
@@ -44,7 +44,7 @@ export const ja: Messages = {
     install: {
       title: "インストール",
       p1: "このライブラリは単一の npm パッケージとして提供されます。お好みのパッケージマネージャーでインストールしてください — <c>vue</c>（3.4+）が唯一の peer dependency です。",
-      p2: "すべての Vue コンポーネントは <c>@arcanalabs/ui-components/vue</c> のサブパスから自己完結型の SFC としてエクスポートされます。使うものだけをインポートしてください。"
+      p2: "各コンポーネントは 4 つのフレームワーク向けに、対応するサブパスで公開されています — <c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c>、<c>/svelte</c>。使うものだけをインポートしてください。"
     },
     usage: {
       title: "使い方",
@@ -73,8 +73,8 @@ export const ja: Messages = {
   },
 
   demoCaption: "ライブコンポーネント · 操作できます",
-  comingSoon: "このコンポーネントの完全なドキュメントは今後のバッチで提供されます。すでに <c>@arcanalabs/ui-components/vue</c> からエクスポートされており、そのまま利用できます。",
-  frameworkSoon: "// React · Angular · Svelte のアダプターは近日公開予定です。\n// Vue 3 は今すぐ利用可能です — フレームワーク切替を Vue にしてください。",
+  comingSoon: "このコンポーネントの完全なドキュメントは今後のバッチで提供されます。すでに Vue・React・Angular・Svelte 向けに公開されており、そのまま利用できます。",
+  frameworkSoon: "// Vue・React・Angular・Svelte は同じコンポーネントを提供します — 上部でフレームワークを選ぶと使い方を確認できます。",
 
   components: {
     button: {

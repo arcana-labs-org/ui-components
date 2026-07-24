@@ -3,7 +3,8 @@ import { DocsShell, type DocsGroup, type DocsSection } from "./components/DocsSh
 import { VueDemo } from "./components/VueDemo";
 import { COMPONENTS, CATEGORY_ORDER } from "./components/registry";
 import { COMPONENT_DOCS, type PropRow } from "./components/componentDocs";
-import { installCode, usageCode, stylesCode, maskaCode, vueOnly, sameForAll } from "./components/snippets";
+import { installCode, usageSnippets, stylesSnippets, maskaSnippets, frameworkCode, sameForAll } from "./components/snippets";
+import { FRAMEWORK_SNIPPETS } from "./components/frameworkSnippets";
 import { rich, useLang, type Messages } from "./i18n";
 
 function P({ children }: { children: string }) {
@@ -52,19 +53,19 @@ function buildGroups(msg: Messages): DocsGroup[] {
         id: "usage",
         title: gs.usage.title,
         body: <><P>{gs.usage.p1}</P><P>{gs.usage.p2}</P></>,
-        code: vueOnly("App.vue", usageCode, msg.frameworkSoon)
+        code: usageSnippets
       },
       {
         id: "styles",
         title: gs.styles.title,
         body: <><P>{gs.styles.p1}</P><P>{gs.styles.p2}</P></>,
-        code: vueOnly("main.ts", stylesCode, msg.frameworkSoon)
+        code: stylesSnippets
       },
       {
         id: "v-maska",
         title: gs.maska.title,
         body: <><P>{gs.maska.p1}</P><P>{gs.maska.p2}</P></>,
-        code: vueOnly("main.ts", maskaCode, msg.frameworkSoon)
+        code: maskaSnippets
       }
     ]
   });
@@ -88,7 +89,7 @@ function buildGroups(msg: Messages): DocsGroup[] {
           </>,
           preview: <VueDemo component={doc.demo} />,
           previewLabel: msg.demoCaption,
-          code: vueOnly(`${entry.name}.vue`, doc.vueSnippet, msg.frameworkSoon)
+          code: frameworkCode(entry.name, { vue: doc.vueSnippet, ...FRAMEWORK_SNIPPETS[entry.docKey] })
         };
         return section;
       }

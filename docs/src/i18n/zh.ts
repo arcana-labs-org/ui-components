@@ -6,7 +6,7 @@ export const zh: Messages = {
 
   shell: {
     kicker: "文档 · v0.x",
-    lead: "一个带类型、shadcn 风格的组件库。Vue 3 今天即可使用；React、Angular 和 Svelte 适配器正在路上——相同的 API、相同的外观，适用于任何框架。",
+    lead: "一个带类型、shadcn 风格的组件库——Vue 3、React、Angular 和 Svelte，在任何框架中都拥有相同的 API 和相同的外观。",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
     searchPlaceholder: "搜索组件…（⌘K）",
@@ -44,7 +44,7 @@ export const zh: Messages = {
     install: {
       title: "安装",
       p1: "该库以单个 npm 包的形式发布。用你喜欢的包管理器安装即可——<c>vue</c>（3.4+）是唯一的 peer dependency。",
-      p2: "所有 Vue 组件都从 <c>@arcanalabs/ui-components/vue</c> 子路径导出，均为自包含的 SFC；只导入你需要的即可。"
+      p2: "每个组件都为四个框架发布在相应的子路径下——<c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c> 和 <c>/svelte</c>；只导入你需要的即可。"
     },
     usage: {
       title: "用法",
@@ -73,8 +73,8 @@ export const zh: Messages = {
   },
 
   demoCaption: "实时组件 · 可交互",
-  comingSoon: "该组件的完整文档将在后续批次中提供。它已经从 <c>@arcanalabs/ui-components/vue</c> 导出，可直接使用。",
-  frameworkSoon: "// React · Angular · Svelte 适配器即将推出。\n// Vue 3 今天即可使用——请将框架切换到 Vue。",
+  comingSoon: "该组件的完整文档将在后续批次中提供。它已经为 Vue、React、Angular 和 Svelte 发布，可直接使用。",
+  frameworkSoon: "// Vue、React、Angular 和 Svelte 提供相同的组件——在上方选择一个框架即可查看其用法。",
 
   components: {
     button: {

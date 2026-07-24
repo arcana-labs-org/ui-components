@@ -6,7 +6,7 @@ export const de: Messages = {
 
   shell: {
     kicker: "Dokumentation · v0.x",
-    lead: "Eine typisierte Komponentenbibliothek im shadcn-Stil. Vue 3 ist schon heute verfügbar; Adapter für React, Angular und Svelte sind in Arbeit — dieselbe API, dasselbe Aussehen, in jedem Framework.",
+    lead: "Eine typisierte Komponentenbibliothek im shadcn-Stil — Vue 3, React, Angular und Svelte, mit derselben API und demselben Aussehen in jedem Framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
     searchPlaceholder: "Komponenten suchen… (⌘K)",
@@ -44,7 +44,7 @@ export const de: Messages = {
     install: {
       title: "Installation",
       p1: "Die Bibliothek wird als einzelnes npm-Paket ausgeliefert. Installiere sie mit dem Paketmanager deiner Wahl — <c>vue</c> (3.4+) ist die einzige Peer-Dependency.",
-      p2: "Alle Vue-Komponenten werden über den Subpath <c>@arcanalabs/ui-components/vue</c> als eigenständige SFCs exportiert; importiere nur die, die du verwendest."
+      p2: "Jede Komponente wird für alle vier Frameworks über einen passenden Subpath veröffentlicht — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> und <c>/svelte</c>; importiere nur die, die du verwendest."
     },
     usage: {
       title: "Verwendung",
@@ -73,8 +73,8 @@ export const de: Messages = {
   },
 
   demoCaption: "Live-Komponente · interagiere damit",
-  comingSoon: "Die vollständige Dokumentation für diese Komponente kommt in einem späteren Batch. Sie wird bereits aus <c>@arcanalabs/ui-components/vue</c> exportiert und ist einsatzbereit.",
-  frameworkSoon: "// React-, Angular- und Svelte-Adapter folgen in Kürze.\n// Vue 3 ist schon heute verfügbar — stelle den Framework-Umschalter auf Vue.",
+  comingSoon: "Die vollständige Dokumentation für diese Komponente kommt in einem späteren Batch. Sie wird bereits für Vue, React, Angular und Svelte veröffentlicht und ist einsatzbereit.",
+  frameworkSoon: "// Vue, React, Angular und Svelte liefern dieselbe Komponente — wähle oben ein Framework, um die Verwendung zu sehen.",
 
   components: {
     button: {
