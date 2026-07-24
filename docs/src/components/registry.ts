@@ -36,38 +36,38 @@ export const COMPONENTS: ComponentEntry[] = [
 
   // ── Data display ───────────────────────────────────────────────────────
   { id: "shadcn-badge", name: "ShadcnBadge", category: "dataDisplay", docKey: "badge" },
-  { id: "shadcn-table", name: "ShadcnTable", category: "dataDisplay" },
-  { id: "shadcn-spec-sheet", name: "ShadcnSpecSheet", category: "dataDisplay" },
-  { id: "shadcn-spec-sheet-section", name: "ShadcnSpecSheetSection", category: "dataDisplay" },
-  { id: "shadcn-spec-sheet-field", name: "ShadcnSpecSheetField", category: "dataDisplay" },
-  { id: "shadcn-summary-tile", name: "ShadcnSummaryTile", category: "dataDisplay" },
-  { id: "shadcn-summary-tiles", name: "ShadcnSummaryTiles", category: "dataDisplay" },
-  { id: "shadcn-settings-list", name: "ShadcnSettingsList", category: "dataDisplay" },
-  { id: "shadcn-settings-list-group", name: "ShadcnSettingsListGroup", category: "dataDisplay" },
-  { id: "shadcn-settings-list-item", name: "ShadcnSettingsListItem", category: "dataDisplay" },
-  { id: "shadcn-settings-editable-field", name: "ShadcnSettingsEditableField", category: "dataDisplay" },
-  { id: "spark-grid-empty-state", name: "SparkGridEmptyState", category: "dataDisplay" },
+  { id: "shadcn-table", name: "ShadcnTable", category: "dataDisplay", docKey: "table" },
+  { id: "shadcn-spec-sheet", name: "ShadcnSpecSheet", category: "dataDisplay", docKey: "specSheet" },
+  { id: "shadcn-spec-sheet-section", name: "ShadcnSpecSheetSection", category: "dataDisplay", docKey: "specSheetSection" },
+  { id: "shadcn-spec-sheet-field", name: "ShadcnSpecSheetField", category: "dataDisplay", docKey: "specSheetField" },
+  { id: "shadcn-summary-tile", name: "ShadcnSummaryTile", category: "dataDisplay", docKey: "summaryTile" },
+  { id: "shadcn-summary-tiles", name: "ShadcnSummaryTiles", category: "dataDisplay", docKey: "summaryTiles" },
+  { id: "shadcn-settings-list", name: "ShadcnSettingsList", category: "dataDisplay", docKey: "settingsList" },
+  { id: "shadcn-settings-list-group", name: "ShadcnSettingsListGroup", category: "dataDisplay", docKey: "settingsListGroup" },
+  { id: "shadcn-settings-list-item", name: "ShadcnSettingsListItem", category: "dataDisplay", docKey: "settingsListItem" },
+  { id: "shadcn-settings-editable-field", name: "ShadcnSettingsEditableField", category: "dataDisplay", docKey: "settingsEditableField" },
+  { id: "spark-grid-empty-state", name: "SparkGridEmptyState", category: "dataDisplay", docKey: "sparkGridEmptyState" },
 
   // ── Overlay ────────────────────────────────────────────────────────────
   { id: "shadcn-dialog", name: "ShadcnDialog", category: "overlay", docKey: "dialog" },
   { id: "shadcn-dropdown", name: "ShadcnDropdown", category: "overlay", docKey: "dropdown" },
   { id: "shadcn-dropdown-item", name: "ShadcnDropdownItem", category: "overlay", docKey: "dropdownItem" },
-  { id: "shadcn-edit-field-modal", name: "ShadcnEditFieldModal", category: "overlay" },
-  { id: "shadcn-required-fields-dialog", name: "ShadcnRequiredFieldsDialog", category: "overlay" },
-  { id: "shadcn-notice", name: "ShadcnNotice", category: "overlay" },
-  { id: "shadcn-onboarding-panel", name: "ShadcnOnboardingPanel", category: "overlay" },
+  { id: "shadcn-edit-field-modal", name: "ShadcnEditFieldModal", category: "overlay", docKey: "editFieldModal" },
+  { id: "shadcn-required-fields-dialog", name: "ShadcnRequiredFieldsDialog", category: "overlay", docKey: "requiredFieldsDialog" },
+  { id: "shadcn-notice", name: "ShadcnNotice", category: "overlay", docKey: "notice" },
+  { id: "shadcn-onboarding-panel", name: "ShadcnOnboardingPanel", category: "overlay", docKey: "onboardingPanel" },
 
   // ── Layout & navigation ────────────────────────────────────────────────
   { id: "shadcn-tabs", name: "ShadcnTabs", category: "layoutNav", docKey: "tabs" },
   { id: "shadcn-accordion", name: "ShadcnAccordion", category: "layoutNav", docKey: "accordion" },
   { id: "shadcn-accordion-item", name: "ShadcnAccordionItem", category: "layoutNav", docKey: "accordionItem" },
-  { id: "shadcn-switch-card", name: "ShadcnSwitchCard", category: "layoutNav" },
-  { id: "shadcn-switch-row", name: "ShadcnSwitchRow", category: "layoutNav" },
-  { id: "shadcn-switch-segmented", name: "ShadcnSwitchSegmented", category: "layoutNav" },
+  { id: "shadcn-switch-card", name: "ShadcnSwitchCard", category: "layoutNav", docKey: "switchCard" },
+  { id: "shadcn-switch-row", name: "ShadcnSwitchRow", category: "layoutNav", docKey: "switchRow" },
+  { id: "shadcn-switch-segmented", name: "ShadcnSwitchSegmented", category: "layoutNav", docKey: "switchSegmented" },
 
   // ── Feedback ───────────────────────────────────────────────────────────
-  { id: "shadcn-skeleton", name: "ShadcnSkeleton", category: "feedback" },
-  { id: "shadcn-loading-overlay", name: "ShadcnLoadingOverlay", category: "feedback" }
+  { id: "shadcn-skeleton", name: "ShadcnSkeleton", category: "feedback", docKey: "skeleton" },
+  { id: "shadcn-loading-overlay", name: "ShadcnLoadingOverlay", category: "feedback", docKey: "loadingOverlay" }
 ];
 
 /** Sidebar category order. */

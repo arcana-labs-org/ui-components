@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { createApp, defineComponent, type Component as VueComponent } from "vue";
+import { createApp, defineComponent, h, type Component as VueComponent } from "vue";
 // The maska plugin registers the global `v-maska` directive, so any demo (now or
 // in a future batch) that renders ShadcnInputMask / ShadcnDatePicker just works.
 import Maska from "maska";
@@ -39,6 +39,26 @@ const ElDatePickerStub = defineComponent({
 });
 
 /**
+ * A stand-in for the host app's `<FormGroup>` — a labelled field wrapper.
+ * `ShadcnSettingsEditableField` renders `<FormGroup md="12" :label="…">` inside its
+ * teleported edit modal by GLOBAL name (the SFC does not import it locally). We are not
+ * shipping the host's form kit into the docs, so we register a small transparent wrapper
+ * that renders the label above its default slot — enough to make the editable-field demo
+ * (and its modal) resolve and look right.
+ */
+const FormGroupStub = defineComponent({
+  name: "FormGroup",
+  props: { label: { type: String, default: "" }, md: { default: "12" } },
+  setup(props, { slots }) {
+    return () =>
+      h("div", { class: "demo-form-group" }, [
+        props.label ? h("label", { class: "demo-form-group__label" }, props.label) : null,
+        slots.default?.()
+      ]);
+  }
+});
+
+/**
  * Mounts a REAL Vue component inside the React docs.
  *
  * The `component` is a Vue component definition (typically a small `{ template,
@@ -58,6 +78,7 @@ export function VueDemo({ component, className }: { component: VueComponent; cla
     app.component("el-tooltip", ElTooltipStub);
     app.component("el-date-picker", ElDatePickerStub);
     app.component("ShadcnSelect", ShadcnSelect);
+    app.component("FormGroup", FormGroupStub);
     app.mount(hostRef.current);
     return () => app.unmount();
   }, [component]);

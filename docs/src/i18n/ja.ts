@@ -139,6 +139,66 @@ export const ja: Messages = {
     },
     dropdownItem: {
       blurb: "<c>ShadcnDropdown</c> 内の 1 行です。任意の <c>icon</c>、ラベル（デフォルトスロット）、任意の <c>suffix</c> スロット（例: ショートカット）を持ちます。<c>variant</c> は <c>default</c>、<c>danger</c>、<c>success</c>、<c>warning</c> に色付けします。<c>divided</c> はその上に区切り線を引いて破壊的な操作を隔離します。クリック時に <c>click</c> を発行し、<c>closeOnClick</c> が false でない限り、バブリングするカスタムイベントで親ドロップダウンに閉じるよう依頼します。"
+    },
+    table: {
+      blurb: "すでにメモリ上に持っている配列向けの静的な shadcn スタイルのテーブルです（バックエンドで fetch とページングを行う <c>SparkGrid</c> とは異なります）。列は <c>{ key, label, width?, align?, valueGetter? }</c> で宣言します。<c>#cell-&lt;key&gt;</c> スロットは任意のセルの描画を引き受け、<c>#footer</c> スロットは合計用の <c>&lt;tfoot&gt;</c> を埋めます。"
+    },
+    specSheet: {
+      blurb: "正式な記録のための読み取り専用・エディトリアルな\"スペックシート\"です（公式文書やデータシートを想像してください）。等幅の <c>docNum</c> アイブロウが <c>title</c> と任意の <c>meta</c> バッジの上に置かれます。<c>&lt;ShadcnSpecSheetSection&gt;</c> の子がフィールドを保持し、<c>#footer</c> スロットが編集アクションを担います。別のカードに埋め込む際は <c>flat</c> を設定してカードの枠を外します。"
+    },
+    specSheetSection: {
+      blurb: "<c>ShadcnSpecSheet</c> 内のセクションです。任意のボックス型アクセント <c>icon</c>（8色）+ <c>title</c> + 右寄せの <c>sectionNum</c> が、設定可能な <c>columns</c> の <c>&lt;ShadcnSpecSheetField&gt;</c> グリッドの上に並びます。<c>#actions</c> スロットはヘッダーのボタンを収め、<c>noRowDividers</c> と <c>compact</c> がレイアウトを調整します。"
+    },
+    specSheetField: {
+      blurb: "セクション内の単一のラベル/値ペアです。<c>label</c> は大文字等幅で、<c>value</c> は Inter で描画されます。空の値（<c>null</c>/<c>undefined</c>/''）は <c>emptyText</c> をイタリックの淡色で表示し、空白が意図的であることを示します。フィールドを広げるには <c>span</c> を、バッジ・リンク・その他のリッチな値にはデフォルトスロットを使います。"
+    },
+    summaryTiles: {
+      blurb: "KPI タイルの 1 行のためのレスポンシブなグリッドコンテナです。<c>columns</c>（デフォルト 3）を設定します。幅 880px 未満では常に 1 列に折りたたまれます。必要なだけ <c>&lt;ShadcnSummaryTile&gt;</c> の子を入れてください。"
+    },
+    summaryTile: {
+      blurb: "<c>[アイコン] [label + sub] [値]</c> のレイアウトで高さ約 52px のコンパクトな KPI スタットです。4 つの <c>tone</c>——<c>neutral</c>、<c>positive</c>、<c>negative</c>、<c>indigo</c>——が視認性のために色付けします。<c>#value</c> と <c>#sub</c> スロットは、インラインバッジやよりリッチな内容のために単純な prop を上書きします。"
+    },
+    settingsList: {
+      blurb: "iOS 設定風のコンテナです。行はヘアラインで区切られ、各行は左にラベル + キャプション、右にコントロールを持ちます。<c>&lt;ShadcnSettingsListItem&gt;</c>、<c>&lt;ShadcnSettingsListGroup&gt;</c>、またはスマートな <c>&lt;ShadcnSettingsEditableField&gt;</c> で埋めてください。"
+    },
+    settingsListGroup: {
+      blurb: "関連する行をまとめるための、<c>ShadcnSettingsList</c> 内のタイトル付きセクションです。ヘッダーは任意のボックス型 <c>icon</c>（8色）、<c>sectionNum</c>、右寄せの <c>meta</c> を持ちます。<c>collapsible</c> を設定するとヘッダーがトグルになり（<c>defaultCollapsed</c> と併用）、<c>compact</c> で密度を高めます。"
+    },
+    settingsListItem: {
+      blurb: "<c>ShadcnSettingsList</c> の単一行です。左に <c>label</c> + <c>caption</c>、右のデフォルトスロットにコントロールを置きます。<c>#label</c> スロットではステータスバッジをインラインで挿入できます。<c>nested</c> は、親がオンのときだけ意味を持つトグル向けのサブ項目スタイルを適用します。<c>disabled</c> は行を淡色化してロックします。"
+    },
+    settingsEditableField: {
+      blurb: "読み取り専用の値、\"Alterar\"ボタン、その編集モーダルを 1 つのタグにまとめたスマートな行です。<c>type</c>——<c>text</c>、<c>currency</c>、<c>number</c>、<c>select</c>——を選ぶと、body へテレポートしたモーダル内に適切な入力を描画します。編集はバッファリングされ、キャンセルで破棄、保存で <c>update:modelValue</c> と <c>save</c> の両方を発行します（自動保存用）。"
+    },
+    sparkGridEmptyState: {
+      blurb: "本当に表示するものが何もないとき、グリッドの内容を <c>ShadcnOnboardingPanel</c> に差し替えるラッパーです。<c>loading</c> が落ち着く（true → false）のを待ち、<c>total</c> が 0 でフィルタが無効なときのみパネルを表示します——そのためフィルタで空になったリストはツールバーを保持します。<c>panel-visible</c> を発行し、ホストがヘッダーのアクションを隠せるようにします。"
+    },
+    notice: {
+      blurb: "セマンティックなバリアント——<c>info</c>、<c>blue</c>、<c>success</c>、<c>warning</c>、<c>pending</c>、<c>destructive</c>——を持つインラインバナーで、それぞれに対応するデフォルトアイコンがあります。文脈的な注意喚起、ステータスカード、非ブロッキングのエラーに使います。<c>dismissible</c> を追加すると <c>dismiss</c> を発行する閉じるボタンが付きます。タイトル・本文・アイコンはすべてスロットで上書きできます。"
+    },
+    editFieldModal: {
+      blurb: "設定リスト向けの汎用的な\"Alterar X\"モーダルラッパーです。枠（ヘッダー・フッター・保存/キャンセル）を提供し、フィールド入力をデフォルトスロットで受け取るため、モーダルごとにファイルを作る代わりに 1 つのコンポーネントで全ての編集行に対応できます。ref 駆動（<c>show()</c> / <c>hide()</c>）で、自動で閉じずに <c>save</c> を発行するので、先にバリデーションできます。"
+    },
+    requiredFieldsDialog: {
+      blurb: "マルチステップフォームでまだ欠けている必須フィールドを列挙する、琥珀色の警告ダイアログです。<c>{ key, label, hint }</c> の <c>fields</c> 配列を渡し（各 <c>hint</c> が修正すべきステップを示します）、ref（<c>show()</c>）で開きます。従来の\"1 つずつ <c>Alert.info</c>\"パターンを、一目で読める単一のリストに置き換えます。"
+    },
+    onboardingPanel: {
+      blurb: "初回設定のための洗練された空状態 / CTA パネルです。脈動するリングの中のグラデーションアイコン、タイトル + 説明、主 CTA、そして任意の二次ボタンとフッターヒントを備えます。すべて prop で制御するか、<c>#action</c> と <c>#sub-hint</c> スロットでカスタムボタンやリッチな文言を使えます。<c>action</c> / <c>secondary-action</c> を発行します。"
+    },
+    loadingOverlay: {
+      blurb: "スコープを限定したローディングオーバーレイです。半透明でぼかしの入った背景の上にスピナー + テキストを表示し、最も近い位置指定された祖先を覆います（親に <c>position: relative</c> が必要）。<c>visible</c> で切り替え、全画面ローダーの代わりにカード/セクション単位の非同期フィードバックに使います。"
+    },
+    skeleton: {
+      blurb: "ローディング状態向けの、シマーアニメーション付きプレースホルダーブロックです。<c>width</c> / <c>height</c> に任意の CSS 値を設定し、<c>rounded</c> プリセット（アバターには <c>full</c>）を選びます。<c>aria-hidden</c>（視覚のみ）で、<c>prefers-reduced-motion</c> を尊重します——シマーは止まりますがブロックは残ります。実データ到着時にちらつく偽のプレースホルダーより、こちらを推奨します。"
+    },
+    switchCard: {
+      blurb: "存在感の強いフル幅トグルです。オンにするとカード全体がエメラルドになり、内部スイッチが反転色になります——離れていても状態が読み取れます。重要な設定（2FA、メンテナンスモード、プレミアム機能）向けに取っておきましょう。ボックス型 <c>icon</c>、<c>title</c>、等幅の <c>statusOn</c>/<c>statusOff</c> 行が説明します。"
+    },
+    switchRow: {
+      blurb: "フル幅の\"設定行\"トグルです。左にタイトル + 任意の説明、右にコンパクトなスイッチがあり、行全体がクリック可能で余裕あるタッチ領域になります。素の <c>ShadcnSwitch</c> と派手な <c>ShadcnSwitchCard</c> の穏やかな中間で、関連する設定のリストに最適です。"
+    },
+    switchSegmented: {
+      blurb: "分割されたカプセル形の二値トグルです。クリック可能な 2 つの半分とスライドするインジケーターにより、オン/オフではなく\"A か B\"として読めます。ラベル付きの二者択一（月次 / 年次、サンドボックス / 本番）に最適です。<c>compact</c> と <c>squared</c> が形状を、<c>activeColor</c> がインジケーターの色を調整し、矢印キーで左右を移動できます。"
     }
   }
 };

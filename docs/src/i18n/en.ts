@@ -139,6 +139,66 @@ export const en: Messages = {
     },
     dropdownItem: {
       blurb: "A row inside a <c>ShadcnDropdown</c>: an optional <c>icon</c>, the label (default slot) and an optional <c>suffix</c> slot (e.g. a shortcut). <c>variant</c> colours it <c>default</c>, <c>danger</c>, <c>success</c> or <c>warning</c>; <c>divided</c> draws a separator above it to fence destructive actions off. On click it emits <c>click</c> and — unless <c>closeOnClick</c> is false — asks the parent dropdown to close via a bubbling custom event."
+    },
+    table: {
+      blurb: "A static shadcn-style table for arrays you already hold in memory (unlike <c>SparkGrid</c>, which fetches and paginates via the backend). Columns declare <c>{ key, label, width?, align?, valueGetter? }</c>; a <c>#cell-&lt;key&gt;</c> slot takes over any cell's render, and a <c>#footer</c> slot fills a <c>&lt;tfoot&gt;</c> for totals."
+    },
+    specSheet: {
+      blurb: "A read-only, editorial \"spec sheet\" for formal records — think SEC filings and datasheets. A mono <c>docNum</c> eyebrow sits over the <c>title</c> and an optional <c>meta</c> badge; <c>&lt;ShadcnSpecSheetSection&gt;</c> children hold the fields and a <c>#footer</c> slot carries edit actions. Set <c>flat</c> to drop the card chrome when embedding it inside another card."
+    },
+    specSheetSection: {
+      blurb: "A section inside a <c>ShadcnSpecSheet</c>: an optional boxed accent <c>icon</c> (eight colours) + <c>title</c> + a right-aligned <c>sectionNum</c>, over a configurable <c>columns</c> grid of <c>&lt;ShadcnSpecSheetField&gt;</c>s. An <c>#actions</c> slot hosts header buttons; <c>noRowDividers</c> and <c>compact</c> tune the layout."
+    },
+    specSheetField: {
+      blurb: "A single label/value pair inside a section. The <c>label</c> renders uppercase mono, the <c>value</c> in Inter; an empty value (<c>null</c>/<c>undefined</c>/'') shows <c>emptyText</c> in italic muted so gaps read as intentional. Use <c>span</c> to widen a field, or the default slot for badges, links and other rich values."
+    },
+    summaryTiles: {
+      blurb: "The responsive grid container for a row of KPI tiles. Set <c>columns</c> (default 3); below 880px it always collapses to a single column. Drop as many <c>&lt;ShadcnSummaryTile&gt;</c> children as you need."
+    },
+    summaryTile: {
+      blurb: "A compact KPI stat laid out as <c>[icon] [label + sub] [value]</c> in ~52px of height. Four <c>tone</c>s — <c>neutral</c>, <c>positive</c>, <c>negative</c>, <c>indigo</c> — colour it for scannability. The <c>#value</c> and <c>#sub</c> slots override the plain props for inline badges or richer content."
+    },
+    settingsList: {
+      blurb: "An iOS-Settings-style container: rows separated by hairlines, each with a label + caption on the left and a control on the right. Fill it with <c>&lt;ShadcnSettingsListItem&gt;</c>, <c>&lt;ShadcnSettingsListGroup&gt;</c> or the smart <c>&lt;ShadcnSettingsEditableField&gt;</c>."
+    },
+    settingsListGroup: {
+      blurb: "A titled section inside a <c>ShadcnSettingsList</c> for grouping related rows. The header carries an optional boxed <c>icon</c> (eight colours), a <c>sectionNum</c> and right-aligned <c>meta</c>. Set <c>collapsible</c> to make the header a toggle (with <c>defaultCollapsed</c>), and <c>compact</c> for denser spacing."
+    },
+    settingsListItem: {
+      blurb: "A single row of a <c>ShadcnSettingsList</c>: <c>label</c> + <c>caption</c> on the left, your control in the default slot on the right. The <c>#label</c> slot lets you inline a status badge; <c>nested</c> applies sub-item styling for toggles that only matter when a parent is on; <c>disabled</c> dims and locks the row."
+    },
+    settingsEditableField: {
+      blurb: "A smart row that folds a read-only value, an \"Alterar\" button and its edit modal into one tag. Pick a <c>type</c> — <c>text</c>, <c>currency</c>, <c>number</c> or <c>select</c> — and it renders the right input inside a teleported modal. Edits are buffered: cancel discards them, save emits both <c>update:modelValue</c> and <c>save</c> (for auto-save)."
+    },
+    sparkGridEmptyState: {
+      blurb: "A wrapper that swaps a grid's contents for a <c>ShadcnOnboardingPanel</c> when there is genuinely nothing to show. It waits for <c>loading</c> to settle (true → false) and only reveals the panel when <c>total</c> is 0 and no filter is active — so a filtered-to-empty list keeps its toolbar. It emits <c>panel-visible</c> so the host can hide header actions."
+    },
+    notice: {
+      blurb: "An inline banner with semantic variants — <c>info</c>, <c>blue</c>, <c>success</c>, <c>warning</c>, <c>pending</c> and <c>destructive</c> — each with a matching default icon. Use it for contextual advisories, status cards and non-blocking errors. Add <c>dismissible</c> for a close button that emits <c>dismiss</c>; the title, body and icon are all slot-overridable."
+    },
+    editFieldModal: {
+      blurb: "A generic \"Alterar X\" modal wrapper for settings lists. It supplies the chrome (header, footer, save/cancel) and takes the field input through its default slot, so one component serves every editable row instead of a file per modal. It is ref-driven (<c>show()</c> / <c>hide()</c>) and emits <c>save</c> without auto-closing, so you can validate first."
+    },
+    requiredFieldsDialog: {
+      blurb: "An amber warning dialog that lists the required fields still missing from a multi-step form. Pass a <c>fields</c> array of <c>{ key, label, hint }</c> — each <c>hint</c> points to the step to fix — and open it with a ref (<c>show()</c>). It replaces the old \"one <c>Alert.info</c> at a time\" pattern with a single, scannable list."
+    },
+    onboardingPanel: {
+      blurb: "A polished empty-state / CTA panel for first-time setup: a gradient icon inside pulsing rings, a title + description, a primary CTA and an optional secondary button and footer hint. Drive it entirely through props, or reach for the <c>#action</c> and <c>#sub-hint</c> slots for custom buttons and rich copy. It emits <c>action</c> / <c>secondary-action</c>."
+    },
+    loadingOverlay: {
+      blurb: "A scoped loading overlay — a spinner + text over a translucent, blurred backdrop that covers its nearest positioned ancestor (the parent needs <c>position: relative</c>). Toggle it with <c>visible</c> for card- or section-level async feedback instead of a full-screen loader."
+    },
+    skeleton: {
+      blurb: "A shimmering placeholder block for loading states. Set <c>width</c> / <c>height</c> to any CSS value and pick a <c>rounded</c> preset (<c>full</c> for avatars). It is <c>aria-hidden</c> (visual only) and honours <c>prefers-reduced-motion</c> — the shimmer stops but the block stays. Prefer it over fake placeholders that flicker when real data lands."
+    },
+    switchCard: {
+      blurb: "A high-impact, full-width toggle: when on, the whole card turns emerald with an inverted internal switch — you can read its state across the room. Reserve it for weighty settings (2FA, maintenance mode, premium features). A boxed <c>icon</c>, <c>title</c> and mono <c>statusOn</c>/<c>statusOff</c> lines describe it."
+    },
+    switchRow: {
+      blurb: "A full-width \"settings row\" toggle: a title + optional description on the left, a compact switch on the right, and the whole row is clickable for a generous touch target. It is the calm middle ground between a bare <c>ShadcnSwitch</c> and the loud <c>ShadcnSwitchCard</c> — ideal for lists of related preferences."
+    },
+    switchSegmented: {
+      blurb: "A binary toggle shaped like a segmented capsule: two clickable halves with a sliding indicator, so it reads as \"A or B\" rather than on/off. Great for labelled either/or choices (monthly / annual, sandbox / production). <c>compact</c> and <c>squared</c> tune the geometry, <c>activeColor</c> recolours the indicator, and Arrow keys move between sides."
     }
   }
 };

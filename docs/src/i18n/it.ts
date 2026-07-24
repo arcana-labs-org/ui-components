@@ -139,6 +139,66 @@ export const it: Messages = {
     },
     dropdownItem: {
       blurb: "Una riga dentro un <c>ShadcnDropdown</c>: un'<c>icon</c> opzionale, l'etichetta (slot predefinito) e uno slot <c>suffix</c> opzionale (es. una scorciatoia). <c>variant</c> lo colora come <c>default</c>, <c>danger</c>, <c>success</c> o <c>warning</c>; <c>divided</c> disegna un separatore sopra di esso per isolare le azioni distruttive. Al clic emette <c>click</c> e — a meno che <c>closeOnClick</c> sia false — chiede al dropdown padre di chiudersi tramite un evento personalizzato che risale per bubbling."
+    },
+    table: {
+      blurb: "Una tabella statica in stile shadcn per array che hai già in memoria (a differenza di <c>SparkGrid</c>, che fa fetch e paginazione via backend). Le colonne dichiarano <c>{ key, label, width?, align?, valueGetter? }</c>; uno slot <c>#cell-&lt;key&gt;</c> prende il controllo del render di qualsiasi cella, e uno slot <c>#footer</c> riempie un <c>&lt;tfoot&gt;</c> per i totali."
+    },
+    specSheet: {
+      blurb: "Una \"spec sheet\" read-only ed editoriale per record formali — pensa a fascicoli ufficiali e datasheet. Un eyebrow mono <c>docNum</c> sta sopra il <c>title</c> e un badge <c>meta</c> opzionale; i figli <c>&lt;ShadcnSpecSheetSection&gt;</c> contengono i campi e uno slot <c>#footer</c> porta le azioni di modifica. Usa <c>flat</c> per togliere il chrome della card quando la incorpori in un'altra card."
+    },
+    specSheetSection: {
+      blurb: "Una sezione dentro un <c>ShadcnSpecSheet</c>: un <c>icon</c> boxed d'accento opzionale (otto colori) + <c>title</c> + un <c>sectionNum</c> allineato a destra, sopra una griglia di <c>columns</c> configurabile di <c>&lt;ShadcnSpecSheetField&gt;</c>. Uno slot <c>#actions</c> ospita pulsanti nell'header; <c>noRowDividers</c> e <c>compact</c> regolano il layout."
+    },
+    specSheetField: {
+      blurb: "Una coppia label/valore dentro una sezione. La <c>label</c> è resa in maiuscolo mono, il <c>value</c> in Inter; un valore vuoto (<c>null</c>/<c>undefined</c>/'') mostra <c>emptyText</c> in corsivo attenuato così i vuoti si leggono come intenzionali. Usa <c>span</c> per allargare un campo, o lo slot predefinito per badge, link e altri valori ricchi."
+    },
+    summaryTiles: {
+      blurb: "Il contenitore a griglia responsiva per una riga di tile KPI. Imposta <c>columns</c> (default 3); sotto gli 880px collassa sempre a una singola colonna. Inserisci tutti i <c>&lt;ShadcnSummaryTile&gt;</c> che ti servono."
+    },
+    summaryTile: {
+      blurb: "Uno stat KPI compatto disposto come <c>[icona] [label + sub] [valore]</c> in ~52px di altezza. Quattro <c>tone</c> — <c>neutral</c>, <c>positive</c>, <c>negative</c>, <c>indigo</c> — lo colorano per una lettura rapida. Gli slot <c>#value</c> e <c>#sub</c> sostituiscono le prop semplici con badge inline o contenuti più ricchi."
+    },
+    settingsList: {
+      blurb: "Un contenitore in stile Impostazioni iOS: righe separate da hairline, ognuna con label + caption a sinistra e un controllo a destra. Riempilo con <c>&lt;ShadcnSettingsListItem&gt;</c>, <c>&lt;ShadcnSettingsListGroup&gt;</c> o l'intelligente <c>&lt;ShadcnSettingsEditableField&gt;</c>."
+    },
+    settingsListGroup: {
+      blurb: "Una sezione titolata dentro un <c>ShadcnSettingsList</c> per raggruppare righe correlate. L'header porta un <c>icon</c> boxed opzionale (otto colori), un <c>sectionNum</c> e un <c>meta</c> a destra. Usa <c>collapsible</c> per rendere l'header un toggle (con <c>defaultCollapsed</c>) e <c>compact</c> per maggiore densità."
+    },
+    settingsListItem: {
+      blurb: "Una riga di un <c>ShadcnSettingsList</c>: <c>label</c> + <c>caption</c> a sinistra, il tuo controllo nello slot predefinito a destra. Lo slot <c>#label</c> permette di inserire inline un badge di stato; <c>nested</c> applica lo stile sub-item per toggle che contano solo quando un genitore è attivo; <c>disabled</c> attenua e blocca la riga."
+    },
+    settingsEditableField: {
+      blurb: "Una riga smart che unisce il valore read-only, un pulsante \"Alterar\" e il suo modal di modifica in un unico tag. Scegli un <c>type</c> — <c>text</c>, <c>currency</c>, <c>number</c> o <c>select</c> — e rende l'input giusto dentro un modal teleportato. Le modifiche sono bufferizzate: annullare le scarta, salvare emette sia <c>update:modelValue</c> sia <c>save</c> (per l'auto-save)."
+    },
+    sparkGridEmptyState: {
+      blurb: "Un wrapper che sostituisce il contenuto di una griglia con un <c>ShadcnOnboardingPanel</c> quando non c'è davvero nulla da mostrare. Attende che <c>loading</c> si stabilizzi (true → false) e rivela il pannello solo quando <c>total</c> è 0 e nessun filtro è attivo — così una lista filtrata fino a svuotarsi mantiene la sua toolbar. Emette <c>panel-visible</c> perché l'host nasconda le azioni dell'header."
+    },
+    notice: {
+      blurb: "Un banner inline con varianti semantiche — <c>info</c>, <c>blue</c>, <c>success</c>, <c>warning</c>, <c>pending</c> e <c>destructive</c> — ciascuna con un'icona predefinita coerente. Usalo per avvisi contestuali, card di stato ed errori non bloccanti. Aggiungi <c>dismissible</c> per un pulsante di chiusura che emette <c>dismiss</c>; titolo, corpo e icona sono tutti sostituibili via slot."
+    },
+    editFieldModal: {
+      blurb: "Un wrapper di modal \"Alterar X\" generico per liste di impostazioni. Fornisce il chrome (header, footer, salva/annulla) e riceve l'input del campo tramite il suo slot predefinito, così un unico componente serve ogni riga modificabile invece di un file per modal. È guidato da ref (<c>show()</c> / <c>hide()</c>) ed emette <c>save</c> senza chiudersi da solo, così puoi validare prima."
+    },
+    requiredFieldsDialog: {
+      blurb: "Un dialog di avviso ambra che elenca i campi obbligatori ancora mancanti in un form multi-step. Passa un array <c>fields</c> di <c>{ key, label, hint }</c> — ogni <c>hint</c> indica il passo da correggere — e aprilo con una ref (<c>show()</c>). Sostituisce il vecchio pattern di \"un <c>Alert.info</c> alla volta\" con un'unica lista scansionabile."
+    },
+    onboardingPanel: {
+      blurb: "Un pannello empty-state / CTA curato per la prima configurazione: un'icona in gradiente dentro anelli pulsanti, titolo + descrizione, una CTA primaria e un pulsante secondario e un sub-hint opzionali. Controllalo interamente via prop, o usa gli slot <c>#action</c> e <c>#sub-hint</c> per pulsanti custom e testo ricco. Emette <c>action</c> / <c>secondary-action</c>."
+    },
+    loadingOverlay: {
+      blurb: "Un overlay di caricamento con ambito ristretto — spinner + testo su uno sfondo translucido con blur che copre l'antenato posizionato più vicino (il genitore ha bisogno di <c>position: relative</c>). Attivalo con <c>visible</c> per feedback asincrono a livello di card/sezione invece di un loader a schermo intero."
+    },
+    skeleton: {
+      blurb: "Un blocco placeholder con shimmer per stati di caricamento. Imposta <c>width</c> / <c>height</c> con qualsiasi valore CSS e scegli un preset <c>rounded</c> (<c>full</c> per gli avatar). È <c>aria-hidden</c> (solo visivo) e rispetta <c>prefers-reduced-motion</c> — lo shimmer si ferma ma il blocco resta. Preferiscilo ai placeholder finti che tremolano quando arrivano i dati reali."
+    },
+    switchCard: {
+      blurb: "Un toggle full-width ad alto impatto: quando è attivo, l'intera card diventa smeraldo con uno switch interno invertito — ne leggi lo stato da lontano. Riservalo a impostazioni di peso (2FA, modalità manutenzione, funzioni premium). Un <c>icon</c> boxed, <c>title</c> e le righe mono <c>statusOn</c>/<c>statusOff</c> lo descrivono."
+    },
+    switchRow: {
+      blurb: "Un toggle \"riga di impostazioni\" full-width: titolo + descrizione opzionale a sinistra, uno switch compatto a destra, e l'intera riga è cliccabile per un'area di tocco generosa. È la via di mezzo tranquilla tra un <c>ShadcnSwitch</c> nudo e il vistoso <c>ShadcnSwitchCard</c> — ideale per liste di preferenze correlate."
+    },
+    switchSegmented: {
+      blurb: "Un toggle binario a forma di capsula segmentata: due metà cliccabili con un indicatore scorrevole, così si legge come \"A o B\" invece che on/off. Ottimo per scelte etichettate (mensile / annuale, sandbox / produzione). <c>compact</c> e <c>squared</c> regolano la geometria, <c>activeColor</c> ricolora l'indicatore, e le frecce navigano tra i lati."
     }
   }
 };

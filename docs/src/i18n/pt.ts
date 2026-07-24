@@ -139,6 +139,66 @@ export const pt: Messages = {
     },
     dropdownItem: {
       blurb: "Uma linha dentro de um <c>ShadcnDropdown</c>: um <c>icon</c> opcional, o rótulo (slot default) e um slot <c>suffix</c> opcional (ex.: um atalho). <c>variant</c> o colore como <c>default</c>, <c>danger</c>, <c>success</c> ou <c>warning</c>; <c>divided</c> desenha um separador acima dele para isolar ações destrutivas. No clique ele emite <c>click</c> e — a menos que <c>closeOnClick</c> seja false — pede pro dropdown pai fechar via um evento customizado que sobe por bubble."
+    },
+    table: {
+      blurb: "Uma tabela estática no padrão shadcn pra arrays que você já tem em mãos (diferente do <c>SparkGrid</c>, que faz fetch e paginação via backend). As colunas declaram <c>{ key, label, width?, align?, valueGetter? }</c>; um slot <c>#cell-&lt;key&gt;</c> assume a renderização de qualquer célula, e um slot <c>#footer</c> preenche um <c>&lt;tfoot&gt;</c> pra totais."
+    },
+    specSheet: {
+      blurb: "Um \"spec sheet\" read-only e editorial pra registros formais — pense em cadastros oficiais e datasheets. Um eyebrow mono <c>docNum</c> fica sobre o <c>title</c> e um badge <c>meta</c> opcional; os filhos <c>&lt;ShadcnSpecSheetSection&gt;</c> carregam os campos e um slot <c>#footer</c> leva as ações de edição. Use <c>flat</c> pra remover o chrome do card ao embuti-lo dentro de outro card."
+    },
+    specSheetSection: {
+      blurb: "Uma seção dentro de um <c>ShadcnSpecSheet</c>: um <c>icon</c> boxed de accent opcional (oito cores) + <c>title</c> + um <c>sectionNum</c> à direita, sobre um grid de <c>columns</c> configurável de <c>&lt;ShadcnSpecSheetField&gt;</c>s. Um slot <c>#actions</c> hospeda botões no header; <c>noRowDividers</c> e <c>compact</c> ajustam o layout."
+    },
+    specSheetField: {
+      blurb: "Um par label/valor dentro de uma seção. O <c>label</c> renderiza em mono uppercase, o <c>value</c> em Inter; um valor vazio (<c>null</c>/<c>undefined</c>/'') mostra <c>emptyText</c> em itálico muted pra deixar claro que o vazio é intencional. Use <c>span</c> pra alargar um campo, ou o slot default pra badges, links e outros valores ricos."
+    },
+    summaryTiles: {
+      blurb: "O container em grid responsivo pra uma linha de tiles de KPI. Defina <c>columns</c> (padrão 3); abaixo de 880px ele sempre colapsa pra uma única coluna. Coloque quantos <c>&lt;ShadcnSummaryTile&gt;</c> quiser."
+    },
+    summaryTile: {
+      blurb: "Um stat de KPI compacto no layout <c>[ícone] [label + sub] [valor]</c> em ~52px de altura. Quatro <c>tone</c>s — <c>neutral</c>, <c>positive</c>, <c>negative</c>, <c>indigo</c> — o colorem pra leitura rápida. Os slots <c>#value</c> e <c>#sub</c> sobrepõem as props simples pra badges inline ou conteúdo mais rico."
+    },
+    settingsList: {
+      blurb: "Um container no estilo Ajustes do iOS: linhas separadas por hairlines, cada uma com label + caption à esquerda e um controle à direita. Preencha com <c>&lt;ShadcnSettingsListItem&gt;</c>, <c>&lt;ShadcnSettingsListGroup&gt;</c> ou o inteligente <c>&lt;ShadcnSettingsEditableField&gt;</c>."
+    },
+    settingsListGroup: {
+      blurb: "Uma seção titulada dentro de um <c>ShadcnSettingsList</c> pra agrupar linhas relacionadas. O header traz um <c>icon</c> boxed opcional (oito cores), um <c>sectionNum</c> e um <c>meta</c> à direita. Use <c>collapsible</c> pra transformar o header num toggle (com <c>defaultCollapsed</c>) e <c>compact</c> pra densidade maior."
+    },
+    settingsListItem: {
+      blurb: "Uma linha de um <c>ShadcnSettingsList</c>: <c>label</c> + <c>caption</c> à esquerda, seu controle no slot default à direita. O slot <c>#label</c> permite embutir um badge de status; <c>nested</c> aplica o estilo de sub-item pra toggles que só importam quando um pai está ligado; <c>disabled</c> apaga e trava a linha."
+    },
+    settingsEditableField: {
+      blurb: "Uma linha inteligente que junta o valor read-only, um botão \"Alterar\" e seu modal de edição numa única tag. Escolha um <c>type</c> — <c>text</c>, <c>currency</c>, <c>number</c> ou <c>select</c> — e ela renderiza o input certo dentro de um modal teleportado. As edições são bufferizadas: cancelar descarta, salvar emite tanto <c>update:modelValue</c> quanto <c>save</c> (pra auto-save)."
+    },
+    sparkGridEmptyState: {
+      blurb: "Um wrapper que troca o conteúdo de um grid por um <c>ShadcnOnboardingPanel</c> quando realmente não há nada a mostrar. Ele espera o <c>loading</c> assentar (true → false) e só revela o painel quando <c>total</c> é 0 e nenhum filtro está ativo — então uma lista filtrada até ficar vazia mantém sua toolbar. Emite <c>panel-visible</c> pro host esconder as ações do header."
+    },
+    notice: {
+      blurb: "Um banner inline com variantes semânticas — <c>info</c>, <c>blue</c>, <c>success</c>, <c>warning</c>, <c>pending</c> e <c>destructive</c> — cada uma com um ícone padrão correspondente. Use pra avisos contextuais, status cards e erros não-bloqueantes. Adicione <c>dismissible</c> pra um botão de fechar que emite <c>dismiss</c>; título, corpo e ícone são todos sobrepostos por slot."
+    },
+    editFieldModal: {
+      blurb: "Um wrapper de modal \"Alterar X\" genérico pra listas de configurações. Ele fornece o chrome (header, footer, salvar/cancelar) e recebe o input do campo pelo slot default, então um único componente serve toda linha editável em vez de um arquivo por modal. É guiado por ref (<c>show()</c> / <c>hide()</c>) e emite <c>save</c> sem fechar sozinho, pra você validar antes."
+    },
+    requiredFieldsDialog: {
+      blurb: "Um dialog de aviso âmbar que lista os campos obrigatórios ainda faltando num formulário multi-step. Passe um array <c>fields</c> de <c>{ key, label, hint }</c> — cada <c>hint</c> aponta o passo a corrigir — e abra com uma ref (<c>show()</c>). Substitui o antigo padrão de \"um <c>Alert.info</c> por vez\" por uma lista única e escaneável."
+    },
+    onboardingPanel: {
+      blurb: "Um painel de empty-state / CTA caprichado pra primeira configuração: um ícone em gradient dentro de rings pulsando, título + descrição, uma CTA primária e um botão secundário e sub-hint opcionais. Controle tudo por props, ou use os slots <c>#action</c> e <c>#sub-hint</c> pra botões custom e texto rico. Emite <c>action</c> / <c>secondary-action</c>."
+    },
+    loadingOverlay: {
+      blurb: "Um overlay de carregamento escopado — spinner + texto sobre um backdrop translúcido com blur que cobre o ancestral posicionado mais próximo (o pai precisa de <c>position: relative</c>). Alterne com <c>visible</c> pra feedback assíncrono a nível de card/seção em vez de um loader full-screen."
+    },
+    skeleton: {
+      blurb: "Um bloco placeholder com shimmer pra estados de loading. Defina <c>width</c> / <c>height</c> com qualquer valor CSS e escolha um preset <c>rounded</c> (<c>full</c> pra avatares). É <c>aria-hidden</c> (visual-only) e respeita <c>prefers-reduced-motion</c> — o shimmer para mas o bloco fica. Prefira-o a placeholders falsos que piscam quando os dados reais chegam."
+    },
+    switchCard: {
+      blurb: "Um toggle full-width de alto impacto: quando ligado, o card inteiro fica esmeralda com um switch interno invertido — dá pra ler o estado à distância. Reserve pra configs de peso (2FA, modo manutenção, recursos premium). Um <c>icon</c> boxed, <c>title</c> e as linhas mono <c>statusOn</c>/<c>statusOff</c> o descrevem."
+    },
+    switchRow: {
+      blurb: "Um toggle \"linha de configuração\" full-width: título + descrição opcional à esquerda, um switch compacto à direita, e a row inteira é clicável pra uma área de toque generosa. É o meio-termo calmo entre um <c>ShadcnSwitch</c> puro e o chamativo <c>ShadcnSwitchCard</c> — ideal pra listas de preferências relacionadas."
+    },
+    switchSegmented: {
+      blurb: "Um toggle binário em formato de cápsula segmentada: duas metades clicáveis com um indicador deslizante, então lê-se como \"A ou B\" em vez de on/off. Ótimo pra escolhas either/or com labels (mensal / anual, sandbox / produção). <c>compact</c> e <c>squared</c> ajustam a geometria, <c>activeColor</c> recolore o indicador, e as setas navegam entre os lados."
     }
   }
 };

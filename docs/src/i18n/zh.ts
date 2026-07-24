@@ -139,6 +139,66 @@ export const zh: Messages = {
     },
     dropdownItem: {
       blurb: "<c>ShadcnDropdown</c> 内的一行：一个可选的 <c>icon</c>、标签（默认插槽）以及一个可选的 <c>suffix</c> 插槽（例如快捷键）。<c>variant</c> 将其着色为 <c>default</c>、<c>danger</c>、<c>success</c> 或 <c>warning</c>；<c>divided</c> 会在其上方画一条分隔线以隔离破坏性操作。点击时会触发 <c>click</c>，并——除非 <c>closeOnClick</c> 为 false——通过一个冒泡的自定义事件请求父下拉菜单关闭。"
+    },
+    table: {
+      blurb: "面向你已在内存中持有的数组的静态 shadcn 风格表格（不同于 <c>SparkGrid</c>，后者通过后端做 fetch 与分页）。列定义为 <c>{ key, label, width?, align?, valueGetter? }</c>；<c>#cell-&lt;key&gt;</c> 插槽可接管任意单元格的渲染，<c>#footer</c> 插槽则填充一个用于合计的 <c>&lt;tfoot&gt;</c>。"
+    },
+    specSheet: {
+      blurb: "面向正式记录的只读、编排式\"规格表\"——想想官方档案与数据表。等宽 <c>docNum</c> 眉标位于 <c>title</c> 之上，还有可选的 <c>meta</c> 徽章；<c>&lt;ShadcnSpecSheetSection&gt;</c> 子元素承载字段，<c>#footer</c> 插槽承载编辑操作。将它嵌入另一张卡片时，设置 <c>flat</c> 以去掉卡片外框。"
+    },
+    specSheetSection: {
+      blurb: "<c>ShadcnSpecSheet</c> 内的一个分区：可选的带框强调 <c>icon</c>（八种颜色）+ <c>title</c> + 右对齐的 <c>sectionNum</c>，位于一个可配置 <c>columns</c> 的 <c>&lt;ShadcnSpecSheetField&gt;</c> 网格之上。<c>#actions</c> 插槽承载表头按钮；<c>noRowDividers</c> 与 <c>compact</c> 调整布局。"
+    },
+    specSheetField: {
+      blurb: "分区内的单个标签/值对。<c>label</c> 以大写等宽呈现，<c>value</c> 以 Inter 呈现；空值（<c>null</c>/<c>undefined</c>/''）以斜体淡色显示 <c>emptyText</c>，使留空看起来是有意的。用 <c>span</c> 加宽字段，或用默认插槽放置徽章、链接及其他富值。"
+    },
+    summaryTiles: {
+      blurb: "用于一行 KPI 磁贴的响应式网格容器。设置 <c>columns</c>（默认 3）；宽度低于 880px 时始终折叠为单列。放入任意数量的 <c>&lt;ShadcnSummaryTile&gt;</c> 子元素。"
+    },
+    summaryTile: {
+      blurb: "布局为 <c>[图标] [label + sub] [值]</c>、约 52px 高的紧凑 KPI 统计块。四种 <c>tone</c>——<c>neutral</c>、<c>positive</c>、<c>negative</c>、<c>indigo</c>——为其上色以便快速扫读。<c>#value</c> 与 <c>#sub</c> 插槽可覆盖普通 prop，用于内联徽章或更丰富的内容。"
+    },
+    settingsList: {
+      blurb: "iOS 设置风格的容器：行与行之间以细线分隔，每行左侧为标签 + 说明，右侧为控件。用 <c>&lt;ShadcnSettingsListItem&gt;</c>、<c>&lt;ShadcnSettingsListGroup&gt;</c> 或智能的 <c>&lt;ShadcnSettingsEditableField&gt;</c> 来填充它。"
+    },
+    settingsListGroup: {
+      blurb: "<c>ShadcnSettingsList</c> 内的带标题分区，用于分组相关的行。表头带有可选的带框 <c>icon</c>（八种颜色）、一个 <c>sectionNum</c> 以及右对齐的 <c>meta</c>。设置 <c>collapsible</c> 使表头成为可展开/折叠的开关（配合 <c>defaultCollapsed</c>），<c>compact</c> 则提高密度。"
+    },
+    settingsListItem: {
+      blurb: "<c>ShadcnSettingsList</c> 的单行：左侧为 <c>label</c> + <c>caption</c>，右侧默认插槽放你的控件。<c>#label</c> 插槽可内联一个状态徽章；<c>nested</c> 应用子项样式，适用于仅在父项开启时才有意义的开关；<c>disabled</c> 会淡化并锁定该行。"
+    },
+    settingsEditableField: {
+      blurb: "一个智能行，将只读值、一个\"Alterar\"按钮及其编辑弹窗合并为一个标签。选择一个 <c>type</c>——<c>text</c>、<c>currency</c>、<c>number</c> 或 <c>select</c>——它便会在一个传送（teleport）到 body 的弹窗中渲染相应输入。编辑会被缓冲：取消即丢弃，保存会同时触发 <c>update:modelValue</c> 与 <c>save</c>（用于自动保存）。"
+    },
+    sparkGridEmptyState: {
+      blurb: "一个包装器，当确实无内容可显示时，将网格内容替换为 <c>ShadcnOnboardingPanel</c>。它等待 <c>loading</c> 稳定（true → false），并仅在 <c>total</c> 为 0 且没有激活筛选时才显示该面板——因此被筛选到空的列表会保留其工具栏。它会触发 <c>panel-visible</c>，以便宿主隐藏表头操作。"
+    },
+    notice: {
+      blurb: "带语义变体的内联横幅——<c>info</c>、<c>blue</c>、<c>success</c>、<c>warning</c>、<c>pending</c> 与 <c>destructive</c>——每种都有相应的默认图标。用于上下文提示、状态卡片与非阻塞错误。加上 <c>dismissible</c> 可获得一个触发 <c>dismiss</c> 的关闭按钮；标题、正文与图标均可通过插槽覆盖。"
+    },
+    editFieldModal: {
+      blurb: "面向设置列表的通用\"Alterar X\"弹窗包装器。它提供外框（表头、页脚、保存/取消），并通过默认插槽接收字段输入，因此一个组件即可服务每一个可编辑行，而无需为每个弹窗建一个文件。它由 ref 驱动（<c>show()</c> / <c>hide()</c>），并触发 <c>save</c> 而不自动关闭，便于你先做校验。"
+    },
+    requiredFieldsDialog: {
+      blurb: "一个琥珀色警告弹窗，列出多步表单中仍缺失的必填字段。传入一个由 <c>{ key, label, hint }</c> 组成的 <c>fields</c> 数组——每个 <c>hint</c> 指向需修正的步骤——并用 ref（<c>show()</c>）打开它。它以一份可扫读的单一列表取代了旧的\"一次一个 <c>Alert.info</c>\"模式。"
+    },
+    onboardingPanel: {
+      blurb: "面向首次配置的精致空状态 / CTA 面板：脉动圆环中的渐变图标、标题 + 描述、一个主 CTA 以及可选的次级按钮和页脚提示。可完全通过 prop 控制，或借助 <c>#action</c> 与 <c>#sub-hint</c> 插槽实现自定义按钮和富文本。它会触发 <c>action</c> / <c>secondary-action</c>。"
+    },
+    loadingOverlay: {
+      blurb: "作用域受限的加载遮罩——旋转指示器 + 文本，覆盖于半透明、带模糊的背景之上，遮住最近的已定位祖先（父级需 <c>position: relative</c>）。用 <c>visible</c> 切换它，为卡片或分区级别的异步操作提供反馈，而非全屏加载器。"
+    },
+    skeleton: {
+      blurb: "用于加载状态、带微光动画的占位块。将 <c>width</c> / <c>height</c> 设为任意 CSS 值，并选择一个 <c>rounded</c> 预设（<c>full</c> 用于头像）。它是 <c>aria-hidden</c>（仅视觉），并尊重 <c>prefers-reduced-motion</c>——微光停止但块仍保留。相比真实数据到达时会闪烁的假占位，更推荐它。"
+    },
+    switchCard: {
+      blurb: "高冲击力的全宽开关：开启时整张卡片变为翡翠绿并带一个反色的内部开关——远远就能读出其状态。请保留给分量较重的设置（2FA、维护模式、高级功能）。一个带框 <c>icon</c>、<c>title</c> 以及等宽的 <c>statusOn</c>/<c>statusOff</c> 行来描述它。"
+    },
+    switchRow: {
+      blurb: "全宽的\"设置行\"开关：左侧为标题 + 可选描述，右侧为紧凑开关，整行均可点击以获得宽裕的触摸区域。它是裸 <c>ShadcnSwitch</c> 与醒目 <c>ShadcnSwitchCard</c> 之间的平和折中——非常适合一组相关偏好的列表。"
+    },
+    switchSegmented: {
+      blurb: "形如分段胶囊的二元开关：两个可点击的半区加一个滑动指示器，因此读作\"A 或 B\"而非开/关。非常适合带标签的二选一（月度 / 年度，沙盒 / 生产）。<c>compact</c> 与 <c>squared</c> 调整几何形状，<c>activeColor</c> 为指示器换色，方向键在两侧之间切换。"
     }
   }
 };

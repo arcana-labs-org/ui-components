@@ -44,7 +44,28 @@ export type DocumentedKey =
   | "accordion"
   | "accordionItem"
   | "dropdown"
-  | "dropdownItem";
+  | "dropdownItem"
+  // ── Batch 3 ──
+  | "table"
+  | "specSheet"
+  | "specSheetSection"
+  | "specSheetField"
+  | "summaryTile"
+  | "summaryTiles"
+  | "settingsList"
+  | "settingsListGroup"
+  | "settingsListItem"
+  | "settingsEditableField"
+  | "sparkGridEmptyState"
+  | "notice"
+  | "editFieldModal"
+  | "requiredFieldsDialog"
+  | "onboardingPanel"
+  | "loadingOverlay"
+  | "skeleton"
+  | "switchCard"
+  | "switchRow"
+  | "switchSegmented";
 
 export interface SectionProse {
   title: string;
