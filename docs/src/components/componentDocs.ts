@@ -400,11 +400,21 @@ const SegmentedOptionsDemo: Component = {
 
 const DatePickerDemo: Component = {
   components: { ArcanaDatePicker },
-  data: () => ({ date: "2026-07-24" as string | null }),
+  data: () => ({
+    date: "2026-07-24",
+    month: "2026-07",
+    year: "2026",
+    range: ["2026-07-01", "2026-07-15"] as string[],
+    datetime: "2026-07-24 14:30"
+  }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaDatePicker v-model="date" />
-      <p class="demo-note">{{ $dt.datePickerValueLabel }}: <strong>{{ date ?? "null" }}</strong> · {{ $dt.datePickerTypeHint }}</p>
+      <ArcanaDatePicker v-model="date" type="date" />
+      <ArcanaDatePicker v-model="month" type="month" />
+      <ArcanaDatePicker v-model="year" type="year" />
+      <ArcanaDatePicker v-model="range" type="daterange" />
+      <ArcanaDatePicker v-model="datetime" type="datetime" />
+      <p class="demo-note">{{ $dt.datePickerValueLabel }}: <strong>{{ date }}</strong> · <strong>{{ month }}</strong> · <strong>{{ year }}</strong> · <strong>{{ datetime }}</strong></p>
     </div>
   `
 };
@@ -1320,26 +1330,32 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   datePicker: {
     demo: DatePickerDemo,
     props: [
-      { name: "modelValue", type: "string | string[] | null", default: "null", description: "ISO 'YYYY-MM-DD' string (or a tuple for ranges)." },
-      { name: "type", type: "date | daterange | month | year | …", default: "date", description: "'date' uses the masked composite; other types use the calendar directly." },
+      { name: "modelValue", type: "string | [string, string]", default: "''", description: "Value: 'YYYY-MM-DD' (date), 'YYYY-MM' (month), 'YYYY' (year), 'YYYY-MM-DD HH:mm' (datetime), or a tuple for daterange." },
+      { name: "type", type: "date | month | year | daterange | datetime", default: "date", description: "Which self-contained calendar to render." },
+      { name: "locale", type: "string", default: "'pt-BR'", description: "BCP-47 locale for month/weekday names (via Intl)." },
+      { name: "messages", type: "Partial<CalendarMessages>", default: "{}", description: "Override the chrome copy (placeholders, clear, nav, confirm)." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
-      { name: "clearable", type: "boolean", default: "true", description: "Shows a clear affordance (non-composite types)." },
-      { name: "editable", type: "boolean", default: "true", description: "Allows typing (ignored for ranges)." },
-      { name: "placeholder", type: "string", default: "''", description: "Placeholder text." },
+      { name: "clearable", type: "boolean", default: "true", description: "Shows a clear affordance." },
+      { name: "placeholder", type: "string", default: "''", description: "Overrides the per-type default placeholder." },
       { name: "size", type: "sm | md | lg", default: "md", description: "Field height/padding." }
     ],
-    events: ["update:modelValue(ymd) — v-model update", "change(ymd) — on pick/type", "blur / focus — forwarded"],
+    events: ["update:modelValue(value) — v-model update", "change(value) — on pick / confirm"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
       "import { ArcanaDatePicker } from '@arcanalabs/ui-components/vue'",
-      "// Requires Maska registered globally — see \"Registering v-maska\".",
       "",
-      "const date = ref('2026-07-24')",
+      "const date = ref('2026-07-24')      // type=\"date\"     → 'YYYY-MM-DD'",
+      "const month = ref('2026-07')        // type=\"month\"    → 'YYYY-MM'",
+      "const year = ref('2026')            // type=\"year\"     → 'YYYY'",
+      "const range = ref(['2026-07-01', '2026-07-15'])  // type=\"daterange\"",
+      "const at = ref('2026-07-24 14:30')  // type=\"datetime\" → 'YYYY-MM-DD HH:mm'",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaDatePicker v-model=\"date\" />",
+      "  <ArcanaDatePicker v-model=\"date\" type=\"date\" />",
+      "  <ArcanaDatePicker v-model=\"range\" type=\"daterange\" locale=\"en\" />",
+      "  <ArcanaDatePicker v-model=\"at\" type=\"datetime\" />",
       "</template>"
     ].join("\n")
   },

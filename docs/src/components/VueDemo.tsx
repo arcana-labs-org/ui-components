@@ -22,22 +22,6 @@ const ElTooltipStub = defineComponent({
   }
 });
 
-/**
- * A stand-in for Element Plus's `<el-date-picker>`. ArcanaDatePicker's composite
- * `type="date"` mode layers an invisible `<el-date-picker>` behind a masked text
- * input purely to host the calendar popover — the visible, interactive part is the
- * masked input, which works on its own. We are not shipping Element Plus into the
- * docs, so we register a transparent stub (renders nothing) to keep the date-picker
- * demo warning-free; the masked field remains fully live.
- */
-const ElDatePickerStub = defineComponent({
-  name: "el-date-picker",
-  props: { modelValue: {}, type: {}, disabled: {}, clearable: {}, editable: {}, placeholder: {}, format: {}, valueFormat: {} },
-  emits: ["update:modelValue", "change"],
-  setup() {
-    return () => null;
-  }
-});
 
 /**
  * A stand-in for the host app's `<FormGroup>` — a labelled field wrapper.
@@ -82,7 +66,6 @@ export function VueDemo({ component, className }: { component: VueComponent; cla
     app.config.globalProperties.$dt = demoStrings;
     app.use(Maska);
     app.component("el-tooltip", ElTooltipStub);
-    app.component("el-date-picker", ElDatePickerStub);
     app.component("ArcanaSelect", ArcanaSelect);
     app.component("FormGroup", FormGroupStub);
     app.mount(hostRef.current);

@@ -121,7 +121,7 @@ export const en: Messages = {
       blurb: "A segmented control for N mutually-exclusive options inside a pill, with per-option icons and disabling."
     },
     datePicker: {
-      blurb: "A shadcn date field pairing a masked <c>DD/MM/AAAA</c> input with a calendar popover; the <c>v-model</c> is an ISO <c>YYYY-MM-DD</c> string."
+      blurb: "A self-contained calendar field (no Element Plus) with five <c>type</c>s — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> and <c>datetime</c> — with Intl-based month/weekday names via the <c>locale</c> prop."
     },
     inputCurrency: {
       blurb: "A currency input (on <c>v-money3</c>) that formats as you type, with configurable decimals and <c>min</c>/<c>max</c> clamping; BRL by default."

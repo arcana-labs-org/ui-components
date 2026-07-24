@@ -289,18 +289,32 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(onValueChange).toHaveBeenLastCalledWith("1.234,56");
     });
 
-    it("ArcanaDatePicker (composite) mascara a digitação e emite YYYY-MM-DD", () => {
+    it("ArcanaDatePicker (date) abre o calendário e emite YYYY-MM-DD ao clicar num dia", () => {
         const onValueChange = vi.fn();
         const { container } = render(
-            <ArcanaDatePicker value={null} onValueChange={onValueChange} />
+            <ArcanaDatePicker value="2026-07-25" onValueChange={onValueChange} />
         );
-        expect(container.querySelector(".arcana-date-picker__box")).toBeTruthy();
-        const text = container.querySelector(
-            "input.arcana-date-picker__text"
-        ) as HTMLInputElement;
-        fireEvent.change(text, { target: { value: "25072026" } });
-        expect(text.value).toBe("25/07/2026");
-        expect(onValueChange).toHaveBeenLastCalledWith("2026-07-25");
+        expect(container.querySelector(".arcana-cal__input")).toBeTruthy();
+        // Fechado: sem painel no body.
+        expect(document.querySelector(".arcana-cal__panel")).toBeNull();
+        fireEvent.click(
+            container.querySelector(".arcana-cal__input") as HTMLButtonElement
+        );
+        const panel = document.querySelector(
+            ".arcana-cal__panel"
+        ) as HTMLElement;
+        expect(panel).toBeTruthy();
+        // Dia selecionado atual (25/07/2026) fica destacado.
+        const selected = panel.querySelector(
+            ".arcana-cal__day--selected"
+        ) as HTMLElement;
+        expect(selected?.textContent).toBe("25");
+        // Clica no dia 10 → emite 2026-07-10.
+        const day10 = Array.from(
+            panel.querySelectorAll(".arcana-cal__day:not(.arcana-cal__day--adjacent)")
+        ).find((el) => el.textContent === "10") as HTMLButtonElement;
+        fireEvent.click(day10);
+        expect(onValueChange).toHaveBeenLastCalledWith("2026-07-10");
     });
 
     it("ArcanaTable renderiza colunas, células e empty", () => {

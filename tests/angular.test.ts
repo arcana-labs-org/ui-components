@@ -469,24 +469,62 @@ describe("Angular adapter", () => {
     expect(input.value).toBe("1.234,56");
   });
 
-  it("ArcanaDatePicker: máscara DD/MM/AAAA emite YYYY-MM-DD", () => {
+  it("ArcanaDatePicker: calendário próprio abre no body e emite YYYY-MM-DD ao clicar um dia", () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [ArcanaDatePickerComponent],
       providers: [provideZonelessChangeDetection()]
     });
     const fixture = TestBed.createComponent(ArcanaDatePickerComponent);
+    fixture.componentRef.setInput("value", "2026-12-25");
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.classList.contains("arcana-date-picker")).toBe(true);
-    const text = el.querySelector<HTMLInputElement>(".arcana-date-picker__text")!;
+    expect(el.classList.contains("arcana-cal")).toBe(true);
+    expect(el.querySelector(".arcana-cal__input-label")?.textContent).toContain("25/12/2026");
+
+    // Abre: painel é teleportado pro document.body (EmbeddedViewRef).
+    click(el.querySelector(".arcana-cal__input"));
+    fixture.detectChanges();
+    const panel = document.body.querySelector(".arcana-cal__panel");
+    expect(panel).toBeTruthy();
+    expect(panel!.querySelector(".arcana-cal__title")?.textContent).toContain("Dezembro 2026");
+
+    const onValue = vi.fn();
+    const onChange = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    fixture.componentInstance.change.subscribe(onChange);
+    // Primeiro dia in-month de Dez/2026 → 2026-12-01.
+    const firstInMonth = panel!.querySelector<HTMLElement>(".arcana-cal__day:not(.arcana-cal__day--adjacent)")!;
+    click(firstInMonth);
+    fixture.detectChanges();
+    expect(onValue).toHaveBeenCalledWith("2026-12-01");
+    expect(onChange).toHaveBeenCalledWith("2026-12-01");
+    // Fechou: painel removido do body.
+    expect(document.body.querySelector(".arcana-cal__panel")).toBeFalsy();
+  });
+
+  it("ArcanaDatePicker: modo month emite YYYY-MM ao escolher um mês", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaDatePickerComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ArcanaDatePickerComponent);
+    fixture.componentRef.setInput("type", "month");
+    fixture.componentRef.setInput("value", "2026-05");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    click(el.querySelector(".arcana-cal__input"));
+    fixture.detectChanges();
+    const panel = document.body.querySelector(".arcana-cal__panel")!;
+    const months = panel.querySelectorAll<HTMLElement>(".arcana-cal__month");
+    expect(months).toHaveLength(12);
     const onValue = vi.fn();
     fixture.componentInstance.valueChange.subscribe(onValue);
-    text.value = "25/12/2026";
-    text.dispatchEvent(new Event("input", { bubbles: true }));
+    click(months[0]); // Janeiro
     fixture.detectChanges();
-    expect(onValue).toHaveBeenCalledWith("2026-12-25");
-    expect(text.value).toBe("25/12/2026");
+    expect(onValue).toHaveBeenCalledWith("2026-01");
+    expect(document.body.querySelector(".arcana-cal__panel")).toBeFalsy();
   });
 
   it("ArcanaTable: renderiza colunas, linhas e empty", () => {
@@ -601,7 +639,7 @@ describe("Angular adapter", () => {
   // teleportam pro body; se um teste falhar no meio, evita poluir o próximo).
   afterEach(() => {
     document.body
-      .querySelectorAll(".arcana-dialog-overlay, .arcana-dropdown__menu, .msp-panel, .arcana-select__panel")
+      .querySelectorAll(".arcana-dialog-overlay, .arcana-dropdown__menu, .msp-panel, .arcana-select__panel, .arcana-cal__panel")
       .forEach((n) => n.remove());
   });
 

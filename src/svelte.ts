@@ -15,6 +15,8 @@
 
 import type { Component, Snippet } from "svelte";
 
+import type { CalendarMessages } from "./core/calendar-locale";
+
 import ArcanaButtonComponent from "./svelte/ArcanaButton.svelte";
 import ArcanaBadgeComponent from "./svelte/ArcanaBadge.svelte";
 import ArcanaInputComponent from "./svelte/ArcanaInput.svelte";
@@ -445,19 +447,21 @@ export interface ArcanaInputCurrencyProps {
 export const ArcanaInputCurrency = ArcanaInputCurrencyComponent as unknown as Component<ArcanaInputCurrencyProps>;
 
 /* ── ArcanaDatePicker ─────────────────────────────────────────────────────── */
+export type ArcanaDatePickerType = "date" | "month" | "year" | "daterange" | "datetime";
 export interface ArcanaDatePickerProps {
   value?: string | string[] | null;
-  type?: string;
+  type?: ArcanaDatePickerType;
   disabled?: boolean;
   clearable?: boolean;
-  editable?: boolean;
   placeholder?: string;
+  ariaLabel?: string;
   size?: "sm" | "md" | "lg";
-  onValueChange?: (value: string | null) => void;
-  onChange?: (value: string | null) => void;
-  onBlur?: (ev: FocusEvent) => void;
-  onFocus?: (ev: FocusEvent) => void;
-  class?: string;
+  /** Locale BCP-47 dos nomes de meses/dias (via Intl). Default `'pt-BR'`. */
+  locale?: string;
+  /** Override parcial dos textos do calendário (clear, nav, confirmar, placeholders). */
+  messages?: Partial<CalendarMessages>;
+  onValueChange?: (value: string | string[] | null) => void;
+  onChange?: (value: string | string[] | null) => void;
 }
 export const ArcanaDatePicker = ArcanaDatePickerComponent as unknown as Component<ArcanaDatePickerProps>;
 

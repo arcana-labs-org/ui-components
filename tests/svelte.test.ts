@@ -225,13 +225,46 @@ describe("Svelte adapter — lote 2", () => {
     expect(onValueChange).toHaveBeenLastCalledWith("1.234,56");
   });
 
-  it("ArcanaDatePicker masks typing and emits YYYY-MM-DD", () => {
+  it("ArcanaDatePicker opens a portaled calendar and picks a day", () => {
     const onValueChange = vi.fn();
-    const { target } = render(ArcanaDatePicker, { value: null, onValueChange });
-    const text = target.querySelector<HTMLInputElement>(".arcana-date-picker__text")!;
-    setInput(text, "25/12/2026");
-    expect(text.value).toBe("25/12/2026");
-    expect(onValueChange).toHaveBeenLastCalledWith("2026-12-25");
+    const { target } = render(ArcanaDatePicker, { value: "2026-12-10", onValueChange });
+    const trigger = target.querySelector("button.arcana-cal__input")!;
+    expect(target.querySelector(".arcana-cal__input-label")?.textContent).toBe("10/12/2026");
+    // Panel is teleported to document.body (not inside target).
+    expect(document.body.querySelector(".arcana-cal__panel")).toBeNull();
+    click(trigger);
+    const panel = document.body.querySelector(".arcana-cal__panel")!;
+    expect(panel).toBeTruthy();
+    // The current value is anchored + highlighted.
+    expect(panel.querySelector(".arcana-cal__day--selected")?.textContent).toBe("10");
+    const day15 = Array.from(panel.querySelectorAll<HTMLButtonElement>("button.arcana-cal__day"))
+      .find((b) => b.textContent === "15" && !b.classList.contains("arcana-cal__day--adjacent"))!;
+    click(day15);
+    expect(onValueChange).toHaveBeenLastCalledWith("2026-12-15");
+    // Panel closes after a date pick.
+    expect(document.body.querySelector(".arcana-cal__panel")).toBeNull();
+  });
+
+  it("ArcanaDatePicker month mode picks YYYY-MM and range mode emits a tuple", () => {
+    const onMonth = vi.fn();
+    const { target: monthTarget } = render(ArcanaDatePicker, { value: "2026-03", type: "month", onValueChange: onMonth });
+    click(monthTarget.querySelector("button.arcana-cal__input"));
+    const monthPanel = document.body.querySelector(".arcana-cal__panel")!;
+    const may = Array.from(monthPanel.querySelectorAll<HTMLButtonElement>("button.arcana-cal__month"))[4];
+    click(may);
+    expect(onMonth).toHaveBeenLastCalledWith("2026-05");
+
+    const onRange = vi.fn();
+    const { target: rangeTarget } = render(ArcanaDatePicker, { value: ["2026-12-05", ""], type: "daterange", onValueChange: onRange });
+    click(rangeTarget.querySelector("button.arcana-cal__input"));
+    const rangePanel = document.body.querySelector(".arcana-cal__panel--range")!;
+    const inMonthDay = (text: string) =>
+      Array.from(rangePanel.querySelectorAll<HTMLButtonElement>("button.arcana-cal__day"))
+        .find((b) => b.textContent === text && !b.classList.contains("arcana-cal__day--adjacent"))!;
+    click(inMonthDay("10"));
+    expect(onRange).not.toHaveBeenCalled(); // first click only anchors the start
+    click(inMonthDay("20"));
+    expect(onRange).toHaveBeenLastCalledWith(["2026-12-10", "2026-12-20"]);
   });
 
   it("ArcanaRadioCardGroup marks the selected card and reports changes", () => {

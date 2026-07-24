@@ -849,176 +849,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ArcanaDatePicker.vue
+   ArcanaDatePicker.vue — see the `/* ArcanaDatePicker *​/` block at the END of
+   this file for the self-contained calendar (`.arcana-cal__*`) rules.
    ───────────────────────────────────────────────────────────────────────── */
-.arcana-date-picker {
-    width: 100%;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-/* ───────────────────────── Composite (type=date) ───────────────────────── */
-.arcana-date-picker__box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 36px;
-    border: 1px solid #e4e4e7;
-    border-radius: 6px;
-    background: #ffffff;
-    box-sizing: border-box;
-    transition: border-color 150ms ease;
-}
-.arcana-date-picker__box:hover { border-color: #d4d4d8; }
-.arcana-date-picker__box:focus-within { border-color: #18181b; }
-.arcana-date-picker.is-disabled .arcana-date-picker__box {
-    background: #fafafa;
-    opacity: 0.7;
-}
-
-.arcana-date-picker__text {
-    position: relative;
-    z-index: 1;
-    flex: 1 1 auto;
-    min-width: 0;
-    height: 100%;
-    padding: 0 36px 0 12px;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: inherit;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #09090b;
-}
-.arcana-date-picker__text::placeholder { color: #a1a1aa; }
-.arcana-date-picker__text:disabled { color: #a1a1aa; cursor: not-allowed; }
-
-.arcana-date-picker__icon-btn {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    color: #71717a;
-    cursor: pointer;
-    transition: color 150ms ease;
-}
-.arcana-date-picker__box:focus-within .arcana-date-picker__icon-btn { color: #18181b; }
-.arcana-date-picker__icon-btn:hover:not(:disabled) { color: #18181b; }
-.arcana-date-picker__icon-btn:disabled { color: #a1a1aa; cursor: not-allowed; }
-
-/* el-date-picker invisível atrás do campo — só fornece o popover (âncora), nunca visível. */
-.arcana-date-picker__picker-anchor {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-.arcana-date-picker__picker-anchor .el-date-editor {
-    width: 100%;
-    height: 100%;
-}
-
-/* Sizes (composite) */
-.arcana-date-picker--sm .arcana-date-picker__box { height: 30px; }
-.arcana-date-picker--sm .arcana-date-picker__text { font-size: 12px; padding: 0 32px 0 10px; }
-.arcana-date-picker--lg .arcana-date-picker__box { height: 42px; }
-.arcana-date-picker--lg .arcana-date-picker__text { font-size: 14px; padding: 0 40px 0 14px; }
-
-/* ───────────────────── Fallback el-date-picker (ranges/month/year) ──────────────────────
-    porque o <el-date-picker> renderiza um .el-input__wrapper interno. */
-.arcana-date-picker .el-date-editor.el-input,
-.arcana-date-picker .el-date-editor.el-input__wrapper,
-.arcana-date-picker .el-date-editor {
-    width: 100%;
-}
-
-.arcana-date-picker .el-input__wrapper {
-    height: 36px;
-    border: 1px solid #e4e4e7;
-    border-radius: 6px;
-    background: #ffffff;
-    box-shadow: none;
-    padding: 0 12px;
-    transition: border-color 150ms ease;
-}
-
-.arcana-date-picker .el-input__wrapper:hover {
-    border-color: #d4d4d8;
-    box-shadow: none;
-}
-
-.arcana-date-picker .el-input__wrapper.is-focus,
-.arcana-date-picker .el-input.is-focus .el-input__wrapper {
-    border-color: #18181b;
-    box-shadow: none;
-}
-
-.arcana-date-picker .el-input__inner {
-    color: #09090b;
-    font-size: 13px;
-    font-family: inherit;
-    line-height: 1.4;
-    height: 100%;
-    cursor: pointer;
-}
-
-.arcana-date-picker .el-input__inner::placeholder {
-    color: #a1a1aa;
-}
-
-.arcana-date-picker .el-input__prefix,
-.arcana-date-picker .el-input__suffix {
-    color: #71717a;
-    transition: color 150ms ease;
-}
-
-.arcana-date-picker .el-input.is-focus .el-input__prefix,
-.arcana-date-picker .el-input.is-focus .el-input__suffix {
-    color: #18181b;
-}
-
-.arcana-date-picker .el-input__icon {
-    font-size: 14px;
-}
-
-.arcana-date-picker.is-disabled .el-input__wrapper {
-    background: #fafafa;
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.arcana-date-picker.is-disabled .el-input__inner {
-    color: #a1a1aa;
-    cursor: not-allowed;
-}
-
-.arcana-date-picker--sm .el-input__wrapper {
-    height: 30px;
-    padding: 0 10px;
-}
-
-.arcana-date-picker--sm .el-input__inner {
-    font-size: 12px;
-}
-
-.arcana-date-picker--lg .el-input__wrapper {
-    height: 42px;
-    padding: 0 14px;
-}
-
-.arcana-date-picker--lg .el-input__inner {
-    font-size: 14px;
-}
 
 /* ─────────────────────────────────────────────────────────────────────────
    ArcanaDialog.vue
@@ -5018,4 +4851,428 @@
         flex: 1 1 auto;
         justify-content: center;
     }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   ArcanaDatePicker — self-contained calendar (`.arcana-cal__*`)
+   ---------------------------------------------------------------------------
+   Portado do projeto irmão Datatable, com as variáveis `--arcana-*` resolvidas
+   pros valores fixos da paleta zinc do ui-components:
+     ink #09090b · muted #71717a · border #e4e4e7 · surface #fff ·
+     subtle bg #f4f4f5 · selecionado #18181b (texto branco) · hover #f4f4f5.
+   Sem dependência de Element Plus e sem tokens de tema.
+   ═════════════════════════════════════════════════════════════════════════ */
+.arcana-cal {
+    width: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.arcana-cal--disabled {
+    cursor: not-allowed;
+}
+
+/* Trigger ─────────────────────────────────────────────────────────────── */
+.arcana-cal__input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 36px;
+    padding: 0 10px 0 12px;
+    background: #ffffff;
+    color: #09090b;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 150ms ease, background-color 150ms ease;
+    outline: none;
+    box-shadow: none;
+}
+
+.arcana-cal__input:hover:not(:disabled) {
+    border-color: #d4d4d8;
+}
+
+.arcana-cal__input:focus-visible,
+.arcana-cal__input--open,
+.arcana-cal__input--open:hover {
+    border-color: #18181b;
+    outline: none;
+}
+
+.arcana-cal__input:disabled {
+    background: #fafafa;
+    color: #a1a1aa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Sizes */
+.arcana-cal--sm .arcana-cal__input { min-height: 30px; font-size: 12px; padding: 0 8px 0 10px; }
+.arcana-cal--lg .arcana-cal__input { min-height: 42px; font-size: 14px; padding: 0 12px 0 14px; }
+
+.arcana-cal__input-icon {
+    flex-shrink: 0;
+    color: #71717a;
+    transition: color 150ms ease;
+}
+
+.arcana-cal__input--open .arcana-cal__input-icon {
+    color: #09090b;
+}
+
+.arcana-cal__input:disabled .arcana-cal__input-icon {
+    color: #a1a1aa;
+}
+
+.arcana-cal__input-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-cal__input-label--placeholder {
+    color: #a1a1aa;
+}
+
+.arcana-cal__clear {
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: #71717a;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 100ms ease, background-color 100ms ease;
+}
+
+.arcana-cal__clear:hover {
+    color: #09090b;
+    background: #f4f4f5;
+}
+
+.arcana-cal__input--has-clear:hover .arcana-cal__clear {
+    display: flex;
+}
+
+/* Panel (teleported to <body>) ─────────────────────────────────────────── */
+.arcana-cal__panel {
+    position: fixed;
+    z-index: 10600;
+    background: #ffffff;
+    border: 1px solid #e4e4e7;
+    border-radius: 10px;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.06),
+        0 12px 32px -8px rgba(24, 24, 27, 0.18);
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    outline: none;
+}
+
+.arcana-cal__panels {
+    display: flex;
+    gap: 14px;
+}
+
+.arcana-cal__panel--range .arcana-cal__month-panel + .arcana-cal__month-panel {
+    border-left: 1px solid #f4f4f5;
+    padding-left: 14px;
+}
+
+.arcana-cal__header {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 6px;
+}
+
+.arcana-cal__title {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #09090b;
+    white-space: nowrap;
+}
+
+.arcana-cal__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: #71717a;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__nav:hover {
+    background: #f4f4f5;
+    color: #09090b;
+}
+
+/* Keeps range titles centered where the inner nav buttons are omitted */
+.arcana-cal__nav-spacer {
+    flex-shrink: 0;
+    width: 50px;
+}
+
+.arcana-cal__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    margin-bottom: 2px;
+}
+
+.arcana-cal__weekday {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #71717a;
+}
+
+.arcana-cal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+}
+
+.arcana-cal__day {
+    width: 32px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    color: #09090b;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__day:hover {
+    background: #f4f4f5;
+}
+
+.arcana-cal__day--adjacent {
+    color: #d4d4d8;
+}
+
+/* Today: subtle ink outline accent */
+.arcana-cal__day--today {
+    box-shadow: inset 0 0 0 1px #18181b;
+    font-weight: 600;
+}
+
+/* Range preview/committed band */
+.arcana-cal__day--in-range {
+    background: #f4f4f5;
+    border-radius: 0;
+}
+
+.arcana-cal__day--selected,
+.arcana-cal__day--range-start,
+.arcana-cal__day--range-end {
+    background: #18181b;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.arcana-cal__day--selected:hover,
+.arcana-cal__day--range-start:hover,
+.arcana-cal__day--range-end:hover {
+    background: #18181b;
+    color: #ffffff;
+}
+
+.arcana-cal__day--range-start {
+    border-radius: 6px 0 0 6px;
+}
+
+.arcana-cal__day--range-end {
+    border-radius: 0 6px 6px 0;
+}
+
+.arcana-cal__day--range-start.arcana-cal__day--range-end {
+    border-radius: 6px;
+}
+
+/* Month (4×3) panel */
+.arcana-cal__months {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    width: 224px;
+}
+
+.arcana-cal__month {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    color: #09090b;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__month:hover {
+    background: #f4f4f5;
+}
+
+.arcana-cal__month--today {
+    box-shadow: inset 0 0 0 1px #18181b;
+    font-weight: 600;
+}
+
+.arcana-cal__month--selected,
+.arcana-cal__month--selected:hover {
+    background: #18181b;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Year (4×3, 12 anos) panel */
+.arcana-cal__years {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    width: 224px;
+}
+
+.arcana-cal__year {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    color: #09090b;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__year:hover {
+    background: #f4f4f5;
+}
+
+/* Anos fora da década corrente (primeiro/último da grade) — atenuados */
+.arcana-cal__year--adjacent {
+    color: #d4d4d8;
+}
+
+.arcana-cal__year--today {
+    box-shadow: inset 0 0 0 1px #18181b;
+    font-weight: 600;
+}
+
+.arcana-cal__year--selected,
+.arcana-cal__year--selected:hover {
+    background: #18181b;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Datetime — time row + confirm ────────────────────────────────────────── */
+.arcana-cal__time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f4f4f5;
+}
+
+.arcana-cal__time-label {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #71717a;
+}
+
+.arcana-cal__time-input {
+    width: 44px;
+    height: 28px;
+    padding: 0 6px;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #09090b;
+    font-family: inherit;
+    font-size: 12.5px;
+    text-align: center;
+    outline: none;
+    transition: border-color 100ms ease;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.arcana-cal__time-input:focus {
+    border-color: #18181b;
+}
+
+.arcana-cal__time-input::-webkit-outer-spin-button,
+.arcana-cal__time-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.arcana-cal__time-sep {
+    font-size: 13px;
+    font-weight: 600;
+    color: #52525b;
+}
+
+.arcana-cal__confirm {
+    margin-left: auto;
+    height: 28px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 6px;
+    background: #18181b;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.arcana-cal__confirm:hover {
+    background: #27272a;
+}
+
+.arcana-cal__confirm:active {
+    background: #09090b;
 }

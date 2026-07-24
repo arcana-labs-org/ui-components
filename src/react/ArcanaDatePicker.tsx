@@ -1,232 +1,716 @@
-import { useEffect, useRef, useState, type FocusEvent } from "react";
-import { mask as maskaMask, tokens as maskaTokens } from "maska";
-import { DateFormatter } from "../core/date";
+import {
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
+import { createPortal } from "react-dom";
+import {
+    addMonths,
+    decadeGrid,
+    formatDateTime,
+    formatYear,
+    formatYm,
+    formatYmd,
+    isBetweenYmd,
+    monthGrid,
+    parseDateTime,
+    parseYear,
+    parseYm,
+    parseYmd,
+    sortRange,
+    toDisplayDate,
+    toDisplayDateTime,
+    toDisplayMonth,
+    type CalendarDay,
+} from "../core/calendar";
+import {
+    calendarMonthLabels,
+    calendarMonthLabelsShort,
+    calendarWeekdayLabels,
+    resolveCalendarMessages,
+    type CalendarMessages,
+} from "../core/calendar-locale";
+import { placePanel } from "../core/popover";
 
 /**
- * `<ArcanaDatePicker>` — React port. Input de data shadcn com máscara `DD/MM/AAAA`.
+ * `ArcanaDatePicker` — React port do SFC Vue reescrito: um calendário PRÓPRIO,
+ * auto-contido e SEM Element Plus.
  *
- * Decisão sobre o calendário (deps externas):
- * - O SFC Vue usa `<el-date-picker>` (Element Plus) APENAS como popover/âncora do
- *   calendário. No React NÃO temos Element Plus. Em vez de reimplementar um calendário
- *   completo (exigiria CSS novo, fora do escopo de reuso do CSS compartilhado), o
- *   calendário é provido pelo **date picker nativo do browser**: um `<input type="date">`
- *   escondido dentro do `__picker-anchor`, aberto pelo botão de ícone via `showPicker()`
- *   (fallback: focus+click). A digitação mascarada e a emissão de `YYYY-MM-DD` são
- *   IDÊNTICAS ao SFC; só o visual do calendário difere (nativo, não Element Plus).
- * - `type="date"` (default) usa esse composite. Outros types (`daterange`/`month`/`year`)
- *   caem num `<input>` nativo do tipo correspondente como fallback documentado (ranges
- *   nativos não existem → usa `type="date"`).
+ * O calendário é desenhado à mão (grid 6×7 Sunday-first) num painel portalado
+ * pro `<body>`, posicionado por `placePanel` e fechado em click-fora / Escape /
+ * scroll / resize. Toda a matemática de datas vem de `core/calendar.ts` e a
+ * localização (meses/dias/textos) de `core/calendar-locale.ts`. As classes CSS
+ * `arcana-cal__*` são compartilhadas verbatim com o adapter Vue.
  *
- * Equivalências Vue → React:
- * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
- * - watch(modelValue) → `useEffect`
+ * Cinco modos via prop `type`, cada um com um formato de valor canônico:
+ * - `date`      (default) → `'YYYY-MM-DD'`               — 1 painel de dias.
+ * - `month`               → `'YYYY-MM'`                  — grid 4×3 de meses.
+ * - `year`                → `'YYYY'`                     — grid de 12 anos.
+ * - `daterange`           → `['YYYY-MM-DD','YYYY-MM-DD']`— 2 painéis + range.
+ * - `datetime`            → `'YYYY-MM-DD HH:mm'`         — dias + hora + Confirmar.
+ *
+ * API React (não v-model): `value` + `onValueChange`.
  */
+export type ArcanaDatePickerType =
+    | "date"
+    | "month"
+    | "year"
+    | "daterange"
+    | "datetime";
+
+export type ArcanaDatePickerValue = string | string[] | null;
+
 export interface ArcanaDatePickerProps {
-    value?: string | string[] | null;
-    type?: string;
+    value?: ArcanaDatePickerValue;
+    type?: ArcanaDatePickerType;
     disabled?: boolean;
-    clearable?: boolean;
-    editable?: boolean;
     placeholder?: string;
+    clearable?: boolean;
+    ariaLabel?: string;
     size?: "sm" | "md" | "lg";
-    onValueChange?: (value: string | null) => void;
-    onChange?: (value: string | null) => void;
-    onBlur?: (ev: FocusEvent<HTMLInputElement>) => void;
-    onFocus?: (ev: FocusEvent<HTMLInputElement>) => void;
-    className?: string;
+    /** Locale BCP-47 dos nomes de meses/dias (via Intl). Default `'pt-BR'`. */
+    locale?: string;
+    /** Override parcial dos textos do calendário (clear, nav, confirmar, placeholders). */
+    messages?: Partial<CalendarMessages>;
+    onValueChange?: (value: ArcanaDatePickerValue) => void;
 }
 
-const DATE_MASK = "##/##/####";
+const PANEL_ESTIMATE: Record<
+    ArcanaDatePickerType,
+    { width: number; height: number }
+> = {
+    date: { width: 252, height: 300 },
+    month: { width: 252, height: 210 },
+    year: { width: 252, height: 210 },
+    daterange: { width: 520, height: 300 },
+    datetime: { width: 252, height: 348 },
+};
+
+const clampInt = (value: number, min: number, max: number) =>
+    Number.isFinite(value) ? Math.min(max, Math.max(min, Math.trunc(value))) : min;
 
 export function ArcanaDatePicker({
     value = null,
     type = "date",
     disabled = false,
-    placeholder = "",
+    placeholder,
+    clearable = true,
+    ariaLabel,
     size = "md",
+    locale = "pt-BR",
+    messages,
     onValueChange,
-    onChange,
-    onBlur,
-    onFocus,
-    className,
 }: ArcanaDatePickerProps) {
-    const isRange = String(type).includes("range");
-    const isComposite = type === "date";
-
-    const nativeType =
-        type === "month" || type === "monthrange"
-            ? "month"
-            : type === "year" || type === "yearrange"
-              ? "number"
-              : "date";
-
-    const toDisplay = (ymd: string): string => DateFormatter.fromDate(ymd) ?? "";
-
-    const [displayText, setDisplayText] = useState<string>(() =>
-        value && typeof value === "string" ? toDisplay(value) : ""
+    const msg = useMemo(() => resolveCalendarMessages(messages), [messages]);
+    const monthLabels = useMemo(() => calendarMonthLabels(locale), [locale]);
+    const monthLabelsShort = useMemo(
+        () => calendarMonthLabelsShort(locale),
+        [locale]
     );
-    const lastEmitted = useRef<string | null>(
-        typeof value === "string" ? value : null
-    );
-    const nativeRef = useRef<HTMLInputElement | null>(null);
+    const weekdayLabels = useMemo(() => calendarWeekdayLabels(locale), [locale]);
+
+    const isRange = type === "daterange";
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [panelStyle, setPanelStyle] = useState<React.CSSProperties>({});
+    const [view, setView] = useState({ year: 2000, month: 1 });
+    const [pendingStart, setPendingStart] = useState<string | null>(null);
+    const [hoverYmd, setHoverYmd] = useState<string | null>(null);
+    const [todayYmd, setTodayYmd] = useState("");
+    // datetime: dia selecionado (ainda não confirmado) + hora/minuto pendentes.
+    const [dtDay, setDtDay] = useState<string | null>(null);
+    const [dtHour, setDtHour] = useState(0);
+    const [dtMinute, setDtMinute] = useState(0);
+    const triggerRef = useRef<HTMLButtonElement | null>(null);
+    const panelRef = useRef<HTMLDivElement | null>(null);
+
+    const rangeValue = useMemo<[string, string]>(() => {
+        if (!isRange) return ["", ""];
+        const pair = Array.isArray(value) ? value : ["", ""];
+        return [String(pair[0] ?? ""), String(pair[1] ?? "")];
+    }, [isRange, value]);
+    const singleValue = isRange ? "" : String(value ?? "");
+
+    const hasValue = isRange
+        ? Boolean(rangeValue[0] || rangeValue[1])
+        : singleValue !== "";
+    const canClear = clearable && !disabled && hasValue;
+
+    const placeholderText = useMemo(() => {
+        if (placeholder) return placeholder;
+        switch (type) {
+            case "month":
+                return msg.monthPlaceholder;
+            case "year":
+                return msg.yearPlaceholder;
+            case "daterange":
+                return msg.rangePlaceholder;
+            case "datetime":
+                return msg.datetimePlaceholder;
+            default:
+                return msg.datePlaceholder;
+        }
+    }, [placeholder, type, msg]);
+
+    const displayLabel = useMemo(() => {
+        if (isRange) {
+            if (!hasValue) return placeholderText;
+            return `${toDisplayDate(rangeValue[0]) || "…"} → ${toDisplayDate(rangeValue[1]) || "…"}`;
+        }
+        switch (type) {
+            case "month":
+                return toDisplayMonth(singleValue) || placeholderText;
+            case "year": {
+                const year = parseYear(singleValue);
+                return year != null ? formatYear(year) : placeholderText;
+            }
+            case "datetime":
+                return toDisplayDateTime(singleValue) || placeholderText;
+            default:
+                return toDisplayDate(singleValue) || placeholderText;
+        }
+    }, [isRange, hasValue, placeholderText, rangeValue, type, singleValue]);
+
+    /* ───────────────────── placement / lifecycle ─────────────────────── */
+
+    const reposition = useCallback(() => {
+        const trigger = triggerRef.current;
+        const panel = panelRef.current;
+        if (!trigger || !panel) return;
+        const rect = trigger.getBoundingClientRect();
+        const estimate = PANEL_ESTIMATE[type];
+        const place = placePanel(
+            rect,
+            {
+                width: panel.offsetWidth || estimate.width,
+                height: panel.offsetHeight || estimate.height,
+            },
+            { width: window.innerWidth, height: window.innerHeight },
+            {}
+        );
+        setPanelStyle({ position: "fixed", left: place.left, top: place.top });
+    }, [type]);
+
+    const close = useCallback(() => {
+        setIsOpen(false);
+        setPendingStart(null);
+        setHoverYmd(null);
+        triggerRef.current?.focus({ preventScroll: true });
+    }, []);
+
+    const open = () => {
+        if (disabled || isOpen) return;
+        const now = new Date();
+        const today = formatYmd(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            now.getDate()
+        );
+        setTodayYmd(today);
+
+        // Anchor the initial view on the current value (per mode) or on today.
+        let anchor: { year: number; month: number } | null = null;
+        if (isRange) anchor = parseYmd(rangeValue[0]);
+        else if (type === "month") anchor = parseYm(singleValue);
+        else if (type === "year") {
+            const y = parseYear(singleValue);
+            anchor = y != null ? { year: y, month: 1 } : null;
+        } else if (type === "datetime") {
+            const dt = parseDateTime(singleValue);
+            anchor = dt ? { year: dt.year, month: dt.month } : null;
+        } else anchor = parseYmd(singleValue);
+        setView(
+            anchor
+                ? { year: anchor.year, month: anchor.month }
+                : { year: now.getFullYear(), month: now.getMonth() + 1 }
+        );
+
+        setPendingStart(null);
+        setHoverYmd(null);
+
+        // datetime: seed the pending day + time from the current value, else today/00:00.
+        if (type === "datetime") {
+            const dt = parseDateTime(singleValue);
+            setDtDay(dt ? formatYmd(dt.year, dt.month, dt.day) : today);
+            setDtHour(dt ? dt.hour : 0);
+            setDtMinute(dt ? dt.minute : 0);
+        }
+
+        const rect = triggerRef.current?.getBoundingClientRect();
+        if (rect) {
+            const place = placePanel(
+                rect,
+                PANEL_ESTIMATE[type],
+                { width: window.innerWidth, height: window.innerHeight },
+                {}
+            );
+            setPanelStyle({
+                position: "fixed",
+                left: place.left,
+                top: place.top,
+            });
+        }
+        setIsOpen(true);
+    };
+
+    useLayoutEffect(() => {
+        if (isOpen) reposition();
+    }, [isOpen, reposition]);
 
     useEffect(() => {
-        if (!isComposite) return;
-        const v = typeof value === "string" ? value : null;
-        if (v !== lastEmitted.current) {
-            lastEmitted.current = v;
-            setDisplayText(v ? toDisplay(v) : "");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
+        if (!isOpen) return;
+        panelRef.current?.focus({ preventScroll: true });
+        const onMouseDown = (event: MouseEvent) => {
+            const target = event.target as Node;
+            if (
+                triggerRef.current?.contains(target) ||
+                panelRef.current?.contains(target)
+            )
+                return;
+            close();
+        };
+        const onScroll = (event: Event) => {
+            if (
+                event.target instanceof Node &&
+                panelRef.current?.contains(event.target)
+            )
+                return;
+            close();
+        };
+        const onResize = () => reposition();
+        const onDocKeydown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") close();
+        };
+        document.addEventListener("mousedown", onMouseDown, true);
+        window.addEventListener("scroll", onScroll, true);
+        window.addEventListener("resize", onResize);
+        document.addEventListener("keydown", onDocKeydown);
+        return () => {
+            document.removeEventListener("mousedown", onMouseDown, true);
+            window.removeEventListener("scroll", onScroll, true);
+            window.removeEventListener("resize", onResize);
+            document.removeEventListener("keydown", onDocKeydown);
+        };
+    }, [isOpen, close, reposition]);
 
-    const rawToYmd = (raw: string): string | undefined => {
-        if (raw.length !== 8) return undefined;
-        const d = raw.slice(0, 2),
-            m = raw.slice(2, 4),
-            y = raw.slice(4, 8);
-        const dd = Number(d),
-            mm = Number(m),
-            yyyy = Number(y);
-        if (mm < 1 || mm > 12 || dd < 1 || dd > 31 || yyyy < 1900) return undefined;
-        const dt = new Date(yyyy, mm - 1, dd);
-        if (
-            dt.getFullYear() !== yyyy ||
-            dt.getMonth() !== mm - 1 ||
-            dt.getDate() !== dd
-        )
-            return undefined;
-        return `${y}-${m}-${d}`;
+    const emitValue = (next: ArcanaDatePickerValue) => {
+        onValueChange?.(next);
     };
 
-    const emitValue = (ymd: string | null) => {
-        lastEmitted.current = ymd;
-        onValueChange?.(ymd);
-        onChange?.(ymd);
+    const clear = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        if (disabled) return;
+        emitValue(isRange ? ["", ""] : "");
     };
 
-    const onTextChange = (typed: string) => {
-        const display = maskaMask(typed, DATE_MASK, maskaTokens);
-        setDisplayText(display);
-        const raw = maskaMask(typed, DATE_MASK, maskaTokens, false);
-        if (raw.length === 0) {
-            emitValue(null);
+    /* ─────────────────────────── navigation ──────────────────────────── */
+
+    const navMonths = (delta: number) =>
+        setView((current) => addMonths(current.year, current.month, delta));
+    const navYears = (delta: number) =>
+        setView((current) => ({ year: current.year + delta, month: current.month }));
+
+    const decadeCells = useMemo(() => decadeGrid(view.year), [view.year]);
+    const decadeStart = Math.floor(view.year / 10) * 10;
+    const decadeTitle = `${decadeStart} - ${decadeStart + 9}`;
+
+    /* ─────────────────────────── selection ───────────────────────────── */
+
+    const pickDay = (ymd: string) => {
+        if (type === "date") {
+            emitValue(ymd);
+            close();
             return;
         }
-        if (raw.length === 8) {
-            const ymd = rawToYmd(raw);
-            if (ymd) emitValue(ymd);
+        if (type === "datetime") {
+            setDtDay(ymd);
+            return;
+        }
+        // daterange
+        if (!pendingStart) {
+            setPendingStart(ymd);
+            setHoverYmd(null);
+            return;
+        }
+        emitValue(sortRange(pendingStart, ymd));
+        close();
+    };
+
+    const pickMonth = (month: number) => {
+        emitValue(formatYm(view.year, month));
+        close();
+    };
+    const pickYear = (year: number) => {
+        emitValue(formatYear(year));
+        close();
+    };
+
+    const confirmDateTime = () => {
+        const day =
+            parseYmd(dtDay ?? todayYmd) ?? parseYmd(todayYmd);
+        if (!day) return;
+        emitValue(formatDateTime(day.year, day.month, day.day, dtHour, dtMinute));
+        close();
+    };
+
+    /* ─────────────────────────── highlighting ────────────────────────── */
+
+    // Range: while picking, preview from the anchored start to the hovered day;
+    // otherwise show the committed value.
+    const highlightRange = useMemo<[string, string] | null>(() => {
+        if (!isRange) return null;
+        if (pendingStart)
+            return hoverYmd
+                ? sortRange(pendingStart, hoverYmd)
+                : [pendingStart, pendingStart];
+        return parseYmd(rangeValue[0]) && parseYmd(rangeValue[1])
+            ? [rangeValue[0], rangeValue[1]]
+            : null;
+    }, [isRange, pendingStart, hoverYmd, rangeValue]);
+
+    const onPanelKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Escape" || event.key === "Tab") {
+            event.preventDefault();
+            close();
         }
     };
 
-    const onTextBlur = (event: FocusEvent<HTMLInputElement>) => {
-        onBlur?.(event);
-        const raw = (displayText ?? "").replace(/\D/g, "");
-        if (raw.length !== 8 || !rawToYmd(raw)) {
-            setDisplayText(
-                typeof value === "string" && value ? toDisplay(value) : ""
-            );
-        }
+    const navButton = (
+        label: string,
+        aria: string,
+        onClick: () => void
+    ) => (
+        <button
+            type="button"
+            className="arcana-cal__nav"
+            aria-label={aria}
+            onClick={onClick}
+        >
+            {label}
+        </button>
+    );
+
+    const renderDaysPanel = (offset: number) => {
+        const panelMonth = addMonths(view.year, view.month, offset);
+        const cells: CalendarDay[] = monthGrid(panelMonth.year, panelMonth.month);
+        return (
+            <div className="arcana-cal__month-panel" key={offset}>
+                <div className="arcana-cal__header">
+                    {!isRange || offset === 0 ? (
+                        <>
+                            {navButton("«", msg.prevYear, () => navMonths(-12))}
+                            {navButton("‹", msg.prevMonth, () => navMonths(-1))}
+                        </>
+                    ) : (
+                        <span className="arcana-cal__nav-spacer" />
+                    )}
+                    <span className="arcana-cal__title">
+                        {monthLabels[panelMonth.month - 1]} {panelMonth.year}
+                    </span>
+                    {!isRange || offset === 1 ? (
+                        <>
+                            {navButton("›", msg.nextMonth, () => navMonths(1))}
+                            {navButton("»", msg.nextYear, () => navMonths(12))}
+                        </>
+                    ) : (
+                        <span className="arcana-cal__nav-spacer" />
+                    )}
+                </div>
+                <div className="arcana-cal__weekdays">
+                    {weekdayLabels.map((label, index) => (
+                        <span key={index} className="arcana-cal__weekday">
+                            {label}
+                        </span>
+                    ))}
+                </div>
+                <div className="arcana-cal__grid">
+                    {cells.map((cell) => {
+                        const inHighlight = Boolean(
+                            highlightRange &&
+                                cell.inMonth &&
+                                isBetweenYmd(
+                                    cell.ymd,
+                                    highlightRange[0],
+                                    highlightRange[1]
+                                )
+                        );
+                        const isEdge = Boolean(
+                            highlightRange &&
+                                cell.inMonth &&
+                                (cell.ymd === highlightRange[0] ||
+                                    cell.ymd === highlightRange[1])
+                        );
+                        let isSelected = false;
+                        if (type === "date")
+                            isSelected = cell.ymd === singleValue;
+                        else if (type === "datetime")
+                            isSelected = cell.ymd === dtDay;
+                        else isSelected = isEdge;
+                        const classes = ["arcana-cal__day"];
+                        if (!cell.inMonth)
+                            classes.push("arcana-cal__day--adjacent");
+                        if (cell.ymd === todayYmd)
+                            classes.push("arcana-cal__day--today");
+                        if (inHighlight && !isEdge)
+                            classes.push("arcana-cal__day--in-range");
+                        if (isSelected)
+                            classes.push("arcana-cal__day--selected");
+                        if (
+                            highlightRange &&
+                            cell.ymd === highlightRange[0] &&
+                            cell.inMonth
+                        )
+                            classes.push("arcana-cal__day--range-start");
+                        if (
+                            highlightRange &&
+                            cell.ymd === highlightRange[1] &&
+                            cell.inMonth
+                        )
+                            classes.push("arcana-cal__day--range-end");
+                        return (
+                            <button
+                                key={cell.ymd}
+                                type="button"
+                                className={classes.join(" ")}
+                                aria-label={toDisplayDate(cell.ymd)}
+                                onMouseEnter={
+                                    isRange && pendingStart
+                                        ? () => setHoverYmd(cell.ymd)
+                                        : undefined
+                                }
+                                onClick={() => pickDay(cell.ymd)}
+                            >
+                                {cell.day}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {type === "datetime" ? (
+                    <div className="arcana-cal__time">
+                        <span className="arcana-cal__time-label">
+                            {msg.time}
+                        </span>
+                        <input
+                            type="number"
+                            className="arcana-cal__time-input"
+                            min={0}
+                            max={23}
+                            value={dtHour}
+                            aria-label="HH"
+                            onChange={(event) =>
+                                setDtHour(
+                                    clampInt(Number(event.target.value), 0, 23)
+                                )
+                            }
+                        />
+                        <span className="arcana-cal__time-sep">:</span>
+                        <input
+                            type="number"
+                            className="arcana-cal__time-input"
+                            min={0}
+                            max={59}
+                            value={dtMinute}
+                            aria-label="mm"
+                            onChange={(event) =>
+                                setDtMinute(
+                                    clampInt(Number(event.target.value), 0, 59)
+                                )
+                            }
+                        />
+                        <button
+                            type="button"
+                            className="arcana-cal__confirm"
+                            onClick={confirmDateTime}
+                        >
+                            {msg.confirm}
+                        </button>
+                    </div>
+                ) : null}
+            </div>
+        );
     };
 
-    const openPicker = () => {
-        if (disabled) return;
-        const el = nativeRef.current;
-        if (!el) return;
-        // showPicker() abre o calendário nativo; fallback pra focus+click.
-        if (typeof el.showPicker === "function") {
-            try {
-                el.showPicker();
-                return;
-            } catch {
-                /* alguns browsers exigem interação; cai no fallback abaixo */
-            }
-        }
-        el.focus();
-        el.click();
+    const renderMonthsPanel = () => {
+        const selected = parseYm(singleValue);
+        const now = parseYmd(todayYmd);
+        return (
+            <div className="arcana-cal__month-panel">
+                <div className="arcana-cal__header">
+                    {navButton("«", msg.prevYear, () => navYears(-1))}
+                    <span className="arcana-cal__title">{view.year}</span>
+                    {navButton("»", msg.nextYear, () => navYears(1))}
+                </div>
+                <div className="arcana-cal__months">
+                    {monthLabelsShort.map((label, index) => {
+                        const month = index + 1;
+                        const classes = ["arcana-cal__month"];
+                        if (
+                            selected &&
+                            selected.year === view.year &&
+                            selected.month === month
+                        )
+                            classes.push("arcana-cal__month--selected");
+                        if (
+                            now &&
+                            now.year === view.year &&
+                            now.month === month
+                        )
+                            classes.push("arcana-cal__month--today");
+                        return (
+                            <button
+                                key={label}
+                                type="button"
+                                className={classes.join(" ")}
+                                onClick={() => pickMonth(month)}
+                            >
+                                {label}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
+
+    const renderYearsPanel = () => {
+        const selected = parseYear(singleValue);
+        const now = parseYmd(todayYmd);
+        return (
+            <div className="arcana-cal__month-panel">
+                <div className="arcana-cal__header">
+                    {navButton("«", msg.prevDecade, () => navYears(-10))}
+                    <span className="arcana-cal__title">{decadeTitle}</span>
+                    {navButton("»", msg.nextDecade, () => navYears(10))}
+                </div>
+                <div className="arcana-cal__years">
+                    {decadeCells.map((year) => {
+                        const classes = ["arcana-cal__year"];
+                        if (
+                            year < decadeStart ||
+                            year > decadeStart + 9
+                        )
+                            classes.push("arcana-cal__year--adjacent");
+                        if (selected === year)
+                            classes.push("arcana-cal__year--selected");
+                        if (now && now.year === year)
+                            classes.push("arcana-cal__year--today");
+                        return (
+                            <button
+                                key={year}
+                                type="button"
+                                className={classes.join(" ")}
+                                onClick={() => pickYear(year)}
+                            >
+                                {year}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+        );
     };
 
     const rootClasses = [
-        "arcana-date-picker",
-        disabled ? "is-disabled" : "",
-        `arcana-date-picker--${size}`,
-        className ?? "",
+        "arcana-cal",
+        `arcana-cal--${size}`,
+        disabled ? "arcana-cal--disabled" : "",
     ]
         .filter(Boolean)
         .join(" ");
 
-    if (isComposite) {
-        return (
-            <div className={rootClasses}>
-                <div className="arcana-date-picker__box">
-                    <div
-                        className="arcana-date-picker__picker-anchor"
-                        aria-hidden="true"
-                    >
-                        <input
-                            ref={nativeRef}
-                            type="date"
-                            value={typeof value === "string" ? value : ""}
-                            disabled={disabled}
-                            tabIndex={-1}
-                            onChange={(e) => emitValue(e.target.value || null)}
-                        />
-                    </div>
-
-                    <input
-                        className="arcana-date-picker__text"
-                        inputMode="numeric"
-                        value={displayText}
-                        placeholder="__/__/____"
-                        disabled={disabled}
-                        onChange={(e) => onTextChange(e.target.value)}
-                        onBlur={onTextBlur}
-                        onFocus={onFocus}
-                    />
-
-                    <button
-                        type="button"
-                        className="arcana-date-picker__icon-btn"
-                        disabled={disabled}
-                        aria-label="Abrir calendário"
-                        onClick={openPicker}
+    return (
+        <div className={rootClasses}>
+            <button
+                ref={triggerRef}
+                type="button"
+                className={`arcana-cal__input${isOpen ? " arcana-cal__input--open" : ""}${canClear ? " arcana-cal__input--has-clear" : ""}`}
+                disabled={disabled}
+                aria-haspopup="dialog"
+                aria-expanded={isOpen}
+                aria-label={ariaLabel}
+                onClick={() => (isOpen ? close() : open())}
+            >
+                <svg
+                    className="arcana-cal__input-icon"
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span
+                    className={`arcana-cal__input-label${hasValue ? "" : " arcana-cal__input-label--placeholder"}`}
+                >
+                    {displayLabel}
+                </span>
+                {canClear ? (
+                    <span
+                        className="arcana-cal__clear"
+                        role="button"
+                        tabIndex={-1}
+                        aria-label={msg.clear}
+                        onClick={clear}
                     >
                         <svg
-                            width="14"
-                            height="14"
+                            width="13"
+                            height="13"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            strokeWidth="2"
+                            strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+                            aria-hidden="true"
                         >
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
-                    </button>
-                </div>
-            </div>
-        );
-    }
+                    </span>
+                ) : null}
+            </button>
 
-    // Fallback nativo pros demais types (ranges/month/year). Documentado: sem Element
-    // Plus, ranges nativos não existem — usa um único input do tipo aproximado.
-    return (
-        <div className={rootClasses}>
-            <input
-                className="arcana-date-picker__text"
-                type={nativeType}
-                value={typeof value === "string" ? value : ""}
-                placeholder={placeholder}
-                disabled={disabled}
-                onChange={(e) => emitValue(e.target.value || null)}
-                onBlur={onBlur}
-                onFocus={onFocus}
-            />
-            {isRange ? null : null}
+            {isOpen
+                ? createPortal(
+                      <div
+                          ref={panelRef}
+                          className={`arcana-cal__panel${isRange ? " arcana-cal__panel--range" : ""}`}
+                          style={panelStyle}
+                          role="dialog"
+                          aria-label={ariaLabel}
+                          tabIndex={-1}
+                          onKeyDown={onPanelKeyDown}
+                      >
+                          <div className="arcana-cal__panels">
+                              {type === "month"
+                                  ? renderMonthsPanel()
+                                  : type === "year"
+                                    ? renderYearsPanel()
+                                    : isRange
+                                      ? (
+                                            <>
+                                                {renderDaysPanel(0)}
+                                                {renderDaysPanel(1)}
+                                            </>
+                                        )
+                                      : renderDaysPanel(0)}
+                          </div>
+                      </div>,
+                      document.body
+                  )
+                : null}
         </div>
     );
 }

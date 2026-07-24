@@ -632,32 +632,45 @@ export class ViewModeComponent {
   datePicker: {
     react: `import { useState } from 'react'
 import { ArcanaDatePicker } from '@arcanalabs/ui-components/react'
-// Masking is built into the component — no global directive needed.
 
-export function BirthDate() {
-  const [date, setDate] = useState<string | null>('2026-07-24')
-  return <ArcanaDatePicker value={date} onValueChange={setDate} />
+export function Dates() {
+  const [date, setDate] = useState('2026-07-24')                       // 'YYYY-MM-DD'
+  const [range, setRange] = useState<[string, string]>(['2026-07-01', '2026-07-15'])
+  const [at, setAt] = useState('2026-07-24 14:30')                     // 'YYYY-MM-DD HH:mm'
+  return (
+    <>
+      <ArcanaDatePicker type="date" value={date} onValueChange={setDate} />
+      <ArcanaDatePicker type="daterange" value={range} onValueChange={setRange} locale="en" />
+      <ArcanaDatePicker type="datetime" value={at} onValueChange={setAt} />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaDatePickerComponent } from '@arcanalabs/ui-components/angular'
 
-// Masking is built into the component — no global directive needed.
 @Component({
-  selector: 'app-birth-date',
+  selector: 'app-dates',
   standalone: true,
   imports: [ArcanaDatePickerComponent],
-  template: \`<div arcanaDatePicker [(value)]="date"></div>\`
+  template: \`
+    <div arcanaDatePicker type="date" [(value)]="date"></div>
+    <div arcanaDatePicker type="daterange" [(value)]="range" locale="en"></div>
+    <div arcanaDatePicker type="datetime" [(value)]="at"></div>
+  \`
 })
-export class BirthDateComponent {
-  date: string | null = '2026-07-24'
+export class DatesComponent {
+  date = '2026-07-24'
+  range: [string, string] = ['2026-07-01', '2026-07-15']
+  at = '2026-07-24 14:30'
 }`,
     svelte: `<script lang="ts">
   import { ArcanaDatePicker } from '@arcanalabs/ui-components/svelte'
-  // Masking is built into the component — no global directive needed.
-  let date = $state<string | null>('2026-07-24')
+  let date = $state('2026-07-24')
+  let at = $state('2026-07-24 14:30')
 </script>
 
-<ArcanaDatePicker value={date} onValueChange={(v) => (date = v)} />`
+<ArcanaDatePicker type="date" value={date} onValueChange={(v) => (date = v)} />
+<ArcanaDatePicker type="datetime" value={at} onValueChange={(v) => (at = v)} />`
   },
 
   inputCurrency: {
