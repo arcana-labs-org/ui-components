@@ -63,9 +63,9 @@ export const de: Messages = {
       p2: "Die Palette zu wechseln ist eine Klasse am Wurzelelement: <c>.arcana-accent-violet</c> wählt den Akzent, <c>.arcana-gray-slate</c> den Neutralton und <c>.arcana-dark</c> den Dunkelmodus. Komponenten lesen ausschließlich semantische Tokens — sie ziehen also alle mit, ohne dass du einen einzigen Stil anfassen musst."
     },
     maska: {
-      title: "v-maska registrieren",
-      p1: "Einige Komponenten (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) nutzen die Direktive <c>v-maska</c> aus dem Paket <c>maska</c>. Registriere sie einmal global beim Erstellen der App.",
-      p2: "Komponenten ohne Maskierung benötigen kein zusätzliches Setup — dieser Schritt ist nur nötig, wenn du ein maskiertes Eingabefeld renderst."
+      title: "v-maska installieren",
+      p1: "Die Komponente <c>ArcanaInputMask</c> nutzt die Direktive <c>v-maska</c> aus dem Paket <c>maska</c>. Es ist eine <b>optionale Peer-Dependency</b>: Installieren Sie es zusammen mit der Bibliothek und registrieren Sie es einmalig global beim Erstellen der App.",
+      p2: "Komponenten ohne Maskierung brauchen keine zusätzliche Einrichtung — dieser Schritt ist nur nötig, wenn Sie ein maskiertes Eingabefeld rendern."
     }
   },
 

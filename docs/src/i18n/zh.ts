@@ -63,9 +63,9 @@ export const zh: Messages = {
       p2: "切换调色板只需在根元素上加一个类：<c>.arcana-accent-violet</c> 决定强调色，<c>.arcana-gray-slate</c> 决定中性色，<c>.arcana-dark</c> 切换暗色模式。组件只读取语义令牌，因此无需改动任何一处组件样式，它们都会随之变化。"
     },
     maska: {
-      title: "注册 v-maska",
-      p1: "少数组件（<c>ArcanaInputMask</c>、<c>ArcanaDatePicker</c>）依赖来自 <c>maska</c> 包的 <c>v-maska</c> 指令。创建应用时全局注册一次即可。",
-      p2: "不使用掩码的组件无需额外设置——只有渲染带掩码的输入框时才需要此步骤。"
+      title: "安装 v-maska",
+      p1: "<c>ArcanaInputMask</c> 组件依赖 <c>maska</c> 包提供的 <c>v-maska</c> 指令。它是<b>可选的 peer dependency</b>：请与本库一同安装，并在创建应用时全局注册一次。",
+      p2: "不使用掩码的组件无需任何额外配置 — 只有渲染掩码输入框时才需要这一步。"
     }
   },
 

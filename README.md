@@ -34,9 +34,10 @@ framework — `@arcanalabs/ui-components/{vue,react,angular,svelte}` — plus th
 once. The full catalog, props, events and per-framework usage live in the
 **[documentation](https://arcana-labs-org.github.io/ui-components/)** (8 languages, live demos).
 
-Framework peers are **optional** — install only the one you use. Vue's mask directive
-(`ArcanaInputMask` / `ArcanaDatePicker`) needs `app.use(Maska)` in the host app; the other
-frameworks have masking built in.
+Framework peers are **optional** — install only the one you use. `ArcanaInputMask` masks
+input through the [`maska`](https://github.com/beholdr/maska) package, also an optional
+peer: install it (`npm i maska`) when you render a masked input, and in Vue register the
+directive once with `app.use(Maska)`. The other frameworks need no global setup.
 
 **Icons** use [Font Awesome Free](https://fontawesome.com/) (the `fa-solid fa-*` classes on
 `icon` props). Install the optional peer and load its CSS once in your app:

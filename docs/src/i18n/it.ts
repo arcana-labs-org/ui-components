@@ -63,9 +63,9 @@ export const it: Messages = {
       p2: "Cambiare palette significa mettere una classe sull'elemento radice: <c>.arcana-accent-violet</c> sceglie l'accento, <c>.arcana-gray-slate</c> il neutro e <c>.arcana-dark</c> la modalità scura. I componenti leggono solo token semantici, quindi si adeguano tutti senza toccare un solo stile."
     },
     maska: {
-      title: "Registrare v-maska",
-      p1: "Alcuni componenti (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) si basano sulla direttiva <c>v-maska</c> del pacchetto <c>maska</c>. Registrala globalmente una volta quando crei l'app.",
-      p2: "I componenti che non usano le maschere non richiedono configurazione extra — questo passaggio serve solo se renderizzi un input con maschera."
+      title: "Installare v-maska",
+      p1: "Il componente <c>ArcanaInputMask</c> usa la direttiva <c>v-maska</c> del pacchetto <c>maska</c>. È una <b>peer dependency opzionale</b>: installala insieme alla libreria e registrala globalmente una volta, alla creazione dell'app.",
+      p2: "I componenti che non usano maschere non richiedono configurazione — questo passaggio serve solo se rendi un input mascherato."
     }
   },
 

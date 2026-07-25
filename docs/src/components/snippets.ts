@@ -151,6 +151,9 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
   vue: {
     file: "main.ts",
     code: [
+      "// maska is an optional peer dependency — install it if you use ArcanaInputMask:",
+      "//   npm i maska",
+      "",
       "// main.ts — Vue needs the global v-maska directive registered once.",
       "import { createApp } from 'vue'",
       "import Maska from 'maska'",

@@ -63,8 +63,8 @@ export const en: Messages = {
       p2: "Switching palettes is a class on the root element: <c>.arcana-accent-violet</c> picks the accent, <c>.arcana-gray-slate</c> the neutral and <c>.arcana-dark</c> the dark mode. Components only ever read semantic tokens, so every one of them follows along without you touching a single component style."
     },
     maska: {
-      title: "Registering v-maska",
-      p1: "A few components (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) rely on the <c>v-maska</c> directive from the <c>maska</c> package. Register it globally once when you create the app.",
+      title: "Installing v-maska",
+      p1: "The <c>ArcanaInputMask</c> component relies on the <c>v-maska</c> directive from the <c>maska</c> package. It is an <b>optional peer dependency</b>: install it alongside the library, then register it globally once when you create the app.",
       p2: "Components that don't use masking need no extra setup — this step is only required if you render a masked input."
     }
   },
