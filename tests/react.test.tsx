@@ -25,6 +25,7 @@ import {
     ArcanaTabs,
     ArcanaCheckbox,
     ArcanaSelect,
+    ArcanaTreeSelect,
     ArcanaInputBoolean,
     ArcanaNumberStepper,
     ArcanaRadioCardGroup,
@@ -167,6 +168,93 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(
             container.querySelector(".arcana-select__label")!.textContent
         ).toContain("Dois");
+    });
+
+    it("ArcanaTreeSelect abre o panel, expande o pai e seleciona a folha", () => {
+        const onValueChange = vi.fn();
+        const tree = [
+            {
+                id: 1,
+                name: "Administrativo",
+                children: [
+                    { id: 11, name: "RH" },
+                    { id: 12, name: "Financeiro" },
+                ],
+            },
+            { id: 2, name: "Operacional" },
+        ];
+        const { container } = render(
+            <ArcanaTreeSelect
+                value={null}
+                options={tree}
+                onValueChange={onValueChange}
+            />
+        );
+        const trigger = container.querySelector(
+            "button.arcana-tree-select__trigger"
+        )!;
+        expect(document.body.querySelector(".arcana-tree-select__panel")).toBeNull();
+
+        fireEvent.click(trigger);
+        const panel = document.body.querySelector(".arcana-tree-select__panel")!;
+        expect(panel).toBeTruthy();
+        // Recolhido: só as duas raízes aparecem.
+        expect(panel.querySelectorAll(".arcana-tree-select__node").length).toBe(2);
+
+        // Clicar no pai (allowParentSelection=false) apenas expande.
+        const parentRow = panel.querySelectorAll(".arcana-tree-select__node")[0];
+        fireEvent.click(parentRow);
+        expect(onValueChange).not.toHaveBeenCalled();
+        const rows = Array.from(
+            document.body.querySelectorAll(".arcana-tree-select__node-label")
+        ).map((el) => el.textContent);
+        expect(rows).toEqual(["Administrativo", "RH", "Financeiro", "Operacional"]);
+
+        // Folha seleciona, emite o id e fecha o painel.
+        fireEvent.click(
+            document.body.querySelectorAll(".arcana-tree-select__node")[2]
+        );
+        expect(onValueChange).toHaveBeenCalledWith(12);
+        expect(document.body.querySelector(".arcana-tree-select__panel")).toBeNull();
+    });
+
+    it("ArcanaTreeSelect filtra pela busca preservando ancestrais e destaca o match", () => {
+        const { container } = render(
+            <ArcanaTreeSelect
+                value={null}
+                options={[
+                    {
+                        id: 1,
+                        name: "Administrativo",
+                        children: [
+                            { id: 11, name: "RH" },
+                            { id: 12, name: "Financeiro" },
+                        ],
+                    },
+                    { id: 2, name: "Operacional" },
+                ]}
+            />
+        );
+        fireEvent.click(
+            container.querySelector("button.arcana-tree-select__trigger")!
+        );
+        const input = document.body.querySelector<HTMLInputElement>(
+            ".arcana-tree-select__search-input"
+        )!;
+        fireEvent.change(input, { target: { value: "finan" } });
+
+        const rows = Array.from(
+            document.body.querySelectorAll(".arcana-tree-select__node-label")
+        ).map((el) => el.textContent);
+        expect(rows).toEqual(["Administrativo", "Financeiro"]);
+        expect(
+            document.body.querySelector(".arcana-tree-select__mark")!.textContent
+        ).toBe("Finan");
+
+        fireEvent.change(input, { target: { value: "zzz" } });
+        expect(
+            document.body.querySelector(".arcana-tree-select__empty")!.textContent
+        ).toBe("Nenhum resultado encontrado");
     });
 
     it("ArcanaInputBoolean renderiza como arcana-select com opção Todos", () => {

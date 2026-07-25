@@ -90,6 +90,9 @@ export const zh: Messages = {
     select: {
       blurb: "完全自定义的选择框（无 Element Plus），传送到 <c>&lt;body&gt;</c>，支持单选/<c>multiple</c>、<c>searchable</c>、<c>clearable</c> 和键盘导航。"
     },
+    treeSelect: {
+      blurb: "面板为可搜索层级结构的选择器 —— 从树中选择节点（成本中心、分类），支持单选或多选，默认仅可选叶子节点。"
+    },
     checkbox: {
       blurb: "包裹真实原生 <c>&lt;input type=\"checkbox\"&gt;</c> 的二元复选框，带 <c>indeterminate</c> 状态；如需切换设置项请用 <c>ArcanaSwitch</c>。"
     },
@@ -508,6 +511,19 @@ export const zh: Messages = {
     switchSegMonthly: "按月",
     switchSegAnnual: "按年 · −20%",
     switchSegSandbox: "沙盒",
-    switchSegProduction: "生产环境"
+    switchSegProduction: "生产环境",
+
+    // ── tree select ──
+    treeAdministrative: "行政",
+    treeHr: "人力资源",
+    treeFinance: "财务",
+    treeOperations: "运营",
+    treeLogistics: "物流",
+    treeFleet: "车队",
+    treeWarehouse: "仓库",
+    treeCommercial: "商务",
+    treePickOne: "选择成本中心",
+    treePickSeveral: "选择多个"
+
   }
 };

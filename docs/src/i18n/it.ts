@@ -90,6 +90,9 @@ export const it: Messages = {
     select: {
       blurb: "Un select completamente personalizzato (senza Element Plus) teletrasportato in <c>&lt;body&gt;</c>, con singola/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> e navigazione da tastiera."
     },
+    treeSelect: {
+      blurb: "Un select il cui pannello è una gerarchia ricercabile — scegli un nodo dall'albero (centri di costo, categorie), singolo o multiplo, selezionando solo le foglie per impostazione predefinita."
+    },
     checkbox: {
       blurb: "Un checkbox binario che avvolge un <c>&lt;input type=\"checkbox\"&gt;</c> nativo vero con uno stato <c>indeterminate</c>; usa <c>ArcanaSwitch</c> per attivare un'impostazione."
     },
@@ -508,6 +511,19 @@ export const it: Messages = {
     switchSegMonthly: "Mensile",
     switchSegAnnual: "Annuale · −20%",
     switchSegSandbox: "Sandbox",
-    switchSegProduction: "Produzione"
+    switchSegProduction: "Produzione",
+
+    // ── tree select ──
+    treeAdministrative: "Amministrativo",
+    treeHr: "Risorse umane",
+    treeFinance: "Finanza",
+    treeOperations: "Operazioni",
+    treeLogistics: "Logistica",
+    treeFleet: "Flotta",
+    treeWarehouse: "Magazzino",
+    treeCommercial: "Commerciale",
+    treePickOne: "Scegli un centro di costo",
+    treePickSeveral: "Scegline diversi"
+
   }
 };

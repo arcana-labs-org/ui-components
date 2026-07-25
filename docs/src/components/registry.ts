@@ -28,6 +28,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-number-stepper", name: "ArcanaNumberStepper", label: "Number Stepper", category: "forms", docKey: "numberStepper" },
   { id: "input-currency", name: "ArcanaInputCurrency", label: "Input Currency", category: "forms", docKey: "inputCurrency" },
   { id: "arcana-select", name: "ArcanaSelect", label: "Select", category: "forms", docKey: "select" },
+  { id: "arcana-tree-select", name: "ArcanaTreeSelect", label: "Tree Select", category: "forms", docKey: "treeSelect" },
   { id: "multi-select-popover", name: "ArcanaMultiSelectPopover", label: "Multi-Select Popover", category: "forms", docKey: "multiSelectPopover" },
   { id: "arcana-checkbox", name: "ArcanaCheckbox", label: "Checkbox", category: "forms", docKey: "checkbox" },
   { id: "arcana-switch", name: "ArcanaSwitch", label: "Switch", category: "forms", docKey: "switch" },

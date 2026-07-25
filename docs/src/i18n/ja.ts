@@ -90,6 +90,9 @@ export const ja: Messages = {
     select: {
       blurb: "<c>&lt;body&gt;</c> にテレポートする完全カスタムなセレクト（Element Plus 不使用）で、単一/<c>multiple</c>、<c>searchable</c>、<c>clearable</c>、キーボード操作をサポートします。"
     },
+    treeSelect: {
+      blurb: "パネルが検索可能な階層になっているセレクトです。ツリーからノード（原価センター、カテゴリ）を単一または複数選択でき、既定では葉のみ選択できます。"
+    },
     checkbox: {
       blurb: "本物のネイティブ <c>&lt;input type=\"checkbox\"&gt;</c> をラップし <c>indeterminate</c> 状態を持つ二値チェックボックスで、設定のオン/オフには <c>ArcanaSwitch</c> を使います。"
     },
@@ -508,6 +511,19 @@ export const ja: Messages = {
     switchSegMonthly: "月額",
     switchSegAnnual: "年額 · −20%",
     switchSegSandbox: "サンドボックス",
-    switchSegProduction: "本番"
+    switchSegProduction: "本番",
+
+    // ── tree select ──
+    treeAdministrative: "管理",
+    treeHr: "人事",
+    treeFinance: "財務",
+    treeOperations: "オペレーション",
+    treeLogistics: "物流",
+    treeFleet: "車両",
+    treeWarehouse: "倉庫",
+    treeCommercial: "営業",
+    treePickOne: "原価センターを選択",
+    treePickSeveral: "複数選択"
+
   }
 };

@@ -90,6 +90,9 @@ export const ru: Messages = {
     select: {
       blurb: "Полностью самописный select (без Element Plus), телепортируемый в <c>&lt;body&gt;</c>, с одиночным/<c>multiple</c> выбором, <c>searchable</c>, <c>clearable</c> и навигацией с клавиатуры."
     },
+    treeSelect: {
+      blurb: "Селект, панель которого — иерархия с поиском: выберите узел дерева (центры затрат, категории), одиночно или множественно; по умолчанию выбираются только листья."
+    },
     checkbox: {
       blurb: "Бинарный чекбокс, оборачивающий настоящий нативный <c>&lt;input type=\"checkbox\"&gt;</c> с состоянием <c>indeterminate</c>; для переключения настройки используйте <c>ArcanaSwitch</c>."
     },
@@ -508,6 +511,19 @@ export const ru: Messages = {
     switchSegMonthly: "Ежемесячно",
     switchSegAnnual: "Ежегодно · −20%",
     switchSegSandbox: "Песочница",
-    switchSegProduction: "Продакшн"
+    switchSegProduction: "Продакшн",
+
+    // ── tree select ──
+    treeAdministrative: "Администрация",
+    treeHr: "Кадры",
+    treeFinance: "Финансы",
+    treeOperations: "Операции",
+    treeLogistics: "Логистика",
+    treeFleet: "Автопарк",
+    treeWarehouse: "Склад",
+    treeCommercial: "Коммерция",
+    treePickOne: "Выберите центр затрат",
+    treePickSeveral: "Выберите несколько"
+
   }
 };

@@ -24,6 +24,7 @@ import {
   ArcanaSwitchSegmented,
   ArcanaTable,
   ArcanaTabs,
+  ArcanaTreeSelect,
 } from "../src/svelte";
 import DropdownFixture from "./fixtures/DropdownFixture.svelte";
 import DialogFixture from "./fixtures/DialogFixture.svelte";
@@ -179,6 +180,56 @@ describe("Svelte adapter — lote 2", () => {
     expect(onValueChange).toHaveBeenCalledWith("b");
     // Panel closes after single-select.
     expect(document.body.querySelector(".arcana-select__panel")).toBeNull();
+  });
+
+  it("ArcanaTreeSelect opens a portaled tree, filters by search and selects a leaf", () => {
+    const onValueChange = vi.fn();
+    const onChange = vi.fn();
+    const { target } = render(ArcanaTreeSelect, {
+      value: null,
+      options: [
+        {
+          id: 1,
+          name: "Operacional",
+          children: [
+            { id: 11, name: "Combustível" },
+            { id: 12, name: "Manutenção" },
+          ],
+        },
+        { id: 2, name: "Administrativo" },
+      ],
+      onValueChange,
+      onChange,
+    });
+    const root = target.querySelector(".arcana-tree-select")!;
+    expect(root.classList.contains("arcana-tree-select--md")).toBe(true);
+    const trigger = target.querySelector("button.arcana-tree-select__trigger")!;
+    click(trigger);
+
+    // Panel is portaled to document.body (not inside target).
+    const panel = document.body.querySelector(".arcana-tree-select__panel")!;
+    expect(panel).toBeTruthy();
+    // Collapsed by default: only the two roots are visible.
+    let nodes = panel.querySelectorAll(".arcana-tree-select__node");
+    expect(nodes).toHaveLength(2);
+
+    // Parent is not selectable (default) → clicking it just expands.
+    click(nodes[0]);
+    expect(onValueChange).not.toHaveBeenCalled();
+    nodes = panel.querySelectorAll(".arcana-tree-select__node");
+    expect(nodes).toHaveLength(4);
+
+    // Search filters the tree, keeps the ancestor and highlights the match.
+    setInput(panel.querySelector<HTMLInputElement>(".arcana-tree-select__search-input"), "manu");
+    nodes = panel.querySelectorAll(".arcana-tree-select__node");
+    expect(nodes).toHaveLength(2);
+    expect(panel.querySelector("mark.arcana-tree-select__mark")?.textContent).toBe("Manu");
+
+    // Clicking the leaf emits the id and closes the panel.
+    click(nodes[1]);
+    expect(onValueChange).toHaveBeenCalledWith(12);
+    expect(onChange).toHaveBeenCalledWith(12);
+    expect(document.body.querySelector(".arcana-tree-select__panel")).toBeNull();
   });
 
   it("ArcanaInputBoolean renders a select showing the mapped label", () => {

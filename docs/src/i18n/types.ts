@@ -27,6 +27,7 @@ export type DocumentedKey =
   | "badge"
   | "input"
   | "select"
+  | "treeSelect"
   | "checkbox"
   | "switch"
   | "tabs"

@@ -45,6 +45,9 @@ export { ArcanaAccordionItemComponent } from "./arcana-accordion-item.component"
 export { ArcanaSelectComponent } from "./arcana-select.component";
 export type { SelectOption } from "./arcana-select.component";
 
+export { ArcanaTreeSelectComponent } from "./arcana-tree-select.component";
+export type { TreeSelectNode, TreeSelectValue } from "./arcana-tree-select.component";
+
 export { ArcanaInputBooleanComponent } from "./arcana-input-boolean.component";
 
 export { ArcanaNumberStepperComponent } from "./arcana-number-stepper.component";

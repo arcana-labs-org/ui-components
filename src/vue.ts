@@ -53,6 +53,8 @@ export { default as ArcanaSwitchRow } from "./vue/components/ArcanaSwitchRow.vue
 export { default as ArcanaSwitchSegmented } from "./vue/components/ArcanaSwitchSegmented.vue";
 export { default as ArcanaTable } from "./vue/components/ArcanaTable.vue";
 export { default as ArcanaTabs } from "./vue/components/ArcanaTabs.vue";
+export { default as ArcanaTreeSelect } from "./vue/components/ArcanaTreeSelect.vue";
+export type { TreeSelectNode } from "./vue/components/ArcanaTreeSelect.vue";
 export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
 
 // ── Form helpers (extraídos junto; usados por alguns Arcana* acima) ──────────

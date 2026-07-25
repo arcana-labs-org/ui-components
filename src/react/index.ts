@@ -88,6 +88,13 @@ export type { ArcanaInputCurrencyProps } from "./ArcanaInputCurrency";
 export { ArcanaDatePicker } from "./ArcanaDatePicker";
 export type { ArcanaDatePickerProps } from "./ArcanaDatePicker";
 
+export { ArcanaTreeSelect } from "./ArcanaTreeSelect";
+export type {
+    ArcanaTreeSelectProps,
+    TreeSelectNode,
+    TreeSelectValue,
+} from "./ArcanaTreeSelect";
+
 export { ArcanaTable } from "./ArcanaTable";
 export type { ArcanaTableProps, ArcanaTableColumn } from "./ArcanaTable";
 

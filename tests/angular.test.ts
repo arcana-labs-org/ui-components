@@ -49,7 +49,8 @@ import {
   ArcanaSwitchComponent,
   ArcanaSwitchSegmentedComponent,
   ArcanaTableComponent,
-  ArcanaTabsComponent
+  ArcanaTabsComponent,
+  ArcanaTreeSelectComponent
 } from "../src/angular";
 
 beforeAll(() => {
@@ -917,5 +918,52 @@ describe("Angular adapter", () => {
     const emptyValue = fields[1].querySelector(".arcana-spec-sheet__value")!;
     expect(emptyValue.classList.contains("arcana-spec-sheet__value--empty")).toBe(true);
     expect(emptyValue.textContent).toContain("Não informado");
+  });
+
+  it("ArcanaTreeSelect: auto-expande até o valor, filtra com highlight e só folha seleciona", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaTreeSelectComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ArcanaTreeSelectComponent);
+    fixture.componentRef.setInput("options", [
+      { id: 1, name: "Operações", children: [{ id: 11, name: "Frota" }, { id: 12, name: "Entregas" }] }
+    ]);
+    fixture.componentRef.setInput("value", 11);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.classList.contains("arcana-tree-select")).toBe(true);
+    expect(el.querySelector(".arcana-tree-select__label")?.textContent).toContain("Frota");
+
+    // Abre: painel teleportado pro body, já expandido até o nó selecionado.
+    click(el.querySelector(".arcana-tree-select__trigger"));
+    fixture.detectChanges();
+    const panel = document.body.querySelector(".arcana-tree-select__panel")!;
+    expect(panel).toBeTruthy();
+    expect(panel.querySelectorAll(".arcana-tree-select__node")).toHaveLength(3);
+    expect(panel.querySelector(".arcana-tree-select__node.is-selected")?.textContent).toContain("Frota");
+
+    // Nó-pai não é selecionável (allowParentSelection = false): clicar recolhe.
+    click(panel.querySelectorAll(".arcana-tree-select__node")[0]);
+    fixture.detectChanges();
+    expect(panel.querySelectorAll(".arcana-tree-select__node")).toHaveLength(1);
+
+    // Busca (sem acento/caixa) filtra preservando o ancestral e destaca em <mark>.
+    const search = panel.querySelector<HTMLInputElement>(".arcana-tree-select__search-input")!;
+    search.value = "entreg";
+    search.dispatchEvent(new Event("input", { bubbles: true }));
+    fixture.detectChanges();
+    const rows = panel.querySelectorAll(".arcana-tree-select__node");
+    expect(rows).toHaveLength(2);
+    expect(rows[1].querySelector(".arcana-tree-select__mark")?.textContent).toBe("Entreg");
+
+    // Folha seleciona, emite e fecha (painel sai do body).
+    const onValue = vi.fn();
+    fixture.componentInstance.valueChange.subscribe(onValue);
+    click(rows[1]);
+    fixture.detectChanges();
+    expect(onValue).toHaveBeenCalledWith(12);
+    expect(document.body.querySelector(".arcana-tree-select__panel")).toBeFalsy();
   });
 });

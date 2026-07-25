@@ -38,6 +38,7 @@ import ArcanaSwitchSegmentedComponent from "./svelte/ArcanaSwitchSegmented.svelt
 import ArcanaMultiSelectPopoverComponent from "./svelte/ArcanaMultiSelectPopover.svelte";
 import ArcanaInputMaskComponent from "./svelte/ArcanaInputMask.svelte";
 import ArcanaInputCurrencyComponent from "./svelte/ArcanaInputCurrency.svelte";
+import ArcanaTreeSelectComponent from "./svelte/ArcanaTreeSelect.svelte";
 import ArcanaDatePickerComponent from "./svelte/ArcanaDatePicker.svelte";
 import ArcanaTableComponent from "./svelte/ArcanaTable.svelte";
 import ArcanaSummaryTileComponent from "./svelte/ArcanaSummaryTile.svelte";
@@ -298,6 +299,34 @@ export interface ArcanaSelectProps {
   class?: string;
 }
 export const ArcanaSelect = ArcanaSelectComponent as unknown as Component<ArcanaSelectProps>;
+
+/* ── ArcanaTreeSelect ─────────────────────────────────────────────────────── */
+/** Nó da árvore. `children` vazio/ausente ⇒ folha. */
+export interface TreeSelectNode {
+  id: string | number;
+  name: string;
+  children?: TreeSelectNode[];
+  disabled?: boolean;
+}
+export type TreeSelectValue = string | number | null | (string | number)[];
+export interface ArcanaTreeSelectProps {
+  value?: TreeSelectValue;
+  options?: TreeSelectNode[];
+  /** Seleção múltipla: `value` vira array e o trigger mostra tags removíveis. */
+  multiple?: boolean;
+  /** `false` (default): nós com filhos apenas expandem; só folhas selecionam. */
+  allowParentSelection?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  searchPlaceholder?: string;
+  emptyText?: string;
+  clearable?: boolean;
+  size?: "sm" | "md" | "lg";
+  ariaLabel?: string;
+  onValueChange?: (value: TreeSelectValue) => void;
+  onChange?: (value: TreeSelectValue) => void;
+}
+export const ArcanaTreeSelect = ArcanaTreeSelectComponent as unknown as Component<ArcanaTreeSelectProps>;
 
 /* ── ArcanaInputBoolean ───────────────────────────────────────────────────── */
 export interface ArcanaInputBooleanProps {

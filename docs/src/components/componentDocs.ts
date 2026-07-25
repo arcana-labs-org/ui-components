@@ -5,6 +5,7 @@ import ArcanaButton from "../../../src/vue/components/ArcanaButton.vue";
 import ArcanaBadge from "../../../src/vue/components/ArcanaBadge.vue";
 import ArcanaInput from "../../../src/vue/components/ArcanaInput.vue";
 import ArcanaSelect from "../../../src/vue/components/ArcanaSelect.vue";
+import ArcanaTreeSelect from "../../../src/vue/components/ArcanaTreeSelect.vue";
 import ArcanaCheckbox from "../../../src/vue/components/ArcanaCheckbox.vue";
 import ArcanaSwitch from "../../../src/vue/components/ArcanaSwitch.vue";
 import ArcanaTabs from "../../../src/vue/components/ArcanaTabs.vue";
@@ -136,6 +137,44 @@ const InputDemo: Component = {
 };
 
 /* ─────────────────────────── ArcanaSelect ─────────────────────────── */
+
+const TreeSelectDemo: Component = {
+  components: { ArcanaTreeSelect },
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      single: null as string | number | null,
+      many: [] as (string | number)[],
+      tree: [
+        {
+          id: 1,
+          name: $dt.treeAdministrative,
+          children: [
+            { id: 11, name: $dt.treeHr },
+            { id: 12, name: $dt.treeFinance }
+          ]
+        },
+        {
+          id: 2,
+          name: $dt.treeOperations,
+          children: [
+            { id: 21, name: $dt.treeLogistics },
+            { id: 22, name: $dt.treeFleet },
+            { id: 23, name: $dt.treeWarehouse }
+          ]
+        },
+        { id: 3, name: $dt.treeCommercial }
+      ]
+    };
+  },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 340px">
+      <ArcanaTreeSelect v-model="single" :options="tree" :placeholder="$dt.treePickOne" />
+      <ArcanaTreeSelect v-model="many" :options="tree" :placeholder="$dt.treePickSeveral" multiple allow-parent-selection />
+      <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
+    </div>
+  `
+};
 
 const SelectDemo: Component = {
   components: { ArcanaSelect },
@@ -1022,6 +1061,43 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <ArcanaSelect v-model=\"fruit\" :options=\"options\" searchable placeholder=\"Pick a fruit\" />",
+      "</template>"
+    ].join("\n")
+  },
+
+  treeSelect: {
+    demo: TreeSelectDemo,
+    props: [
+      { name: "modelValue", type: "string | number | null | (string | number)[]", default: "null", description: "Selected node id (single) or array of ids (multiple)." },
+      { name: "options", type: "TreeSelectNode[]", default: "[]", description: "Hierarchy: { id, name, children?, disabled? }." },
+      { name: "multiple", type: "boolean", default: "false", description: "Multi-select; the trigger renders removable tags." },
+      { name: "allowParentSelection", type: "boolean", default: "false", description: "When false, clicking a parent only expands it — only leaves select." },
+      { name: "placeholder", type: "string", default: "'Selecione…'", description: "Shown when nothing is selected." },
+      { name: "searchPlaceholder", type: "string", default: "'Buscar...'", description: "Placeholder of the filter input." },
+      { name: "emptyText", type: "string", default: "'Nenhum resultado encontrado'", description: "Shown when the filter matches nothing." },
+      { name: "clearable", type: "boolean", default: "true", description: "Shows an X on hover to clear the value." },
+      { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
+      { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." }
+    ],
+    events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const costCenter = ref<number | null>(null)",
+      "const tree: TreeSelectNode[] = [",
+      "  { id: 1, name: 'Administrativo', children: [",
+      "    { id: 11, name: 'RH' },",
+      "    { id: 12, name: 'Financeiro' },",
+      "  ] },",
+      "  { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },",
+      "]",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Only leaves select; parents expand. Pass allow-parent-selection to change that. -->",
+      "  <ArcanaTreeSelect v-model=\"costCenter\" :options=\"tree\" placeholder=\"Centro de custo\" />",
       "</template>"
     ].join("\n")
   },

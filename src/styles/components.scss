@@ -5276,3 +5276,412 @@
 .arcana-cal__confirm:active {
     background: #09090b;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaTreeSelect.vue
+   ───────────────────────────────────────────────────────────────────────── */
+/*
+ * Estilos GLOBAIS (não-scoped) porque o `.arcana-tree-select__panel` é teleportado
+ * pro <body>. Medidas espelham `.arcana-select__*` (altura 36px, radius 6, 13px)
+ * pra que os dois controles fiquem alinhados lado a lado num form.
+ */
+
+.arcana-tree-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-family: inherit;
+}
+
+/* ═════════════════════════════════════════════════
+   TRIGGER
+   ═════════════════════════════════════════════════ */
+.arcana-tree-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 12px;
+    background: #ffffff;
+    color: #09090b;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 150ms ease, background-color 150ms ease;
+    outline: none;
+    box-shadow: none;
+}
+
+.arcana-tree-select__trigger:hover:not(:disabled):not(.arcana-tree-select__trigger--disabled) {
+    border-color: #d4d4d8;
+}
+
+.arcana-tree-select__trigger:focus-visible {
+    border-color: #18181b;
+}
+
+.arcana-tree-select__trigger--open,
+.arcana-tree-select__trigger--open:hover {
+    border-color: #18181b;
+}
+
+.arcana-tree-select__trigger:disabled,
+.arcana-tree-select__trigger--disabled {
+    background: #fafafa;
+    color: #a1a1aa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Tamanhos */
+.arcana-tree-select--sm .arcana-tree-select__trigger {
+    min-height: 30px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.arcana-tree-select--lg .arcana-tree-select__trigger {
+    min-height: 42px;
+    padding: 9px 14px;
+    font-size: 14px;
+}
+
+/* Label (modo simples) */
+.arcana-tree-select__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-tree-select__label--placeholder {
+    color: #a1a1aa;
+}
+
+.arcana-tree-select__placeholder {
+    color: #a1a1aa;
+}
+
+/* Caret (chevron do trigger) */
+.arcana-tree-select__caret {
+    flex-shrink: 0;
+    color: #71717a;
+    transition: transform 200ms ease, color 150ms ease;
+}
+
+.arcana-tree-select__trigger--open .arcana-tree-select__caret,
+.arcana-tree-select__caret.is-open {
+    transform: rotate(180deg);
+    color: #18181b;
+}
+
+/* Clear (X): aparece no hover do trigger e esconde o caret enquanto visível */
+.arcana-tree-select__clear {
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: #71717a;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 100ms ease, background-color 100ms ease;
+}
+
+.arcana-tree-select__clear:hover {
+    color: #18181b;
+    background: #f4f4f5;
+}
+
+.arcana-tree-select__trigger--has-clear:hover .arcana-tree-select__clear {
+    display: flex;
+}
+
+.arcana-tree-select__trigger--has-clear:hover .arcana-tree-select__caret {
+    display: none;
+}
+
+/* ═════════════════════════════════════════════════
+   TAGS (modo múltiplo)
+   ═════════════════════════════════════════════════ */
+.arcana-tree-select__trigger--multiple {
+    align-items: center;
+    padding: 4px 10px;
+}
+
+.arcana-tree-select__tags {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 24px;
+}
+
+.arcana-tree-select__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    height: 22px;
+    padding: 0 4px 0 8px;
+    background: #f4f4f5;
+    color: #18181b;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.arcana-tree-select__tag-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-tree-select__tag-remove {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    color: #71717a;
+    cursor: pointer;
+    transition: color 100ms ease, background-color 100ms ease;
+}
+
+.arcana-tree-select__tag-remove:hover {
+    color: #09090b;
+    background: #e4e4e7;
+}
+
+/* ═════════════════════════════════════════════════
+   PANEL (teleportado pro body)
+   ═════════════════════════════════════════════════ */
+.arcana-tree-select__panel {
+    /* z-index 10100 fica ACIMA do ArcanaDialog (10000/10001). */
+    z-index: 10100;
+    background: #ffffff;
+    border: 1px solid #e4e4e7;
+    border-radius: 8px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 2px 4px rgba(0, 0, 0, 0.04);
+    padding: 4px;
+    min-width: 220px;
+    font-family: inherit;
+    outline: none;
+}
+
+/* ── Busca ── */
+.arcana-tree-select__search {
+    position: relative;
+    margin: -4px -4px 4px;
+    padding: 8px;
+    background: #ffffff;
+    border-bottom: 1px solid #e4e4e7;
+}
+
+.arcana-tree-select__search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #71717a;
+    pointer-events: none;
+}
+
+.arcana-tree-select__search-input {
+    width: 100%;
+    padding: 6px 10px 6px 32px;
+    background: #ffffff;
+    color: #09090b;
+    border: 1px solid #e4e4e7;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+    outline: none;
+    transition: border-color 150ms ease;
+}
+
+.arcana-tree-select__search-input::placeholder {
+    color: #a1a1aa;
+}
+
+.arcana-tree-select__search-input:focus {
+    border-color: #18181b;
+}
+
+/* ── Árvore (área de scroll) ── */
+.arcana-tree-select__tree {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.arcana-tree-select__node {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #18181b;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-tree-select__node:hover {
+    background: #f4f4f5;
+    color: #09090b;
+}
+
+.arcana-tree-select__node.is-selected {
+    background: #18181b;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.arcana-tree-select__node.is-selected:hover {
+    background: #27272a;
+    color: #ffffff;
+}
+
+.arcana-tree-select__node.is-disabled {
+    color: #a1a1aa;
+    cursor: not-allowed;
+}
+
+/* Nó-pai não selecionável: o clique só expande, então some o "ar de item". */
+.arcana-tree-select__node.is-branch:not(.is-selectable) {
+    color: #52525b;
+    font-weight: 500;
+}
+
+/* Indentação por nível (largura vem inline: `level * 14px`) */
+.arcana-tree-select__indent {
+    flex-shrink: 0;
+}
+
+/* Chevron de expandir/recolher */
+.arcana-tree-select__chevron {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    color: #71717a;
+    cursor: pointer;
+    transition: transform 150ms ease, background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-tree-select__chevron:hover {
+    background: #e4e4e7;
+    color: #09090b;
+}
+
+.arcana-tree-select__chevron.is-expanded {
+    transform: rotate(90deg);
+}
+
+.arcana-tree-select__chevron--empty {
+    cursor: inherit;
+}
+
+.arcana-tree-select__chevron--empty:hover {
+    background: transparent;
+}
+
+.arcana-tree-select__node.is-selected .arcana-tree-select__chevron {
+    color: #e4e4e7;
+}
+
+.arcana-tree-select__node.is-selected .arcana-tree-select__chevron:hover {
+    background: #3f3f46;
+    color: #ffffff;
+}
+
+/* Ícones de pasta (nó com filhos) e documento (folha) */
+.arcana-tree-select__icon {
+    flex-shrink: 0;
+}
+
+.arcana-tree-select__icon--folder {
+    color: #a1a1aa;
+}
+
+.arcana-tree-select__icon--leaf {
+    color: #d4d4d8;
+}
+
+.arcana-tree-select__node.is-selected .arcana-tree-select__icon--folder,
+.arcana-tree-select__node.is-selected .arcana-tree-select__icon--leaf {
+    color: #d4d4d8;
+}
+
+.arcana-tree-select__node-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-tree-select__check {
+    flex-shrink: 0;
+    color: #ffffff;
+}
+
+/* Highlight do termo buscado */
+.arcana-tree-select__mark {
+    background: #fef08a;
+    color: #09090b;
+    padding: 0 1px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+.arcana-tree-select__node.is-selected .arcana-tree-select__mark {
+    background: #facc15;
+}
+
+/* Empty state */
+.arcana-tree-select__empty {
+    padding: 14px 10px;
+    text-align: center;
+    color: #71717a;
+    font-size: 12.5px;
+    font-style: italic;
+}
+
+/* ═════════════════════════════════════════════════
+   ANIMAÇÃO — fade + slide-down sutil
+   ═════════════════════════════════════════════════ */
+.arcana-tree-select-fade-enter-active,
+.arcana-tree-select-fade-leave-active {
+    transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.arcana-tree-select-fade-enter-from,
+.arcana-tree-select-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+}
