@@ -260,8 +260,10 @@ export const zh: Messages = {
     },
     contextMenu: {
       blurb: "由 <c>items</c> 数组构建的右键菜单（图标、后缀、<c>danger</c> 变体、分隔线），也可以用子元素组合。"
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "组合模式下 <c>ArcanaContextMenu</c> 的单个条目 —— 图标、右对齐的快捷键 <c>suffix</c>、语义化的 <c>variant</c>，以及绘制在其上方的 <c>divided</c> 分隔线。"
+    },  },
 
   demos: {
     depMoment: "ArcanaDatePicker 背后的日期解析与格式化。",

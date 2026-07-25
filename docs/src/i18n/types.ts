@@ -75,7 +75,8 @@ export type DocumentedKey =
   | "aspectRatio"
   | "scrollArea"
   | "hoverCard"
-  | "contextMenu";
+  | "contextMenu"
+  | "contextMenuItem";
 
 export interface SectionProse {
   title: string;

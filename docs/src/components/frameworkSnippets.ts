@@ -4241,5 +4241,92 @@ export class LibraryItemComponent {
 <ArcanaContextMenu disabled {items}>
   {#snippet trigger()}<div>Disabled — the browser menu shows instead</div>{/snippet}
 </ArcanaContextMenu>`
+  },
+  contextMenuItem: {
+    react: `import { useState } from 'react'
+import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/react'
+
+export function FileActions() {
+  const [lastAction, setLastAction] = useState<string | null>(null)
+
+  return (
+    <>
+      {/* Composition — one <ArcanaContextMenuItem> per entry */}
+      <ArcanaContextMenu ariaLabel="Right-click this area" trigger={<div className="drop-zone">Right-click this area</div>}>
+        <ArcanaContextMenuItem icon="fa-regular fa-folder-open" onSelect={() => setLastAction('Open')}>
+          Open
+        </ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-clone" suffix="⌘D" onSelect={() => setLastAction('Duplicate')}>
+          Duplicate
+        </ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-folder-tree" disabled>
+          Move to folder
+        </ArcanaContextMenuItem>
+
+        {/* \`divided\` draws the separator ABOVE the item */}
+        <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" divided onSelect={() => setLastAction('Delete')}>
+          Delete
+        </ArcanaContextMenuItem>
+      </ArcanaContextMenu>
+
+      <p>Last action: <strong>{lastAction ?? 'none yet'}</strong></p>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaContextMenuComponent, ArcanaContextMenuItemComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-file-actions',
+  standalone: true,
+  imports: [ArcanaContextMenuComponent, ArcanaContextMenuItemComponent],
+  template: \`
+    <!-- Composition — one item component per entry -->
+    <div arcanaContextMenu ariaLabel="Right-click this area">
+      <div arcanaContextMenuTrigger class="drop-zone">Right-click this area</div>
+
+      <div arcanaContextMenuItem icon="fa-regular fa-folder-open" (selected)="lastAction = 'Open'">Open</div>
+      <div arcanaContextMenuItem icon="fa-solid fa-clone" suffix="⌘D" (selected)="lastAction = 'Duplicate'">Duplicate</div>
+      <div arcanaContextMenuItem icon="fa-solid fa-folder-tree" [disabled]="true">Move to folder</div>
+
+      <!-- \`divided\` draws the separator ABOVE the item -->
+      <div arcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" [divided]="true" (selected)="lastAction = 'Delete'">Delete</div>
+    </div>
+
+    <p>Last action: <strong>{{ lastAction ?? 'none yet' }}</strong></p>
+  \`
+})
+export class FileActionsComponent {
+  lastAction: string | null = null
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/svelte'
+
+  let lastAction = $state<string | null>(null)
+</script>
+
+<!-- Composition — one <ArcanaContextMenuItem> per entry -->
+<ArcanaContextMenu ariaLabel="Right-click this area">
+  {#snippet trigger()}
+    <div class="drop-zone">Right-click this area</div>
+  {/snippet}
+
+  <ArcanaContextMenuItem icon="fa-regular fa-folder-open" onSelect={() => (lastAction = 'Open')}>
+    Open
+  </ArcanaContextMenuItem>
+  <ArcanaContextMenuItem icon="fa-solid fa-clone" suffix="⌘D" onSelect={() => (lastAction = 'Duplicate')}>
+    Duplicate
+  </ArcanaContextMenuItem>
+  <ArcanaContextMenuItem icon="fa-solid fa-folder-tree" disabled>
+    Move to folder
+  </ArcanaContextMenuItem>
+
+  <!-- \`divided\` draws the separator ABOVE the item -->
+  <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" divided onSelect={() => (lastAction = 'Delete')}>
+    Delete
+  </ArcanaContextMenuItem>
+</ArcanaContextMenu>
+
+<p>Last action: <strong>{lastAction ?? 'none yet'}</strong></p>`
   }
 };

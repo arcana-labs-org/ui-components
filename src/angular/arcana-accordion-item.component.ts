@@ -30,6 +30,9 @@ import { ArcanaAccordionComponent } from "./arcana-accordion.component";
  * transição em si está no CSS (`.arcana-accordion-content--animated`). Com
  * `prefers-reduced-motion: reduce` a animação é ignorada e o estado final é aplicado direto.
  */
+/** Sequência para os ids de painel — ver `panelId` na classe. */
+let panelUid = 0;
+
 @Component({
   selector: "div[arcanaAccordionItem]",
   standalone: true,
@@ -38,7 +41,14 @@ import { ArcanaAccordionComponent } from "./arcana-accordion.component";
     "[class]": "rootClass"
   },
   template: `
-    <button type="button" class="arcana-accordion-trigger" [disabled]="disabled" (click)="onToggle()">
+    <button
+      type="button"
+      class="arcana-accordion-trigger"
+      [disabled]="disabled"
+      [attr.aria-expanded]="isOpen"
+      [attr.aria-controls]="panelId"
+      (click)="onToggle()"
+    >
       <span class="arcana-accordion-title">{{ title }}</span>
       <i class="fa-solid fa-chevron-down arcana-accordion-chevron"></i>
     </button>
@@ -49,6 +59,8 @@ import { ArcanaAccordionComponent } from "./arcana-accordion.component";
     -->
     <div
       #content
+      [id]="panelId"
+      role="region"
       class="arcana-accordion-content"
       [class.arcana-accordion-content--animated]="isAnimated"
       [style.display]="isAnimated || isOpen ? null : 'none'"
@@ -61,6 +73,10 @@ export class ArcanaAccordionItemComponent implements AfterViewInit, DoCheck, OnD
   private readonly accordion = inject(ArcanaAccordionComponent);
 
   @Input({ required: true }) name!: string;
+  /** Amarra `aria-controls` do gatilho ao painel. Contador de módulo: a lib é
+      client-only, então não há hidratação de SSR para divergir. */
+  readonly panelId = `arcana-accordion-panel-${++panelUid}`;
+
   @Input() title = "";
   @Input() disabled = false;
   /** `undefined` = herda do `ArcanaAccordionComponent`; informado = tem precedência. */

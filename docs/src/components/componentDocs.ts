@@ -1402,6 +1402,39 @@ const CountdownDemo: Component = {
   `
 };
 
+
+/* ──────────────────── ArcanaContextMenuItem ───────────────────── */
+
+const ContextMenuItemDemo: Component = {
+  components: { ArcanaContextMenu, ArcanaContextMenuItem },
+  data: () => ({ lastAction: null as string | null }),
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 420px">
+      <!-- Composition — one <ArcanaContextMenuItem> per entry -->
+      <ArcanaContextMenu :aria-label="$dt.contextTriggerNote">
+        <template #trigger>
+          <div class="demo-panel" style="border-style: dashed; text-align: center">
+            {{ $dt.contextTriggerNote }}
+          </div>
+        </template>
+        <ArcanaContextMenuItem icon="fa-regular fa-folder-open" @select="lastAction = $dt.contextOpen">
+          {{ $dt.contextOpen }}
+        </ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-clone" suffix="⌘D" @select="lastAction = $dt.contextDuplicate">
+          {{ $dt.contextDuplicate }}
+        </ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-folder-tree" :disabled="true">
+          {{ $dt.contextDisabledItem }}
+        </ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" :divided="true" @select="lastAction = $dt.contextDelete">
+          {{ $dt.contextDelete }}
+        </ArcanaContextMenuItem>
+      </ArcanaContextMenu>
+      <p class="demo-note">{{ $dt.contextLastAction }}: <strong>{{ lastAction ?? $dt.contextNoneYet }}</strong></p>
+    </div>
+  `
+};
+
 /* ─────────────────────────── ArcanaProgress ────────────────────────── */
 
 const ProgressDemo: Component = {
@@ -1817,7 +1850,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "placeholder", type: "string", default: "''", description: "Placeholder text." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the input." },
       { name: "readonly", type: "boolean", default: "false", description: "Renders the input read-only." },
-      { name: "size", type: "sm | md | lg", default: "md", description: "Control height/padding." }
+      { name: "size", type: "sm | md | lg", default: "md", description: "Control height/padding." },
+      { name: "min", type: "string | number", default: "—", description: "Forwarded to the native input; meaningful for number and date types." },
+      { name: "max", type: "string | number", default: "—", description: "Forwarded to the native input; meaningful for number and date types." },
+      { name: "step", type: "string | number", default: "—", description: "Increment of the native number input." },
+      { name: "maxlength", type: "string | number", default: "—", description: "Maximum character count, enforced by the browser." },
+      { name: "autocomplete", type: "string", default: "—", description: "Native autocomplete hint (e.g. \"email\", \"off\")." },
+      { name: "name", type: "string", default: "—", description: "Field name, for native form submission." }
     ],
     events: [
       "update:modelValue(value) — v-model update",
@@ -1855,7 +1894,10 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "icon / iconColor", type: "string", default: "''", description: "FontAwesome class (and optional colour) rendered at the left of the trigger." },
       { name: "showFooter", type: "boolean", default: "false", description: "In multiple mode, adds a footer to the panel with the selected count and a clear button." },
       { name: "footerCountLabel", type: "string", default: "'{count} selecionada(s)'", description: "Footer counter text; {count} is replaced by the number of selected options." },
-      { name: "clearLabel", type: "string", default: "'Limpar'", description: "Label of the footer's clear button (clears the selection, keeping the panel open)." }
+      { name: "clearLabel", type: "string", default: "'Limpar'", description: "Label of the footer's clear button (clears the selection, keeping the panel open)." },
+      { name: "searchPlaceholder", type: "string", default: "'Buscar...'", description: "Placeholder of the search box, shown when searchable is on." },
+      { name: "icon", type: "string", default: "''", description: "Font Awesome class of an icon rendered at the start of the trigger." },
+      { name: "iconColor", type: "string", default: "''", description: "Colour of that icon; any valid CSS colour string." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
     vueSnippet: [
@@ -1921,7 +1963,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "clearable", type: "boolean", default: "true", description: "Shows an X on hover to clear the value." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
       { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." },
-      { name: "panelClass", type: "string", default: "undefined", description: "Extra class on the panel. The panel is teleported to <body>, so a selector on the field wrapper can't reach it — use this to scope the theme tokens below to one instance." }
+      { name: "panelClass", type: "string", default: "undefined", description: "Extra class on the panel. The panel is teleported to <body>, so a selector on the field wrapper can't reach it — use this to scope the theme tokens below to one instance." },
+      { name: "ariaLabel", type: "string", default: "—", description: "Accessible name of the trigger, when no visible label is associated." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
     vueSnippet: [
@@ -2057,7 +2100,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "variant", type: "pills | underline | boxed | sidebar | sidebar-soft | segmented", default: "pills", description: "Visual style of the tablist." },
       { name: "orientation", type: "horizontal | vertical", default: "horizontal", description: "Tablist placement (sidebar variants force vertical)." },
       { name: "keepAlive", type: "boolean", default: "false", description: "Keeps inactive panels mounted (preserves their state)." },
-      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the tablist." }
+      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the tablist." },
+      { name: "flush", type: "boolean", default: "false", description: "Zeroes the margin inherited from a parent tablist, for nested tabs." },
+      { name: "tooltipPlacement", type: "string", default: "''", description: "Shows the tab label in a tooltip at this placement — for collapsed sidebars that hide labels." }
     ],
     events: ["update:modelValue(name) — v-model update", "change(name) — on tab change"],
     vueSnippet: [
@@ -2091,7 +2136,12 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "size", type: "sm | md | lg | xl | full | number", default: "md", description: "Max width preset (md = 580px) or a px number." },
       { name: "closeable", type: "boolean", default: "true", description: "Shows the X close button in the header." },
       { name: "closeOnOverlayClick", type: "boolean", default: "false", description: "Close when the backdrop is clicked." },
-      { name: "closeOnEscape", type: "boolean", default: "true", description: "Close when Escape is pressed." }
+      { name: "closeOnEscape", type: "boolean", default: "true", description: "Close when Escape is pressed." },
+      { name: "fullHeight", type: "boolean", default: "false", description: "Stretches the dialog to the available viewport height." },
+      { name: "contentClass", type: "string", default: "''", description: "Extra class on the dialog content box, for one-off sizing or spacing." },
+      { name: "noBodyPadding", type: "boolean", default: "false", description: "Removes the body padding, for content that draws its own edges (tables, maps)." },
+      { name: "bodyScrollable", type: "boolean", default: "true", description: "Lets the body scroll when the content overflows; off, the whole dialog grows." },
+      { name: "flatFooter", type: "boolean", default: "false", description: "Drops the footer separator and background, so the actions sit flush with the body." }
     ],
     events: [
       "show — emitted from show()",
@@ -2397,7 +2447,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
       { name: "clearable", type: "boolean", default: "true", description: "Shows a clear affordance." },
       { name: "placeholder", type: "string", default: "''", description: "Overrides the per-type default placeholder." },
-      { name: "size", type: "sm | md | lg", default: "md", description: "Field height/padding." }
+      { name: "size", type: "sm | md | lg", default: "md", description: "Field height/padding." },
+      { name: "ariaLabel", type: "string", default: "—", description: "Accessible name of the field, when no visible label is associated." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — on pick / confirm"],
     vueSnippet: [
@@ -2434,7 +2485,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "prefix", type: "string", default: "''", description: "String prefix rendered before the number (e.g. 'R$ ')." },
       { name: "min", type: "number", default: "undefined", description: "Minimum value clamp." },
       { name: "max", type: "number", default: "MAX_SAFE_INTEGER", description: "Maximum value clamp." },
-      { name: "allowBlank", type: "boolean", default: "false", description: "Permits an empty field instead of coercing to 0." }
+      { name: "allowBlank", type: "boolean", default: "false", description: "Permits an empty field instead of coercing to 0." },
+      { name: "name", type: "string", default: "—", description: "Field name, for native form submission." },
+      { name: "formatCurrency", type: "boolean", default: "true", description: "Formats as currency while typing; off, the field keeps a plain number." }
     ],
     events: [
       "update:modelValue(value) — v-model update",
@@ -2494,7 +2547,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     props: [
       { name: "name", type: "string", default: "— (required)", description: "Unique key identifying this panel within the accordion." },
       { name: "title", type: "string", default: "''", description: "Header text (or use the #title slot for rich headers)." },
-      { name: "disabled", type: "boolean", default: "false", description: "Blocks toggling this panel." }
+      { name: "disabled", type: "boolean", default: "false", description: "Blocks toggling this panel." },
+      { name: "animated", type: "boolean", default: "inherited", description: "Animates the open/close transition. Omitted, it inherits the accordion; set, it wins over the container." }
     ],
     events: [
       "Reads open state from the parent <ArcanaAccordion> (inject) — must be nested inside one",
@@ -2927,7 +2981,14 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "nested", type: "boolean", default: "false", description: "Sub-item styling (forwarded to the inner list item)." },
       { name: "min / max", type: "number | string", default: "undefined", description: "Bounds for type='number'." },
       { name: "modalTitle / modalDescription / inputLabel / inputPlaceholder", type: "string", default: "''", description: "Copy overrides for the edit modal." },
-      { name: "emptyText", type: "string", default: "'Não definido'", description: "Italic fallback shown when the value is empty." }
+      { name: "emptyText", type: "string", default: "'Não definido'", description: "Italic fallback shown when the value is empty." },
+      { name: "disabled", type: "boolean", default: "false", description: "Disables the row and its edit button." },
+      { name: "modalTitle", type: "string", default: "''", description: "Title of the edit dialog; falls back to the field label." },
+      { name: "modalDescription", type: "string", default: "''", description: "Support text under the dialog title." },
+      { name: "inputLabel", type: "string", default: "''", description: "Label of the input inside the dialog; falls back to the field label." },
+      { name: "inputPlaceholder", type: "string", default: "''", description: "Placeholder of the input inside the dialog." },
+      { name: "min", type: "number | string", default: "—", description: "Lower bound forwarded to the numeric/currency editor." },
+      { name: "max", type: "number | string", default: "—", description: "Upper bound forwarded to the numeric/currency editor." }
     ],
     events: [
       "update:modelValue(value) — emitted on save (with the buffered value)",
@@ -3019,7 +3080,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "description", type: "string", default: "''", description: "Sub-title under the header title." },
       { name: "cancelLabel", type: "string", default: "'Cancelar'", description: "Cancel button label." },
       { name: "saveLabel", type: "string", default: "'Salvar Alterações'", description: "Save button label." },
-      { name: "size", type: "sm | md | lg | xl | number", default: "md", description: "Modal width preset or px number." }
+      { name: "size", type: "sm | md | lg | xl | number", default: "md", description: "Modal width preset or px number." },
+      { name: "cancelColor", type: "string", default: "'white'", description: "Colour forwarded to the Cancel button; e.g. \"danger-700\" for a destructive cancel." },
+      { name: "saveColor", type: "string", default: "'primary-700'", description: "Colour forwarded to the Save button; e.g. \"success-700\" for a green confirm." },
+      { name: "cancelClass", type: "string", default: "''", description: "Extra class forwarded to the Cancel button." },
+      { name: "saveClass", type: "string", default: "''", description: "Extra class forwarded to the Save button." }
     ],
     events: [
       "save — emitted on Save (no auto-close; the caller validates then calls hide())",
@@ -3249,7 +3314,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "squared", type: "boolean", default: "false", description: "Moderate corner radius instead of the full pill." },
       { name: "activeColor", type: "string (CSS color)", default: "'#18181b'", description: "Fill colour of the sliding indicator." },
       { name: "radio", type: "boolean", default: "false", description: "Shows a radio circle on each side, filled on the active one." },
-      { name: "ariaLabel", type: "string", default: "auto", description: "Accessible name; falls back to 'off ou on'." }
+      { name: "ariaLabel", type: "string", default: "auto", description: "Accessible name; falls back to 'off ou on'." },
+      { name: "offIcon", type: "string", default: "''", description: "Font Awesome class of the left option icon, rendered before its label." },
+      { name: "onIcon", type: "string", default: "''", description: "Font Awesome class of the right option icon." },
+      { name: "offIconColor", type: "string", default: "''", description: "Inline colour of offIcon; wins over the inherited CSS, including while active." },
+      { name: "onIconColor", type: "string", default: "''", description: "Inline colour of onIcon; same semantics as offIconColor." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — on toggle", "Slots: #off-label, #on-label"],
     vueSnippet: [
@@ -3463,7 +3532,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "tone", type: "neutral | success | danger | warning | info", default: "neutral", description: "Colours value + icon with the state tokens." },
       { name: "valueColor", type: "string (CSS colour)", default: "''", description: "Arbitrary colour for the value; wins over tone." },
       { name: "size", type: "sm | md | lg | xl", default: "md", description: "Value/title type scale." },
-      { name: "icon", type: "string", default: "''", description: "Icon class rendered before the prefix (e.g. fa-solid fa-arrow-trend-up)." }
+      { name: "icon", type: "string", default: "''", description: "Icon class rendered before the prefix (e.g. fa-solid fa-arrow-trend-up)." },
+      { name: "prefix", type: "string", default: "''", description: "Text rendered before the value. The #prefix slot takes precedence over it." },
+      { name: "suffix", type: "string", default: "''", description: "Text rendered after the value. The #suffix slot takes precedence over it." }
     ],
     events: ["Slots: #title, #prefix, #suffix — each one overrides the prop of the same name"],
     vueSnippet: [
@@ -3523,7 +3594,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "valueColor", type: "string (CSS colour)", default: "''", description: "Arbitrary colour for the value; wins over tone." },
       { name: "size", type: "sm | md | lg | xl", default: "md", description: "Value/title type scale." },
       { name: "paused", type: "boolean", default: "false", description: "Freezes the countdown. Reactive: setting it back to false resumes." },
-      { name: "interval", type: "number (ms)", default: "auto", description: "Tick period. Automatic default: 50ms when the format shows milliseconds, 1000ms otherwise." }
+      { name: "interval", type: "number (ms)", default: "auto", description: "Tick period. Automatic default: 50ms when the format shows milliseconds, 1000ms otherwise." },
+      { name: "prefix", type: "string", default: "''", description: "Text rendered before the value. The #prefix slot takes precedence over it." },
+      { name: "suffix", type: "string", default: "''", description: "Text rendered after the value. The #suffix slot takes precedence over it." }
     ],
     events: [
       "change(remaining: number) — on every tick, with the time left in ms",
@@ -3847,5 +3920,55 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  <p>Disabled — the browser menu shows instead</p>",
       "</template>"
     ].join("\n")
-  }
+  },
+
+  contextMenuItem: {
+    demo: ContextMenuItemDemo,
+    props: [
+      { name: "icon", type: "string", default: "''", description: "Font Awesome class rendered before the label." },
+      { name: "suffix", type: "string", default: "''", description: "Shortcut or affix shown right-aligned (e.g. \"⌘C\"). The #suffix slot takes precedence." },
+      { name: "variant", type: "default | danger | success | warning", default: "'default'", description: "Semantic tone of the item; danger paints it in the destructive colour." },
+      { name: "disabled", type: "boolean", default: "false", description: "Greys the item out and stops it from being selected or focused." },
+      { name: "divided", type: "boolean", default: "false", description: "Draws a separator ABOVE this item, to group entries." },
+      { name: "closeOnClick", type: "boolean", default: "true", description: "Closes the menu on selection; off, the menu stays open for repeated actions." }
+    ],
+    events: [
+      "click — raw click on the item",
+      "select — selection through mouse or keyboard; prefer this one",
+      "Slots: default (label), #suffix (overrides the suffix prop)"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const lastAction = ref<string | null>(null)",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Composition — one <ArcanaContextMenuItem> per entry -->",
+      "  <ArcanaContextMenu aria-label=\"Right-click this area\">",
+      "    <template #trigger>",
+      "      <div class=\"drop-zone\">Right-click this area</div>",
+      "    </template>",
+      "",
+      "    <ArcanaContextMenuItem icon=\"fa-regular fa-folder-open\" @select=\"lastAction = 'Open'\">",
+      "      Open",
+      "    </ArcanaContextMenuItem>",
+      "    <ArcanaContextMenuItem icon=\"fa-solid fa-clone\" suffix=\"⌘D\" @select=\"lastAction = 'Duplicate'\">",
+      "      Duplicate",
+      "    </ArcanaContextMenuItem>",
+      "    <ArcanaContextMenuItem icon=\"fa-solid fa-folder-tree\" :disabled=\"true\">",
+      "      Move to folder",
+      "    </ArcanaContextMenuItem>",
+      "",
+      "    <!-- `divided` draws the separator ABOVE the item -->",
+      "    <ArcanaContextMenuItem icon=\"fa-solid fa-trash\" variant=\"danger\" :divided=\"true\" @select=\"lastAction = 'Delete'\">",
+      "      Delete",
+      "    </ArcanaContextMenuItem>",
+      "  </ArcanaContextMenu>",
+      "",
+      "  <p>Last action: <strong>{{ lastAction ?? 'none yet' }}</strong></p>",
+      "</template>"
+    ].join("\n")
+  },
 };

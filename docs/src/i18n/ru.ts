@@ -260,8 +260,10 @@ export const ru: Messages = {
     },
     contextMenu: {
       blurb: "Меню по правому клику, собранное из массива <c>items</c> (иконки, суффиксы, варианты <c>danger</c>, разделители) или из дочерних элементов."
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "Один пункт <c>ArcanaContextMenu</c> в режиме композиции — значок, выровненный по правому краю <c>suffix</c> для сочетания клавиш, семантический <c>variant</c> и разделитель <c>divided</c> над ним."
+    },  },
 
   demos: {
     depMoment: "Разбор и форматирование дат в основе ArcanaDatePicker.",

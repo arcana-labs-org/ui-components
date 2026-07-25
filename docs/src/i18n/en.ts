@@ -260,8 +260,10 @@ export const en: Messages = {
     },
     contextMenu: {
       blurb: "A right-click menu built from an <c>items</c> array (icons, suffixes, <c>danger</c> variants, dividers) or composed from children."
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "One entry of an <c>ArcanaContextMenu</c> in composition mode — icon, right-aligned <c>suffix</c> for the shortcut, semantic <c>variant</c> and a <c>divided</c> separator drawn above it."
+    },  },
 
   demos: {
     depMoment: "Date parsing and formatting behind ArcanaDatePicker.",

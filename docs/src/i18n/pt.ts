@@ -260,8 +260,10 @@ export const pt: Messages = {
     },
     contextMenu: {
       blurb: "Um menu de botão direito montado a partir de um array <c>items</c> (ícones, sufixos, variantes <c>danger</c>, divisores) ou composto pelos filhos."
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "Uma entrada do <c>ArcanaContextMenu</c> no modo de composição — ícone, <c>suffix</c> à direita para o atalho, <c>variant</c> semântico e separador <c>divided</c> desenhado acima dela."
+    },  },
 
   demos: {
     depMoment: "Interpretação e formatação de datas por trás do ArcanaDatePicker.",

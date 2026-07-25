@@ -1,6 +1,13 @@
 <template>
     <div class="arcana-accordion-item" :class="{ open: isOpen, disabled }">
-        <button type="button" class="arcana-accordion-trigger" :disabled="disabled" @click="onToggle">
+        <button
+            type="button"
+            class="arcana-accordion-trigger"
+            :disabled="disabled"
+            :aria-expanded="isOpen ? 'true' : 'false'"
+            :aria-controls="panelId"
+            @click="onToggle"
+        >
             <span class="arcana-accordion-title">
                 <slot name="title">{{ title }}</slot>
             </span>
@@ -13,6 +20,8 @@
         -->
         <div
             ref="content"
+            :id="panelId"
+            role="region"
             class="arcana-accordion-content"
             :class="{ 'arcana-accordion-content--animated': isAnimated }"
             :style="contentStyle"
@@ -24,6 +33,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
+
+/** Sequência para os ids de painel — ver `panelId` no `data()`. */
+let panelUid = 0
 import { animateCollapse, applyCollapsedState } from "../../core/collapse"
 
 /**
@@ -99,7 +111,13 @@ export default defineComponent({
         this.cancelAnimation = null
     },
     data() {
-        return { cancelAnimation: null as (() => void) | null }
+        return {
+            cancelAnimation: null as (() => void) | null,
+            // Id só para amarrar `aria-controls` do gatilho ao painel. Contador de
+            // módulo em vez de random: a saída fica estável entre renders, e a lib
+            // é client-only (não há hidratação de SSR para divergir).
+            panelId: `arcana-accordion-panel-${++panelUid}`,
+        }
     },
     methods: {
         onToggle() {

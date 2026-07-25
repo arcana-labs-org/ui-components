@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect, useRef, type ReactNode } from "react";
+import { useContext, useId, useLayoutEffect, useRef, type ReactNode } from "react";
 import { animateCollapse, applyCollapsedState } from "../core/collapse";
 import { AccordionContext } from "./ArcanaAccordion";
 
@@ -91,12 +91,18 @@ export function ArcanaAccordionItem({
         .filter(Boolean)
         .join(" ");
 
+    // Amarra `aria-controls` do gatilho ao painel. `useId` em vez de contador de
+    // módulo porque o StrictMode renderiza duas vezes e um contador dessincronizaria.
+    const panelId = useId();
+
     return (
         <div className={rootClasses}>
             <button
                 type="button"
                 className="arcana-accordion-trigger"
                 disabled={disabled}
+                aria-expanded={open}
+                aria-controls={panelId}
                 onClick={() => {
                     if (disabled) return;
                     api.toggle(name);
@@ -112,6 +118,8 @@ export function ArcanaAccordionItem({
             */}
             <div
                 ref={contentRef}
+                id={panelId}
+                role="region"
                 className={contentClasses}
                 style={isAnimated || open ? undefined : { display: "none" }}
             >

@@ -1,8 +1,19 @@
+<script module lang="ts">
+  /**
+   * Sequência para os ids de painel, no escopo de MÓDULO — no escopo de instância
+   * o contador reiniciaria a cada componente e todos os itens dividiriam o mesmo
+   * id, quebrando o `aria-controls`.
+   */
+  let panelUid = 0;
+</script>
+
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { getContext } from "svelte";
   import { animateCollapse, applyCollapsedState } from "../core/collapse";
   import { ACCORDION_CONTEXT, type AccordionApi } from "./ArcanaAccordion.svelte";
+
+  const panelId = `arcana-accordion-panel-${++panelUid}`;
 
   /**
    * `<ArcanaAccordionItem>` — Svelte 5 port. Reproduz o item (`arcana-accordion-item` +
@@ -97,7 +108,14 @@
 </script>
 
 <div class={rootClasses}>
-  <button type="button" class="arcana-accordion-trigger" {disabled} onclick={onToggle}>
+  <button
+    type="button"
+    class="arcana-accordion-trigger"
+    {disabled}
+    aria-expanded={open}
+    aria-controls={panelId}
+    onclick={onToggle}
+  >
     <span class="arcana-accordion-title">
       {#if typeof title === "function"}{@render title()}{:else}{title}{/if}
     </span>
@@ -110,6 +128,8 @@
   -->
   <div
     bind:this={contentEl}
+    id={panelId}
+    role="region"
     class={contentClasses}
     style={isAnimated || open ? undefined : "display: none;"}
   >

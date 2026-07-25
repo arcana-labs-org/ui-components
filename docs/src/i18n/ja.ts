@@ -260,8 +260,10 @@ export const ja: Messages = {
     },
     contextMenu: {
       blurb: "<c>items</c> 配列（アイコン、サフィックス、<c>danger</c> バリアント、区切り線）から作る右クリックメニュー。子要素で組み立てることもできます。"
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "組み合わせモードでの <c>ArcanaContextMenu</c> の 1 項目 — アイコン、ショートカット用の右寄せ <c>suffix</c>、意味づけの <c>variant</c>、そして上に引かれる <c>divided</c> 区切り線。"
+    },  },
 
   demos: {
     depMoment: "ArcanaDatePicker の日付の解析と整形。",

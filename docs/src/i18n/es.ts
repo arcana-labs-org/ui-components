@@ -260,8 +260,10 @@ export const es: Messages = {
     },
     contextMenu: {
       blurb: "Un menú contextual construido desde un array <c>items</c> (iconos, sufijos, variantes <c>danger</c>, separadores) o compuesto con los hijos."
-    }
-  },
+    },
+    contextMenuItem: {
+      blurb: "Una entrada del <c>ArcanaContextMenu</c> en modo composición — icono, <c>suffix</c> a la derecha para el atajo, <c>variant</c> semántico y separador <c>divided</c> dibujado encima."
+    },  },
 
   demos: {
     depMoment: "Análisis y formato de fechas detrás de ArcanaDatePicker.",

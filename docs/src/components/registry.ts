@@ -64,6 +64,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-action-panel", name: "ArcanaActionPanel", label: "Action Panel", category: "overlay", docKey: "onboardingPanel" },
   { id: "arcana-hover-card", name: "ArcanaHoverCard", label: "Hover Card", category: "overlay", docKey: "hoverCard" },
   { id: "arcana-context-menu", name: "ArcanaContextMenu", label: "Context Menu", category: "overlay", docKey: "contextMenu" },
+  { id: "arcana-context-menu-item", name: "ArcanaContextMenuItem", label: "Context Menu Item", category: "overlay", docKey: "contextMenuItem" },
 
   // ── Layout & navigation ────────────────────────────────────────────────
   { id: "arcana-tabs", name: "ArcanaTabs", label: "Tabs", category: "layoutNav", docKey: "tabs" },
