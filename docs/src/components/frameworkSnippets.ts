@@ -205,6 +205,60 @@ export class FruitPickerComponent {
 <ArcanaSelect value={fruit} onValueChange={(v) => (fruit = v as string | null)} {options} searchable placeholder="Pick a fruit" />`
   },
 
+  treeSelect: {
+    react: `import { useState } from 'react'
+import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/react'
+
+const tree: TreeSelectNode[] = [
+  { id: 1, name: 'Administrativo', children: [
+    { id: 11, name: 'RH' },
+    { id: 12, name: 'Financeiro' },
+  ] },
+  { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+]
+
+export function CostCentreField() {
+  const [costCentre, setCostCentre] = useState<string | number | null>(null)
+  // Only leaves select; parents expand. Pass allowParentSelection to change that.
+  return <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} placeholder="Centro de custo" />
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaTreeSelectComponent, type TreeSelectNode } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-cost-centre-field',
+  standalone: true,
+  imports: [ArcanaTreeSelectComponent],
+  // Only leaves select; parents expand. Add [allowParentSelection]="true" to change that.
+  template: \`<div arcanaTreeSelect [(value)]="costCentre" [options]="tree" placeholder="Centro de custo"></div>\`
+})
+export class CostCentreFieldComponent {
+  costCentre: string | number | null = null
+  tree: TreeSelectNode[] = [
+    { id: 1, name: 'Administrativo', children: [
+      { id: 11, name: 'RH' },
+      { id: 12, name: 'Financeiro' },
+    ] },
+    { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+  ]
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/svelte'
+
+  let costCentre = $state<string | number | null>(null)
+  const tree: TreeSelectNode[] = [
+    { id: 1, name: 'Administrativo', children: [
+      { id: 11, name: 'RH' },
+      { id: 12, name: 'Financeiro' },
+    ] },
+    { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+  ]
+</script>
+
+<!-- Only leaves select; parents expand. Pass allowParentSelection to change that. -->
+<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} placeholder="Centro de custo" />`
+  },
+
   checkbox: {
     react: `import { useState } from 'react'
 import { ArcanaCheckbox } from '@arcanalabs/ui-components/react'

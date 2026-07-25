@@ -75,9 +75,10 @@
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run typecheck && npm test && npm run build && npm run docs:build",
+    "check": "npm run typecheck && npm run typecheck:docs && npm test && npm run build && npm run docs:build",
     "prepublishOnly": "npm run check",
-    "release:dry": "npm pack --dry-run"
+    "release:dry": "npm pack --dry-run",
+    "typecheck:docs": "vue-tsc --noEmit -p tsconfig.docs.json"
   },
   "peerDependencies": {
     "@angular/common": ">=17.0.0",

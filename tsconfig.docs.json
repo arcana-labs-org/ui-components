@@ -1,0 +1,12 @@
+{
+  // Typecheck for the documentation site.
+  //
+  // The root tsconfig only covers `src/` and `tests/` (what ships in the
+  // package), so nothing was validating `docs/` — which is how a missing
+  // `FRAMEWORK_SNIPPETS` entry (a `Record<DocumentedKey, …>` hole) reached the
+  // built site and crashed the Code tab at runtime. `npm run check` now runs
+  // this too, so those holes fail the build instead.
+  "extends": "./tsconfig.json",
+  "include": ["docs/**/*.ts", "docs/**/*.tsx", "docs/**/*.d.ts", "src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["docs/dist", "node_modules", "dist"]
+}
