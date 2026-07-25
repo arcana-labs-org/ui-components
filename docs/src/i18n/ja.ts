@@ -62,6 +62,11 @@ export const ja: Messages = {
       p1: "色は Radix モデルに沿った 12 段階のシステムです。各段には固定の役割があり、1 はアプリの背景、9 はコンポーネント自身を塗るソリッドな面、12 は最もコントラストの高いテキストです。ライトとダークで 31 のスケールを、それぞれ alpha バリアント付きで同梱しているので、トークンの意味はどこで使っても変わりません。",
       p2: "パレットの切り替えはルート要素のクラス 1 つです。<c>.arcana-accent-violet</c> でアクセント、<c>.arcana-gray-slate</c> でニュートラル、<c>.arcana-dark</c> でダークモードを選びます。コンポーネントは意味的トークンしか読まないため、スタイルに一切手を入れなくてもすべてが追従します。"
     },
+    deps: {
+      title: "依存関係",
+      p1: "下の表はパッケージ自身の <c>package.json</c> から生成されるため、古くなることがありません。<b>runtime</b> はライブラリと一緒にインストールされます。<b>peer</b> はアプリ側が用意します — ライブラリは期待を宣言するだけで、同梱はしません。",
+      p2: "ここにある peer はすべて<b>オプション</b>です。実際に使うフレームワークと、描画する機能に必要な追加パッケージだけを入れてください。入れ忘れてもインストールは失敗しません — 必要とするのは、それを使うコンポーネントです。"
+    },
     maska: {
       title: "v-maska のインストール",
       p1: "<c>ArcanaInputMask</c> コンポーネントは <c>maska</c> パッケージの <c>v-maska</c> ディレクティブを使います。これは<b>オプションの peer dependency</b> です。ライブラリと一緒にインストールし、アプリ作成時に一度だけグローバル登録してください。",
@@ -76,6 +81,17 @@ export const ja: Messages = {
     scaleCaption: "{scale} の 12 段階",
     previewTitle: "選択したパレットでの実際のコンポーネント",
     hint: "すべてのコンポーネントが意味的トークンを読むので、ルートのクラスを変えるだけでページ全体のテーマが変わります。"
+  },
+
+  dependencies: {
+    colPackage: "パッケージ",
+    colVersion: "バージョン",
+    colKind: "種別",
+    colPurpose: "用途",
+    kindRuntime: "runtime",
+    kindPeer: "peer",
+    kindPeerOptional: "peer · 任意",
+    note: "runtime 依存はバンドルに入ります。任意の peer は、それを使うコンポーネントを描画する場合にのみ関係します。"
   },
 
   propsTable: {
@@ -247,6 +263,15 @@ export const ja: Messages = {
   },
 
   demos: {
+    depMoment: "ArcanaDatePicker の日付の解析と整形。",
+    depVMoney: "ArcanaInputCurrency の通貨マスク（Vue）。",
+    depMaska: "ArcanaInputMask の入力マスク。Vue では app.use(Maska) でディレクティブを登録します。",
+    depVue: "/vue エントリポイントのみで必要。",
+    depReact: "/react エントリポイントのみで必要。",
+    depReactDom: "/react エントリポイントのみで必要。",
+    depAngular: "/angular エントリポイントのみで必要。",
+    depSvelte: "/svelte エントリポイントのみで必要。",
+    depFontAwesome: "アイコン系 props が使うアイコンクラス（fa-solid fa-*）。",
     // ── shared ──
     lastAction: "最後の操作",
     timesSuffix: "回",

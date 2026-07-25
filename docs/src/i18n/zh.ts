@@ -62,6 +62,11 @@ export const zh: Messages = {
       p1: "颜色是遵循 Radix 模型的 12 级色阶体系：每一级都有固定职责——第 1 级是应用背景，第 9 级是组件用来填充自身的实色，第 12 级是对比度最高的文本。库中提供 31 套亮色与暗色色阶，每套都带 alpha 变体，因此同一个令牌无论用在哪里含义都一致。",
       p2: "切换调色板只需在根元素上加一个类：<c>.arcana-accent-violet</c> 决定强调色，<c>.arcana-gray-slate</c> 决定中性色，<c>.arcana-dark</c> 切换暗色模式。组件只读取语义令牌，因此无需改动任何一处组件样式，它们都会随之变化。"
     },
+    deps: {
+      title: "依赖",
+      p1: "下表由本包自身的 <c>package.json</c> 生成，因此永远不会过期。<b>runtime</b> 依赖会随库一起安装；<b>peer</b> 依赖由你的应用提供 —— 库只声明期望，不打包进去。",
+      p2: "这里的 peer 依赖全部是<b>可选的</b>：只装你实际使用的框架，以及你要渲染的功能所需的额外包。漏装不会导致安装失败 —— 真正要求它的是用到它的那个组件。"
+    },
     maska: {
       title: "安装 v-maska",
       p1: "<c>ArcanaInputMask</c> 组件依赖 <c>maska</c> 包提供的 <c>v-maska</c> 指令。它是<b>可选的 peer dependency</b>：请与本库一同安装，并在创建应用时全局注册一次。",
@@ -76,6 +81,17 @@ export const zh: Messages = {
     scaleCaption: "{scale} 的 12 个色阶",
     previewTitle: "所选调色板下的真实组件",
     hint: "每个组件都读取语义令牌，所以切换根元素的类即可为整页重新配色。"
+  },
+
+  dependencies: {
+    colPackage: "包",
+    colVersion: "版本",
+    colKind: "类型",
+    colPurpose: "用途",
+    kindRuntime: "runtime",
+    kindPeer: "peer",
+    kindPeerOptional: "peer · 可选",
+    note: "runtime 依赖会进入你的产物。可选 peer 只在你渲染用到它的组件时才有影响。"
   },
 
   propsTable: {
@@ -247,6 +263,15 @@ export const zh: Messages = {
   },
 
   demos: {
+    depMoment: "ArcanaDatePicker 背后的日期解析与格式化。",
+    depVMoney: "ArcanaInputCurrency 的货币掩码（Vue）。",
+    depMaska: "ArcanaInputMask 的输入掩码；在 Vue 中用 app.use(Maska) 注册指令。",
+    depVue: "仅 /vue 入口需要。",
+    depReact: "仅 /react 入口需要。",
+    depReactDom: "仅 /react 入口需要。",
+    depAngular: "仅 /angular 入口需要。",
+    depSvelte: "仅 /svelte 入口需要。",
+    depFontAwesome: "库中图标属性使用的图标类（fa-solid fa-*）。",
     // ── shared ──
     lastAction: "最近操作",
     timesSuffix: "次",

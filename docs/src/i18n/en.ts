@@ -62,6 +62,11 @@ export const en: Messages = {
       p1: "Colour is a 12-step system in the Radix model: every step has a fixed job — step 1 is the app background, step 9 the solid fill a component paints itself with, step 12 the highest-contrast text. The library ships 31 scales in light and dark, each with an alpha variant, so a token always means the same thing wherever it lands.",
       p2: "Switching palettes is a class on the root element: <c>.arcana-accent-violet</c> picks the accent, <c>.arcana-gray-slate</c> the neutral and <c>.arcana-dark</c> the dark mode. Components only ever read semantic tokens, so every one of them follows along without you touching a single component style."
     },
+    deps: {
+      title: "Dependencies",
+      p1: "The table below is generated from the package's own <c>package.json</c>, so it is never out of date. <b>Runtime</b> entries are installed automatically with the library. <b>Peer</b> entries are provided by your app — the library declares what it expects but does not bundle it.",
+      p2: "Every peer here is <b>optional</b>: install only the framework you actually use, plus the extras for the features you render. Nothing breaks at install time if you skip one — the component that needs it is simply the one that requires it."
+    },
     maska: {
       title: "Installing v-maska",
       p1: "The <c>ArcanaInputMask</c> component relies on the <c>v-maska</c> directive from the <c>maska</c> package. It is an <b>optional peer dependency</b>: install it alongside the library, then register it globally once when you create the app.",
@@ -76,6 +81,17 @@ export const en: Messages = {
     scaleCaption: "The 12 steps of {scale}",
     previewTitle: "Real components under the selected palette",
     hint: "Every component reads semantic tokens, so switching the root class re-themes the whole page."
+  },
+
+  dependencies: {
+    colPackage: "Package",
+    colVersion: "Version",
+    colKind: "Kind",
+    colPurpose: "Used for",
+    kindRuntime: "runtime",
+    kindPeer: "peer",
+    kindPeerOptional: "peer · optional",
+    note: "Runtime dependencies end up in your bundle. Optional peers only matter if you render the component that uses them."
   },
 
   propsTable: {
@@ -247,6 +263,15 @@ export const en: Messages = {
   },
 
   demos: {
+    depMoment: "Date parsing and formatting behind ArcanaDatePicker.",
+    depVMoney: "Currency masking in ArcanaInputCurrency (Vue).",
+    depMaska: "Input masking in ArcanaInputMask; in Vue, register the directive with app.use(Maska).",
+    depVue: "Required only for the /vue entrypoint.",
+    depReact: "Required only for the /react entrypoint.",
+    depReactDom: "Required only for the /react entrypoint.",
+    depAngular: "Required only for the /angular entrypoint.",
+    depSvelte: "Required only for the /svelte entrypoint.",
+    depFontAwesome: "Icon classes (fa-solid fa-*) used by icon props across the library.",
     // ── shared ──
     lastAction: "last action",
     timesSuffix: "time(s)",

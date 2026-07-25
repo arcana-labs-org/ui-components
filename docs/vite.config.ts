@@ -5,7 +5,12 @@ import { readFileSync } from "node:fs";
 
 // A versão exibida na docs vem do package.json — antes era a string fixa "v0.x",
 // que ficou parada enquanto a lib avançava até a 1.6.1.
-const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string };
+const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as {
+  version: string;
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  peerDependenciesMeta?: Record<string, { optional?: boolean }>;
+};
 
 // The docs are a React app that mounts REAL Vue components inline (see
 // `components/VueDemo.tsx`). We therefore load BOTH plugins:
@@ -17,7 +22,16 @@ export default defineConfig({
   root: __dirname,
   base: process.env.DOCS_BASE ?? "/ui-components/",
   plugins: [react(), vue()],
-  define: { __ARCANA_VERSION__: JSON.stringify(pkg.version) },
+  // A tabela de dependências da docs é derivada daqui, não escrita à mão: uma
+  // lista copiada envelhece silenciosamente a cada `npm install`.
+  define: {
+    __ARCANA_VERSION__: JSON.stringify(pkg.version),
+    __ARCANA_DEPS__: JSON.stringify({
+      dependencies: pkg.dependencies ?? {},
+      peerDependencies: pkg.peerDependencies ?? {},
+      peerDependenciesMeta: pkg.peerDependenciesMeta ?? {}
+    })
+  },
   resolve: {
     alias: {
       vue: "vue/dist/vue.esm-bundler.js"

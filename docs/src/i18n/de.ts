@@ -62,6 +62,11 @@ export const de: Messages = {
       p1: "Farbe ist ein 12-stufiges System nach dem Radix-Modell: Jede Stufe hat eine feste Aufgabe — Stufe 1 ist der App-Hintergrund, Stufe 9 die deckende Fläche, mit der sich eine Komponente selbst füllt, Stufe 12 der Text mit dem höchsten Kontrast. Die Bibliothek liefert 31 Skalen in Hell und Dunkel, jede mit Alpha-Variante, sodass ein Token überall dasselbe bedeutet.",
       p2: "Die Palette zu wechseln ist eine Klasse am Wurzelelement: <c>.arcana-accent-violet</c> wählt den Akzent, <c>.arcana-gray-slate</c> den Neutralton und <c>.arcana-dark</c> den Dunkelmodus. Komponenten lesen ausschließlich semantische Tokens — sie ziehen also alle mit, ohne dass du einen einzigen Stil anfassen musst."
     },
+    deps: {
+      title: "Abhängigkeiten",
+      p1: "Die Tabelle wird aus der <c>package.json</c> des Pakets selbst erzeugt und ist damit nie veraltet. <b>Runtime</b>-Einträge werden mit der Bibliothek installiert. <b>Peer</b>-Einträge stellt Ihre Anwendung bereit — die Bibliothek deklariert nur, was sie erwartet, und bündelt es nicht.",
+      p2: "Jede Peer hier ist <b>optional</b>: Installieren Sie nur das Framework, das Sie verwenden, plus die Extras für die Funktionen, die Sie rendern. Bei der Installation bricht nichts, wenn Sie eine auslassen — verlangt wird sie von der Komponente, die sie braucht."
+    },
     maska: {
       title: "v-maska installieren",
       p1: "Die Komponente <c>ArcanaInputMask</c> nutzt die Direktive <c>v-maska</c> aus dem Paket <c>maska</c>. Es ist eine <b>optionale Peer-Dependency</b>: Installieren Sie es zusammen mit der Bibliothek und registrieren Sie es einmalig global beim Erstellen der App.",
@@ -76,6 +81,17 @@ export const de: Messages = {
     scaleCaption: "Die 12 Stufen von {scale}",
     previewTitle: "Echte Komponenten unter der gewählten Palette",
     hint: "Jede Komponente liest semantische Tokens — ein Klassenwechsel an der Wurzel thematisiert die ganze Seite neu."
+  },
+
+  dependencies: {
+    colPackage: "Paket",
+    colVersion: "Version",
+    colKind: "Art",
+    colPurpose: "Wofür",
+    kindRuntime: "Runtime",
+    kindPeer: "Peer",
+    kindPeerOptional: "Peer · optional",
+    note: "Runtime-Abhängigkeiten landen in Ihrem Bundle. Optionale Peers zählen nur, wenn Sie die Komponente rendern, die sie nutzt."
   },
 
   propsTable: {
@@ -247,6 +263,15 @@ export const de: Messages = {
   },
 
   demos: {
+    depMoment: "Datums-Parsing und -Formatierung hinter ArcanaDatePicker.",
+    depVMoney: "Währungsmaske in ArcanaInputCurrency (Vue).",
+    depMaska: "Eingabemaske in ArcanaInputMask; in Vue die Direktive mit app.use(Maska) registrieren.",
+    depVue: "Nur für den /vue-Einstiegspunkt nötig.",
+    depReact: "Nur für den /react-Einstiegspunkt nötig.",
+    depReactDom: "Nur für den /react-Einstiegspunkt nötig.",
+    depAngular: "Nur für den /angular-Einstiegspunkt nötig.",
+    depSvelte: "Nur für den /svelte-Einstiegspunkt nötig.",
+    depFontAwesome: "Icon-Klassen (fa-solid fa-*), die von den Icon-Props genutzt werden.",
     // ── shared ──
     lastAction: "letzte Aktion",
     timesSuffix: "Mal",

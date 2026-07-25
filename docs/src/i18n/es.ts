@@ -62,6 +62,11 @@ export const es: Messages = {
       p1: "El color es un sistema de 12 pasos según el modelo Radix: cada paso tiene un papel fijo — el paso 1 es el fondo de la aplicación, el 9 el relleno sólido con el que el componente se pinta y el 12 el texto de mayor contraste. La biblioteca incluye 31 escalas en claro y oscuro, cada una con variante alpha, así que un token significa siempre lo mismo allá donde caiga.",
       p2: "Cambiar de paleta es poner una clase en el elemento raíz: <c>.arcana-accent-violet</c> elige el acento, <c>.arcana-gray-slate</c> el neutro y <c>.arcana-dark</c> el modo oscuro. Los componentes solo leen tokens semánticos, así que todos siguen el cambio sin tocar ni un estilo."
     },
+    deps: {
+      title: "Dependencias",
+      p1: "La tabla se genera desde el propio <c>package.json</c> del paquete, así que nunca queda desactualizada. Las de <b>runtime</b> se instalan junto con la biblioteca. Las <b>peer</b> las aporta tu aplicación — la biblioteca declara lo que espera, pero no lo empaqueta.",
+      p2: "Todas las peer aquí son <b>opcionales</b>: instala solo el framework que uses, más los extras de las funciones que rendericen. Nada falla al instalar si omites alguna — quien la exige es el componente que la necesita."
+    },
     maska: {
       title: "Instalar v-maska",
       p1: "El componente <c>ArcanaInputMask</c> usa la directiva <c>v-maska</c> del paquete <c>maska</c>. Es una <b>peer dependency opcional</b>: instálala junto a la biblioteca y regístrala globalmente una vez al crear la aplicación.",
@@ -76,6 +81,17 @@ export const es: Messages = {
     scaleCaption: "Los 12 pasos de {scale}",
     previewTitle: "Componentes reales con la paleta seleccionada",
     hint: "Cada componente lee tokens semánticos, así que cambiar la clase raíz re-tematiza toda la página."
+  },
+
+  dependencies: {
+    colPackage: "Paquete",
+    colVersion: "Versión",
+    colKind: "Tipo",
+    colPurpose: "Sirve para",
+    kindRuntime: "runtime",
+    kindPeer: "peer",
+    kindPeerOptional: "peer · opcional",
+    note: "Las dependencias de runtime entran en tu bundle. Las peer opcionales solo importan si renderizas el componente que las usa."
   },
 
   propsTable: {
@@ -247,6 +263,15 @@ export const es: Messages = {
   },
 
   demos: {
+    depMoment: "Análisis y formato de fechas detrás de ArcanaDatePicker.",
+    depVMoney: "Máscara de moneda en ArcanaInputCurrency (Vue).",
+    depMaska: "Máscara de entrada en ArcanaInputMask; en Vue, registra la directiva con app.use(Maska).",
+    depVue: "Necesaria solo para el entrypoint /vue.",
+    depReact: "Necesaria solo para el entrypoint /react.",
+    depReactDom: "Necesaria solo para el entrypoint /react.",
+    depAngular: "Necesaria solo para el entrypoint /angular.",
+    depSvelte: "Necesaria solo para el entrypoint /svelte.",
+    depFontAwesome: "Clases de iconos (fa-solid fa-*) usadas por las props de icono.",
     // ── shared ──
     lastAction: "última acción",
     timesSuffix: "vez(ces)",

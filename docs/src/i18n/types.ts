@@ -136,7 +136,24 @@ export interface Messages {
     styles: SectionProse;
     /** Sistema de cores: escalas de 12 degraus, acento, neutro e modo escuro. */
     palette: SectionProse;
+    /** O que a lib instala, o que ela espera do app e o que é opcional. */
+    deps: SectionProse;
     maska: SectionProse;
+  };
+
+  /** Rótulos da tabela de dependências (os dados vêm do package.json). */
+  dependencies: {
+    colPackage: string;
+    colVersion: string;
+    colKind: string;
+    colPurpose: string;
+    /** Entra no fecho de dependências de quem instala. */
+    kindRuntime: string;
+    /** O app precisa fornecer. */
+    kindPeer: string;
+    /** O app fornece só se usar o recurso. */
+    kindPeerOptional: string;
+    note: string;
   };
 
   /** Rótulos do explorador de paletas (seção "Colors" do getting started). */

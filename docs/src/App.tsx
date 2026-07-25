@@ -5,6 +5,7 @@ import { COMPONENTS, CATEGORY_ORDER } from "./components/registry";
 import { COMPONENT_DOCS, type PropRow } from "./components/componentDocs";
 import { installCode, usageSnippets, stylesSnippets, maskaSnippets, paletteSnippets, frameworkCode, sameForAll } from "./components/snippets";
 import { PaletteExplorer } from "./components/PaletteExplorer";
+import { DependenciesTable } from "./components/DependenciesTable";
 import { FRAMEWORK_SNIPPETS } from "./components/frameworkSnippets";
 import { rich, useLang, type Messages } from "./i18n";
 
@@ -69,6 +70,13 @@ function buildGroups(msg: Messages): DocsGroup[] {
         preview: <PaletteExplorer />,
         previewLabel: msg.palette.previewTitle,
         code: paletteSnippets
+      },
+      {
+        id: "dependencies",
+        title: gs.deps.title,
+        body: <><P>{gs.deps.p1}</P><P>{gs.deps.p2}</P></>,
+        preview: <DependenciesTable />,
+        previewLabel: gs.deps.title
       },
       {
         id: "v-maska",
