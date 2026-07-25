@@ -1247,6 +1247,27 @@ table.ref-table td .t-type {
 .demo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
 .demo-note { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
 .demo-note strong { color: var(--ink); }
+
+/* Um caso rotulado dentro de um demo (ex.: "seleção única" vs "múltipla"). */
+.demo-field { display: flex; flex-direction: column; gap: 6px; }
+.demo-field-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Demo de tematização do ArcanaTreeSelect: aplicado ao painel via `panel-class`,
+   já que o painel é teleportado pro <body> e não herda do wrapper do campo. */
+.demo-tree-amber {
+  --arcana-tree-select-folder-color: #f59e0b;
+  --arcana-tree-select-leaf-color: #38bdf8;
+  --arcana-tree-select-selected-bg: #fef3c7;
+  --arcana-tree-select-selected-text: #92400e;
+  --arcana-tree-select-selected-icon-color: #b45309;
+  --arcana-tree-select-hover-bg: #fffbeb;
+}
 .demo-panel { padding: 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: #3f3f46; background: #fafafa; }
 .demo-switch-row { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #3f3f46; cursor: pointer; }
 .demo-chip { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); cursor: pointer; }

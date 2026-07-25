@@ -91,7 +91,7 @@
                 <div
                     v-if="isOpen"
                     ref="panelRef"
-                    class="arcana-tree-select__panel"
+                    :class="['arcana-tree-select__panel', panelClass]"
                     :style="panelStyle"
                     :aria-label="ariaLabel"
                     tabindex="-1"
@@ -323,6 +323,16 @@ export default defineComponent({
             validator: (value: string) => ["sm", "md", "lg"].includes(value),
         },
         ariaLabel: {
+            type: String,
+            default: undefined,
+        },
+        /**
+         * Classe extra aplicada ao painel. Como o painel é teleportado pro
+         * `<body>`, um seletor no wrapper do campo não o alcança — use isto pra
+         * escopar tema (os custom properties `--arcana-tree-select-*`) a uma
+         * instância específica.
+         */
+        panelClass: {
             type: String,
             default: undefined,
         },

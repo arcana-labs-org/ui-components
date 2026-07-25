@@ -80,6 +80,13 @@ export interface ArcanaTreeSelectProps {
     onValueChange?: (value: TreeSelectValue) => void;
     onChange?: (value: TreeSelectValue) => void;
     className?: string;
+    /**
+     * Classe extra aplicada ao painel. Como o painel é renderizado em portal no
+     * `<body>`, um seletor no wrapper do campo não o alcança — use isto pra
+     * escopar tema (os custom properties `--arcana-tree-select-*`) a uma
+     * instância específica.
+     */
+    panelClass?: string;
 }
 
 /** Painel estimado antes da primeira medição (evita flip errado no 1º frame). */
@@ -204,6 +211,7 @@ export function ArcanaTreeSelect({
     onValueChange,
     onChange,
     className,
+    panelClass,
 }: ArcanaTreeSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -657,7 +665,9 @@ export function ArcanaTreeSelect({
                 ? createPortal(
                       <div
                           ref={panelRef}
-                          className="arcana-tree-select__panel"
+                          className={["arcana-tree-select__panel", panelClass]
+                              .filter(Boolean)
+                              .join(" ")}
                           style={panelStyle}
                           aria-label={ariaLabel}
                           tabIndex={-1}

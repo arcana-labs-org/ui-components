@@ -219,8 +219,20 @@ const tree: TreeSelectNode[] = [
 
 export function CostCentreField() {
   const [costCentre, setCostCentre] = useState<string | number | null>(null)
-  // Only leaves select; parents expand. Pass allowParentSelection to change that.
-  return <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} placeholder="Centro de custo" />
+  const [picked, setPicked] = useState<(string | number)[]>([])
+  return (
+    <>
+      {/* Single: only leaves select; clicking a parent just expands it. */}
+      <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} placeholder="Centro de custo" />
+
+      {/* Multiple: removable tags; allowParentSelection lets parents be picked too. */}
+      <ArcanaTreeSelect value={picked} onValueChange={setPicked} options={tree} multiple allowParentSelection />
+
+      {/* Theming: scope the CSS custom properties with panelClass (the panel lives in <body>).
+          .my-tree { --arcana-tree-select-folder-color: #f59e0b; --arcana-tree-select-selected-bg: #fef3c7; … } */}
+      <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} panelClass="my-tree" />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaTreeSelectComponent, type TreeSelectNode } from '@arcanalabs/ui-components/angular'
@@ -229,11 +241,21 @@ import { ArcanaTreeSelectComponent, type TreeSelectNode } from '@arcanalabs/ui-c
   selector: 'app-cost-centre-field',
   standalone: true,
   imports: [ArcanaTreeSelectComponent],
-  // Only leaves select; parents expand. Add [allowParentSelection]="true" to change that.
-  template: \`<div arcanaTreeSelect [(value)]="costCentre" [options]="tree" placeholder="Centro de custo"></div>\`
+  // Theming: scope the CSS custom properties with panelClass (the panel lives in <body>).
+  // .my-tree { --arcana-tree-select-folder-color: #f59e0b; --arcana-tree-select-selected-bg: #fef3c7; … }
+  template: \`
+    <!-- Single: only leaves select; clicking a parent just expands it. -->
+    <div arcanaTreeSelect [(value)]="costCentre" [options]="tree" placeholder="Centro de custo"></div>
+
+    <!-- Multiple: removable tags; [allowParentSelection]="true" lets parents be picked too. -->
+    <div arcanaTreeSelect [(value)]="picked" [options]="tree" [multiple]="true" [allowParentSelection]="true"></div>
+
+    <div arcanaTreeSelect [(value)]="costCentre" [options]="tree" panelClass="my-tree"></div>
+  \`
 })
 export class CostCentreFieldComponent {
   costCentre: string | number | null = null
+  picked: (string | number)[] = []
   tree: TreeSelectNode[] = [
     { id: 1, name: 'Administrativo', children: [
       { id: 11, name: 'RH' },
@@ -246,6 +268,7 @@ export class CostCentreFieldComponent {
   import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/svelte'
 
   let costCentre = $state<string | number | null>(null)
+  let picked = $state<(string | number)[]>([])
   const tree: TreeSelectNode[] = [
     { id: 1, name: 'Administrativo', children: [
       { id: 11, name: 'RH' },
@@ -255,8 +278,24 @@ export class CostCentreFieldComponent {
   ]
 </script>
 
-<!-- Only leaves select; parents expand. Pass allowParentSelection to change that. -->
-<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} placeholder="Centro de custo" />`
+<!-- Single: only leaves select; clicking a parent just expands it. -->
+<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} placeholder="Centro de custo" />
+
+<!-- Multiple: removable tags; allowParentSelection lets parents be picked too. -->
+<ArcanaTreeSelect value={picked} onValueChange={(v) => (picked = v)} options={tree} multiple allowParentSelection />
+
+<!-- Theming: scope the tokens with panelClass (the panel lives in <body>). -->
+<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} panelClass="my-tree" />
+
+<style>
+  /* Icon colours, selected item and search highlight are CSS custom properties. */
+  :global(.my-tree) {
+    --arcana-tree-select-folder-color: #f59e0b;
+    --arcana-tree-select-leaf-color: #38bdf8;
+    --arcana-tree-select-selected-bg: #fef3c7;
+    --arcana-tree-select-selected-text: #92400e;
+  }
+</style>`
   },
 
   checkbox: {

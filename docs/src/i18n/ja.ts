@@ -523,7 +523,11 @@ export const ja: Messages = {
     treeWarehouse: "倉庫",
     treeCommercial: "営業",
     treePickOne: "原価センターを選択",
-    treePickSeveral: "複数選択"
+    treePickSeveral: "複数選択",
+    treeSingleTitle: "単一選択",
+    treeMultipleTitle: "複数選択",
+    treeThemedTitle: "カスタムテーマ",
+    treeThemedHint: "アイコンと選択項目の色は CSS カスタムプロパティで指定"
 
   }
 };

@@ -5284,6 +5284,21 @@
  * Estilos GLOBAIS (não-scoped) porque o `.arcana-tree-select__panel` é teleportado
  * pro <body>. Medidas espelham `.arcana-select__*` (altura 36px, radius 6, 13px)
  * pra que os dois controles fiquem alinhados lado a lado num form.
+ *
+ * TEMA — sobrescreva estes custom properties para recolorir a árvore. Declare-os
+ * em `:root` (ou em qualquer ancestral comum ao trigger E ao painel; lembre que o
+ * painel vive no <body>, então um seletor no wrapper do campo NÃO o alcança):
+ *
+ *   --arcana-tree-select-folder-color         ícone de pasta (nó com filhos)
+ *   --arcana-tree-select-leaf-color           ícone de documento (folha)
+ *   --arcana-tree-select-selected-bg          fundo do item selecionado
+ *   --arcana-tree-select-selected-bg-hover    idem, sob o cursor
+ *   --arcana-tree-select-selected-text        texto/ícone de check do selecionado
+ *   --arcana-tree-select-selected-icon-color  ícones dentro do item selecionado
+ *   --arcana-tree-select-hover-bg             fundo do item sob o cursor
+ *   --arcana-tree-select-hover-text           texto do item sob o cursor
+ *   --arcana-tree-select-mark-bg              realce do termo buscado
+ *   --arcana-tree-select-mark-text            texto do realce
  */
 
 .arcana-tree-select {
@@ -5548,19 +5563,19 @@
 }
 
 .arcana-tree-select__node:hover {
-    background: #f4f4f5;
-    color: #09090b;
+    background: var(--arcana-tree-select-hover-bg, #f4f4f5);
+    color: var(--arcana-tree-select-hover-text, #09090b);
 }
 
 .arcana-tree-select__node.is-selected {
-    background: #18181b;
-    color: #ffffff;
+    background: var(--arcana-tree-select-selected-bg, #18181b);
+    color: var(--arcana-tree-select-selected-text, #ffffff);
     font-weight: 500;
 }
 
 .arcana-tree-select__node.is-selected:hover {
-    background: #27272a;
-    color: #ffffff;
+    background: var(--arcana-tree-select-selected-bg-hover, var(--arcana-tree-select-selected-bg, #27272a));
+    color: var(--arcana-tree-select-selected-text, #ffffff);
 }
 
 .arcana-tree-select__node.is-disabled {
@@ -5625,16 +5640,16 @@
 }
 
 .arcana-tree-select__icon--folder {
-    color: #a1a1aa;
+    color: var(--arcana-tree-select-folder-color, #a1a1aa);
 }
 
 .arcana-tree-select__icon--leaf {
-    color: #d4d4d8;
+    color: var(--arcana-tree-select-leaf-color, #d4d4d8);
 }
 
 .arcana-tree-select__node.is-selected .arcana-tree-select__icon--folder,
 .arcana-tree-select__node.is-selected .arcana-tree-select__icon--leaf {
-    color: #d4d4d8;
+    color: var(--arcana-tree-select-selected-icon-color, #d4d4d8);
 }
 
 .arcana-tree-select__node-label {
@@ -5647,13 +5662,13 @@
 
 .arcana-tree-select__check {
     flex-shrink: 0;
-    color: #ffffff;
+    color: var(--arcana-tree-select-selected-text, #ffffff);
 }
 
 /* Highlight do termo buscado */
 .arcana-tree-select__mark {
-    background: #fef08a;
-    color: #09090b;
+    background: var(--arcana-tree-select-mark-bg, #fef08a);
+    color: var(--arcana-tree-select-mark-text, #09090b);
     padding: 0 1px;
     border-radius: 2px;
     font-weight: 600;

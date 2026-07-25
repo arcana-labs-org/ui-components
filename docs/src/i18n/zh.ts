@@ -523,7 +523,11 @@ export const zh: Messages = {
     treeWarehouse: "仓库",
     treeCommercial: "商务",
     treePickOne: "选择成本中心",
-    treePickSeveral: "选择多个"
+    treePickSeveral: "选择多个",
+    treeSingleTitle: "单选",
+    treeMultipleTitle: "多选",
+    treeThemedTitle: "自定义主题",
+    treeThemedHint: "通过 CSS 自定义属性设置图标与选中项颜色"
 
   }
 };

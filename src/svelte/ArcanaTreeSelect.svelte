@@ -75,6 +75,7 @@
     clearable = true,
     size = "md",
     ariaLabel,
+    panelClass = undefined,
     onValueChange,
     onChange,
   }: {
@@ -92,6 +93,12 @@
     clearable?: boolean;
     size?: "sm" | "md" | "lg";
     ariaLabel?: string;
+    /**
+     * Classe extra aplicada ao painel. Como o painel é portado pro `<body>`, um
+     * seletor no wrapper do campo não o alcança — use isto pra escopar tema (os
+     * custom properties `--arcana-tree-select-*`) a uma instância específica.
+     */
+    panelClass?: string;
     onValueChange?: (value: TreeSelectValue) => void;
     onChange?: (value: TreeSelectValue) => void;
   } = $props();
@@ -621,7 +628,7 @@
     <div
       use:portal
       bind:this={panelEl}
-      class="arcana-tree-select__panel"
+      class={["arcana-tree-select__panel", panelClass].filter(Boolean).join(" ")}
       style={panelStyle}
       aria-label={ariaLabel}
       tabindex="-1"

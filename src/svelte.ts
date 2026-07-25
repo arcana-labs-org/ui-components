@@ -323,6 +323,8 @@ export interface ArcanaTreeSelectProps {
   clearable?: boolean;
   size?: "sm" | "md" | "lg";
   ariaLabel?: string;
+  /** Classe extra no painel portado pro `<body>` (escopa tema por instância). */
+  panelClass?: string;
   onValueChange?: (value: TreeSelectValue) => void;
   onChange?: (value: TreeSelectValue) => void;
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 — 2026-07-25
+
+### Novos recursos
+- **`ArcanaTreeSelect` agora é tematizável**: as cores dos ícones (pasta/documento), do item selecionado, do item sob o cursor e do realce da busca passaram a ser custom properties CSS (`--arcana-tree-select-*`), como no componente original do ERP. Nova prop **`panelClass`** para escopar o tema a uma instância — necessária porque o painel é renderizado no `<body>` e não herda estilos do wrapper do campo.
+
+### Documentação
+- A demonstração do Tree Select agora separa **seleção única**, **seleção múltipla** e **tema customizado**, e os exemplos de código dos quatro frameworks mostram os três casos, incluindo os tokens de cor disponíveis.
+
 ## 1.2.1 — 2026-07-25
 
 ### Correções

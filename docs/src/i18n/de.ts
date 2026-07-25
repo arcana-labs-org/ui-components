@@ -523,7 +523,11 @@ export const de: Messages = {
     treeWarehouse: "Lager",
     treeCommercial: "Vertrieb",
     treePickOne: "Kostenstelle wählen",
-    treePickSeveral: "Mehrere wählen"
+    treePickSeveral: "Mehrere wählen",
+    treeSingleTitle: "Einfachauswahl",
+    treeMultipleTitle: "Mehrfachauswahl",
+    treeThemedTitle: "Eigenes Theme",
+    treeThemedHint: "Icon- und Auswahlfarben über CSS Custom Properties"
 
   }
 };

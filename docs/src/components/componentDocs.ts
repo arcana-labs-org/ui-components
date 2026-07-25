@@ -145,6 +145,7 @@ const TreeSelectDemo: Component = {
     return {
       single: null as string | number | null,
       many: [] as (string | number)[],
+      themed: 21 as string | number | null,
       tree: [
         {
           id: 1,
@@ -169,9 +170,23 @@ const TreeSelectDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaTreeSelect v-model="single" :options="tree" :placeholder="$dt.treePickOne" />
-      <ArcanaTreeSelect v-model="many" :options="tree" :placeholder="$dt.treePickSeveral" multiple allow-parent-selection />
-      <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.treeSingleTitle }}</span>
+        <ArcanaTreeSelect v-model="single" :options="tree" :placeholder="$dt.treePickOne" />
+        <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong></p>
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.treeMultipleTitle }}</span>
+        <ArcanaTreeSelect v-model="many" :options="tree" :placeholder="$dt.treePickSeveral" multiple allow-parent-selection />
+        <p class="demo-note">{{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.treeThemedTitle }}</span>
+        <ArcanaTreeSelect v-model="themed" :options="tree" :placeholder="$dt.treePickOne" panel-class="demo-tree-amber" />
+        <p class="demo-note">{{ $dt.treeThemedHint }}</p>
+      </div>
     </div>
   `
 };
@@ -1077,7 +1092,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "emptyText", type: "string", default: "'Nenhum resultado encontrado'", description: "Shown when the filter matches nothing." },
       { name: "clearable", type: "boolean", default: "true", description: "Shows an X on hover to clear the value." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the field." },
-      { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." }
+      { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." },
+      { name: "panelClass", type: "string", default: "undefined", description: "Extra class on the panel. The panel is teleported to <body>, so a selector on the field wrapper can't reach it — use this to scope the theme tokens below to one instance." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
     vueSnippet: [
@@ -1086,6 +1102,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/vue'",
       "",
       "const costCenter = ref<number | null>(null)",
+      "const picked = ref<number[]>([])",
       "const tree: TreeSelectNode[] = [",
       "  { id: 1, name: 'Administrativo', children: [",
       "    { id: 11, name: 'RH' },",
@@ -1096,9 +1113,29 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <!-- Only leaves select; parents expand. Pass allow-parent-selection to change that. -->",
+      "  <!-- Single: only leaves select; clicking a parent just expands it. -->",
       "  <ArcanaTreeSelect v-model=\"costCenter\" :options=\"tree\" placeholder=\"Centro de custo\" />",
-      "</template>"
+      "",
+      "  <!-- Multiple: removable tags; allow-parent-selection lets parents be picked too. -->",
+      "  <ArcanaTreeSelect v-model=\"picked\" :options=\"tree\" multiple allow-parent-selection />",
+      "",
+      "  <!-- Theming: scope the tokens with panel-class (the panel lives in <body>). -->",
+      "  <ArcanaTreeSelect v-model=\"costCenter\" :options=\"tree\" panel-class=\"my-tree\" />",
+      "</template>",
+      "",
+      "<style>",
+      "/* Icon colours, selected item and search highlight are all CSS custom",
+      "   properties — override them globally (:root) or per instance (panel-class). */",
+      ".my-tree {",
+      "  --arcana-tree-select-folder-color: #f59e0b;        /* folder icon (branch) */",
+      "  --arcana-tree-select-leaf-color: #38bdf8;          /* document icon (leaf) */",
+      "  --arcana-tree-select-selected-bg: #fef3c7;         /* selected row */",
+      "  --arcana-tree-select-selected-text: #92400e;",
+      "  --arcana-tree-select-selected-icon-color: #b45309;",
+      "  --arcana-tree-select-hover-bg: #fffbeb;",
+      "  --arcana-tree-select-mark-bg: #fde68a;             /* search highlight */",
+      "}",
+      "</style>"
     ].join("\n")
   },
 

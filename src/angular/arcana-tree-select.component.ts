@@ -170,7 +170,7 @@ const PANEL_ESTIMATE = { width: 280, height: 340 };
     -->
     <ng-template #panelTpl>
       <div
-        class="arcana-tree-select__panel"
+        [class]="panelClasses"
         [style]="panelStyle"
         [attr.aria-label]="ariaLabel"
         tabindex="-1"
@@ -281,6 +281,12 @@ export class ArcanaTreeSelectComponent implements OnChanges, OnDestroy {
   @Input() clearable = true;
   @Input() size: "sm" | "md" | "lg" = "md";
   @Input() ariaLabel?: string;
+  /**
+   * Classe extra aplicada ao painel. Como o painel é teleportado pro `<body>`,
+   * um seletor no wrapper do campo não o alcança — use isto pra escopar tema
+   * (os custom properties `--arcana-tree-select-*`) a uma instância específica.
+   */
+  @Input() panelClass?: string;
 
   @Output() valueChange = new EventEmitter<TreeSelectValue>();
   @Output() change = new EventEmitter<TreeSelectValue>();
@@ -311,6 +317,10 @@ export class ArcanaTreeSelectComponent implements OnChanges, OnDestroy {
       this.isOpen ? "arcana-tree-select--open" : "",
       this.multiple ? "arcana-tree-select--multiple" : ""
     ].filter(Boolean).join(" ");
+  }
+
+  get panelClasses(): string {
+    return ["arcana-tree-select__panel", this.panelClass].filter(Boolean).join(" ");
   }
 
   get isSearching(): boolean {

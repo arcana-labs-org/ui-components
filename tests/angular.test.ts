@@ -966,4 +966,26 @@ describe("Angular adapter", () => {
     expect(onValue).toHaveBeenCalledWith(12);
     expect(document.body.querySelector(".arcana-tree-select__panel")).toBeFalsy();
   });
+
+  it("ArcanaTreeSelect: panelClass chega ao painel sem derrubar a classe base", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaTreeSelectComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ArcanaTreeSelectComponent);
+    fixture.componentRef.setInput("options", [{ id: 1, name: "Operações" }]);
+    // O painel é teleportado pro <body>, então tematizar exige uma classe nele.
+    fixture.componentRef.setInput("panelClass", "meu-tema");
+    fixture.detectChanges();
+
+    click((fixture.nativeElement as HTMLElement).querySelector(".arcana-tree-select__trigger"));
+    fixture.detectChanges();
+
+    const panel = document.body.querySelector(".arcana-tree-select__panel")!;
+    expect(panel).toBeTruthy();
+    // A classe base precisa sobreviver ao binding que aplica a custom.
+    expect(panel.classList.contains("arcana-tree-select__panel")).toBe(true);
+    expect(panel.classList.contains("meu-tema")).toBe(true);
+  });
 });

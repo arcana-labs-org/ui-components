@@ -523,7 +523,11 @@ export const it: Messages = {
     treeWarehouse: "Magazzino",
     treeCommercial: "Commerciale",
     treePickOne: "Scegli un centro di costo",
-    treePickSeveral: "Scegline diversi"
+    treePickSeveral: "Scegline diversi",
+    treeSingleTitle: "Selezione singola",
+    treeMultipleTitle: "Selezione multipla",
+    treeThemedTitle: "Tema personalizzato",
+    treeThemedHint: "Colori di icone e selezione tramite custom properties CSS"
 
   }
 };

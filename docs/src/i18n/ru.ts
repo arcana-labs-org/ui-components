@@ -523,7 +523,11 @@ export const ru: Messages = {
     treeWarehouse: "Склад",
     treeCommercial: "Коммерция",
     treePickOne: "Выберите центр затрат",
-    treePickSeveral: "Выберите несколько"
+    treePickSeveral: "Выберите несколько",
+    treeSingleTitle: "Одиночный выбор",
+    treeMultipleTitle: "Множественный выбор",
+    treeThemedTitle: "Своя тема",
+    treeThemedHint: "Цвета иконок и выделения через CSS custom properties"
 
   }
 };

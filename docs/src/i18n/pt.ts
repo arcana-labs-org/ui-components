@@ -523,7 +523,11 @@ export const pt: Messages = {
     treeWarehouse: "Almoxarifado",
     treeCommercial: "Comercial",
     treePickOne: "Escolha um centro de custo",
-    treePickSeveral: "Escolha vários"
+    treePickSeveral: "Escolha vários",
+    treeSingleTitle: "Seleção única",
+    treeMultipleTitle: "Seleção múltipla",
+    treeThemedTitle: "Tema customizado",
+    treeThemedHint: "Cores dos ícones e da seleção via custom properties CSS"
 
   }
 };
