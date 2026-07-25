@@ -24,8 +24,8 @@ export { ArcanaSwitchRowComponent } from "./arcana-switch-row.component";
 
 export { ArcanaSwitchCardComponent } from "./arcana-switch-card.component";
 
-export { ArcanaSegmentedOptionsComponent } from "./arcana-segmented-options.component";
-export type { SegmentedOption } from "./arcana-segmented-options.component";
+export { ArcanaSegmentedControlComponent } from "./arcana-segmented-control.component";
+export type { SegmentedOption, SegmentedControlSize } from "./arcana-segmented-control.component";
 
 export { ArcanaSkeletonComponent } from "./arcana-skeleton.component";
 export type { SkeletonRounded } from "./arcana-skeleton.component";

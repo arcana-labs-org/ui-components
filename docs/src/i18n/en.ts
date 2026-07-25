@@ -121,7 +121,7 @@ export const en: Messages = {
       blurb: "Selectable cards backed by real <c>&lt;input type=\"radio\"&gt;</c>, each with a description, icon or badge; lay out stacked, <c>inline</c> or in <c>columns</c>."
     },
     segmentedOptions: {
-      blurb: "A segmented control for N mutually-exclusive options inside a pill, with per-option icons and disabling."
+      blurb: "A segmented control for N mutually-exclusive options inside a pill — per-option icons (with their own colour), icon-only segments, four sizes plus CSS tokens for a custom one."
     },
     datePicker: {
       blurb: "A self-contained calendar field (no Element Plus) with five <c>type</c>s — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> and <c>datetime</c> — with Intl-based month/weekday names via the <c>locale</c> prop."
@@ -545,7 +545,15 @@ export const en: Messages = {
     statusDelivered: "Delivered",
     statusCanceled: "Canceled",
     accAnimatedTitle: "Animated",
-    accAnimatedHint: "Smooth height transition; respects reduced-motion"
+    accAnimatedHint: "Smooth height transition; respects reduced-motion",
+    segIconOnly: "Icons only",
+    segSizes: "Sizes (sm · md · lg · xl)",
+    segCustomSize: "Custom size",
+    segCustomSizeHint: "CSS custom properties override any size",
+    switchSegWithIcons: "With icons",
+    switchSegIconOnly: "Icons only",
+    switchSegLight: "Light",
+    switchSegDark: "Dark"
 
   }
 };

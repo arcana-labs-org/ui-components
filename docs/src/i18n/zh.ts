@@ -545,7 +545,15 @@ export const zh: Messages = {
     statusDelivered: "已送达",
     statusCanceled: "已取消",
     accAnimatedTitle: "带动画",
-    accAnimatedHint: "平滑的高度过渡；遵循 reduced-motion"
+    accAnimatedHint: "平滑的高度过渡；遵循 reduced-motion",
+    segIconOnly: "仅图标",
+    segSizes: "尺寸（sm · md · lg · xl）",
+    segCustomSize: "自定义尺寸",
+    segCustomSizeHint: "CSS 自定义属性优先于任何 size",
+    switchSegWithIcons: "带图标",
+    switchSegIconOnly: "仅图标",
+    switchSegLight: "浅色",
+    switchSegDark: "深色"
 
   }
 };

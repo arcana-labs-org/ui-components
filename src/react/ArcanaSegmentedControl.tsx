@@ -1,18 +1,29 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 
 /**
- * `<ArcanaSegmentedOptions>` — React port. Segmented control de N opções. Reproduz
- * `<div class="arcana-segmented-options">` (+ `is-compact`/`is-squared`/`is-disabled`),
- * cada `<button class="arcana-segmented-options__option">` (+ `is-active`), o
- * `__radio`/`__icon` opcionais e o `__empty`, idêntico ao SFC.
+ * `<ArcanaSegmentedControl>` — React port. Segmented control de N opções. Reproduz
+ * `<div class="arcana-segmented-control arcana-segmented-control--md">` (+ `is-compact`/
+ * `is-squared`/`is-disabled`), cada `<button class="arcana-segmented-control__option">`
+ * (+ `is-active`), o `__radio`/`__icon` opcionais e o `__empty`, idêntico ao SFC.
  *
  * Equivalências Vue → React:
  * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
  * - `--seg-active` inline style preservado
  * - `iconColor` por opção → inline style `color` no `<i>` (vence o CSS, inclusive na ativa)
+ *
+ * Modo só-ícone: opção com `label` vazio/ausente renderiza só o `<i>` — o `<span>` de texto
+ * não é emitido (nada de span vazio comendo o `gap`) e o botão ganha
+ * `.arcana-segmented-control__option--icon-only` (gap zerado + padding simétrico pelos tokens
+ * do `size`). Como o `<i>` é `aria-hidden`, quem nomeia o botão é o `ariaLabel` da opção.
  */
 export interface SegmentedOption {
-    label: string;
+    /**
+     * Rótulo visível do segmento. Vazio (`""`) ou ausente ativa o modo **só-ícone**:
+     * o `<span>` de texto nem é renderizado e o botão recebe a classe
+     * `arcana-segmented-control__option--icon-only`. Nesse modo, informe `ariaLabel`
+     * — o ícone é `aria-hidden`, então sem ele o botão fica sem nome acessível.
+     */
+    label?: string;
     value: string | number;
     disabled?: boolean;
     /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
@@ -24,12 +35,34 @@ export interface SegmentedOption {
      * ícone herda a cor do texto do segmento.
      */
     iconColor?: string;
+    /**
+     * Nome acessível do botão desta opção (`aria-label`). O nome final é
+     * `ariaLabel || label`; com os dois vazios o atributo não é emitido.
+     * Indispensável no modo só-ícone; com `label` presente é opcional.
+     * No modo só-ícone vira também o `title` (tooltip nativa).
+     */
+    ariaLabel?: string;
 }
 
-export interface ArcanaSegmentedOptionsProps {
+export type SegmentedControlSize = "sm" | "md" | "lg" | "xl";
+
+export interface ArcanaSegmentedControlProps {
     value?: string | number | null;
     options?: SegmentedOption[];
     disabled?: boolean;
+    /**
+     * Altura/padding/fonte/ícone do controle. Default `"md"` (tamanho histórico do
+     * componente); `"sm"` equivale ao antigo `compact`, `"lg"`/`"xl"` são maiores.
+     * Cada dimensão é uma custom property CSS com o valor do size como fallback
+     * (`--arcana-segmented-control-height`, `--arcana-segmented-control-font-size`,
+     * `--arcana-segmented-control-padding-x`, `--arcana-segmented-control-icon-size`,
+     * `--arcana-segmented-control-padding`), então dá pra afinar via `style`/CSS.
+     */
+    size?: SegmentedControlSize;
+    /**
+     * @deprecated Use `size="sm"`. Mantido por compatibilidade — só tem efeito quando
+     * `size` não é informado.
+     */
     compact?: boolean;
     squared?: boolean;
     activeColor?: string;
@@ -42,10 +75,11 @@ export interface ArcanaSegmentedOptionsProps {
     className?: string;
 }
 
-export function ArcanaSegmentedOptions({
+export function ArcanaSegmentedControl({
     value = null,
     options = [],
     disabled = false,
+    size,
     compact = false,
     squared = false,
     activeColor = "",
@@ -56,8 +90,11 @@ export function ArcanaSegmentedOptions({
     onValueChange,
     onChange,
     className,
-}: ArcanaSegmentedOptionsProps) {
+}: ArcanaSegmentedControlProps) {
     const normalizedOptions = options ?? [];
+
+    // `size` explícito vence; sem ele, o `compact` legado mapeia pra `sm`.
+    const effectiveSize: SegmentedControlSize = size ?? (compact ? "sm" : "md");
 
     const select = (opt: SegmentedOption) => {
         if (disabled || opt.disabled || opt.value === value) return;
@@ -83,7 +120,8 @@ export function ArcanaSegmentedOptions({
     }, [options, autoSelectFirst, disabled]);
 
     const rootClasses = [
-        "arcana-segmented-options",
+        "arcana-segmented-control",
+        `arcana-segmented-control--${effectiveSize}`,
         compact ? "is-compact" : "",
         squared ? "is-squared" : "",
         disabled ? "is-disabled" : "",
@@ -91,6 +129,11 @@ export function ArcanaSegmentedOptions({
     ]
         .filter(Boolean)
         .join(" ");
+
+    /** `false` quando o `label` é vazio/ausente → modo só-ícone (span de texto nem sai). */
+    const hasLabel = (opt: SegmentedOption) => (opt.label ?? "") !== "";
+    /** Nome acessível do botão: `ariaLabel` da opção, com fallback no `label` visível. */
+    const optionName = (opt: SegmentedOption) => opt.ariaLabel || opt.label || "";
 
     const rootStyle = activeColor
         ? ({ "--seg-active": activeColor } as CSSProperties)
@@ -108,34 +151,41 @@ export function ArcanaSegmentedOptions({
                     key={String(opt.value)}
                     type="button"
                     className={[
-                        "arcana-segmented-options__option",
+                        "arcana-segmented-control__option",
                         opt.value === value ? "is-active" : "",
+                        hasLabel(opt)
+                            ? ""
+                            : "arcana-segmented-control__option--icon-only",
                     ]
                         .filter(Boolean)
                         .join(" ")}
                     role="radio"
                     aria-checked={opt.value === value}
+                    aria-label={optionName(opt) || undefined}
+                    // Tooltip nativa só no modo só-ícone (com label visível seria ruído).
+                    title={!hasLabel(opt) ? optionName(opt) || undefined : undefined}
                     disabled={disabled || opt.disabled}
                     onClick={() => select(opt)}
                 >
                     {radio ? (
                         <span
-                            className="arcana-segmented-options__radio"
+                            className="arcana-segmented-control__radio"
                             aria-hidden="true"
                         />
                     ) : null}
                     {opt.icon ? (
                         <i
-                            className={`arcana-segmented-options__icon ${opt.icon}`}
+                            className={`arcana-segmented-control__icon ${opt.icon}`}
                             style={opt.iconColor ? { color: opt.iconColor } : undefined}
+                            aria-hidden="true"
                         />
                     ) : null}
-                    <span>{opt.label}</span>
+                    {hasLabel(opt) ? <span>{opt.label}</span> : null}
                 </button>
             ))}
 
             {!normalizedOptions.length ? (
-                <span className="arcana-segmented-options__empty">{emptyText}</span>
+                <span className="arcana-segmented-control__empty">{emptyText}</span>
             ) : null}
         </div>
     );

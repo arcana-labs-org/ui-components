@@ -2135,16 +2135,34 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ArcanaSegmentedOptions.vue
+   ArcanaSegmentedControl.vue
    ───────────────────────────────────────────────────────────────────────── */
-.arcana-segmented-options {
+/*
+ * TAMANHO — a prop `size` (`sm | md | lg | xl`, default `md`) aplica a classe
+ * modificadora `.arcana-segmented-control--{size}`, que só define os DEFAULTS das
+ * custom properties abaixo. Ou seja: pra um tamanho fora da escala, sobrescreva o
+ * token no próprio elemento (inline style, classe do app, `:root`…) — o valor do
+ * `size` continua sendo o fallback:
+ *
+ *   --arcana-segmented-control-height       altura total da cápsula
+ *   --arcana-segmented-control-padding      padding interno da cápsula (trilho)
+ *   --arcana-segmented-control-padding-x    padding horizontal de cada segmento
+ *   --arcana-segmented-control-font-size    fonte do rótulo do segmento
+ *   --arcana-segmented-control-icon-size    fonte (tamanho) do ícone do segmento
+ *
+ * `--seg-active` (cor do segmento ativo) continua vindo da prop `activeColor`.
+ *
+ * A classe legada `.is-compact` (prop `compact`, DEPRECADA) não estiliza nada: os
+ * componentes mapeiam `compact` → `size="sm"` quando `size` não é informado.
+ */
+.arcana-segmented-control {
     --seg-active: #18181b;
     display: inline-flex;
     align-items: center;
     gap: 2px;
     width: 100%;
-    height: 48px;
-    padding: 4px;
+    height: var(--arcana-segmented-control-height, 48px);
+    padding: var(--arcana-segmented-control-padding, 4px);
     background: #f4f4f5;
     border: 1px solid #e4e4e7;
     border-radius: 9999px;
@@ -2152,19 +2170,36 @@
     transition: opacity 180ms ease;
 }
 
-.arcana-segmented-options.is-compact {
-    height: 36px;
+/* Escala de tamanhos — cada uma só troca os defaults dos tokens. */
+.arcana-segmented-control--sm {
+    height: var(--arcana-segmented-control-height, 36px);
+    padding: var(--arcana-segmented-control-padding, 4px);
 }
 
-.arcana-segmented-options.is-squared {
+.arcana-segmented-control--md {
+    height: var(--arcana-segmented-control-height, 48px);
+    padding: var(--arcana-segmented-control-padding, 4px);
+}
+
+.arcana-segmented-control--lg {
+    height: var(--arcana-segmented-control-height, 56px);
+    padding: var(--arcana-segmented-control-padding, 5px);
+}
+
+.arcana-segmented-control--xl {
+    height: var(--arcana-segmented-control-height, 64px);
+    padding: var(--arcana-segmented-control-padding, 6px);
+}
+
+.arcana-segmented-control.is-squared {
     border-radius: 8px;
 }
 
-.arcana-segmented-options.is-disabled {
+.arcana-segmented-control.is-disabled {
     opacity: 0.55;
 }
 
-.arcana-segmented-options__option {
+.arcana-segmented-control__option {
     flex: 1 1 0;
     min-width: 0;
     height: 100%;
@@ -2172,12 +2207,12 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 0 10px;
+    padding: 0 var(--arcana-segmented-control-padding-x, 10px);
     border: none;
     background: transparent;
     border-radius: 9999px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: var(--arcana-segmented-control-font-size, 13px);
     font-weight: 600;
     color: #71717a;
     cursor: pointer;
@@ -2187,19 +2222,98 @@
     transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
-.arcana-segmented-options.is-compact .arcana-segmented-options__option {
-    font-size: 12.5px;
+.arcana-segmented-control--sm .arcana-segmented-control__option {
+    padding: 0 var(--arcana-segmented-control-padding-x, 8px);
+    font-size: var(--arcana-segmented-control-font-size, 12.5px);
 }
 
-.arcana-segmented-options.is-squared .arcana-segmented-options__option {
+.arcana-segmented-control--md .arcana-segmented-control__option {
+    padding: 0 var(--arcana-segmented-control-padding-x, 10px);
+    font-size: var(--arcana-segmented-control-font-size, 13px);
+}
+
+.arcana-segmented-control--lg .arcana-segmented-control__option {
+    padding: 0 var(--arcana-segmented-control-padding-x, 14px);
+    font-size: var(--arcana-segmented-control-font-size, 14.5px);
+    gap: 8px;
+}
+
+.arcana-segmented-control--xl .arcana-segmented-control__option {
+    padding: 0 var(--arcana-segmented-control-padding-x, 18px);
+    font-size: var(--arcana-segmented-control-font-size, 16px);
+    gap: 10px;
+}
+
+/*
+ * Modo só-ícone — a opção sem `label` não renderiza o `<span>` de texto, então o
+ * botão fica com o ícone sozinho. Aqui o `gap` é zerado (sem espaço fantasma) e o
+ * padding horizontal fica simétrico, com uma largura mínima derivada dos MESMOS
+ * tokens do `size` (`icon-size` + 2× `padding-x`) — o segmento fica equilibrado /
+ * quadrado em torno do ícone em qualquer sm/md/lg/xl. Sobrescrever os tokens
+ * continua funcionando: eles são só os fallbacks.
+ */
+.arcana-segmented-control__option--icon-only {
+    gap: 0;
+    padding: 0 var(--arcana-segmented-control-padding-x, 10px);
+    min-width: calc(
+        var(--arcana-segmented-control-icon-size, 11px) + 2 *
+            var(--arcana-segmented-control-padding-x, 10px)
+    );
+}
+
+.arcana-segmented-control--sm .arcana-segmented-control__option--icon-only {
+    gap: 0;
+    padding: 0 var(--arcana-segmented-control-padding-x, 8px);
+    min-width: calc(
+        var(--arcana-segmented-control-icon-size, 10.5px) + 2 *
+            var(--arcana-segmented-control-padding-x, 8px)
+    );
+}
+
+.arcana-segmented-control--md .arcana-segmented-control__option--icon-only {
+    gap: 0;
+    padding: 0 var(--arcana-segmented-control-padding-x, 10px);
+    min-width: calc(
+        var(--arcana-segmented-control-icon-size, 11px) + 2 *
+            var(--arcana-segmented-control-padding-x, 10px)
+    );
+}
+
+.arcana-segmented-control--lg .arcana-segmented-control__option--icon-only {
+    gap: 0;
+    padding: 0 var(--arcana-segmented-control-padding-x, 14px);
+    min-width: calc(
+        var(--arcana-segmented-control-icon-size, 13px) + 2 *
+            var(--arcana-segmented-control-padding-x, 14px)
+    );
+}
+
+.arcana-segmented-control--xl .arcana-segmented-control__option--icon-only {
+    gap: 0;
+    padding: 0 var(--arcana-segmented-control-padding-x, 18px);
+    min-width: calc(
+        var(--arcana-segmented-control-icon-size, 15px) + 2 *
+            var(--arcana-segmented-control-padding-x, 18px)
+    );
+}
+
+/*
+ * Combo só-ícone + `radio`: o gap zerado colaria o círculo no ícone, então a
+ * respiração volta como margem no próprio ícone.
+ */
+.arcana-segmented-control__option--icon-only .arcana-segmented-control__radio + .arcana-segmented-control__icon {
+    margin-left: 6px;
+}
+
+.arcana-segmented-control.is-squared .arcana-segmented-control__option {
     border-radius: 6px;
 }
 
-.arcana-segmented-options__option:hover:not(:disabled):not(.is-active) {
+.arcana-segmented-control__option:hover:not(:disabled):not(.is-active) {
     color: #18181b;
 }
 
-.arcana-segmented-options__option.is-active {
+.arcana-segmented-control__option.is-active {
     background: var(--seg-active);
     color: #ffffff;
     box-shadow:
@@ -2207,23 +2321,39 @@
         0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
-.arcana-segmented-options__option:disabled {
+.arcana-segmented-control__option:disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }
 
-.arcana-segmented-options__option:focus-visible {
+.arcana-segmented-control__option:focus-visible {
     outline: 2px solid #18181b;
     outline-offset: 2px;
 }
 
-.arcana-segmented-options__icon {
-    font-size: 11px;
+.arcana-segmented-control__icon {
+    font-size: var(--arcana-segmented-control-icon-size, 11px);
     flex-shrink: 0;
 }
 
+.arcana-segmented-control--sm .arcana-segmented-control__icon {
+    font-size: var(--arcana-segmented-control-icon-size, 10.5px);
+}
+
+.arcana-segmented-control--md .arcana-segmented-control__icon {
+    font-size: var(--arcana-segmented-control-icon-size, 11px);
+}
+
+.arcana-segmented-control--lg .arcana-segmented-control__icon {
+    font-size: var(--arcana-segmented-control-icon-size, 13px);
+}
+
+.arcana-segmented-control--xl .arcana-segmented-control__icon {
+    font-size: var(--arcana-segmented-control-icon-size, 15px);
+}
+
 /* Radio indicator (opt-in via prop `radio`) */
-.arcana-segmented-options__radio {
+.arcana-segmented-control__radio {
     position: relative;
     width: 14px;
     height: 14px;
@@ -2232,7 +2362,7 @@
     flex-shrink: 0;
     transition: border-color .2s ease;
 }
-.arcana-segmented-options__radio::after {
+.arcana-segmented-control__radio::after {
     content: '';
     position: absolute;
     inset: 3px;
@@ -2240,14 +2370,22 @@
     background: transparent;
     transition: background .2s ease;
 }
-.arcana-segmented-options__option.is-active .arcana-segmented-options__radio {
+.arcana-segmented-control--lg .arcana-segmented-control__radio {
+    width: 16px;
+    height: 16px;
+}
+.arcana-segmented-control--xl .arcana-segmented-control__radio {
+    width: 18px;
+    height: 18px;
+}
+.arcana-segmented-control__option.is-active .arcana-segmented-control__radio {
     border-color: #ffffff;
 }
-.arcana-segmented-options__option.is-active .arcana-segmented-options__radio::after {
+.arcana-segmented-control__option.is-active .arcana-segmented-control__radio::after {
     background: #ffffff;
 }
 
-.arcana-segmented-options__empty {
+.arcana-segmented-control__empty {
     flex: 1;
     text-align: center;
     font-size: 12.5px;
@@ -4083,6 +4221,21 @@
 .arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off,
 .arcana-switch-segmented.is-on .arcana-switch-segmented__option--on {
     color: #ffffff;
+}
+
+/*
+ * Ícone opcional por lado (props `offIcon`/`onIcon`). Herda a cor do `__option`
+ * (zinc no lado inativo, branco no ativo) a menos que `offIconColor`/`onIconColor`
+ * apliquem `color` inline. O `gap: 8px` do `__option` já espaça ícone↔texto; sem
+ * label, o `justify-content: center` deixa o ícone sozinho e centralizado.
+ */
+.arcana-switch-segmented__icon {
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.arcana-switch-segmented.is-compact .arcana-switch-segmented__icon {
+    font-size: 11px;
 }
 
 /* Radio indicator (opt-in via prop `radio`) */

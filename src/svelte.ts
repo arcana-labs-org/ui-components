@@ -24,7 +24,7 @@ import ArcanaCheckboxComponent from "./svelte/ArcanaCheckbox.svelte";
 import ArcanaSwitchComponent from "./svelte/ArcanaSwitch.svelte";
 import ArcanaSwitchRowComponent from "./svelte/ArcanaSwitchRow.svelte";
 import ArcanaSwitchCardComponent from "./svelte/ArcanaSwitchCard.svelte";
-import ArcanaSegmentedOptionsComponent from "./svelte/ArcanaSegmentedOptions.svelte";
+import ArcanaSegmentedControlComponent from "./svelte/ArcanaSegmentedControl.svelte";
 import ArcanaSkeletonComponent from "./svelte/ArcanaSkeleton.svelte";
 import ArcanaNoticeComponent from "./svelte/ArcanaNotice.svelte";
 import ArcanaTabsComponent from "./svelte/ArcanaTabs.svelte";
@@ -176,9 +176,15 @@ export interface ArcanaSwitchCardProps {
 }
 export const ArcanaSwitchCard = ArcanaSwitchCardComponent as unknown as Component<ArcanaSwitchCardProps>;
 
-/* ── ArcanaSegmentedOptions ───────────────────────────────────────────────── */
+/* ── ArcanaSegmentedControl ───────────────────────────────────────────────── */
 export interface SegmentedOption {
-  label: string;
+  /**
+   * Rótulo visível do segmento. Vazio (`""`) ou ausente ativa o modo **só-ícone**:
+   * o `<span>` de texto nem é renderizado (sem span vazio comendo o `gap`) e o botão
+   * recebe `arcana-segmented-control__option--icon-only`. Nesse modo, informe
+   * `ariaLabel` — o `<i>` é `aria-hidden`, então é ele que nomeia o botão.
+   */
+  label?: string;
   value: string | number;
   disabled?: boolean;
   /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
@@ -189,11 +195,25 @@ export interface SegmentedOption {
    * inclusive quando a opção está ativa (fundo escuro/colorido).
    */
   iconColor?: string;
+  /**
+   * Nome acessível do botão desta opção (`aria-label`). Nome final =
+   * `ariaLabel || label`; com os dois vazios o atributo não é emitido.
+   * No modo só-ícone vira também o `title` (tooltip nativa).
+   */
+  ariaLabel?: string;
 }
-export interface ArcanaSegmentedOptionsProps {
+export type SegmentedControlSize = "sm" | "md" | "lg" | "xl";
+export interface ArcanaSegmentedControlProps {
   value?: string | number | null;
   options?: SegmentedOption[];
   disabled?: boolean;
+  /**
+   * Altura/padding/fonte/ícone do controle. Default `"md"` (tamanho histórico);
+   * `"sm"` equivale ao antigo `compact`, `"lg"`/`"xl"` são maiores. Custom via
+   * `--arcana-segmented-control-*` (height/font-size/padding-x/icon-size/padding).
+   */
+  size?: SegmentedControlSize;
+  /** @deprecated Use `size="sm"`. Só tem efeito quando `size` não é informado. */
   compact?: boolean;
   squared?: boolean;
   activeColor?: string;
@@ -205,7 +225,7 @@ export interface ArcanaSegmentedOptionsProps {
   onChange?: (value: string | number) => void;
   class?: string;
 }
-export const ArcanaSegmentedOptions = ArcanaSegmentedOptionsComponent as unknown as Component<ArcanaSegmentedOptionsProps>;
+export const ArcanaSegmentedControl = ArcanaSegmentedControlComponent as unknown as Component<ArcanaSegmentedControlProps>;
 
 /* ── ArcanaSkeleton ───────────────────────────────────────────────────────── */
 export interface ArcanaSkeletonProps {
@@ -414,6 +434,14 @@ export interface ArcanaSwitchSegmentedProps {
   value?: boolean;
   offLabel?: string;
   onLabel?: string;
+  /** Classe FontAwesome do ícone da opção esquerda (ex: `"fa-solid fa-moon"`). */
+  offIcon?: string;
+  /** Classe FontAwesome do ícone da opção direita (ex: `"fa-solid fa-sun"`). */
+  onIcon?: string;
+  /** Cor inline do `offIcon` (qualquer string CSS válida). */
+  offIconColor?: string;
+  /** Cor inline do `onIcon`. */
+  onIconColor?: string;
   disabled?: boolean;
   ariaLabel?: string;
   compact?: boolean;

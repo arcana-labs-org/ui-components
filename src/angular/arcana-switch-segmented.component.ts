@@ -13,6 +13,11 @@ import {
  * Vue → Angular:
  * - `modelValue` (v-model) → `value` + `@Output() valueChange`; `emit('change')` → `@Output() change`
  * - slots `#off-label`/`#on-label` → conteúdo projetado `[segOff]`/`[segOn]` (fallback: offLabel/onLabel)
+ *
+ * `offIcon`/`onIcon` (classe FontAwesome) viram um `<i class="arcana-switch-segmented__icon">`
+ * decorativo antes do texto de cada lado; `offIconColor`/`onIconColor` aplicam `color` inline
+ * (vence o CSS, inclusive no lado ativo). Com o label vazio (`offLabel=""`) o lado fica
+ * icon-only, com o ícone centralizado — nenhum texto é forçado.
  */
 @Component({
   selector: "div[arcanaSwitchSegmented]",
@@ -36,11 +41,25 @@ import {
       @if (radio) {
         <span class="arcana-switch-segmented__radio" aria-hidden="true"></span>
       }
+      @if (offIcon) {
+        <i
+          [class]="'arcana-switch-segmented__icon ' + offIcon"
+          [style.color]="offIconColor || null"
+          aria-hidden="true"
+        ></i>
+      }
       <ng-content select="[segOff]">{{ offLabel }}</ng-content>
     </div>
     <div class="arcana-switch-segmented__option arcana-switch-segmented__option--on">
       @if (radio) {
         <span class="arcana-switch-segmented__radio" aria-hidden="true"></span>
+      }
+      @if (onIcon) {
+        <i
+          [class]="'arcana-switch-segmented__icon ' + onIcon"
+          [style.color]="onIconColor || null"
+          aria-hidden="true"
+        ></i>
       }
       <ng-content select="[segOn]">{{ onLabel }}</ng-content>
     </div>
@@ -50,6 +69,14 @@ export class ArcanaSwitchSegmentedComponent {
   @Input() value = false;
   @Input() offLabel = "Inativo";
   @Input() onLabel = "Ativo";
+  /** Classe FontAwesome do ícone da opção esquerda (ex: `"fa-solid fa-moon"`). */
+  @Input() offIcon = "";
+  /** Classe FontAwesome do ícone da opção direita (ex: `"fa-solid fa-sun"`). */
+  @Input() onIcon = "";
+  /** Cor inline do `offIcon` (qualquer string CSS válida). */
+  @Input() offIconColor = "";
+  /** Cor inline do `onIcon`. */
+  @Input() onIconColor = "";
   @Input() disabled = false;
   @Input() ariaLabel = "";
   @Input() compact = false;
@@ -61,7 +88,8 @@ export class ArcanaSwitchSegmentedComponent {
   @Output() change = new EventEmitter<boolean>();
 
   get ariaLabelFallback(): string {
-    return `${this.offLabel} ou ${this.onLabel}`;
+    // Labels vazios (modo icon-only) são descartados pra não gerar " ou ".
+    return [this.offLabel, this.onLabel].filter(Boolean).join(" ou ");
   }
 
   get rootClass(): string {

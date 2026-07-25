@@ -545,7 +545,15 @@ export const it: Messages = {
     statusDelivered: "Consegnato",
     statusCanceled: "Annullato",
     accAnimatedTitle: "Animato",
-    accAnimatedHint: "Transizione fluida dell'altezza; rispetta reduced-motion"
+    accAnimatedHint: "Transizione fluida dell'altezza; rispetta reduced-motion",
+    segIconOnly: "Solo icone",
+    segSizes: "Dimensioni (sm · md · lg · xl)",
+    segCustomSize: "Dimensione personalizzata",
+    segCustomSizeHint: "Le custom properties CSS prevalgono su qualsiasi size",
+    switchSegWithIcons: "Con icone",
+    switchSegIconOnly: "Solo icone",
+    switchSegLight: "Chiaro",
+    switchSegDark: "Scuro"
 
   }
 };

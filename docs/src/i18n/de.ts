@@ -545,7 +545,15 @@ export const de: Messages = {
     statusDelivered: "Zugestellt",
     statusCanceled: "Storniert",
     accAnimatedTitle: "Animiert",
-    accAnimatedHint: "Weiche Höhenanimation; beachtet Reduced Motion"
+    accAnimatedHint: "Weiche Höhenanimation; beachtet Reduced Motion",
+    segIconOnly: "Nur Symbole",
+    segSizes: "Größen (sm · md · lg · xl)",
+    segCustomSize: "Eigene Größe",
+    segCustomSizeHint: "CSS Custom Properties überschreiben jedes size",
+    switchSegWithIcons: "Mit Symbolen",
+    switchSegIconOnly: "Nur Symbole",
+    switchSegLight: "Hell",
+    switchSegDark: "Dunkel"
 
   }
 };

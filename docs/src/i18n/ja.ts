@@ -545,7 +545,15 @@ export const ja: Messages = {
     statusDelivered: "配達済",
     statusCanceled: "キャンセル",
     accAnimatedTitle: "アニメーション",
-    accAnimatedHint: "滑らかな高さアニメーション。reduced-motion に対応"
+    accAnimatedHint: "滑らかな高さアニメーション。reduced-motion に対応",
+    segIconOnly: "アイコンのみ",
+    segSizes: "サイズ（sm・md・lg・xl）",
+    segCustomSize: "カスタムサイズ",
+    segCustomSizeHint: "CSS カスタムプロパティは size より優先されます",
+    switchSegWithIcons: "アイコン付き",
+    switchSegIconOnly: "アイコンのみ",
+    switchSegLight: "ライト",
+    switchSegDark: "ダーク"
 
   }
 };

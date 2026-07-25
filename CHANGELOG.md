@@ -1,5 +1,13 @@
 # Changelog
 
+## Não publicado
+
+### Alterações que exigem atenção
+- **`ArcanaSegmentedOptions` renomeado para `ArcanaSegmentedControl`** (seletor Angular `arcanaSegmentedControl`, classe Angular `ArcanaSegmentedControlComponent`, tipo de props `ArcanaSegmentedControlProps`; classes CSS `.arcana-segmented-options*` → `.arcana-segmented-control*`). O tipo da opção continua se chamando `SegmentedOption`. Quem importa o nome antigo — ou estiliza as classes antigas — precisa atualizar.
+
+### Novos recursos
+- **`ArcanaSegmentedControl` ganhou a prop `size`** (`'sm' | 'md' | 'lg' | 'xl'`, default `'md'`), que controla altura, padding, fonte e tamanho do ícone. `sm` equivale ao antigo `compact` — que continua funcionando, **deprecado**: sem `size`, `compact` mapeia para `sm`; com `size`, o `size` vence. Para tamanhos fora da escala, sobrescreva as custom properties CSS `--arcana-segmented-control-height`, `--arcana-segmented-control-padding`, `--arcana-segmented-control-padding-x`, `--arcana-segmented-control-font-size` e `--arcana-segmented-control-icon-size` (os valores de cada `size` são apenas os defaults).
+
 ## 1.4.1 — 2026-07-25
 
 ### Documentação

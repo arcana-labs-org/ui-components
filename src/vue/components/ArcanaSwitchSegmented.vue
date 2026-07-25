@@ -20,11 +20,28 @@
 
         <div class="arcana-switch-segmented__option arcana-switch-segmented__option--off">
             <span v-if="radio" class="arcana-switch-segmented__radio" aria-hidden="true"></span>
-            <slot name="off-label">{{ offLabel }}</slot>
+            <!--
+                Ícone decorativo (aria-hidden): quem descreve o lado é o label/aria-label.
+                Sem label, o `justify-content: center` do `__option` deixa o ícone sozinho
+                e centralizado — nenhum texto é forçado.
+            -->
+            <i
+                v-if="offIcon"
+                :class="['arcana-switch-segmented__icon', offIcon]"
+                :style="offIconColor ? { color: offIconColor } : undefined"
+                aria-hidden="true"
+            ></i>
+            <slot name="off-label"><template v-if="offLabel">{{ offLabel }}</template></slot>
         </div>
         <div class="arcana-switch-segmented__option arcana-switch-segmented__option--on">
             <span v-if="radio" class="arcana-switch-segmented__radio" aria-hidden="true"></span>
-            <slot name="on-label">{{ onLabel }}</slot>
+            <i
+                v-if="onIcon"
+                :class="['arcana-switch-segmented__icon', onIcon]"
+                :style="onIconColor ? { color: onIconColor } : undefined"
+                aria-hidden="true"
+            ></i>
+            <slot name="on-label"><template v-if="onLabel">{{ onLabel }}</template></slot>
         </div>
     </div>
 </template>
@@ -53,8 +70,16 @@ import type { Component } from "vue"
  * - `modelValue` (v-model) — boolean (`false` = opção esquerda, `true` = direita)
  * - `offLabel` — texto da opção esquerda (default `'Inativo'`); aceita slot `#off-label`
  * - `onLabel` — texto da opção direita (default `'Ativo'`); aceita slot `#on-label`
+ * - `offIcon` / `onIcon` — classe FontAwesome renderada como `<i>` ANTES do texto do lado
+ *   (ex: `'fa-solid fa-moon'` / `'fa-solid fa-sun'`). Decorativos (`aria-hidden`)
+ * - `offIconColor` / `onIconColor` — cor inline do respectivo ícone (vence o CSS, inclusive
+ *   no lado ativo, onde o texto fica branco)
  * - `disabled` — boolean
  * - `ariaLabel` — fallback pra screen readers quando o significado não está nos labels
+ *
+ * Icon-only: passe `off-label=""`/`on-label=""` junto com os ícones — o lado não força
+ * texto e o ícone fica centralizado sozinho. Nesse caso informe `ariaLabel`, já que o
+ * fallback automático é montado a partir dos labels.
  *
  * Acessibilidade:
  * - `role="switch"` + `aria-checked` no container
@@ -86,6 +111,36 @@ export default {
         onLabel: {
             type: String,
             default: 'Ativo',
+        },
+        /**
+         * Classe FontAwesome do ícone da opção esquerda (ex: `'fa-solid fa-moon'`),
+         * renderado antes do texto. Opcional — sem ele o lado fica só com o label.
+         */
+        offIcon: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Classe FontAwesome do ícone da opção direita (ex: `'fa-solid fa-sun'`).
+         */
+        onIcon: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Cor inline do `offIcon`. Qualquer string CSS válida — vence o CSS herdado,
+         * inclusive quando o lado está ativo (texto branco).
+         */
+        offIconColor: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Cor inline do `onIcon`. Mesma semântica do `offIconColor`.
+         */
+        onIconColor: {
+            type: String,
+            default: '',
         },
         disabled: {
             type: Boolean,
@@ -135,7 +190,8 @@ export default {
             // Quando caller não passou aria-label, monta um descritivo legível:
             // "Mensal ou Anual · −20%". Ajuda screen readers a contextualizar
             // sem precisar inspecionar os 2 children separadamente.
-            return `${this.offLabel} ou ${this.onLabel}`
+            // Labels vazios (modo icon-only) são descartados pra não gerar " ou ".
+            return [this.offLabel, this.onLabel].filter(Boolean).join(' ou ')
         },
     },
 

@@ -16,7 +16,7 @@ import ArcanaInputBoolean from "../../../src/vue/components/ArcanaInputBoolean.v
 import ArcanaNumberStepper from "../../../src/vue/components/ArcanaNumberStepper.vue";
 import ArcanaMultiSelectPopover from "../../../src/vue/components/ArcanaMultiSelectPopover.vue";
 import ArcanaRadioCardGroup from "../../../src/vue/components/ArcanaRadioCardGroup.vue";
-import ArcanaSegmentedOptions from "../../../src/vue/components/ArcanaSegmentedOptions.vue";
+import ArcanaSegmentedControl from "../../../src/vue/components/ArcanaSegmentedControl.vue";
 import ArcanaDatePicker from "../../../src/vue/components/ArcanaDatePicker.vue";
 import ArcanaInputCurrency from "../../../src/vue/components/ArcanaInputCurrency.vue";
 import ArcanaAccordion from "../../../src/vue/components/ArcanaAccordion.vue";
@@ -452,10 +452,10 @@ const RadioCardGroupDemo: Component = {
   `
 };
 
-/* ────────────────────── ArcanaSegmentedOptions ─────────────────────── */
+/* ────────────────────── ArcanaSegmentedControl ─────────────────────── */
 
-const SegmentedOptionsDemo: Component = {
-  components: { ArcanaSegmentedOptions },
+const SegmentedControlDemo: Component = {
+  components: { ArcanaSegmentedControl },
   data() {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
@@ -477,22 +477,53 @@ const SegmentedOptionsDemo: Component = {
         { label: $dt.segLow, value: "low", icon: "fa-solid fa-circle-check", iconColor: "#16a34a" },
         { label: $dt.segMedium, value: "medium", icon: "fa-solid fa-triangle-exclamation", iconColor: "#f59e0b" },
         { label: $dt.segHigh, value: "high", icon: "fa-solid fa-fire", iconColor: "#dc2626" }
+      ],
+      // Só ícones: omita `label` e informe `ariaLabel` na opção pra manter o
+      // controle acessível (o rótulo visível some, o acessível não).
+      iconOnlyOptions: [
+        { label: "", value: "list", icon: "fa-solid fa-list", ariaLabel: $dt.segList },
+        { label: "", value: "grid", icon: "fa-solid fa-table-cells-large", ariaLabel: $dt.segGrid },
+        { label: "", value: "board", icon: "fa-solid fa-columns", ariaLabel: $dt.segBoard }
       ]
     };
   },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaSegmentedOptions v-model="view" :options="options" aria-label="View mode" />
-      <ArcanaSegmentedOptions v-model="view" :options="options" :compact="true" :squared="true" />
+      <ArcanaSegmentedControl v-model="view" :options="options" aria-label="View mode" />
+      <ArcanaSegmentedControl v-model="view" :options="options" :compact="true" :squared="true" />
 
       <div class="demo-field">
         <span class="demo-field-label">{{ $dt.segWithIcons }}</span>
-        <ArcanaSegmentedOptions v-model="view" :options="iconOptions" />
+        <ArcanaSegmentedControl v-model="view" :options="iconOptions" />
       </div>
 
       <div class="demo-field">
         <span class="demo-field-label">{{ $dt.segColoredIcons }}</span>
-        <ArcanaSegmentedOptions v-model="priority" :options="colorOptions" />
+        <ArcanaSegmentedControl v-model="priority" :options="colorOptions" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.segIconOnly }}</span>
+        <ArcanaSegmentedControl v-model="view" :options="iconOnlyOptions" :aria-label="$dt.viewLabel" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.segSizes }}</span>
+        <ArcanaSegmentedControl v-model="view" :options="options" size="sm" />
+        <ArcanaSegmentedControl v-model="view" :options="options" size="md" />
+        <ArcanaSegmentedControl v-model="view" :options="options" size="lg" />
+        <ArcanaSegmentedControl v-model="view" :options="options" size="xl" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.segCustomSize }}</span>
+        <!-- Fora da escala: os tokens CSS vencem qualquer 'size'. -->
+        <ArcanaSegmentedControl
+          v-model="view"
+          :options="options"
+          style="--arcana-segmented-control-height: 40px; --arcana-segmented-control-font-size: 15px; --arcana-segmented-control-padding-x: 22px"
+        />
+        <p class="demo-note">{{ $dt.segCustomSizeHint }}</p>
       </div>
 
       <p class="demo-note">{{ $dt.viewLabel }}: <strong>{{ view }}</strong> · {{ $dt.segPriorityLabel }}: <strong>{{ priority }}</strong></p>
@@ -1011,11 +1042,38 @@ const SwitchRowDemo: Component = {
 
 const SwitchSegmentedDemo: Component = {
   components: { ArcanaSwitchSegmented },
-  data: () => ({ yearly: false, env: true }),
+  data: () => ({ yearly: false, env: true, theme: false, listMode: true }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSwitchSegmented v-model="yearly" :off-label="$dt.switchSegMonthly" :on-label="$dt.switchSegAnnual" />
       <ArcanaSwitchSegmented v-model="env" :off-label="$dt.switchSegSandbox" :on-label="$dt.switchSegProduction" :compact="true" :squared="true" />
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.switchSegWithIcons }}</span>
+        <ArcanaSwitchSegmented
+          v-model="theme"
+          :off-label="$dt.switchSegLight"
+          :on-label="$dt.switchSegDark"
+          off-icon="fa-solid fa-sun"
+          on-icon="fa-solid fa-moon"
+          off-icon-color="#f59e0b"
+          on-icon-color="#6366f1"
+        />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.switchSegIconOnly }}</span>
+        <!-- Sem labels: informe 'ariaLabel', já que os ícones são decorativos. -->
+        <ArcanaSwitchSegmented
+          v-model="listMode"
+          off-label=""
+          on-label=""
+          off-icon="fa-solid fa-list"
+          on-icon="fa-solid fa-table-cells-large"
+          :aria-label="$dt.viewLabel"
+        />
+      </div>
+
       <p class="demo-note">{{ $dt.switchSegCycleLabel }}: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · {{ $dt.switchSegEnvLabel }}: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
     </div>
   `
@@ -1566,12 +1624,14 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   },
 
   segmentedOptions: {
-    demo: SegmentedOptionsDemo,
+    demo: SegmentedControlDemo,
     props: [
       { name: "modelValue", type: "string | number | null", default: "null", description: "Value of the active option (v-model)." },
-      { name: "options", type: "Array<{ label, value, disabled?, icon? }>", default: "[]", description: "The segments." },
+      { name: "options", type: "Array<{ label, value, disabled?, icon?, iconColor?, ariaLabel? }>", default: "[]", description: "The segments. `iconColor` tints that option's icon; leave `label` empty for an icon-only segment and give it an `ariaLabel`." },
+      { name: "size", type: "sm | md | lg | xl", default: "md", description: "Height, padding, font and icon size of the control." },
+      { name: "CSS tokens", type: "custom properties", default: "per size", description: "--arcana-segmented-control-{height,padding,padding-x,font-size,icon-size} override any size, for a fully custom dimension." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the whole group." },
-      { name: "compact", type: "boolean", default: "false", description: "Reduced height/font for dense forms." },
+      { name: "compact", type: "boolean (deprecated)", default: "false", description: "Legacy shorthand for size=\"sm\"; an explicit `size` wins." },
       { name: "squared", type: "boolean", default: "false", description: "Moderate corner radius instead of the full pill." },
       { name: "activeColor", type: "string (CSS color)", default: "'#18181b'", description: "Fill colour of the active segment." },
       { name: "radio", type: "boolean", default: "false", description: "Shows a radio circle to the left of each option." },
@@ -1583,7 +1643,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     vueSnippet: [
       "<script setup lang=\"ts\">",
       "import { ref } from 'vue'",
-      "import { ArcanaSegmentedOptions } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaSegmentedControl } from '@arcanalabs/ui-components/vue'",
       "",
       "const view = ref('list')",
       "const priority = ref('medium')",
@@ -1600,22 +1660,50 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  { label: 'Board', value: 'board', icon: 'fa-solid fa-columns' },",
       "]",
       "",
-      "// `iconColor` tints each option's icon — handy for semantics.",
+      "// `iconColor` tints each option's icon — handy for semantics",
+      "// (green = low risk, amber = attention, red = urgent).",
       "const colorOptions = [",
       "  { label: 'Low', value: 'low', icon: 'fa-solid fa-circle-check', iconColor: '#16a34a' },",
       "  { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },",
       "  { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },",
       "]",
+      "",
+      "// Icon-only: leave `label` empty and name each segment with `ariaLabel`.",
+      "// The <i> is aria-hidden, so without it the button has no accessible name.",
+      "const iconOnlyOptions = [",
+      "  { label: '', value: 'list', icon: 'fa-solid fa-list', ariaLabel: 'List' },",
+      "  { label: '', value: 'grid', icon: 'fa-solid fa-table-cells-large', ariaLabel: 'Grid' },",
+      "  { label: '', value: 'board', icon: 'fa-solid fa-columns', ariaLabel: 'Board' },",
+      "]",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaSegmentedOptions v-model=\"view\" :options=\"options\" aria-label=\"View mode\" />",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" aria-label=\"View mode\" />",
       "",
       "  <!-- Dense variant: shorter height and moderate corner radius -->",
-      "  <ArcanaSegmentedOptions v-model=\"view\" :options=\"options\" compact squared />",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" compact squared />",
       "",
-      "  <ArcanaSegmentedOptions v-model=\"view\" :options=\"iconOptions\" />",
-      "  <ArcanaSegmentedOptions v-model=\"priority\" :options=\"colorOptions\" />",
+      "  <!-- With icons -->",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"iconOptions\" />",
+      "",
+      "  <!-- With coloured icons -->",
+      "  <ArcanaSegmentedControl v-model=\"priority\" :options=\"colorOptions\" />",
+      "",
+      "  <!-- Icon-only: empty labels + per-option ariaLabel -->",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"iconOnlyOptions\" aria-label=\"View mode\" />",
+      "",
+      "  <!-- The four sizes -->",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" size=\"sm\" />",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" size=\"md\" />",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" size=\"lg\" />",
+      "  <ArcanaSegmentedControl v-model=\"view\" :options=\"options\" size=\"xl\" />",
+      "",
+      "  <!-- Off the scale: the CSS tokens beat any `size` (drop `size` altogether) -->",
+      "  <ArcanaSegmentedControl",
+      "    v-model=\"view\"",
+      "    :options=\"options\"",
+      "    style=\"--arcana-segmented-control-height: 40px; --arcana-segmented-control-font-size: 15px; --arcana-segmented-control-padding-x: 22px\"",
+      "  />",
       "</template>"
     ].join("\n")
   },
@@ -2470,6 +2558,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "modelValue", type: "boolean", default: "false", description: "false = left option, true = right option (v-model)." },
       { name: "offLabel", type: "string", default: "'Inativo'", description: "Left option label (or #off-label slot)." },
       { name: "onLabel", type: "string", default: "'Ativo'", description: "Right option label (or #on-label slot)." },
+      { name: "offIcon / onIcon", type: "string", default: "''", description: "FontAwesome class rendered before each side's text. Pass empty labels for an icon-only toggle (then set ariaLabel)." },
+      { name: "offIconColor / onIconColor", type: "string (CSS color)", default: "''", description: "Inline colour for the respective icon — kept even on the active side." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the control." },
       { name: "compact", type: "boolean", default: "false", description: "Shorter height/font for inline use in dense forms." },
       { name: "squared", type: "boolean", default: "false", description: "Moderate corner radius instead of the full pill." },
@@ -2484,10 +2574,37 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/vue'",
       "",
       "const yearly = ref(false)",
+      "const env = ref(true)",
+      "const theme = ref(false)",
+      "const listMode = ref(true)",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaSwitchSegmented v-model=\"yearly\" off-label=\"Mensal\" on-label=\"Anual · −20%\" />",
+      "  <ArcanaSwitchSegmented v-model=\"yearly\" off-label=\"Monthly\" on-label=\"Annual · −20%\" />",
+      "",
+      "  <!-- Dense variant: shorter height and moderate corner radius -->",
+      "  <ArcanaSwitchSegmented v-model=\"env\" off-label=\"Sandbox\" on-label=\"Production\" compact squared />",
+      "",
+      "  <!-- With icons: `off-icon-color`/`on-icon-color` survive on the active side too -->",
+      "  <ArcanaSwitchSegmented",
+      "    v-model=\"theme\"",
+      "    off-label=\"Light\"",
+      "    on-label=\"Dark\"",
+      "    off-icon=\"fa-solid fa-sun\"",
+      "    on-icon=\"fa-solid fa-moon\"",
+      "    off-icon-color=\"#f59e0b\"",
+      "    on-icon-color=\"#6366f1\"",
+      "  />",
+      "",
+      "  <!-- Icon-only: empty labels, so give it an `aria-label` (the icons are decorative) -->",
+      "  <ArcanaSwitchSegmented",
+      "    v-model=\"listMode\"",
+      "    off-label=\"\"",
+      "    on-label=\"\"",
+      "    off-icon=\"fa-solid fa-list\"",
+      "    on-icon=\"fa-solid fa-table-cells-large\"",
+      "    aria-label=\"View mode\"",
+      "  />",
       "</template>"
     ].join("\n")
   }

@@ -545,7 +545,15 @@ export const ru: Messages = {
     statusDelivered: "Доставлен",
     statusCanceled: "Отменён",
     accAnimatedTitle: "С анимацией",
-    accAnimatedHint: "Плавная анимация высоты; учитывает reduced-motion"
+    accAnimatedHint: "Плавная анимация высоты; учитывает reduced-motion",
+    segIconOnly: "Только значки",
+    segSizes: "Размеры (sm · md · lg · xl)",
+    segCustomSize: "Свой размер",
+    segCustomSizeHint: "CSS custom properties переопределяют любой size",
+    switchSegWithIcons: "Со значками",
+    switchSegIconOnly: "Только значки",
+    switchSegLight: "Светлая",
+    switchSegDark: "Тёмная"
 
   }
 };

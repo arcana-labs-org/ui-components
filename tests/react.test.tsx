@@ -30,6 +30,7 @@ import {
     ArcanaNumberStepper,
     ArcanaRadioCardGroup,
     ArcanaSwitchSegmented,
+    ArcanaSegmentedControl,
     ArcanaMultiSelectPopover,
     ArcanaInputMask,
     ArcanaInputCurrency,
@@ -400,6 +401,54 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(onValueChange).toHaveBeenCalledWith("b");
     });
 
+    it("ArcanaSegmentedControl: opção sem label vira só-ícone (sem span de texto) e é nomeada pelo ariaLabel", () => {
+        const { container } = render(
+            <ArcanaSegmentedControl
+                value="list"
+                options={[
+                    {
+                        label: "",
+                        value: "list",
+                        icon: "fa-solid fa-list",
+                        ariaLabel: "Lista",
+                    },
+                    { label: "Grade", value: "grid", icon: "fa-solid fa-table-cells-large" },
+                ]}
+                ariaLabel="Modo de exibição"
+            />
+        );
+
+        const options = container.querySelectorAll<HTMLButtonElement>(
+            "button.arcana-segmented-control__option"
+        );
+        expect(options).toHaveLength(2);
+
+        // Só-ícone: nenhum <span> de texto (nem vazio) e o ícone continua aria-hidden.
+        const iconOnly = options[0];
+        expect(
+            iconOnly.classList.contains("arcana-segmented-control__option--icon-only")
+        ).toBe(true);
+        expect(iconOnly.querySelectorAll("span")).toHaveLength(0);
+        expect(iconOnly.textContent).toBe("");
+        expect(
+            iconOnly
+                .querySelector(".arcana-segmented-control__icon")!
+                .getAttribute("aria-hidden")
+        ).toBe("true");
+        // O nome acessível sai do `ariaLabel` da opção (o ícone não nomeia nada).
+        expect(iconOnly.getAttribute("aria-label")).toBe("Lista");
+        expect(iconOnly.getAttribute("title")).toBe("Lista");
+
+        // Com label: span de texto preservado, nome vem do label e sem tooltip nativa.
+        const labelled = options[1];
+        expect(
+            labelled.classList.contains("arcana-segmented-control__option--icon-only")
+        ).toBe(false);
+        expect(labelled.querySelector("span")!.textContent).toBe("Grade");
+        expect(labelled.getAttribute("aria-label")).toBe("Grade");
+        expect(labelled.getAttribute("title")).toBeNull();
+    });
+
     it("ArcanaSwitchSegmented alterna e reflete is-on", () => {
         const onValueChange = vi.fn();
         const { container } = render(
@@ -410,6 +459,36 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(root.classList.contains("is-on")).toBe(false);
         fireEvent.click(root);
         expect(onValueChange).toHaveBeenCalledWith(true);
+    });
+
+    it("ArcanaSwitchSegmented renderiza ícones antes do texto (e icon-only sem label)", () => {
+        const { container } = render(
+            <ArcanaSwitchSegmented
+                value={false}
+                offIcon="fa-solid fa-moon"
+                onIcon="fa-solid fa-sun"
+                onIconColor="#f59e0b"
+                offLabel=""
+                onLabel=""
+                ariaLabel="Tema"
+            />
+        );
+        const offIcon = container.querySelector(
+            ".arcana-switch-segmented__option--off .arcana-switch-segmented__icon"
+        )!;
+        expect(offIcon.classList.contains("fa-moon")).toBe(true);
+        expect(offIcon.getAttribute("aria-hidden")).toBe("true");
+        const onIcon = container.querySelector(
+            ".arcana-switch-segmented__option--on .arcana-switch-segmented__icon"
+        ) as HTMLElement;
+        expect(onIcon.getAttribute("style")).toContain("#f59e0b");
+        // Icon-only: nenhum texto é forçado nos lados.
+        expect(
+            container.querySelector(".arcana-switch-segmented__option--on")!.textContent
+        ).toBe("");
+        expect(
+            container.querySelector(".arcana-switch-segmented")!.getAttribute("aria-label")
+        ).toBe("Tema");
     });
 
     it("ArcanaMultiSelectPopover renderiza o trigger com o summary vazio", () => {

@@ -5,7 +5,9 @@ import {
   ArcanaBadge,
   ArcanaInput,
   ArcanaTabs,
-  ArcanaSwitch
+  ArcanaSwitch,
+  ArcanaSwitchSegmented,
+  ArcanaSegmentedControl
 } from "../src/vue";
 
 // Smoke test: monta uma amostra variada de componentes da lib Vue e garante que
@@ -60,5 +62,63 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     });
     await wrapper.find("button, [role='switch']").trigger("click");
     expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+  });
+
+  it("ArcanaSegmentedControl: opção sem label é só-ícone e o ariaLabel nomeia o botão", () => {
+    const wrapper = mount(ArcanaSegmentedControl, {
+      props: {
+        modelValue: "list",
+        options: [
+          { label: "", value: "list", icon: "fa-solid fa-list", ariaLabel: "Lista" },
+          { label: "Grade", value: "grid", icon: "fa-solid fa-table-cells-large" }
+        ]
+      }
+    });
+    const options = wrapper.findAll("button.arcana-segmented-control__option");
+    expect(options).toHaveLength(2);
+
+    // Sem label → nenhum <span> de texto (nem vazio) e classe modificadora de só-ícone.
+    const iconOnly = options[0];
+    expect(iconOnly.classes()).toContain("arcana-segmented-control__option--icon-only");
+    expect(iconOnly.findAll("span")).toHaveLength(0);
+    expect(iconOnly.text()).toBe("");
+    // O ícone é aria-hidden → quem dá nome ao botão é o `ariaLabel` da opção.
+    expect(iconOnly.find(".arcana-segmented-control__icon").attributes("aria-hidden")).toBe("true");
+    expect(iconOnly.attributes("aria-label")).toBe("Lista");
+    expect(iconOnly.attributes("title")).toBe("Lista");
+
+    // Com label: span preservado, nome vem do label e sem tooltip nativa.
+    const labelled = options[1];
+    expect(labelled.classes()).not.toContain("arcana-segmented-control__option--icon-only");
+    expect(labelled.find("span").text()).toBe("Grade");
+    expect(labelled.attributes("aria-label")).toBe("Grade");
+    expect(labelled.attributes("title")).toBeUndefined();
+  });
+
+  it("ArcanaSwitchSegmented renderiza offIcon/onIcon antes do texto", () => {
+    const wrapper = mount(ArcanaSwitchSegmented, {
+      props: {
+        modelValue: false,
+        offIcon: "fa-solid fa-moon",
+        onIcon: "fa-solid fa-sun",
+        onIconColor: "#f59e0b",
+        onLabel: ""
+      }
+    });
+    const off = wrapper.find(".arcana-switch-segmented__option--off");
+    const offIcon = off.find(".arcana-switch-segmented__icon");
+    expect(offIcon.classes()).toContain("fa-moon");
+    expect(offIcon.attributes("aria-hidden")).toBe("true");
+    // Ícone vem ANTES do texto.
+    expect(off.element.firstElementChild).toBe(offIcon.element);
+    expect(off.text()).toContain("Inativo");
+    const onIcon = wrapper.find(
+      ".arcana-switch-segmented__option--on .arcana-switch-segmented__icon"
+    );
+    expect(onIcon.attributes("style")).toContain("#f59e0b");
+    // Label vazio → lado icon-only, sem texto forçado.
+    expect(wrapper.find(".arcana-switch-segmented__option--on").text()).toBe("");
+    // aria-label descarta o label vazio.
+    expect(wrapper.attributes("aria-label")).toBe("Inativo");
   });
 });

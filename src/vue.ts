@@ -35,7 +35,7 @@ export { default as ArcanaNumberStepper } from "./vue/components/ArcanaNumberSte
 export { default as ArcanaActionPanel } from "./vue/components/ArcanaActionPanel.vue";
 export { default as ArcanaRadioCardGroup } from "./vue/components/ArcanaRadioCardGroup.vue";
 export { default as ArcanaRequiredFieldsDialog } from "./vue/components/ArcanaRequiredFieldsDialog.vue";
-export { default as ArcanaSegmentedOptions } from "./vue/components/ArcanaSegmentedOptions.vue";
+export { default as ArcanaSegmentedControl } from "./vue/components/ArcanaSegmentedControl.vue";
 export { default as ArcanaSelect } from "./vue/components/ArcanaSelect.vue";
 export { default as ArcanaSettingsEditableField } from "./vue/components/ArcanaSettingsEditableField.vue";
 export { default as ArcanaSettingsList } from "./vue/components/ArcanaSettingsList.vue";

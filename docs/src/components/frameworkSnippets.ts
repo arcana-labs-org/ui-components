@@ -999,8 +999,8 @@ export class PaymentMethodComponent {
   },
 
   segmentedOptions: {
-    react: `import { useState } from 'react'
-import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/react'
+    react: `import { useState, type CSSProperties } from 'react'
+import { ArcanaSegmentedControl, type SegmentedOption } from '@arcanalabs/ui-components/react'
 
 const options: SegmentedOption[] = [
   { label: 'List', value: 'list' },
@@ -1022,43 +1022,94 @@ const colorOptions: SegmentedOption[] = [
   { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
 ]
 
+// Icon-only: empty labels, so the group needs an ariaLabel of its own.
+const iconOnlyOptions: SegmentedOption[] = [
+  { label: '', value: 'list', icon: 'fa-solid fa-list' },
+  { label: '', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+  { label: '', value: 'board', icon: 'fa-solid fa-columns' },
+]
+
+// Off the scale: these tokens beat any \`size\`. They inherit, so setting them on
+// a wrapper is enough (the control reads them from the cascade).
+const customSize = {
+  '--arcana-segmented-control-height': '40px',
+  '--arcana-segmented-control-font-size': '15px',
+  '--arcana-segmented-control-padding-x': '22px',
+} as CSSProperties
+
 export function ViewMode() {
   const [view, setView] = useState<string | number | null>('list')
   const [priority, setPriority] = useState<string | number | null>('medium')
   return (
     <>
-      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
 
       {/* Denser, square-cornered variant */}
-      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} compact squared />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} compact squared />
 
       {/* With icons */}
-      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={iconOptions} />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={iconOptions} />
 
       {/* With coloured icons */}
-      <ArcanaSegmentedOptions value={priority} onValueChange={setPriority} options={colorOptions} />
+      <ArcanaSegmentedControl value={priority} onValueChange={setPriority} options={colorOptions} />
+
+      {/* Icon-only */}
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={iconOnlyOptions} ariaLabel="View mode" />
+
+      {/* The four sizes */}
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} size="sm" />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} size="md" />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} size="lg" />
+      <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} size="xl" />
+
+      {/* Custom dimension via the CSS tokens — no \`size\` needed */}
+      <div style={customSize}>
+        <ArcanaSegmentedControl value={view} onValueChange={setView} options={options} />
+      </div>
     </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSegmentedOptionsComponent, type SegmentedOption } from '@arcanalabs/ui-components/angular'
+import { ArcanaSegmentedControlComponent, type SegmentedOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-view-mode',
   standalone: true,
-  imports: [ArcanaSegmentedOptionsComponent],
+  imports: [ArcanaSegmentedControlComponent],
   template: \`
-    <div arcanaSegmentedOptions [(value)]="view" [options]="options" ariaLabel="View mode"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" ariaLabel="View mode"></div>
 
     <!-- Denser, square-cornered variant -->
-    <div arcanaSegmentedOptions [(value)]="view" [options]="options" [compact]="true" [squared]="true"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" [compact]="true" [squared]="true"></div>
 
     <!-- With icons -->
-    <div arcanaSegmentedOptions [(value)]="view" [options]="iconOptions"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="iconOptions"></div>
 
     <!-- With coloured icons -->
-    <div arcanaSegmentedOptions [(value)]="priority" [options]="colorOptions"></div>
-  \`
+    <div arcanaSegmentedControl [(value)]="priority" [options]="colorOptions"></div>
+
+    <!-- Icon-only: empty labels, so the group carries the accessible name -->
+    <div arcanaSegmentedControl [(value)]="view" [options]="iconOnlyOptions" ariaLabel="View mode"></div>
+
+    <!-- The four sizes -->
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" size="sm"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" size="md"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" size="lg"></div>
+    <div arcanaSegmentedControl [(value)]="view" [options]="options" size="xl"></div>
+
+    <!-- Custom dimension: the CSS tokens beat any size, so no size input here.
+         They inherit, so declaring them on a wrapper is enough. -->
+    <div class="seg-custom-size">
+      <div arcanaSegmentedControl [(value)]="view" [options]="options"></div>
+    </div>
+  \`,
+  styles: [
+    '.seg-custom-size {' +
+    '  --arcana-segmented-control-height: 40px;' +
+    '  --arcana-segmented-control-font-size: 15px;' +
+    '  --arcana-segmented-control-padding-x: 22px;' +
+    '}'
+  ]
 })
 export class ViewModeComponent {
   view: string | number | null = 'list'
@@ -1080,9 +1131,15 @@ export class ViewModeComponent {
     { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },
     { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
   ]
+  // Icon-only: empty labels, so the group needs its own ariaLabel.
+  iconOnlyOptions: SegmentedOption[] = [
+    { label: '', value: 'list', icon: 'fa-solid fa-list' },
+    { label: '', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+    { label: '', value: 'board', icon: 'fa-solid fa-columns' },
+  ]
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSegmentedControl, type SegmentedOption } from '@arcanalabs/ui-components/svelte'
 
   let view = $state<string | number | null>('list')
   let priority = $state<string | number | null>('medium')
@@ -1104,18 +1161,39 @@ export class ViewModeComponent {
     { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },
     { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
   ]
+  // Icon-only: empty labels, so the group needs its own ariaLabel.
+  const iconOnlyOptions: SegmentedOption[] = [
+    { label: '', value: 'list', icon: 'fa-solid fa-list' },
+    { label: '', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+    { label: '', value: 'board', icon: 'fa-solid fa-columns' },
+  ]
 </script>
 
-<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />
 
 <!-- Denser, square-cornered variant -->
-<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} compact squared />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} compact squared />
 
 <!-- With icons -->
-<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} options={iconOptions} />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} options={iconOptions} />
 
 <!-- With coloured icons -->
-<ArcanaSegmentedOptions value={priority} onValueChange={(v) => (priority = v)} options={colorOptions} />`
+<ArcanaSegmentedControl value={priority} onValueChange={(v) => (priority = v)} options={colorOptions} />
+
+<!-- Icon-only -->
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} options={iconOnlyOptions} ariaLabel="View mode" />
+
+<!-- The four sizes -->
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} size="sm" />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} size="md" />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} size="lg" />
+<ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} size="xl" />
+
+<!-- Custom dimension: the CSS tokens beat any size, so no size prop here.
+     They inherit, so declaring them on a wrapper is enough. -->
+<div style="--arcana-segmented-control-height: 40px; --arcana-segmented-control-font-size: 15px; --arcana-segmented-control-padding-x: 22px">
+  <ArcanaSegmentedControl value={view} onValueChange={(v) => (view = v)} {options} />
+</div>`
   },
 
   datePicker: {
@@ -2749,7 +2827,40 @@ import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/react'
 
 export function BillingCycle() {
   const [yearly, setYearly] = useState(false)
-  return <ArcanaSwitchSegmented value={yearly} onValueChange={setYearly} offLabel="Mensal" onLabel="Anual · −20%" />
+  const [env, setEnv] = useState(true)
+  const [dark, setDark] = useState(false)
+  const [listMode, setListMode] = useState(true)
+  return (
+    <>
+      <ArcanaSwitchSegmented value={yearly} onValueChange={setYearly} offLabel="Monthly" onLabel="Annual · −20%" />
+
+      {/* Denser, square-cornered variant */}
+      <ArcanaSwitchSegmented value={env} onValueChange={setEnv} offLabel="Sandbox" onLabel="Production" compact squared />
+
+      {/* With icons — the icon colours survive on the active side too */}
+      <ArcanaSwitchSegmented
+        value={dark}
+        onValueChange={setDark}
+        offLabel="Light"
+        onLabel="Dark"
+        offIcon="fa-solid fa-sun"
+        onIcon="fa-solid fa-moon"
+        offIconColor="#f59e0b"
+        onIconColor="#6366f1"
+      />
+
+      {/* Icon-only: empty labels, so pass an ariaLabel (the icons are decorative) */}
+      <ArcanaSwitchSegmented
+        value={listMode}
+        onValueChange={setListMode}
+        offLabel=""
+        onLabel=""
+        offIcon="fa-solid fa-list"
+        onIcon="fa-solid fa-table-cells-large"
+        ariaLabel="View mode"
+      />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaSwitchSegmentedComponent } from '@arcanalabs/ui-components/angular'
@@ -2758,16 +2869,77 @@ import { ArcanaSwitchSegmentedComponent } from '@arcanalabs/ui-components/angula
   selector: 'app-billing-cycle',
   standalone: true,
   imports: [ArcanaSwitchSegmentedComponent],
-  template: \`<div arcanaSwitchSegmented [(value)]="yearly" offLabel="Mensal" onLabel="Anual · −20%"></div>\`
+  template: \`
+    <div arcanaSwitchSegmented [(value)]="yearly" offLabel="Monthly" onLabel="Annual · −20%"></div>
+
+    <!-- Denser, square-cornered variant -->
+    <div arcanaSwitchSegmented [(value)]="env" offLabel="Sandbox" onLabel="Production" [compact]="true" [squared]="true"></div>
+
+    <!-- With icons: the icon colours survive on the active side too -->
+    <div
+      arcanaSwitchSegmented
+      [(value)]="dark"
+      offLabel="Light"
+      onLabel="Dark"
+      offIcon="fa-solid fa-sun"
+      onIcon="fa-solid fa-moon"
+      offIconColor="#f59e0b"
+      onIconColor="#6366f1"
+    ></div>
+
+    <!-- Icon-only: empty labels, so pass an ariaLabel (the icons are decorative) -->
+    <div
+      arcanaSwitchSegmented
+      [(value)]="listMode"
+      offLabel=""
+      onLabel=""
+      offIcon="fa-solid fa-list"
+      onIcon="fa-solid fa-table-cells-large"
+      ariaLabel="View mode"
+    ></div>
+  \`
 })
 export class BillingCycleComponent {
   yearly = false
+  env = true
+  dark = false
+  listMode = true
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSwitchSegmented } from '@arcanalabs/ui-components/svelte'
+
   let yearly = $state(false)
+  let env = $state(true)
+  let dark = $state(false)
+  let listMode = $state(true)
 </script>
 
-<ArcanaSwitchSegmented value={yearly} onValueChange={(v) => (yearly = v)} offLabel="Mensal" onLabel="Anual · −20%" />`
+<ArcanaSwitchSegmented value={yearly} onValueChange={(v) => (yearly = v)} offLabel="Monthly" onLabel="Annual · −20%" />
+
+<!-- Denser, square-cornered variant -->
+<ArcanaSwitchSegmented value={env} onValueChange={(v) => (env = v)} offLabel="Sandbox" onLabel="Production" compact squared />
+
+<!-- With icons: the icon colours survive on the active side too -->
+<ArcanaSwitchSegmented
+  value={dark}
+  onValueChange={(v) => (dark = v)}
+  offLabel="Light"
+  onLabel="Dark"
+  offIcon="fa-solid fa-sun"
+  onIcon="fa-solid fa-moon"
+  offIconColor="#f59e0b"
+  onIconColor="#6366f1"
+/>
+
+<!-- Icon-only: empty labels, so pass an ariaLabel (the icons are decorative) -->
+<ArcanaSwitchSegmented
+  value={listMode}
+  onValueChange={(v) => (listMode = v)}
+  offLabel=""
+  onLabel=""
+  offIcon="fa-solid fa-list"
+  onIcon="fa-solid fa-table-cells-large"
+  ariaLabel="View mode"
+/>`
   }
 };

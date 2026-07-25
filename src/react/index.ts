@@ -27,11 +27,12 @@ export type { ArcanaSwitchRowProps } from "./ArcanaSwitchRow";
 export { ArcanaSwitchCard } from "./ArcanaSwitchCard";
 export type { ArcanaSwitchCardProps } from "./ArcanaSwitchCard";
 
-export { ArcanaSegmentedOptions } from "./ArcanaSegmentedOptions";
+export { ArcanaSegmentedControl } from "./ArcanaSegmentedControl";
 export type {
-    ArcanaSegmentedOptionsProps,
+    ArcanaSegmentedControlProps,
+    SegmentedControlSize,
     SegmentedOption,
-} from "./ArcanaSegmentedOptions";
+} from "./ArcanaSegmentedControl";
 
 export { ArcanaSkeleton } from "./ArcanaSkeleton";
 export type { ArcanaSkeletonProps } from "./ArcanaSkeleton";

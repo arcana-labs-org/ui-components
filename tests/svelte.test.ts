@@ -15,7 +15,7 @@ import {
   ArcanaActionPanel,
   ArcanaRadioCardGroup,
   ArcanaRequiredFieldsDialog,
-  ArcanaSegmentedOptions,
+  ArcanaSegmentedControl,
   ArcanaSelect,
   ArcanaSettingsEditableField,
   ArcanaSummaryTile,
@@ -124,9 +124,9 @@ describe("Svelte adapter — lote 1", () => {
     expect(onValueChange).toHaveBeenCalledWith(42);
   });
 
-  it("ArcanaSegmentedOptions renders options and selects on click", () => {
+  it("ArcanaSegmentedControl renders options and selects on click", () => {
     const onValueChange = vi.fn();
-    const { target } = render(ArcanaSegmentedOptions, {
+    const { target } = render(ArcanaSegmentedControl, {
       value: "a",
       options: [
         { label: "Ativo", value: "a" },
@@ -134,11 +134,56 @@ describe("Svelte adapter — lote 1", () => {
       ],
       onValueChange,
     });
-    const options = target.querySelectorAll("button.arcana-segmented-options__option");
+    const options = target.querySelectorAll("button.arcana-segmented-control__option");
     expect(options).toHaveLength(2);
     expect(options[0].classList.contains("is-active")).toBe(true);
+    expect(
+      target.querySelector(".arcana-segmented-control")!.classList.contains("arcana-segmented-control--md")
+    ).toBe(true);
     click(options[1]);
     expect(onValueChange).toHaveBeenCalledWith("b");
+  });
+
+  it("ArcanaSegmentedControl renders an option without label as icon-only, named by its ariaLabel", () => {
+    const { target } = render(ArcanaSegmentedControl, {
+      value: "list",
+      options: [
+        { label: "", value: "list", icon: "fa-solid fa-list", ariaLabel: "Lista" },
+        { label: "Grade", value: "grid", icon: "fa-solid fa-table-cells-large" },
+      ],
+    });
+    const options = target.querySelectorAll<HTMLButtonElement>(
+      "button.arcana-segmented-control__option"
+    );
+
+    const iconOnly = options[0];
+    expect(iconOnly.classList.contains("arcana-segmented-control__option--icon-only")).toBe(true);
+    expect(iconOnly.querySelectorAll("span")).toHaveLength(0);
+    expect(iconOnly.getAttribute("aria-label")).toBe("Lista");
+    expect(iconOnly.getAttribute("title")).toBe("Lista");
+    expect(
+      iconOnly.querySelector(".arcana-segmented-control__icon")!.getAttribute("aria-hidden")
+    ).toBe("true");
+
+    const labelled = options[1];
+    expect(labelled.classList.contains("arcana-segmented-control__option--icon-only")).toBe(false);
+    expect(labelled.querySelector("span")!.textContent).toBe("Grade");
+    expect(labelled.getAttribute("aria-label")).toBe("Grade");
+    expect(labelled.getAttribute("title")).toBeNull();
+  });
+
+  it("ArcanaSegmentedControl applies the size modifier (compact falls back to sm)", () => {
+    const opts = [{ label: "A", value: "a" }];
+
+    const sized = render(ArcanaSegmentedControl, { value: "a", options: opts, size: "lg" });
+    expect(
+      sized.target.querySelector(".arcana-segmented-control")!.classList.contains("arcana-segmented-control--lg")
+    ).toBe(true);
+
+    const compact = render(ArcanaSegmentedControl, { value: "a", options: opts, compact: true });
+    expect(
+      compact.target.querySelector(".arcana-segmented-control")!.classList.contains("arcana-segmented-control--sm")
+    ).toBe(true);
   });
 
   it("ArcanaTabs renders triggers, marks the active one and selects another", () => {
@@ -358,6 +403,29 @@ describe("Svelte adapter — lote 2", () => {
     expect(root.getAttribute("aria-checked")).toBe("false");
     click(root);
     expect(onValueChange).toHaveBeenCalledWith(true);
+  });
+
+  it("ArcanaSwitchSegmented renders icons before the label", () => {
+    const { target } = render(ArcanaSwitchSegmented, {
+      value: false,
+      offIcon: "fa-solid fa-moon",
+      onIcon: "fa-solid fa-sun",
+      offIconColor: "#f59e0b",
+      onLabel: "",
+    });
+    const offIcon = target.querySelector(
+      ".arcana-switch-segmented__option--off .arcana-switch-segmented__icon"
+    ) as HTMLElement;
+    expect(offIcon.classList.contains("fa-moon")).toBe(true);
+    expect(offIcon.getAttribute("style")).toContain("#f59e0b");
+    // Ícone vem ANTES do texto.
+    const off = target.querySelector(".arcana-switch-segmented__option--off")!;
+    expect(off.firstElementChild).toBe(offIcon);
+    expect(off.textContent).toContain("Inativo");
+    // Label vazio → lado só com o ícone.
+    expect(
+      target.querySelector(".arcana-switch-segmented__option--on")!.textContent!.trim()
+    ).toBe("");
   });
 
   it("ArcanaTable renders headers, rows and the empty state", () => {

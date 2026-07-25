@@ -8,11 +8,24 @@ import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
  * Equivalências Vue → React:
  * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
  * - slots `#off-label`/`#on-label` → props `offSlot`/`onSlot` (ReactNode)
+ *
+ * `offIcon`/`onIcon` (classe FontAwesome) viram um `<i class="arcana-switch-segmented__icon">`
+ * decorativo antes do texto de cada lado; `offIconColor`/`onIconColor` aplicam `color` inline
+ * (vence o CSS, inclusive no lado ativo). Com o label vazio (`offLabel=""`) o lado fica
+ * icon-only, com o ícone centralizado — nenhum texto é forçado.
  */
 export interface ArcanaSwitchSegmentedProps {
     value?: boolean;
     offLabel?: string;
     onLabel?: string;
+    /** Classe FontAwesome do ícone da opção esquerda (ex: `"fa-solid fa-moon"`). */
+    offIcon?: string;
+    /** Classe FontAwesome do ícone da opção direita (ex: `"fa-solid fa-sun"`). */
+    onIcon?: string;
+    /** Cor inline do `offIcon` (qualquer string CSS válida). */
+    offIconColor?: string;
+    /** Cor inline do `onIcon`. */
+    onIconColor?: string;
     disabled?: boolean;
     ariaLabel?: string;
     compact?: boolean;
@@ -30,6 +43,10 @@ export function ArcanaSwitchSegmented({
     value = false,
     offLabel = "Inativo",
     onLabel = "Ativo",
+    offIcon = "",
+    onIcon = "",
+    offIconColor = "",
+    onIconColor = "",
     disabled = false,
     ariaLabel = "",
     compact = false,
@@ -42,7 +59,8 @@ export function ArcanaSwitchSegmented({
     onChange,
     className,
 }: ArcanaSwitchSegmentedProps) {
-    const ariaLabelFallback = `${offLabel} ou ${onLabel}`;
+    // Labels vazios (modo icon-only) são descartados pra não gerar " ou ".
+    const ariaLabelFallback = [offLabel, onLabel].filter(Boolean).join(" ou ");
 
     const toggle = () => {
         if (disabled) return;
@@ -104,7 +122,14 @@ export function ArcanaSwitchSegmented({
                         aria-hidden="true"
                     />
                 ) : null}
-                {offSlot ?? offLabel}
+                {offIcon ? (
+                    <i
+                        className={`arcana-switch-segmented__icon ${offIcon}`}
+                        style={offIconColor ? { color: offIconColor } : undefined}
+                        aria-hidden="true"
+                    />
+                ) : null}
+                {offSlot ?? (offLabel || null)}
             </div>
             <div className="arcana-switch-segmented__option arcana-switch-segmented__option--on">
                 {radio ? (
@@ -113,7 +138,14 @@ export function ArcanaSwitchSegmented({
                         aria-hidden="true"
                     />
                 ) : null}
-                {onSlot ?? onLabel}
+                {onIcon ? (
+                    <i
+                        className={`arcana-switch-segmented__icon ${onIcon}`}
+                        style={onIconColor ? { color: onIconColor } : undefined}
+                        aria-hidden="true"
+                    />
+                ) : null}
+                {onSlot ?? (onLabel || null)}
             </div>
         </div>
     );

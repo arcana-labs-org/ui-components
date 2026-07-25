@@ -35,7 +35,7 @@ import {
   ArcanaActionPanelComponent,
   ArcanaRadioCardGroupComponent,
   ArcanaRequiredFieldsDialogComponent,
-  ArcanaSegmentedOptionsComponent,
+  ArcanaSegmentedControlComponent,
   ArcanaSelectComponent,
   ArcanaSettingsEditableFieldComponent,
   ArcanaSettingsListComponent,
@@ -220,13 +220,13 @@ describe("Angular adapter", () => {
     expect(dismissed).toHaveBeenCalledOnce();
   });
 
-  it("ArcanaSegmentedOptions: renderiza opções e seleciona", () => {
+  it("ArcanaSegmentedControl: renderiza opções e seleciona", () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [ArcanaSegmentedOptionsComponent],
+      imports: [ArcanaSegmentedControlComponent],
       providers: [provideZonelessChangeDetection()]
     });
-    const fixture = TestBed.createComponent(ArcanaSegmentedOptionsComponent);
+    const fixture = TestBed.createComponent(ArcanaSegmentedControlComponent);
     fixture.componentRef.setInput("value", "a");
     fixture.componentRef.setInput("options", [
       { label: "A", value: "a" },
@@ -234,14 +234,73 @@ describe("Angular adapter", () => {
     ]);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.classList.contains("arcana-segmented-options")).toBe(true);
-    const options = el.querySelectorAll(".arcana-segmented-options__option");
+    expect(el.classList.contains("arcana-segmented-control")).toBe(true);
+    expect(el.classList.contains("arcana-segmented-control--md")).toBe(true);
+    const options = el.querySelectorAll(".arcana-segmented-control__option");
     expect(options).toHaveLength(2);
     expect(options[0].classList.contains("is-active")).toBe(true);
     const onValue = vi.fn();
     fixture.componentInstance.valueChange.subscribe(onValue);
     click(options[1]);
     expect(onValue).toHaveBeenCalledWith("b");
+  });
+
+  it("ArcanaSegmentedControl: opção sem label é só-ícone e usa o ariaLabel como nome acessível", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaSegmentedControlComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ArcanaSegmentedControlComponent);
+    fixture.componentRef.setInput("value", "list");
+    fixture.componentRef.setInput("options", [
+      { label: "", value: "list", icon: "fa-solid fa-list", ariaLabel: "Lista" },
+      { label: "Grade", value: "grid", icon: "fa-solid fa-table-cells-large" }
+    ]);
+    fixture.detectChanges();
+    const options = (fixture.nativeElement as HTMLElement)
+      .querySelectorAll<HTMLButtonElement>("button.arcana-segmented-control__option");
+
+    const iconOnly = options[0];
+    expect(iconOnly.classList.contains("arcana-segmented-control__option--icon-only")).toBe(true);
+    expect(iconOnly.querySelectorAll("span")).toHaveLength(0);
+    expect(iconOnly.getAttribute("aria-label")).toBe("Lista");
+    expect(iconOnly.getAttribute("title")).toBe("Lista");
+    expect(iconOnly.querySelector(".arcana-segmented-control__icon")!.getAttribute("aria-hidden")).toBe("true");
+
+    const labelled = options[1];
+    expect(labelled.classList.contains("arcana-segmented-control__option--icon-only")).toBe(false);
+    expect(labelled.querySelector("span")!.textContent).toContain("Grade");
+    expect(labelled.getAttribute("aria-label")).toBe("Grade");
+    expect(labelled.getAttribute("title")).toBeNull();
+  });
+
+  it("ArcanaSegmentedControl: size aplica modificador e `compact` legado vira sm", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaSegmentedControlComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+
+    const sized = TestBed.createComponent(ArcanaSegmentedControlComponent);
+    sized.componentRef.setInput("size", "xl");
+    sized.detectChanges();
+    expect((sized.nativeElement as HTMLElement).classList.contains("arcana-segmented-control--xl")).toBe(true);
+
+    // `compact` sem `size` → sm (compatibilidade)
+    const compact = TestBed.createComponent(ArcanaSegmentedControlComponent);
+    compact.componentRef.setInput("compact", true);
+    compact.detectChanges();
+    const compactEl = compact.nativeElement as HTMLElement;
+    expect(compactEl.classList.contains("arcana-segmented-control--sm")).toBe(true);
+    expect(compactEl.classList.contains("is-compact")).toBe(true);
+
+    // `size` explícito vence o `compact` legado
+    const both = TestBed.createComponent(ArcanaSegmentedControlComponent);
+    both.componentRef.setInput("compact", true);
+    both.componentRef.setInput("size", "lg");
+    both.detectChanges();
+    expect((both.nativeElement as HTMLElement).classList.contains("arcana-segmented-control--lg")).toBe(true);
   });
 
   it("ArcanaTabs: triggers + painel ativo via *arcanaTabPanel", () => {
@@ -477,6 +536,30 @@ describe("Angular adapter", () => {
     fixture.componentInstance.valueChange.subscribe(onValue);
     el.click();
     expect(onValue).toHaveBeenCalledWith(true);
+  });
+
+  it("ArcanaSwitchSegmented: renderiza offIcon/onIcon com cor inline", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ArcanaSwitchSegmentedComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(ArcanaSwitchSegmentedComponent);
+    fixture.componentRef.setInput("offIcon", "fa-solid fa-moon");
+    fixture.componentRef.setInput("onIcon", "fa-solid fa-sun");
+    fixture.componentRef.setInput("onIconColor", "#f59e0b");
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const off = el.querySelector(".arcana-switch-segmented__option--off")!;
+    const offIcon = off.querySelector(".arcana-switch-segmented__icon")!;
+    expect(offIcon.classList.contains("fa-moon")).toBe(true);
+    expect(offIcon.getAttribute("aria-hidden")).toBe("true");
+    // Ícone vem ANTES do texto.
+    expect(off.firstElementChild).toBe(offIcon);
+    const onIcon = el.querySelector(
+      ".arcana-switch-segmented__option--on .arcana-switch-segmented__icon"
+    ) as HTMLElement;
+    expect(onIcon.getAttribute("style")).toContain("#f59e0b");
   });
 
   it("ArcanaInputMask: formata display e emite raw sem separadores", () => {
