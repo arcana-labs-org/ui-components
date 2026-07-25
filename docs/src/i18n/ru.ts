@@ -553,7 +553,18 @@ export const ru: Messages = {
     switchSegWithIcons: "Со значками",
     switchSegIconOnly: "Только значки",
     switchSegLight: "Светлая",
-    switchSegDark: "Тёмная"
+    switchSegDark: "Тёмная",
+    rcIconStart: "Значок в начале",
+    rcIconEnd: "Значок в конце",
+    rcRadioEnd: "Радиокнопка в конце",
+    rcNfeModel: "NF-e",
+    rcNfeModelDesc: "Товарная накладная",
+    rcNfceModel: "NFC-e",
+    rcNfceModelDesc: "Чек покупателю",
+    rcFreightSender: "Отправитель",
+    rcFreightSenderDesc: "Доставку оплачивает продавец",
+    rcFreightRecipient: "Получатель",
+    rcFreightRecipientDesc: "Доставка оплачивается при получении"
 
   }
 };

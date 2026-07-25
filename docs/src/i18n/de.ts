@@ -553,7 +553,18 @@ export const de: Messages = {
     switchSegWithIcons: "Mit Symbolen",
     switchSegIconOnly: "Nur Symbole",
     switchSegLight: "Hell",
-    switchSegDark: "Dunkel"
+    switchSegDark: "Dunkel",
+    rcIconStart: "Symbol am Anfang",
+    rcIconEnd: "Symbol am Ende",
+    rcRadioEnd: "Radio am Ende",
+    rcNfeModel: "NF-e",
+    rcNfeModelDesc: "Warenrechnung",
+    rcNfceModel: "NFC-e",
+    rcNfceModelDesc: "Verbraucherbeleg",
+    rcFreightSender: "Absender",
+    rcFreightSenderDesc: "Fracht vom Verkäufer bezahlt",
+    rcFreightRecipient: "Empfänger",
+    rcFreightRecipientDesc: "Fracht bei Lieferung bezahlt"
 
   }
 };

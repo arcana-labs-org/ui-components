@@ -961,13 +961,41 @@ export class AssigneePickerComponent {
 import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/react'
 
 const options: RadioCardOption[] = [
-  { label: 'Credit card', value: 'credit_card', description: 'Recurring charge.' },
-  { label: 'Pix', value: 'pix', badge: 'Recommended' },
+  { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
+  { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
+  { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+  { label: 'Cash on delivery', value: 'cash', disabled: true },
+]
+
+// Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
+const iconOptions: RadioCardOption[] = [
+  { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+  { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+]
+
+const freightOptions: RadioCardOption[] = [
+  { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+  { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
 ]
 
 export function PaymentMethod() {
   const [method, setMethod] = useState<string | number | boolean | null>('pix')
-  return <ArcanaRadioCardGroup value={method} onValueChange={setMethod} options={options} ariaLabel="Payment method" />
+  const [model, setModel] = useState<string | number | boolean | null>('nfe')
+  const [freight, setFreight] = useState<string | number | boolean | null>('sender')
+  return (
+    <>
+      <ArcanaRadioCardGroup value={method} onValueChange={setMethod} options={options} ariaLabel="Payment method" />
+
+      {/* Icon at the start (default) */}
+      <ArcanaRadioCardGroup value={model} onValueChange={setModel} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
+
+      {/* Icon at the end */}
+      <ArcanaRadioCardGroup value={model} onValueChange={setModel} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
+
+      {/* Radio at the end */}
+      <ArcanaRadioCardGroup value={freight} onValueChange={setFreight} options={freightOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaRadioCardGroupComponent, type RadioCardOption } from '@arcanalabs/ui-components/angular'
@@ -976,26 +1004,78 @@ import { ArcanaRadioCardGroupComponent, type RadioCardOption } from '@arcanalabs
   selector: 'app-payment-method',
   standalone: true,
   imports: [ArcanaRadioCardGroupComponent],
-  template: \`<div arcanaRadioCardGroup [(value)]="method" [options]="options" ariaLabel="Payment method"></div>\`
+  template: \`
+    <div arcanaRadioCardGroup [(value)]="method" [options]="options" ariaLabel="Payment method"></div>
+
+    <!-- Icon at the start (default) -->
+    <div arcanaRadioCardGroup [(value)]="model" [options]="iconOptions" [columns]="2" ariaLabel="Icon at the start"></div>
+
+    <!-- Icon at the end -->
+    <div arcanaRadioCardGroup [(value)]="model" [options]="iconOptions" [columns]="2" [iconPosition]="'end'" ariaLabel="Icon at the end"></div>
+
+    <!-- Radio at the end -->
+    <div arcanaRadioCardGroup [(value)]="freight" [options]="freightOptions" [columns]="2" [radioPosition]="'end'" ariaLabel="Radio at the end"></div>
+  \`
 })
 export class PaymentMethodComponent {
   method: string | number | boolean | null = 'pix'
+  model: string | number | boolean | null = 'nfe'
+  freight: string | number | boolean | null = 'sender'
+
   options: RadioCardOption[] = [
-    { label: 'Credit card', value: 'credit_card', description: 'Recurring charge.' },
-    { label: 'Pix', value: 'pix', badge: 'Recommended' },
+    { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
+    { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
+    { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+    { label: 'Cash on delivery', value: 'cash', disabled: true },
+  ]
+
+  // Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
+  iconOptions: RadioCardOption[] = [
+    { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+    { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+  ]
+
+  freightOptions: RadioCardOption[] = [
+    { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+    { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
   ]
 }`,
     svelte: `<script lang="ts">
   import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/svelte'
 
   let method = $state<string | number | boolean | null>('pix')
+  let model = $state<string | number | boolean | null>('nfe')
+  let freight = $state<string | number | boolean | null>('sender')
+
   const options: RadioCardOption[] = [
-    { label: 'Credit card', value: 'credit_card', description: 'Recurring charge.' },
-    { label: 'Pix', value: 'pix', badge: 'Recommended' },
+    { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
+    { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
+    { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+    { label: 'Cash on delivery', value: 'cash', disabled: true },
+  ]
+
+  // Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
+  const iconOptions: RadioCardOption[] = [
+    { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+    { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+  ]
+
+  const freightOptions: RadioCardOption[] = [
+    { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+    { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
   ]
 </script>
 
-<ArcanaRadioCardGroup value={method} onValueChange={(v) => (method = v)} {options} ariaLabel="Payment method" />`
+<ArcanaRadioCardGroup value={method} onValueChange={(v) => (method = v)} {options} ariaLabel="Payment method" />
+
+<!-- Icon at the start (default) -->
+<ArcanaRadioCardGroup value={model} onValueChange={(v) => (model = v)} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
+
+<!-- Icon at the end -->
+<ArcanaRadioCardGroup value={model} onValueChange={(v) => (model = v)} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
+
+<!-- Radio at the end -->
+<ArcanaRadioCardGroup value={freight} onValueChange={(v) => (freight = v)} options={freightOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />`
   },
 
   segmentedOptions: {

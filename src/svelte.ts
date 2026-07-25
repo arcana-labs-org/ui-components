@@ -422,7 +422,13 @@ export interface ArcanaRadioCardGroupProps {
   disabled?: boolean;
   inline?: boolean;
   columns?: number;
+  /** Lado do círculo do radio. Default `'start'`. */
   radioPosition?: "start" | "end";
+  /**
+   * Lado do chip do ícone. Default `'start'`. Em `'end'` o ícone é renderizado
+   * depois do texto/badge, encostado na direita — combina com qualquer `radioPosition`.
+   */
+  iconPosition?: "start" | "end";
   onValueChange?: (value: string | number | boolean | null) => void;
   onChange?: (value: string | number | boolean | null) => void;
   class?: string;

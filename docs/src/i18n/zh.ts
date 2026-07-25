@@ -553,7 +553,18 @@ export const zh: Messages = {
     switchSegWithIcons: "带图标",
     switchSegIconOnly: "仅图标",
     switchSegLight: "浅色",
-    switchSegDark: "深色"
+    switchSegDark: "深色",
+    rcIconStart: "图标在前",
+    rcIconEnd: "图标在后",
+    rcRadioEnd: "单选按钮在后",
+    rcNfeModel: "NF-e",
+    rcNfeModelDesc: "货物发票",
+    rcNfceModel: "NFC-e",
+    rcNfceModelDesc: "消费者小票",
+    rcFreightSender: "寄件方",
+    rcFreightSenderDesc: "运费由卖方支付",
+    rcFreightRecipient: "收件方",
+    rcFreightRecipientDesc: "运费到付"
 
   }
 };

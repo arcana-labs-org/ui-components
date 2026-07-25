@@ -401,6 +401,46 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(onValueChange).toHaveBeenCalledWith("b");
     });
 
+    it("ArcanaRadioCardGroup: iconPosition='end' aplica a classe modificadora (default 'start' não aplica)", () => {
+        const options = [
+            { label: "A", value: "a", icon: "fa-solid fa-bolt" },
+            { label: "B", value: "b", icon: "fa-solid fa-star" },
+        ];
+
+        // default → sem modificador
+        const { container: def } = render(
+            <ArcanaRadioCardGroup value="a" options={options} />
+        );
+        expect(
+            def
+                .querySelector(".arcana-radio-card-group")!
+                .classList.contains("arcana-radio-card-group--icon-end")
+        ).toBe(false);
+
+        // iconPosition="end" → modificador presente, sem afetar radioPosition
+        const { container: end } = render(
+            <ArcanaRadioCardGroup value="a" options={options} iconPosition="end" />
+        );
+        const endRoot = end.querySelector(".arcana-radio-card-group")!;
+        expect(endRoot.classList.contains("arcana-radio-card-group--icon-end")).toBe(true);
+        expect(endRoot.classList.contains("arcana-radio-card-group--radio-end")).toBe(false);
+        // ícone continua no DOM (reposicionamento é só CSS)
+        expect(endRoot.querySelectorAll(".arcana-radio-card__icon").length).toBe(2);
+
+        // combinado com radioPosition="end" → as duas classes coexistem
+        const { container: both } = render(
+            <ArcanaRadioCardGroup
+                value="a"
+                options={options}
+                iconPosition="end"
+                radioPosition="end"
+            />
+        );
+        const bothRoot = both.querySelector(".arcana-radio-card-group")!;
+        expect(bothRoot.classList.contains("arcana-radio-card-group--icon-end")).toBe(true);
+        expect(bothRoot.classList.contains("arcana-radio-card-group--radio-end")).toBe(true);
+    });
+
     it("ArcanaSegmentedControl: opção sem label vira só-ícone (sem span de texto) e é nomeada pelo ariaLabel", () => {
         const { container } = render(
             <ArcanaSegmentedControl

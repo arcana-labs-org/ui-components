@@ -2,9 +2,15 @@ import { useMemo, useRef, type CSSProperties } from "react";
 
 /**
  * `<ArcanaRadioCardGroup>` — React port. Reproduz `<div class="arcana-radio-card-group">`
- * (+ `--inline`/`--grid`/`--radio-end`), cada `<label class="arcana-radio-card">`
+ * (+ `--inline`/`--grid`/`--radio-end`/`--icon-end`), cada `<label class="arcana-radio-card">`
  * (+ `is-selected`/`is-disabled`), o `__input` nativo, `__radio`/`__dot`, `__icon`,
  * `__content`/`__label`/`__desc` e `__badge`, idêntico ao SFC.
+ *
+ * Posicionamento (puramente CSS, DOM inalterado):
+ * - `radioPosition` — `'start'` (default) | `'end'`: lado do círculo do radio.
+ * - `iconPosition` — `'start'` (default) | `'end'`: lado do chip do ícone. Em `'end'`
+ *   o ícone vem depois do texto/badge, encostado na direita. Independente de
+ *   `radioPosition` — as 4 permutações são suportadas.
  *
  * Equivalências Vue → React:
  * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
@@ -30,6 +36,7 @@ export interface ArcanaRadioCardGroupProps {
     inline?: boolean;
     columns?: number;
     radioPosition?: "start" | "end";
+    iconPosition?: "start" | "end";
     onValueChange?: (value: string | number | boolean | null) => void;
     onChange?: (value: string | number | boolean | null) => void;
     className?: string;
@@ -46,6 +53,7 @@ export function ArcanaRadioCardGroup({
     inline = false,
     columns = 0,
     radioPosition = "start",
+    iconPosition = "start",
     onValueChange,
     onChange,
     className,
@@ -69,6 +77,7 @@ export function ArcanaRadioCardGroup({
         inline && !columns ? "arcana-radio-card-group--inline" : "",
         columns > 0 ? "arcana-radio-card-group--grid" : "",
         radioPosition === "end" ? "arcana-radio-card-group--radio-end" : "",
+        iconPosition === "end" ? "arcana-radio-card-group--icon-end" : "",
         className ?? "",
     ]
         .filter(Boolean)

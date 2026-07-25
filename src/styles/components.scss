@@ -2052,6 +2052,31 @@
     order: 1;
 }
 
+/* ─────────────────────────────────────────────────────────
+   iconPosition='end': move o chip do ícone pra DEPOIS do
+   bloco de texto (label/desc) e do badge, também via `order`
+   (DOM intacto). O `.__content` continua com `flex: 1 1 auto`,
+   então ele absorve o espaço restante e empurra o ícone pra
+   borda direita do card — `margin-left: auto` fica como
+   garantia caso o content seja suprimido/encolhido.
+   ───────────────────────────────────────────────────────── */
+.arcana-radio-card-group--icon-end .arcana-radio-card__icon {
+    order: 1;
+    margin-left: auto;
+}
+
+/*
+ * Combinação radio-end + icon-end: os dois disputariam `order: 1`
+ * (empate desempatado pela ordem do DOM, que colocaria o radio
+ * ANTES do ícone). Promove o radio pra `order: 2` — o radio fica
+ * sempre na extremidade direita e o ícone logo antes dele.
+ * Aqui o `margin-left: auto` do ícone é o que mantém o par
+ * ícone+radio colado à direita.
+ */
+.arcana-radio-card-group--radio-end.arcana-radio-card-group--icon-end .arcana-radio-card__radio {
+    order: 2;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    ArcanaRequiredFieldsDialog.vue
    ───────────────────────────────────────────────────────────────────────── */

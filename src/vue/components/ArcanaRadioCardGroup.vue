@@ -5,6 +5,7 @@
             'arcana-radio-card-group--inline': inline && !columns,
             'arcana-radio-card-group--grid': columns > 0,
             'arcana-radio-card-group--radio-end': radioPosition === 'end',
+            'arcana-radio-card-group--icon-end': iconPosition === 'end',
         }"
         :style="columns > 0 ? { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` } : undefined"
         role="radiogroup"
@@ -36,8 +37,9 @@
             </span>
 
             <!-- Ícone opcional (FontAwesome class). `iconBg` e `iconColor` aplicam cor
-                 custom no badge esquerdo (inline style sobrescreve a regra `.is-selected`
-                 graças à especificidade — cor permanece em ambos os estados). -->
+                 custom no badge do ícone (inline style sobrescreve a regra `.is-selected`
+                 graças à especificidade — cor permanece em ambos os estados).
+                 A posição (início/fim do card) é puramente CSS via `iconPosition`. -->
             <span
                 v-if="opt.icon"
                 class="arcana-radio-card__icon"
@@ -87,12 +89,17 @@ import type { Component, PropType } from "vue"
  * - `name` (opcional) — `name` HTML do grupo de radios. Default `radio-group-{uid}`.
  * - `ariaLabel` (opcional) — texto de acessibilidade pro `role="radiogroup"`.
  * - `disabled` (opcional, global) — desativa todas as opções.
+ * - `radioPosition` (opcional) — `'start'` (default) | `'end'`: lado do círculo do radio.
+ * - `iconPosition` (opcional) — `'start'` (default) | `'end'`: lado do chip do ícone.
+ *   Em `'end'` o ícone é renderizado depois do texto/badge, encostado na direita.
+ *   As duas props são independentes e combinam nas 4 permutações.
  *
  * Cada option pode ter:
  * - `label` (obrigatório): título principal
  * - `value` (obrigatório): valor emitido em `update:modelValue`
  * - `description` (opcional): texto secundário abaixo do label
- * - `icon` (opcional): classe FontAwesome (ex: `'fa-solid fa-credit-card'`) — vira badge à esquerda
+ * - `icon` (opcional): classe FontAwesome (ex: `'fa-solid fa-credit-card'`) — vira chip
+ *   à esquerda (ou à direita, com `iconPosition="end"` no grupo)
  * - `badge` (opcional): texto curto à direita (ex: `'Recomendado'`)
  * - `disabled` (opcional): desativa só essa option
  *
@@ -194,6 +201,19 @@ export default {
          *   até a interação. Implementado via CSS `order`, sem alteração no DOM.
          */
         radioPosition: {
+            type: String as PropType<'start' | 'end'>,
+            default: 'start',
+            validator: (v: string) => ['start', 'end'].includes(v),
+        },
+        /**
+         * Posição do chip do ícone (`option.icon`) dentro do card.
+         * - `'start'` (default): ícone antes do texto — layout original.
+         * - `'end'`: ícone depois do bloco de texto (label/descrição) e do badge,
+         *   encostado na direita do card. Combina com qualquer `radioPosition`
+         *   (com `radioPosition='end'` a ordem final vira texto → badge → ícone →
+         *   radio). Implementado via CSS `order`, sem alteração no DOM.
+         */
+        iconPosition: {
             type: String as PropType<'start' | 'end'>,
             default: 'start',
             validator: (v: string) => ['start', 'end'].includes(v),

@@ -6,9 +6,15 @@ import {
  * `ArcanaRadioCardGroupComponent` — Angular port do SFC Vue `ArcanaRadioCardGroup`.
  *
  * Attribute selector num `<div>` (`<div arcanaRadioCardGroup>`): reproduz
- * `.arcana-radio-card-group` (+ `--inline`/`--grid`/`--radio-end`), cada
+ * `.arcana-radio-card-group` (+ `--inline`/`--grid`/`--radio-end`/`--icon-end`), cada
  * `<label class="arcana-radio-card">` (+ `is-selected`/`is-disabled`), o `__input` nativo,
  * `__radio`/`__dot`, `__icon`, `__content`/`__label`/`__desc` e `__badge`, idêntico ao Vue/React.
+ *
+ * Posicionamento (puramente CSS, DOM inalterado):
+ * - `radioPosition` — `'start'` (default) | `'end'`: lado do círculo do radio.
+ * - `iconPosition` — `'start'` (default) | `'end'`: lado do chip do ícone. Em `'end'`
+ *   o ícone vem depois do texto/badge, encostado na direita. Independente de
+ *   `radioPosition` — as 4 permutações são suportadas.
  *
  * Vue → Angular:
  * - `modelValue` (v-model) → `value` + `@Output() valueChange`; `emit('change')` → `@Output() change`
@@ -95,6 +101,7 @@ export class ArcanaRadioCardGroupComponent {
   @Input() inline = false;
   @Input() columns = 0;
   @Input() radioPosition: "start" | "end" = "start";
+  @Input() iconPosition: "start" | "end" = "start";
   @Input() className = "";
 
   @Output() valueChange = new EventEmitter<string | number | boolean | null>();
@@ -118,6 +125,7 @@ export class ArcanaRadioCardGroupComponent {
       this.inline && !this.columns ? "arcana-radio-card-group--inline" : "",
       this.columns > 0 ? "arcana-radio-card-group--grid" : "",
       this.radioPosition === "end" ? "arcana-radio-card-group--radio-end" : "",
+      this.iconPosition === "end" ? "arcana-radio-card-group--icon-end" : "",
       this.className
     ].filter(Boolean).join(" ");
   }

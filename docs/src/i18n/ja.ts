@@ -553,7 +553,18 @@ export const ja: Messages = {
     switchSegWithIcons: "アイコン付き",
     switchSegIconOnly: "アイコンのみ",
     switchSegLight: "ライト",
-    switchSegDark: "ダーク"
+    switchSegDark: "ダーク",
+    rcIconStart: "アイコンを先頭に",
+    rcIconEnd: "アイコンを末尾に",
+    rcRadioEnd: "ラジオを末尾に",
+    rcNfeModel: "NF-e",
+    rcNfeModelDesc: "商品の請求書",
+    rcNfceModel: "NFC-e",
+    rcNfceModelDesc: "消費者向けレシート",
+    rcFreightSender: "発送者",
+    rcFreightSenderDesc: "送料は販売者負担",
+    rcFreightRecipient: "受取人",
+    rcFreightRecipientDesc: "送料は着払い"
 
   }
 };

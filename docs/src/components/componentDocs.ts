@@ -436,11 +436,23 @@ const RadioCardGroupDemo: Component = {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
       method: "pix",
+      model: "nfe",
+      freight: "sender",
       options: [
         { label: $dt.payCreditCard, value: "credit_card", description: $dt.payCreditCardDesc },
         { label: $dt.payPix, value: "pix", description: $dt.payPixDesc, badge: $dt.payPixBadge },
         { label: $dt.payBoleto, value: "boleto", description: $dt.payBoletoDesc },
         { label: $dt.payCash, value: "cash", disabled: true }
+      ],
+      // Ícone em "chip" colorido: o trio iconBg/iconColor/iconBorder desenha o
+      // quadrado atrás do ícone (mesmo padrão do wizard de emissão de NF-e).
+      iconOptions: [
+        { label: $dt.rcNfeModel, value: "nfe", description: $dt.rcNfeModelDesc, icon: "fa-solid fa-file-invoice", iconBg: "#dbeafe", iconColor: "#2563eb", iconBorder: "#bfdbfe" },
+        { label: $dt.rcNfceModel, value: "nfce", description: $dt.rcNfceModelDesc, icon: "fa-solid fa-receipt", iconBg: "#d1fae5", iconColor: "#059669", iconBorder: "#a7f3d0" }
+      ],
+      freightOptions: [
+        { label: $dt.rcFreightSender, value: "sender", description: $dt.rcFreightSenderDesc, icon: "fa-solid fa-truck", iconBg: "#e0e7ff", iconColor: "#4f46e5", iconBorder: "#c7d2fe" },
+        { label: $dt.rcFreightRecipient, value: "recipient", description: $dt.rcFreightRecipientDesc, icon: "fa-solid fa-user", iconBg: "#fef3c7", iconColor: "#b45309", iconBorder: "#fde68a" }
       ]
     };
   },
@@ -448,6 +460,21 @@ const RadioCardGroupDemo: Component = {
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaRadioCardGroup v-model="method" :options="options" aria-label="Payment method" />
       <p class="demo-note">{{ $dt.selectedLabel }}: <strong>{{ method }}</strong></p>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.rcIconStart }}</span>
+        <ArcanaRadioCardGroup v-model="model" :options="iconOptions" :columns="2" :aria-label="$dt.rcIconStart" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.rcIconEnd }}</span>
+        <ArcanaRadioCardGroup v-model="model" :options="iconOptions" :columns="2" icon-position="end" :aria-label="$dt.rcIconEnd" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.rcRadioEnd }}</span>
+        <ArcanaRadioCardGroup v-model="freight" :options="freightOptions" :columns="2" radio-position="end" :aria-label="$dt.rcRadioEnd" />
+      </div>
     </div>
   `
 };
@@ -1602,7 +1629,9 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "disabled", type: "boolean", default: "false", description: "Disables every option." },
       { name: "inline", type: "boolean", default: "false", description: "Lays cards out in a single equal-width row." },
       { name: "columns", type: "number", default: "0", description: "When > 0, renders an N-column grid (overrides inline)." },
-      { name: "radioPosition", type: "start | end", default: "start", description: "Places the radio circle on the left (start) or right (end)." }
+      { name: "radioPosition", type: "start | end", default: "start", description: "Places the radio circle on the left (start) or right (end)." },
+      { name: "iconPosition", type: "start | end", default: "start", description: "Places the icon chip before (start) or after (end) the text block. Combines with radioPosition." },
+      { name: "option.iconBg / iconColor / iconBorder", type: "string (CSS color)", default: "undefined", description: "Paint the icon chip — background, glyph colour and border, as in the ERP's invoice wizard." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — on selection"],
     vueSnippet: [
@@ -1611,14 +1640,39 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ArcanaRadioCardGroup } from '@arcanalabs/ui-components/vue'",
       "",
       "const method = ref('pix')",
+      "const model = ref('nfe')",
+      "const freight = ref('sender')",
+      "",
       "const options = [",
-      "  { label: 'Credit card', value: 'credit_card', description: 'Recurring charge.' },",
-      "  { label: 'Pix', value: 'pix', badge: 'Recommended' },",
+      "  { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },",
+      "  { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },",
+      "  { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },",
+      "  { label: 'Cash on delivery', value: 'cash', disabled: true },",
+      "]",
+      "",
+      "// Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.",
+      "const iconOptions = [",
+      "  { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },",
+      "  { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },",
+      "]",
+      "",
+      "const freightOptions = [",
+      "  { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },",
+      "  { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },",
       "]",
       "</script>",
       "",
       "<template>",
       "  <ArcanaRadioCardGroup v-model=\"method\" :options=\"options\" aria-label=\"Payment method\" />",
+      "",
+      "  <!-- Icon at the start (default) -->",
+      "  <ArcanaRadioCardGroup v-model=\"model\" :options=\"iconOptions\" :columns=\"2\" aria-label=\"Icon at the start\" />",
+      "",
+      "  <!-- Icon at the end -->",
+      "  <ArcanaRadioCardGroup v-model=\"model\" :options=\"iconOptions\" :columns=\"2\" icon-position=\"end\" aria-label=\"Icon at the end\" />",
+      "",
+      "  <!-- Radio at the end -->",
+      "  <ArcanaRadioCardGroup v-model=\"freight\" :options=\"freightOptions\" :columns=\"2\" radio-position=\"end\" aria-label=\"Radio at the end\" />",
       "</template>"
     ].join("\n")
   },
