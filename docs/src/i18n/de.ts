@@ -65,8 +65,8 @@ export const de: Messages = {
     },
     deps: {
       title: "Abhängigkeiten",
-      p1: "Die Tabelle wird aus der <c>package.json</c> des Pakets selbst erzeugt und ist damit nie veraltet. <b>Runtime</b>-Einträge werden mit der Bibliothek installiert. <b>Peer</b>-Einträge stellt Ihre Anwendung bereit — die Bibliothek deklariert nur, was sie erwartet, und bündelt es nicht.",
-      p2: "Jede Peer hier ist <b>optional</b>: Installieren Sie nur das Framework, das Sie verwenden, plus die Extras für die Funktionen, die Sie rendern. Bei der Installation bricht nichts, wenn Sie eine auslassen — verlangt wird sie von der Komponente, die sie braucht."
+      p1: "Diese Bibliothek hat <b>keine Runtime-Abhängigkeiten</b>: Die Installation fügt Ihrem Bundle nichts hinzu. Alles Folgende ist eine <b>Peer</b>-Abhängigkeit — von Ihrer Anwendung bereitgestellt und hier deklariert, damit Sie wissen, was eine Komponente erwartet.",
+      p2: "Jede Peer ist <b>optional</b>: Installieren Sie nur das Framework, das Sie verwenden, plus die Extras für die Funktionen, die Sie rendern. Bei der Installation bricht nichts, wenn Sie eine auslassen — verlangt wird sie von der Komponente, die sie braucht."
     },
     maska: {
       title: "Maskierung",
@@ -92,7 +92,7 @@ export const de: Messages = {
     kindRuntime: "Runtime",
     kindPeer: "Peer",
     kindPeerOptional: "Peer · optional",
-    note: "Runtime-Abhängigkeiten landen in Ihrem Bundle. Optionale Peers zählen nur, wenn Sie die Komponente rendern, die sie nutzt."
+    note: "Nichts davon wird ohne Ihr Zutun heruntergeladen — optionale Peers zählen nur, wenn Sie die Komponente rendern, die sie nutzt."
   },
 
   propsTable: {
@@ -266,7 +266,6 @@ export const de: Messages = {
     },  },
 
   demos: {
-    depMoment: "Datums-Parsing und -Formatierung hinter ArcanaDatePicker.",
     depMaska: "Eingabemaske in ArcanaInputMask — von allen vier Frameworks genutzt. Vue registriert zusätzlich die v-maska-Direktive.",
     depVue: "Nur für den /vue-Einstiegspunkt nötig.",
     depReact: "Nur für den /react-Einstiegspunkt nötig.",

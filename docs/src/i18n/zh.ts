@@ -65,8 +65,8 @@ export const zh: Messages = {
     },
     deps: {
       title: "依赖",
-      p1: "下表由本包自身的 <c>package.json</c> 生成，因此永远不会过期。<b>runtime</b> 依赖会随库一起安装；<b>peer</b> 依赖由你的应用提供 —— 库只声明期望，不打包进去。",
-      p2: "这里的 peer 依赖全部是<b>可选的</b>：只装你实际使用的框架，以及你要渲染的功能所需的额外包。漏装不会导致安装失败 —— 真正要求它的是用到它的那个组件。"
+      p1: "本库<b>没有运行时依赖</b>：安装它不会给你的产物增加任何东西。下面全部是 <b>peer</b> 依赖 —— 由你的应用提供，在此声明是为了让你知道各组件需要什么。",
+      p2: "所有 peer 依赖都是<b>可选的</b>：只装你实际使用的框架，以及你要渲染的功能所需的额外包。漏装不会导致安装失败 —— 真正要求它的是用到它的那个组件。"
     },
     maska: {
       title: "输入掩码",
@@ -92,7 +92,7 @@ export const zh: Messages = {
     kindRuntime: "runtime",
     kindPeer: "peer",
     kindPeerOptional: "peer · 可选",
-    note: "runtime 依赖会进入你的产物。可选 peer 只在你渲染用到它的组件时才有影响。"
+    note: "这里的一切都不会被自动下载 —— 可选 peer 只在你渲染用到它的组件时才有影响。"
   },
 
   propsTable: {
@@ -266,7 +266,6 @@ export const zh: Messages = {
     },  },
 
   demos: {
-    depMoment: "ArcanaDatePicker 背后的日期解析与格式化。",
     depMaska: "ArcanaInputMask 的输入掩码 —— 四个框架都在用。Vue 额外注册 v-maska 指令。",
     depVue: "仅 /vue 入口需要。",
     depReact: "仅 /react 入口需要。",

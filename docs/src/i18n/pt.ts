@@ -65,8 +65,8 @@ export const pt: Messages = {
     },
     deps: {
       title: "Dependências",
-      p1: "A tabela abaixo é gerada a partir do próprio <c>package.json</c> do pacote, então nunca fica desatualizada. As de <b>runtime</b> são instaladas junto com a biblioteca. As <b>peer</b> são fornecidas pela sua aplicação — a lib declara o que espera, mas não embute.",
-      p2: "Toda peer aqui é <b>opcional</b>: instale apenas o framework que você usa, mais os extras dos recursos que você renderiza. Nada quebra na instalação se você pular alguma — quem exige é o componente que precisa dela."
+      p1: "Esta biblioteca <b>não tem dependências de runtime</b>: instalá-la não acrescenta nada ao seu bundle. Tudo abaixo é <b>peer</b> — fornecido pela sua aplicação e declarado aqui para você saber o que cada componente espera.",
+      p2: "Toda peer é <b>opcional</b>: instale apenas o framework que você usa, mais os extras dos recursos que você renderiza. Nada quebra na instalação se você pular alguma — quem exige é o componente que precisa dela."
     },
     maska: {
       title: "Máscaras",
@@ -92,7 +92,7 @@ export const pt: Messages = {
     kindRuntime: "runtime",
     kindPeer: "peer",
     kindPeerOptional: "peer · opcional",
-    note: "Dependências de runtime entram no seu bundle. Peers opcionais só importam se você renderizar o componente que as usa."
+    note: "Nada aqui é baixado sem você pedir — peers opcionais só importam se você renderizar o componente que as usa."
   },
 
   propsTable: {
@@ -266,7 +266,6 @@ export const pt: Messages = {
     },  },
 
   demos: {
-    depMoment: "Interpretação e formatação de datas por trás do ArcanaDatePicker.",
     depMaska: "Máscara de entrada no ArcanaInputMask — usada pelos quatro frameworks. O Vue ainda registra a diretiva v-maska.",
     depVue: "Necessária apenas para o entrypoint /vue.",
     depReact: "Necessária apenas para o entrypoint /react.",

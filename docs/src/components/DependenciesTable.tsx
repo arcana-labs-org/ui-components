@@ -14,7 +14,6 @@ import { useLang } from "../i18n";
 
 /** Chave de tradução com o propósito de cada pacote. */
 const PURPOSE_KEY: Record<string, string> = {
-  moment: "depMoment",
   maska: "depMaska",
   vue: "depVue",
   react: "depReact",

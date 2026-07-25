@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0 — 2026-07-25
+
+### Alterações que exigem atenção
+- **A lib chegou a ZERO dependências de runtime.** A `moment` era a última — 5,2 MB instalados no bundle de todo consumidor, para uma classe utilitária (`DateFormatter`) que **nenhum componente da lib usa**. Foi substituída por `Intl.DateTimeFormat` e aritmética de data, seguindo o caminho que `core/calendar-locale.ts` já usava. A saída de todos os métodos é idêntica: conferida caso a caso contra a `moment` antes da troca, 99 comparações, zero divergências.
+
+  Por que major mesmo sem mudança de comportamento: quem dependia da `moment` **transitivamente**, através da lib, deixa de recebê-la. Se o seu app importa `moment` sem declará-la, precisa declarar:
+
+  ```bash
+  npm i moment
+  ```
+
+### Correções
+- **Datas sem hora deixaram de correr risco de deslocar o dia.** `new Date("2026-07-25")` lê como meia-noite UTC, e em fuso negativo isso exibe o dia anterior às 21:00. O parser novo reproduz a regra da `moment` (meia-noite local) de propósito — uma troca ingênua teria introduzido esse erro de forma silenciosa em toda a superfície.
+
+
 ## 1.9.0 — 2026-07-25
 
 ### Alterações que exigem atenção

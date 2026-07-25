@@ -92,7 +92,10 @@ describe("ArcanaInputCurrency — paridade entre frameworks", () => {
       const fonte = readFileSync(arquivo, "utf8");
       expect(fonte, arquivo).not.toMatch(/^\s*import .*v-money3/m);
     }
+    // A lib chegou a zero dependências de runtime: `dependencies` deixou de
+    // existir no package.json. Afirmamos o estado forte, não só a ausência da
+    // v-money3 — assim o teste também protege contra alguém reintroduzir outra.
     const pkg = JSON.parse(readFileSync("package.json", "utf8"));
-    expect(pkg.dependencies).not.toHaveProperty("v-money3");
+    expect(Object.keys(pkg.dependencies ?? {})).toEqual([]);
   });
 });

@@ -65,8 +65,8 @@ export const en: Messages = {
     },
     deps: {
       title: "Dependencies",
-      p1: "The table below is generated from the package's own <c>package.json</c>, so it is never out of date. <b>Runtime</b> entries are installed automatically with the library. <b>Peer</b> entries are provided by your app — the library declares what it expects but does not bundle it.",
-      p2: "Every peer here is <b>optional</b>: install only the framework you actually use, plus the extras for the features you render. Nothing breaks at install time if you skip one — the component that needs it is simply the one that requires it."
+      p1: "This library has <b>no runtime dependencies</b>: installing it adds nothing to your bundle. Everything below is a <b>peer</b> — provided by your app, declared here so you know what a given component expects.",
+      p2: "Every peer is <b>optional</b>: install only the framework you actually use, plus the extras for the features you render. Nothing breaks at install time if you skip one — the component that needs it is simply the one that requires it."
     },
     maska: {
       title: "Masking",
@@ -92,7 +92,7 @@ export const en: Messages = {
     kindRuntime: "runtime",
     kindPeer: "peer",
     kindPeerOptional: "peer · optional",
-    note: "Runtime dependencies end up in your bundle. Optional peers only matter if you render the component that uses them."
+    note: "Nothing here is downloaded unless you ask for it — optional peers only matter if you render the component that uses them."
   },
 
   propsTable: {
@@ -266,7 +266,6 @@ export const en: Messages = {
     },  },
 
   demos: {
-    depMoment: "Date parsing and formatting behind ArcanaDatePicker.",
     depMaska: "Input masking in ArcanaInputMask — used by all four frameworks. Vue additionally registers the v-maska directive.",
     depVue: "Required only for the /vue entrypoint.",
     depReact: "Required only for the /react entrypoint.",
