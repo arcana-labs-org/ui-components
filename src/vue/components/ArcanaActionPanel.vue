@@ -1,20 +1,20 @@
 <template>
-    <div class="arcana-onboarding">
+    <div class="arcana-action-panel">
         <!--
             Visual: dois rings concêntricos pulsando + ícone gradient azul.
             Inspirado nos empty/setup states do arcana-vue.
         -->
-        <div class="arcana-onboarding__visual">
-            <div class="arcana-onboarding__ring"></div>
-            <div class="arcana-onboarding__ring arcana-onboarding__ring--2"></div>
-            <div class="arcana-onboarding__icon">
+        <div class="arcana-action-panel__visual">
+            <div class="arcana-action-panel__ring"></div>
+            <div class="arcana-action-panel__ring arcana-action-panel__ring--2"></div>
+            <div class="arcana-action-panel__icon">
                 <i :class="icon"></i>
             </div>
         </div>
 
-        <h3 class="arcana-onboarding__title">{{ title }}</h3>
+        <h3 class="arcana-action-panel__title">{{ title }}</h3>
 
-        <p v-if="$slots.default || description" class="arcana-onboarding__desc">
+        <p v-if="$slots.default || description" class="arcana-action-panel__desc">
             <slot>{{ description }}</slot>
         </p>
 
@@ -22,7 +22,7 @@
             Ação principal. Caller pode passar via `#action` slot (full custom button)
             ou usar a CTA padrão (azul gradient match com o ícone) e ouvir o evento `@action`.
         -->
-        <div v-if="$slots.action || actionLabel || secondaryActionLabel" class="arcana-onboarding__action">
+        <div v-if="$slots.action || actionLabel || secondaryActionLabel" class="arcana-action-panel__action">
             <slot name="action">
                 <ArcanaButton
                     v-if="actionLabel"
@@ -49,7 +49,7 @@
             Sub-hint discreto no rodapé (ex.: "🔒 O arquivo é encriptado").
             Renderiza só se o slot ou a prop tiver conteúdo.
         -->
-        <p v-if="$slots['sub-hint'] || subHint" class="arcana-onboarding__sub-hint">
+        <p v-if="$slots['sub-hint'] || subHint" class="arcana-action-panel__sub-hint">
             <slot name="sub-hint">
                 <i v-if="subHintIcon" :class="subHintIcon"></i>
                 <span>{{ subHint }}</span>
@@ -63,7 +63,7 @@ import { type Component } from "vue"
 import ArcanaButton from "./ArcanaButton.vue"
 
 /**
- * `<ArcanaOnboardingPanel>` — empty state/CTA panel pra primeiras configurações.
+ * `<ArcanaActionPanel>` — empty state/CTA panel pra primeiras configurações.
  *
  * Visual padronizado: card com background sutil de pontos + radial-gradient azul no topo,
  * ícone em gradient azul cercado por dois rings pulsando, título grande + descrição,
@@ -76,7 +76,7 @@ import ArcanaButton from "./ArcanaButton.vue"
  *
  * Props-only (caso simples):
  * ```vue
- * <ArcanaOnboardingPanel
+ * <ArcanaActionPanel
  *     icon="fa-solid fa-clock"
  *     title="Configure os horários de atendimento"
  *     description="Cadastre os intervalos em que esta empresa atende."
@@ -89,7 +89,7 @@ import ArcanaButton from "./ArcanaButton.vue"
  *
  * Slots (caso rico — `<strong>`, botão custom, etc):
  * ```vue
- * <ArcanaOnboardingPanel icon="fa-solid fa-file-shield" title="Configure seu certificado">
+ * <ArcanaActionPanel icon="fa-solid fa-file-shield" title="Configure seu certificado">
  *     <template #default>
  *         O certificado digital A1 é necessário pra emitir <strong>NF-e</strong> e demais
  *         documentos fiscais.
@@ -100,11 +100,11 @@ import ArcanaButton from "./ArcanaButton.vue"
  *     <template #sub-hint>
  *         <i class="fa-solid fa-lock"></i> O arquivo é encriptado antes de ser armazenado.
  *     </template>
- * </ArcanaOnboardingPanel>
+ * </ArcanaActionPanel>
  * ```
  */
 export default {
-    name: 'ArcanaOnboardingPanel',
+    name: 'ArcanaActionPanel',
 
     components: { ArcanaButton },
 

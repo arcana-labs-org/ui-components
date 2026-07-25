@@ -91,7 +91,7 @@ export { ArcanaEditFieldDialogComponent } from "./arcana-edit-field-dialog.compo
 export { ArcanaRequiredFieldsDialogComponent } from "./arcana-required-fields-dialog.component";
 export type { RequiredField } from "./arcana-required-fields-dialog.component";
 
-export { ArcanaOnboardingPanelComponent } from "./arcana-onboarding-panel.component";
+export { ArcanaActionPanelComponent } from "./arcana-action-panel.component";
 
 export {
   ArcanaSettingsListComponent,

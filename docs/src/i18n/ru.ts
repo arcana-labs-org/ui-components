@@ -527,7 +527,25 @@ export const ru: Messages = {
     treeSingleTitle: "Одиночный выбор",
     treeMultipleTitle: "Множественный выбор",
     treeThemedTitle: "Своя тема",
-    treeThemedHint: "Цвета иконок и выделения через CSS custom properties"
+    treeThemedHint: "Цвета иконок и выделения через CSS custom properties",
+    segWithIcons: "Со значками",
+    segColoredIcons: "Цветные значки",
+    segLow: "Низкий",
+    segMedium: "Средний",
+    segHigh: "Высокий",
+    segPriorityLabel: "приоритет",
+    selectQuickFilterTitle: "Быстрый фильтр (цветные точки)",
+    selectStatusPlaceholder: "Статус",
+    selectFooterCount: "Выбрано: {count}",
+    selectClearLabel: "Очистить",
+    selectStatusLabel: "статус",
+    statusOpen: "Открыт",
+    statusConfirmed: "Подтверждён",
+    statusShipped: "Отправлен",
+    statusDelivered: "Доставлен",
+    statusCanceled: "Отменён",
+    accAnimatedTitle: "С анимацией",
+    accAnimatedHint: "Плавная анимация высоты; учитывает reduced-motion"
 
   }
 };

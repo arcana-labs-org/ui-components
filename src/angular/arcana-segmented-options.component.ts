@@ -9,7 +9,8 @@ import {
  * Attribute selector num `<div>` (`<div arcanaSegmentedOptions>`): segmented control
  * de N opções. Reproduz `.arcana-segmented-options` (+ `is-compact`/`is-squared`/`is-disabled`),
  * cada `.arcana-segmented-options__option` (+ `is-active`), o `__radio`/`__icon` opcionais e o
- * `__empty`, idêntico ao Vue/React. Preserva o inline `--seg-active`.
+ * `__empty`, idêntico ao Vue/React. Preserva o inline `--seg-active` e o `iconColor` por
+ * opção (inline `color` no `<i>`, que vence o CSS inclusive na opção ativa).
  *
  * Vue → Angular:
  * - `modelValue` (v-model) → `value` + `@Output() valueChange`; `emit('change')` → `@Output() change`
@@ -18,7 +19,15 @@ export interface SegmentedOption {
   label: string;
   value: string | number;
   disabled?: boolean;
+  /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
   icon?: string;
+  /**
+   * Cor do ícone desta opção. Qualquer string CSS válida (hex, rgb, `var(...)`).
+   * Aplicada como inline style no `<i>`, então vence o CSS e permanece válida
+   * inclusive quando a opção está ativa (fundo escuro/colorido). Sem valor, o
+   * ícone herda a cor do texto do segmento.
+   */
+  iconColor?: string;
 }
 
 @Component({
@@ -46,7 +55,10 @@ export interface SegmentedOption {
           <span class="arcana-segmented-options__radio" aria-hidden="true"></span>
         }
         @if (opt.icon) {
-          <i [class]="'arcana-segmented-options__icon ' + opt.icon"></i>
+          <i
+            [class]="'arcana-segmented-options__icon ' + opt.icon"
+            [style.color]="opt.iconColor || null"
+          ></i>
         }
         <span>{{ opt.label }}</span>
       </button>

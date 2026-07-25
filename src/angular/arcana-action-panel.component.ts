@@ -5,10 +5,10 @@ import { NgTemplateOutlet } from "@angular/common";
 import { ArcanaButtonComponent } from "./arcana-button.component";
 
 /**
- * `ArcanaOnboardingPanelComponent` — Angular port do SFC Vue `ArcanaOnboardingPanel`.
+ * `ArcanaActionPanelComponent` — Angular port do SFC Vue `ArcanaActionPanel`.
  *
- * Attribute selector num `<div>` (`<div arcanaOnboardingPanel>`): empty state / CTA
- * panel. Reproduz `.arcana-onboarding` (visual/ring/icon), `__title`/`__desc`/`__action`/
+ * Attribute selector num `<div>` (`<div arcanaActionPanel>`): empty state / CTA
+ * panel. Reproduz `.arcana-action-panel` (visual/ring/icon), `__title`/`__desc`/`__action`/
  * `__cta`(+`--secondary`)/`__sub-hint`, idêntico ao Vue/React.
  *
  * Vue → Angular:
@@ -18,32 +18,32 @@ import { ArcanaButtonComponent } from "./arcana-button.component";
  * - `emit('action')` / `emit('secondary-action')` → `@Output() action` / `@Output() secondaryAction`.
  */
 @Component({
-  selector: "div[arcanaOnboardingPanel]",
+  selector: "div[arcanaActionPanel]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, ArcanaButtonComponent],
-  host: { "class": "arcana-onboarding" },
+  host: { "class": "arcana-action-panel" },
   template: `
-    <div class="arcana-onboarding__visual">
-      <div class="arcana-onboarding__ring"></div>
-      <div class="arcana-onboarding__ring arcana-onboarding__ring--2"></div>
-      <div class="arcana-onboarding__icon">
+    <div class="arcana-action-panel__visual">
+      <div class="arcana-action-panel__ring"></div>
+      <div class="arcana-action-panel__ring arcana-action-panel__ring--2"></div>
+      <div class="arcana-action-panel__icon">
         <i [class]="icon"></i>
       </div>
     </div>
 
-    <h3 class="arcana-onboarding__title">{{ title }}</h3>
+    <h3 class="arcana-action-panel__title">{{ title }}</h3>
 
     @if (descriptionTemplate) {
-      <p class="arcana-onboarding__desc">
+      <p class="arcana-action-panel__desc">
         <ng-container [ngTemplateOutlet]="descriptionTemplate"></ng-container>
       </p>
     } @else if (description) {
-      <p class="arcana-onboarding__desc">{{ description }}</p>
+      <p class="arcana-action-panel__desc">{{ description }}</p>
     }
 
     @if (actionTemplate || actionLabel || secondaryActionLabel) {
-      <div class="arcana-onboarding__action">
+      <div class="arcana-action-panel__action">
         @if (actionTemplate) {
           <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
         } @else {
@@ -79,7 +79,7 @@ import { ArcanaButtonComponent } from "./arcana-button.component";
     }
 
     @if (subHintTemplate || subHint) {
-      <p class="arcana-onboarding__sub-hint">
+      <p class="arcana-action-panel__sub-hint">
         @if (subHintTemplate) {
           <ng-container [ngTemplateOutlet]="subHintTemplate"></ng-container>
         } @else {
@@ -92,7 +92,7 @@ import { ArcanaButtonComponent } from "./arcana-button.component";
     }
   `
 })
-export class ArcanaOnboardingPanelComponent {
+export class ArcanaActionPanelComponent {
   @Input({ required: true }) icon!: string;
   @Input({ required: true }) title!: string;
   @Input() description = "";

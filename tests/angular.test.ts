@@ -32,7 +32,7 @@ import {
   ArcanaLoadingOverlayComponent,
   ArcanaNoticeComponent,
   ArcanaNumberStepperComponent,
-  ArcanaOnboardingPanelComponent,
+  ArcanaActionPanelComponent,
   ArcanaRadioCardGroupComponent,
   ArcanaRequiredFieldsDialogComponent,
   ArcanaSegmentedOptionsComponent,
@@ -59,6 +59,18 @@ beforeAll(() => {
 
 const click = (element: Element | null) =>
   element?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+
+/**
+ * happy-dom não roda transições CSS (`transitionend` nunca dispara), então a animação do
+ * accordion só assenta pelo fallback por timeout do `core/collapse` — daí o polling.
+ */
+const waitFor = async (predicate: () => boolean, timeoutMs = 1500) => {
+  const started = Date.now();
+  while (!predicate()) {
+    if (Date.now() - started > timeoutMs) throw new Error("waitFor: timeout");
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+};
 
 describe("Angular adapter", () => {
   it("ArcanaButton: emite as classes e o clique nativo do host chega ao consumidor", () => {
@@ -303,6 +315,45 @@ describe("Angular adapter", () => {
     fixture.detectChanges();
     expect(items[1].classList.contains("open")).toBe(true);
     expect(items[0].classList.contains("open")).toBe(false);
+  });
+
+  it("ArcanaAccordion: com [animated], o conteúdo abre e fecha (transição de altura)", async () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaAccordionComponent, ArcanaAccordionItemComponent],
+      template: `
+        <div arcanaAccordion [animated]="true" [value]="open" (valueChange)="open = $event">
+          <div arcanaAccordionItem name="a" title="A">Corpo A</div>
+        </div>
+      `
+    })
+    class AnimatedAccordionHost {
+      open: string | string[] | null = null;
+    }
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AnimatedAccordionHost],
+      providers: [provideZonelessChangeDetection()]
+    });
+    const fixture = TestBed.createComponent(AnimatedAccordionHost);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const content = el.querySelector(".arcana-accordion-content") as HTMLElement;
+    expect(content.classList.contains("arcana-accordion-content--animated")).toBe(true);
+    // Repouso inicial: fechado.
+    expect(content.style.display).toBe("none");
+
+    // Abre: visível já no início da transição.
+    click(el.querySelector(".arcana-accordion-trigger"));
+    fixture.detectChanges();
+    expect(content.style.display).not.toBe("none");
+    // Ao assentar, os estilos inline da animação somem (volta pra height auto).
+    await waitFor(() => content.style.height === "");
+
+    // Fecha: só sai do layout quando a transição termina.
+    click(el.querySelector(".arcana-accordion-trigger"));
+    fixture.detectChanges();
+    await waitFor(() => content.style.display === "none");
   });
 
   // ── Lote 2 ─────────────────────────────────────────────────────────────────
@@ -727,20 +778,20 @@ describe("Angular adapter", () => {
     expect(document.body.querySelector(".arcana-dropdown__menu")).toBeFalsy();
   });
 
-  it("ArcanaOnboardingPanel: emite classes e dispara action no clique da CTA", () => {
+  it("ArcanaActionPanel: emite classes e dispara action no clique da CTA", () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [ArcanaOnboardingPanelComponent],
+      imports: [ArcanaActionPanelComponent],
       providers: [provideZonelessChangeDetection()]
     });
-    const fixture = TestBed.createComponent(ArcanaOnboardingPanelComponent);
+    const fixture = TestBed.createComponent(ArcanaActionPanelComponent);
     fixture.componentRef.setInput("icon", "fa-solid fa-clock");
     fixture.componentRef.setInput("title", "Configure horários");
     fixture.componentRef.setInput("actionLabel", "Adicionar");
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.classList.contains("arcana-onboarding")).toBe(true);
-    expect(el.querySelector(".arcana-onboarding__title")?.textContent).toContain("Configure horários");
+    expect(el.classList.contains("arcana-action-panel")).toBe(true);
+    expect(el.querySelector(".arcana-action-panel__title")?.textContent).toContain("Configure horários");
     const onAction = vi.fn();
     fixture.componentInstance.action.subscribe(onAction);
     click(el.querySelector(".arcana-button"));

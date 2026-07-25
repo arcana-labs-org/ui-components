@@ -46,11 +46,10 @@ export type {
     ArcanaTabsVariant,
 } from "./ArcanaTabs";
 
-export { ArcanaAccordion, ArcanaAccordionItem } from "./ArcanaAccordion";
-export type {
-    ArcanaAccordionProps,
-    ArcanaAccordionItemProps,
-} from "./ArcanaAccordion";
+export { ArcanaAccordion } from "./ArcanaAccordion";
+export type { ArcanaAccordionProps } from "./ArcanaAccordion";
+export { ArcanaAccordionItem } from "./ArcanaAccordionItem";
+export type { ArcanaAccordionItemProps } from "./ArcanaAccordionItem";
 
 // ── React lote 2 ────────────────────────────────────────────────────────────
 
@@ -140,8 +139,8 @@ export type {
     RequiredField,
 } from "./ArcanaRequiredFieldsDialog";
 
-export { ArcanaOnboardingPanel } from "./ArcanaOnboardingPanel";
-export type { ArcanaOnboardingPanelProps } from "./ArcanaOnboardingPanel";
+export { ArcanaActionPanel } from "./ArcanaActionPanel";
+export type { ArcanaActionPanelProps } from "./ArcanaActionPanel";
 
 export {
     ArcanaSettingsList,

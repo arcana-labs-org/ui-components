@@ -12,7 +12,13 @@ import {
  * Vue → Angular:
  * - `modelValue` (v-model, `string | string[] | null`) → `value` + `@Output() valueChange`
  * - `accordion` (single-open) → `@Input() accordion`
+ * - `animated` → `@Input() animated`
  * - slot default → `<ng-content>`
+ *
+ * `animated` (default `false`) liga a transição de altura (0 → altura real medida) + fade,
+ * ~200ms. O `ArcanaAccordionItemComponent` também aceita `animated` e, quando informada lá,
+ * ela tem **precedência** sobre a do container (permite um item animado num accordion
+ * estático e vice-versa). Respeita `prefers-reduced-motion: reduce` (sem animação).
  */
 @Component({
   selector: "div[arcanaAccordion]",
@@ -27,6 +33,8 @@ export class ArcanaAccordionComponent {
   @Input() value: string | string[] | null = null;
   /** `true` (default): só um item aberto por vez. `false`: múltiplos (array). */
   @Input() accordion = true;
+  /** `false` (default): abre/fecha instantâneo. `true`: slide de altura + fade (~200ms). */
+  @Input() animated = false;
 
   @Output() valueChange = new EventEmitter<string | string[] | null>();
 

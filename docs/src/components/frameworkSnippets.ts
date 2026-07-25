@@ -1570,11 +1570,11 @@ export class CustomerFormComponent {
   },
 
   onboardingPanel: {
-    react: `import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaActionPanel } from '@arcanalabs/ui-components/react'
 
 export function EmptyProjects({ openCreate }) {
   return (
-    <ArcanaOnboardingPanel
+    <ArcanaActionPanel
       icon="fa-solid fa-folder-open"
       title="No projects yet"
       description="Create your first project to get started."
@@ -1584,14 +1584,14 @@ export function EmptyProjects({ openCreate }) {
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaOnboardingPanelComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaActionPanelComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-empty-projects',
   standalone: true,
-  imports: [ArcanaOnboardingPanelComponent],
+  imports: [ArcanaActionPanelComponent],
   template: \`
-    <div arcanaOnboardingPanel
+    <div arcanaActionPanel
       icon="fa-solid fa-folder-open"
       title="No projects yet"
       description="Create your first project to get started."
@@ -1603,11 +1603,11 @@ export class EmptyProjectsComponent {
   openCreate() {}
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaActionPanel } from '@arcanalabs/ui-components/svelte'
   export let openCreate: () => void
 </script>
 
-<ArcanaOnboardingPanel
+<ArcanaActionPanel
   icon="fa-solid fa-folder-open"
   title="No projects yet"
   description="Create your first project to get started."

@@ -527,7 +527,25 @@ export const ja: Messages = {
     treeSingleTitle: "単一選択",
     treeMultipleTitle: "複数選択",
     treeThemedTitle: "カスタムテーマ",
-    treeThemedHint: "アイコンと選択項目の色は CSS カスタムプロパティで指定"
+    treeThemedHint: "アイコンと選択項目の色は CSS カスタムプロパティで指定",
+    segWithIcons: "アイコン付き",
+    segColoredIcons: "色付きアイコン",
+    segLow: "低",
+    segMedium: "中",
+    segHigh: "高",
+    segPriorityLabel: "優先度",
+    selectQuickFilterTitle: "クイックフィルター（カラードット）",
+    selectStatusPlaceholder: "ステータス",
+    selectFooterCount: "{count} 件選択中",
+    selectClearLabel: "クリア",
+    selectStatusLabel: "ステータス",
+    statusOpen: "受付",
+    statusConfirmed: "確定",
+    statusShipped: "発送済",
+    statusDelivered: "配達済",
+    statusCanceled: "キャンセル",
+    accAnimatedTitle: "アニメーション",
+    accAnimatedHint: "滑らかな高さアニメーション。reduced-motion に対応"
 
   }
 };

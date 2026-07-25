@@ -32,7 +32,7 @@ export { default as ArcanaInputMask } from "./vue/components/ArcanaInputMask.vue
 export { default as ArcanaLoadingOverlay } from "./vue/components/ArcanaLoadingOverlay.vue";
 export { default as ArcanaNotice } from "./vue/components/ArcanaNotice.vue";
 export { default as ArcanaNumberStepper } from "./vue/components/ArcanaNumberStepper.vue";
-export { default as ArcanaOnboardingPanel } from "./vue/components/ArcanaOnboardingPanel.vue";
+export { default as ArcanaActionPanel } from "./vue/components/ArcanaActionPanel.vue";
 export { default as ArcanaRadioCardGroup } from "./vue/components/ArcanaRadioCardGroup.vue";
 export { default as ArcanaRequiredFieldsDialog } from "./vue/components/ArcanaRequiredFieldsDialog.vue";
 export { default as ArcanaSegmentedOptions } from "./vue/components/ArcanaSegmentedOptions.vue";

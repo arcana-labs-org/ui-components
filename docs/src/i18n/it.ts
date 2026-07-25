@@ -527,7 +527,25 @@ export const it: Messages = {
     treeSingleTitle: "Selezione singola",
     treeMultipleTitle: "Selezione multipla",
     treeThemedTitle: "Tema personalizzato",
-    treeThemedHint: "Colori di icone e selezione tramite custom properties CSS"
+    treeThemedHint: "Colori di icone e selezione tramite custom properties CSS",
+    segWithIcons: "Con icone",
+    segColoredIcons: "Icone colorate",
+    segLow: "Bassa",
+    segMedium: "Media",
+    segHigh: "Alta",
+    segPriorityLabel: "priorità",
+    selectQuickFilterTitle: "Filtro rapido (pallini colorati)",
+    selectStatusPlaceholder: "Stato",
+    selectFooterCount: "{count} selezionati",
+    selectClearLabel: "Pulisci",
+    selectStatusLabel: "stato",
+    statusOpen: "Aperto",
+    statusConfirmed: "Confermato",
+    statusShipped: "Spedito",
+    statusDelivered: "Consegnato",
+    statusCanceled: "Annullato",
+    accAnimatedTitle: "Animato",
+    accAnimatedHint: "Transizione fluida dell'altezza; rispetta reduced-motion"
 
   }
 };

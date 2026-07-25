@@ -527,7 +527,25 @@ export const en: Messages = {
     treeSingleTitle: "Single selection",
     treeMultipleTitle: "Multiple selection",
     treeThemedTitle: "Custom theme",
-    treeThemedHint: "Icon and selection colours via CSS custom properties"
+    treeThemedHint: "Icon and selection colours via CSS custom properties",
+    segWithIcons: "With icons",
+    segColoredIcons: "Coloured icons",
+    segLow: "Low",
+    segMedium: "Medium",
+    segHigh: "High",
+    segPriorityLabel: "priority",
+    selectQuickFilterTitle: "Quick filter (colour dots)",
+    selectStatusPlaceholder: "Status",
+    selectFooterCount: "{count} selected",
+    selectClearLabel: "Clear",
+    selectStatusLabel: "status",
+    statusOpen: "Open",
+    statusConfirmed: "Confirmed",
+    statusShipped: "Shipped",
+    statusDelivered: "Delivered",
+    statusCanceled: "Canceled",
+    accAnimatedTitle: "Animated",
+    accAnimatedHint: "Smooth height transition; respects reduced-motion"
 
   }
 };

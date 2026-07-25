@@ -527,7 +527,25 @@ export const zh: Messages = {
     treeSingleTitle: "单选",
     treeMultipleTitle: "多选",
     treeThemedTitle: "自定义主题",
-    treeThemedHint: "通过 CSS 自定义属性设置图标与选中项颜色"
+    treeThemedHint: "通过 CSS 自定义属性设置图标与选中项颜色",
+    segWithIcons: "带图标",
+    segColoredIcons: "彩色图标",
+    segLow: "低",
+    segMedium: "中",
+    segHigh: "高",
+    segPriorityLabel: "优先级",
+    selectQuickFilterTitle: "快速筛选（彩色圆点）",
+    selectStatusPlaceholder: "状态",
+    selectFooterCount: "已选 {count} 项",
+    selectClearLabel: "清除",
+    selectStatusLabel: "状态",
+    statusOpen: "待处理",
+    statusConfirmed: "已确认",
+    statusShipped: "已发货",
+    statusDelivered: "已送达",
+    statusCanceled: "已取消",
+    accAnimatedTitle: "带动画",
+    accAnimatedHint: "平滑的高度过渡；遵循 reduced-motion"
 
   }
 };

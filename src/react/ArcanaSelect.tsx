@@ -21,12 +21,27 @@ import { createPortal } from "react-dom";
  * - `<Teleport>` + `<Transition>` → `createPortal` (a transição de fade é omitida; o
  *   panel monta/desmonta direto — CSS de entrada não é essencial pra funcionalidade)
  * - listeners globais (mousedown/scroll/resize) reproduzidos via `useEffect`
+ *
+ * Filtro por cor (padrão do filtro de Situação do ERP):
+ * ```tsx
+ * <ArcanaSelect
+ *   multiple showFooter triggerMode="dots"
+ *   icon="fa-solid fa-flag" placeholder="Situação"
+ *   options={[{ label: "Aberto", value: 1, color: "#10b981" }]}
+ *   footerCountLabel="{count} selecionada(s)" clearLabel="Limpar"
+ * />
+ * ```
  */
 export interface SelectOption {
     label: string;
     value: string | number | boolean | null;
     disabled?: boolean;
     description?: string;
+    /**
+     * Cor (valor CSS) da bolinha exibida antes do label no item do panel — e no
+     * trigger quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
+     */
+    color?: string;
 }
 
 export interface ArcanaSelectProps {
@@ -39,6 +54,21 @@ export interface ArcanaSelectProps {
     clearable?: boolean;
     searchable?: boolean;
     searchPlaceholder?: string;
+    /**
+     * Como o trigger representa a seleção: `"labels"` (default, labels por vírgula)
+     * ou `"dots"` (só bolinhas coloridas; requer `multiple`).
+     */
+    triggerMode?: "labels" | "dots";
+    /** Classe FontAwesome de um ícone à esquerda no trigger. */
+    icon?: string;
+    /** Cor CSS inline aplicada no `icon`. */
+    iconColor?: string;
+    /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
+    showFooter?: boolean;
+    /** Texto da contagem; `{count}` vira o total selecionado. */
+    footerCountLabel?: string;
+    /** Rótulo do botão de limpar do rodapé. */
+    clearLabel?: string;
     onValueChange?: (value: unknown) => void;
     onChange?: (value: unknown) => void;
     className?: string;
@@ -54,6 +84,12 @@ export function ArcanaSelect({
     clearable = true,
     searchable = false,
     searchPlaceholder = "Buscar...",
+    triggerMode = "labels",
+    icon = "",
+    iconColor = "",
+    showFooter = false,
+    footerCountLabel = "{count} selecionada(s)",
+    clearLabel = "Limpar",
     onValueChange,
     onChange,
     className,
@@ -107,6 +143,21 @@ export function ArcanaSelect({
         : placeholder;
 
     const canClear = clearable && !disabled && hasValue;
+
+    // Modo bolinhas só faz sentido em multi-select.
+    const isDotsMode = triggerMode === "dots" && multiple;
+    const selectedCount = multiple
+        ? Array.isArray(value)
+            ? (value as unknown[]).length
+            : 0
+        : hasValue
+          ? 1
+          : 0;
+    const footerCountText = String(footerCountLabel).replace(
+        "{count}",
+        String(selectedCount)
+    );
+    const dotColor = (opt: SelectOption): string => opt.color || "#71717a";
 
     const filteredOptions = useMemo<SelectOption[]>(() => {
         if (!searchable) return normalizedOptions;
@@ -338,16 +389,38 @@ export function ArcanaSelect({
                 onClick={toggle}
                 onKeyDown={onTriggerKeydown}
             >
-                <span
-                    className={[
-                        "arcana-select__label",
-                        !hasValue ? "arcana-select__label--placeholder" : "",
-                    ]
-                        .filter(Boolean)
-                        .join(" ")}
-                >
-                    {displayLabel}
-                </span>
+                {icon ? (
+                    <i
+                        className={`arcana-select__icon ${icon}`}
+                        style={iconColor ? { color: iconColor } : undefined}
+                        aria-hidden="true"
+                    />
+                ) : null}
+
+                {isDotsMode && hasValue ? (
+                    <span className="arcana-select__dots">
+                        {selectedOptions.map((opt) => (
+                            <span
+                                key={String(opt.value)}
+                                className="arcana-select__dot"
+                                style={{ background: dotColor(opt) }}
+                                title={opt.label}
+                                aria-label={opt.label}
+                            />
+                        ))}
+                    </span>
+                ) : (
+                    <span
+                        className={[
+                            "arcana-select__label",
+                            !hasValue ? "arcana-select__label--placeholder" : "",
+                        ]
+                            .filter(Boolean)
+                            .join(" ")}
+                    >
+                        {displayLabel}
+                    </span>
+                )}
 
                 {canClear ? (
                     <span
@@ -461,6 +534,13 @@ export function ArcanaSelect({
                                       }
                                       onClick={() => onItemClick(opt)}
                                   >
+                                      {opt.color ? (
+                                          <span
+                                              className="arcana-select__dot"
+                                              style={{ background: opt.color }}
+                                              aria-hidden="true"
+                                          />
+                                      ) : null}
                                       <span className="arcana-select__item-body">
                                           <span className="arcana-select__item-label">
                                               {opt.label}
@@ -498,6 +578,24 @@ export function ArcanaSelect({
                                   </li>
                               ) : null}
                           </ul>
+
+                          {showFooter && multiple ? (
+                              <div className="arcana-select__footer">
+                                  <span className="arcana-select__footer-count">
+                                      {footerCountText}
+                                  </span>
+                                  <button
+                                      type="button"
+                                      className="arcana-select__footer-clear"
+                                      onClick={(e) => {
+                                          e.stopPropagation();
+                                          clear();
+                                      }}
+                                  >
+                                      {clearLabel}
+                                  </button>
+                              </div>
+                          ) : null}
                       </div>,
                       document.body
                   )

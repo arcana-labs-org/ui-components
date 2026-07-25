@@ -532,6 +532,27 @@
 .arcana-accordion-item.open .arcana-accordion-chevron { transform: rotate(180deg); }
 .arcana-accordion-content { padding: 16px; border-top: 1px solid #e4e4e7; }
 
+/*
+ * Modo `animated` (prop `animated` no ArcanaAccordion/Item). `height: auto` não anima,
+ * então o componente mede o conteúdo e escreve `height` em px inline; aqui fica só a
+ * transição. `box-sizing: border-box` faz a altura medida (`offsetHeight`) casar exatamente
+ * com o valor aplicado, incluindo padding e a borda de topo.
+ */
+.arcana-accordion-content--animated {
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: height .2s cubic-bezier(.4, 0, .2, 1), opacity .2s cubic-bezier(.4, 0, .2, 1);
+}
+
+/*
+ * Pra usuários que preferem reduzir motion (configuração de SO), o expandir/recolher
+ * é instantâneo — o JS também curto-circuita a animação (ver `core/collapse.ts`).
+ */
+@media (prefers-reduced-motion: reduce) {
+    .arcana-accordion-content--animated { transition: none; }
+    .arcana-accordion-chevron { transition: none; }
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    ArcanaBadge.vue
    ───────────────────────────────────────────────────────────────────────── */
@@ -1652,15 +1673,15 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   ArcanaOnboardingPanel.vue
+   ArcanaActionPanel.vue
    ───────────────────────────────────────────────────────────────────────── */
 /*
  * Estilos GLOBAIS (não-scoped) — segue convenção dos demais `Arcana*` components, que
- * exportam classes utilitárias estáveis (`.arcana-onboarding__*`) pra permitir override
+ * exportam classes utilitárias estáveis (`.arcana-action-panel__*`) pra permitir override
  * por callers via `` ou simplesmente reaproveitando os tokens.
  */
 
-.arcana-onboarding {
+.arcana-action-panel {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1676,7 +1697,7 @@
     isolation: isolate;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
-.arcana-onboarding::before {
+.arcana-action-panel::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1689,7 +1710,7 @@
 }
 
 /* ─── Visual: ícone + rings ──────────────────────────────────────────── */
-.arcana-onboarding__visual {
+.arcana-action-panel__visual {
     position: relative;
     width: 96px;
     height: 96px;
@@ -1698,20 +1719,20 @@
     align-items: center;
     justify-content: center;
 }
-.arcana-onboarding__ring,
-.arcana-onboarding__ring--2 {
+.arcana-action-panel__ring,
+.arcana-action-panel__ring--2 {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background: rgba(37, 99, 235, 0.10);
-    animation: arcana-onboarding-pulse 2.4s ease-in-out infinite;
+    animation: arcana-action-panel-pulse 2.4s ease-in-out infinite;
 }
-.arcana-onboarding__ring--2 {
+.arcana-action-panel__ring--2 {
     inset: 8px;
     background: rgba(37, 99, 235, 0.18);
     animation-delay: 0.6s;
 }
-.arcana-onboarding__icon {
+.arcana-action-panel__icon {
     position: relative;
     z-index: 1;
     width: 64px;
@@ -1730,7 +1751,7 @@
 
 /* ─── Tipografia ──────────────────────────────────────────────────────── */
 /* Parent-scoped (0,0,2,0) so host/global `h3` margins can't bleed in. */
-.arcana-onboarding .arcana-onboarding__title {
+.arcana-action-panel .arcana-action-panel__title {
     font-size: 19px;
     font-weight: 700;
     color: #09090b;
@@ -1738,22 +1759,22 @@
     margin: 0 0 8px;
     line-height: 1.3;
 }
-.arcana-onboarding__desc {
+.arcana-action-panel__desc {
     font-size: 13.5px;
     color: #52525b;
     line-height: 1.55;
     max-width: 440px;
     margin: 0 0 22px;
 }
-.arcana-onboarding__desc strong { font-weight: 600; color: #18181b; }
+.arcana-action-panel__desc strong { font-weight: 600; color: #18181b; }
 
 /* ─── Ação principal ──────────────────────────────────────────────────── */
-.arcana-onboarding__action {
+.arcana-action-panel__action {
     display: inline-flex;
     align-items: center;
     gap: 10px;
 }
-.arcana-onboarding__cta {
+.arcana-action-panel__cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1764,7 +1785,7 @@
     line-height: 1;
     cursor: pointer;
     color: #ffffff;
-    /* Mesma gradient azul do .arcana-onboarding__icon */
+    /* Mesma gradient azul do .arcana-action-panel__icon */
     background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
     border: 1px solid #1d4ed8;
     font-family: inherit;
@@ -1773,17 +1794,17 @@
         0 6px 14px -6px rgba(37, 99, 235, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.arcana-onboarding__cta:hover {
+.arcana-action-panel__cta:hover {
     transform: translateY(-1px);
     background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
     box-shadow:
         0 8px 18px -6px rgba(37, 99, 235, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.arcana-onboarding__cta:active {
+.arcana-action-panel__cta:active {
     transform: translateY(0);
 }
-.arcana-onboarding__cta:disabled {
+.arcana-action-panel__cta:disabled {
     cursor: not-allowed;
     opacity: 0.7;
     transform: none;
@@ -1791,7 +1812,7 @@
 }
 
 /* Variante secundária: botão amber — hierarquia abaixo da CTA primária azul. */
-.arcana-onboarding__cta--secondary {
+.arcana-action-panel__cta--secondary {
     color: #ffffff;
     background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
     border: 1px solid #d97706;
@@ -1799,21 +1820,21 @@
         0 6px 14px -6px rgba(217, 119, 6, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.arcana-onboarding__cta--secondary:hover {
+.arcana-action-panel__cta--secondary:hover {
     background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
     box-shadow:
         0 8px 18px -6px rgba(217, 119, 6, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.arcana-onboarding__cta--secondary i {
+.arcana-action-panel__cta--secondary i {
     color: #ffffff;
 }
-.arcana-onboarding__cta i {
+.arcana-action-panel__cta i {
     font-size: 11px;
 }
 
 /* ─── Sub-hint discreto ───────────────────────────────────────────────── */
-.arcana-onboarding__sub-hint {
+.arcana-action-panel__sub-hint {
     margin: 16px 0 0;
     font-size: 11.5px;
     color: #71717a;
@@ -1821,9 +1842,9 @@
     align-items: center;
     gap: 5px;
 }
-.arcana-onboarding__sub-hint i { font-size: 10px; color: #a1a1aa; }
+.arcana-action-panel__sub-hint i { font-size: 10px; color: #a1a1aa; }
 
-@keyframes arcana-onboarding-pulse {
+@keyframes arcana-action-panel-pulse {
     0%, 100% { transform: scale(1); opacity: 0.7; }
     50%      { transform: scale(1.08); opacity: 1; }
 }
@@ -2319,6 +2340,43 @@
     color: #a1a1aa;
 }
 
+/* Ícone opcional à esquerda no trigger (classe FontAwesome via prop `icon`) */
+.arcana-select__icon {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: #71717a;
+    line-height: 1;
+}
+
+.arcana-select--lg .arcana-select__icon {
+    font-size: 13px;
+}
+
+/*
+ * Bolinha de cor. Serve tanto no item do panel (antes do label) quanto no trigger
+ * em `triggerMode="dots"`. A cor vem por inline style (`background`).
+ */
+.arcana-select__dot {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #71717a;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Agrupamento das bolinhas no trigger (`triggerMode="dots"`) */
+.arcana-select__dots {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+    overflow: hidden;
+}
+
 /* Caret (chevron) */
 .arcana-select__caret {
     flex-shrink: 0;
@@ -2511,6 +2569,46 @@
     color: #71717a;
     font-size: 12.5px;
     font-style: italic;
+}
+
+/* ── Footer (`showFooter` + `multiple`): contagem + limpar ── */
+/*
+ * `position: sticky; bottom: -4px` cola no fundo do panel respeitando o
+ * `padding: 4px` dele (margins negativos esticam até a borda), espelhando o
+ * `.arcana-select__search` sticky do topo.
+ */
+.arcana-select__footer {
+    position: sticky;
+    bottom: -4px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 4px -4px -4px;
+    padding: 8px 12px;
+    background: #fafafa;
+    border-top: 1px solid #e4e4e7;
+}
+
+.arcana-select__footer-count {
+    font-size: 11.5px;
+    color: #71717a;
+}
+
+.arcana-select__footer-clear {
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #b91c1c;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.arcana-select__footer-clear:hover {
+    text-decoration: underline;
 }
 
 /* ═════════════════════════════════════════════════

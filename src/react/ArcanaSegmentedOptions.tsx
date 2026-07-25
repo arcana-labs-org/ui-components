@@ -9,12 +9,21 @@ import { useEffect, useRef, type CSSProperties } from "react";
  * Equivalências Vue → React:
  * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
  * - `--seg-active` inline style preservado
+ * - `iconColor` por opção → inline style `color` no `<i>` (vence o CSS, inclusive na ativa)
  */
 export interface SegmentedOption {
     label: string;
     value: string | number;
     disabled?: boolean;
+    /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
     icon?: string;
+    /**
+     * Cor do ícone desta opção. Qualquer string CSS válida (hex, rgb, `var(...)`).
+     * Aplicada como inline style no `<i>`, então vence o CSS e permanece válida
+     * inclusive quando a opção está ativa (fundo escuro/colorido). Sem valor, o
+     * ícone herda a cor do texto do segmento.
+     */
+    iconColor?: string;
 }
 
 export interface ArcanaSegmentedOptionsProps {
@@ -116,7 +125,10 @@ export function ArcanaSegmentedOptions({
                         />
                     ) : null}
                     {opt.icon ? (
-                        <i className={`arcana-segmented-options__icon ${opt.icon}`} />
+                        <i
+                            className={`arcana-segmented-options__icon ${opt.icon}`}
+                            style={opt.iconColor ? { color: opt.iconColor } : undefined}
+                        />
                     ) : null}
                     <span>{opt.label}</span>
                 </button>

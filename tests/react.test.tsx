@@ -10,7 +10,7 @@ import {
     type ArcanaEditFieldDialogHandle,
     ArcanaRequiredFieldsDialog,
     type ArcanaRequiredFieldsDialogHandle,
-    ArcanaOnboardingPanel,
+    ArcanaActionPanel,
     ArcanaSettingsList,
     ArcanaSettingsListGroup,
     ArcanaSettingsListItem,
@@ -38,7 +38,21 @@ import {
     ArcanaSummaryTile,
     ArcanaSummaryTilesGroup,
     ArcanaLoadingOverlay,
+    ArcanaAccordion,
+    ArcanaAccordionItem,
 } from "../src/react";
+
+/**
+ * happy-dom não roda transições CSS (`transitionend` nunca dispara), então a animação do
+ * accordion só assenta pelo fallback por timeout do `core/collapse` — daí o polling.
+ */
+const waitForStyle = async (predicate: () => boolean, timeoutMs = 1500) => {
+    const started = Date.now();
+    while (!predicate()) {
+        if (Date.now() - started > timeoutMs) throw new Error("waitForStyle: timeout");
+        await new Promise((resolve) => setTimeout(resolve, 10));
+    }
+};
 
 // Smoke test do port React (lote 1): monta uma amostra dos componentes e garante que
 // emitem as MESMAS classes shadcn do equivalente Vue (reuso do CSS compartilhado), além
@@ -168,6 +182,77 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(
             container.querySelector(".arcana-select__label")!.textContent
         ).toContain("Dois");
+    });
+
+    it("ArcanaSelect triggerMode=dots mostra bolinhas e o rodapé limpa a seleção", () => {
+        const onValueChange = vi.fn();
+        const options = [
+            { label: "Aberto", value: 1, color: "#10b981" },
+            { label: "Confirmado", value: 2, color: "#6366f1" },
+            { label: "Cancelado", value: 3, color: "#ef4444" },
+        ];
+        const { container, rerender } = render(
+            <ArcanaSelect
+                value={[1, 2]}
+                options={options}
+                multiple
+                triggerMode="dots"
+                icon="fa-solid fa-flag"
+                placeholder="Situação"
+                showFooter
+                footerCountLabel="{count} selecionada(s)"
+                clearLabel="Limpar"
+                onValueChange={onValueChange}
+            />
+        );
+
+        // Trigger: ícone + uma bolinha por selecionado, sem texto de labels.
+        const trigger = container.querySelector("button.arcana-select__trigger")!;
+        expect(trigger.querySelector("i.arcana-select__icon")!.className).toContain(
+            "fa-flag"
+        );
+        expect(container.querySelector(".arcana-select__label")).toBeNull();
+        const dots = container.querySelectorAll(
+            ".arcana-select__dots .arcana-select__dot"
+        );
+        expect(dots).toHaveLength(2);
+        expect((dots[0] as HTMLElement).style.background).toBe("#10b981");
+        expect(dots[0].getAttribute("title")).toBe("Aberto");
+
+        // Panel: bolinha por item + rodapé com a contagem.
+        fireEvent.click(trigger);
+        const panel = document.body.querySelector(".arcana-select__panel")!;
+        expect(
+            panel.querySelectorAll(".arcana-select__item .arcana-select__dot")
+        ).toHaveLength(3);
+        expect(
+            panel.querySelector(".arcana-select__footer-count")!.textContent
+        ).toBe("2 selecionada(s)");
+
+        // Limpar: emite [] e mantém o panel aberto.
+        const clearBtn = panel.querySelector(".arcana-select__footer-clear")!;
+        expect(clearBtn.textContent).toBe("Limpar");
+        fireEvent.click(clearBtn);
+        expect(onValueChange).toHaveBeenCalledWith([]);
+        expect(document.body.querySelector(".arcana-select__panel")).toBeTruthy();
+
+        // Sem seleção o trigger volta pro placeholder.
+        rerender(
+            <ArcanaSelect
+                value={[]}
+                options={options}
+                multiple
+                triggerMode="dots"
+                placeholder="Situação"
+                showFooter
+            />
+        );
+        const label = container.querySelector(".arcana-select__label")!;
+        expect(label.className).toContain("arcana-select__label--placeholder");
+        expect(label.textContent).toBe("Situação");
+        expect(
+            document.body.querySelector(".arcana-select__footer-count")!.textContent
+        ).toBe("0 selecionada(s)");
     });
 
     it("ArcanaTreeSelect abre o panel, expande o pai e seleciona a folha", () => {
@@ -558,10 +643,10 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(getByText("CNPJ")).toBeTruthy();
     });
 
-    it("ArcanaOnboardingPanel renderiza visual + CTA e dispara onAction", () => {
+    it("ArcanaActionPanel renderiza visual + CTA e dispara onAction", () => {
         const onAction = vi.fn();
         const { container, getByText } = render(
-            <ArcanaOnboardingPanel
+            <ArcanaActionPanel
                 icon="fa-solid fa-clock"
                 title="Configure os horários"
                 description="Cadastre os intervalos."
@@ -569,9 +654,9 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
                 onAction={onAction}
             />
         );
-        expect(container.querySelector(".arcana-onboarding")).toBeTruthy();
-        expect(container.querySelectorAll(".arcana-onboarding__ring").length).toBe(2);
-        expect(container.querySelector(".arcana-onboarding__title")!.textContent).toBe(
+        expect(container.querySelector(".arcana-action-panel")).toBeTruthy();
+        expect(container.querySelectorAll(".arcana-action-panel__ring").length).toBe(2);
+        expect(container.querySelector(".arcana-action-panel__title")!.textContent).toBe(
             "Configure os horários"
         );
         fireEvent.click(getByText("Adicionar"));
@@ -663,5 +748,52 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         const emptyValue = container.querySelector(".arcana-spec-sheet__value--empty")!;
         expect(emptyValue.textContent).toBe("Não informado");
         expect(getByText("Popgás Ltda")).toBeTruthy();
+    });
+    it("ArcanaAccordion: com `animated`, o conteúdo abre e fecha", async () => {
+        function Host() {
+            const [value, setValue] = useState<string | string[] | null>(null);
+            return (
+                <ArcanaAccordion value={value} animated onValueChange={setValue}>
+                    <ArcanaAccordionItem name="a" title="A">
+                        <p className="body-a">Corpo A</p>
+                    </ArcanaAccordionItem>
+                </ArcanaAccordion>
+            );
+        }
+        const { container } = render(<Host />);
+        const content = container.querySelector(".arcana-accordion-content") as HTMLElement;
+        expect(content.classList.contains("arcana-accordion-content--animated")).toBe(true);
+        // Repouso inicial: fechado.
+        expect(content.style.display).toBe("none");
+
+        // Abre: visível já no início da transição.
+        fireEvent.click(container.querySelector(".arcana-accordion-trigger")!);
+        expect(container.querySelector(".arcana-accordion-item")!.classList.contains("open")).toBe(true);
+        expect(content.style.display).not.toBe("none");
+        // Ao assentar, os estilos inline da animação somem (volta pra height auto).
+        await waitForStyle(() => content.style.height === "");
+
+        // Fecha: só sai do layout quando a transição termina.
+        fireEvent.click(container.querySelector(".arcana-accordion-trigger")!);
+        await waitForStyle(() => content.style.display === "none");
+    });
+
+    it("ArcanaAccordion: sem `animated` (default), alterna display na hora", () => {
+        function Host() {
+            const [value, setValue] = useState<string | string[] | null>(null);
+            return (
+                <ArcanaAccordion value={value} onValueChange={setValue}>
+                    <ArcanaAccordionItem name="a" title="A">Corpo A</ArcanaAccordionItem>
+                </ArcanaAccordion>
+            );
+        }
+        const { container } = render(<Host />);
+        const content = container.querySelector(".arcana-accordion-content") as HTMLElement;
+        expect(content.classList.contains("arcana-accordion-content--animated")).toBe(false);
+        expect(content.style.display).toBe("none");
+        fireEvent.click(container.querySelector(".arcana-accordion-trigger")!);
+        expect(content.style.display).toBe("");
+        fireEvent.click(container.querySelector(".arcana-accordion-trigger")!);
+        expect(content.style.display).toBe("none");
     });
 });

@@ -4,6 +4,11 @@
     value: string | number | boolean | null;
     disabled?: boolean;
     description?: string;
+    /**
+     * Cor (valor CSS) da bolinha antes do label no item do panel — e no trigger
+     * quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
+     */
+    color?: string;
   }
 </script>
 
@@ -19,6 +24,16 @@
    * - `<Teleport>`+`<Transition>` → action `use:portal` (move o painel pro body; fade omitido)
    * - listeners globais (mousedown/scroll/resize) via `$effect` keyado em `isOpen`
    * - `modelValue` (v-model) → `value` + `onValueChange`; `emit('change')` → `onChange`
+   *
+   * Filtro por cor (padrão do filtro de Situação do ERP):
+   * ```svelte
+   * <ArcanaSelect
+   *   multiple showFooter triggerMode="dots"
+   *   icon="fa-solid fa-flag" placeholder="Situação"
+   *   options={[{ label: "Aberto", value: 1, color: "#10b981" }]}
+   *   footerCountLabel="{'{count}'} selecionada(s)" clearLabel="Limpar"
+   * />
+   * ```
    */
   import { untrack } from "svelte";
   import { portal } from "./portal";
@@ -33,6 +48,12 @@
     clearable = true,
     searchable = false,
     searchPlaceholder = "Buscar...",
+    triggerMode = "labels",
+    icon = "",
+    iconColor = "",
+    showFooter = false,
+    footerCountLabel = "{count} selecionada(s)",
+    clearLabel = "Limpar",
     onValueChange,
     onChange,
     class: className = "",
@@ -46,6 +67,18 @@
     clearable?: boolean;
     searchable?: boolean;
     searchPlaceholder?: string;
+    /** `"labels"` (default) ou `"dots"` (bolinhas coloridas no trigger; requer `multiple`). */
+    triggerMode?: "labels" | "dots";
+    /** Classe FontAwesome de um ícone à esquerda no trigger. */
+    icon?: string;
+    /** Cor CSS inline aplicada no `icon`. */
+    iconColor?: string;
+    /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
+    showFooter?: boolean;
+    /** Texto da contagem; `{count}` vira o total selecionado. */
+    footerCountLabel?: string;
+    /** Rótulo do botão de limpar do rodapé. */
+    clearLabel?: string;
     onValueChange?: (value: unknown) => void;
     onChange?: (value: unknown) => void;
     class?: string;
@@ -91,6 +124,17 @@
     hasValue ? selectedOptions.map((o) => o.label).join(", ") : placeholder
   );
   const canClear = $derived(clearable && !disabled && hasValue);
+
+  // Modo bolinhas só faz sentido em multi-select.
+  const isDotsMode = $derived(triggerMode === "dots" && multiple);
+  const selectedCount = $derived.by<number>(() => {
+    if (multiple) return Array.isArray(value) ? (value as unknown[]).length : 0;
+    return hasValue ? 1 : 0;
+  });
+  const footerCountText = $derived(
+    String(footerCountLabel).replace("{count}", String(selectedCount))
+  );
+  const dotColor = (opt: SelectOption): string => opt.color || "#71717a";
 
   const filteredOptions = $derived.by<SelectOption[]>(() => {
     if (!searchable) return normalizedOptions;
@@ -300,16 +344,37 @@
     onclick={toggle}
     onkeydown={onTriggerKeydown}
   >
-    <span
-      class={[
-        "arcana-select__label",
-        !hasValue ? "arcana-select__label--placeholder" : "",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      {displayLabel}
-    </span>
+    {#if icon}
+      <i
+        class="arcana-select__icon {icon}"
+        style={iconColor ? `color:${iconColor};` : undefined}
+        aria-hidden="true"
+      ></i>
+    {/if}
+
+    {#if isDotsMode && hasValue}
+      <span class="arcana-select__dots">
+        {#each selectedOptions as opt (String(opt.value))}
+          <span
+            class="arcana-select__dot"
+            style={`background:${dotColor(opt)};`}
+            title={opt.label}
+            aria-label={opt.label}
+          ></span>
+        {/each}
+      </span>
+    {:else}
+      <span
+        class={[
+          "arcana-select__label",
+          !hasValue ? "arcana-select__label--placeholder" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        {displayLabel}
+      </span>
+    {/if}
 
     {#if canClear}
       <span
@@ -419,6 +484,13 @@
             }}
             onclick={() => onItemClick(opt)}
           >
+            {#if opt.color}
+              <span
+                class="arcana-select__dot"
+                style={`background:${opt.color};`}
+                aria-hidden="true"
+              ></span>
+            {/if}
             <span class="arcana-select__item-body">
               <span class="arcana-select__item-label">{opt.label}</span>
               {#if opt.description}
@@ -450,6 +522,22 @@
           </li>
         {/if}
       </ul>
+
+      {#if showFooter && multiple}
+        <div class="arcana-select__footer">
+          <span class="arcana-select__footer-count">{footerCountText}</span>
+          <button
+            type="button"
+            class="arcana-select__footer-clear"
+            onclick={(e) => {
+              e.stopPropagation();
+              clear();
+            }}
+          >
+            {clearLabel}
+          </button>
+        </div>
+      {/if}
     </div>
   {/if}
 </div>

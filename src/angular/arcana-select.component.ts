@@ -22,12 +22,25 @@ import {
  *
  * Vue → Angular:
  * - `modelValue` (v-model) → `value` + `@Output() valueChange`; `emit('change')` → `@Output() change`
+ *
+ * Filtro por cor (padrão do filtro de Situação do ERP):
+ * ```html
+ * <div arcanaSelect multiple showFooter triggerMode="dots"
+ *      icon="fa-solid fa-flag" placeholder="Situação"
+ *      [options]="statusOptions" footerCountLabel="{count} selecionada(s)"
+ *      clearLabel="Limpar" [value]="ids" (valueChange)="ids = $any($event)"></div>
+ * ```
  */
 export interface SelectOption {
   label: string;
   value: string | number | boolean | null;
   disabled?: boolean;
   description?: string;
+  /**
+   * Cor (valor CSS) da bolinha antes do label no item do painel — e no trigger
+   * quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
+   */
+  color?: string;
 }
 
 interface PanelPos {
@@ -55,10 +68,24 @@ interface PanelPos {
       (click)="toggle()"
       (keydown)="onTriggerKeydown($event)"
     >
-      <span
-        class="arcana-select__label"
-        [class.arcana-select__label--placeholder]="!hasValue"
-      >{{ displayLabel }}</span>
+      @if (icon) {
+        <i [class]="'arcana-select__icon ' + icon"
+           [style.color]="iconColor || null" aria-hidden="true"></i>
+      }
+
+      @if (isDotsMode && hasValue) {
+        <span class="arcana-select__dots">
+          @for (opt of selectedOptions; track $index) {
+            <span class="arcana-select__dot" [style.background]="dotColor(opt)"
+                  [title]="opt.label" [attr.aria-label]="opt.label"></span>
+          }
+        </span>
+      } @else {
+        <span
+          class="arcana-select__label"
+          [class.arcana-select__label--placeholder]="!hasValue"
+        >{{ displayLabel }}</span>
+      }
 
       @if (canClear) {
         <span
@@ -132,6 +159,9 @@ interface PanelPos {
               (mouseenter)="!opt.disabled && (highlightedIndex = $index)"
               (click)="onItemClick(opt)"
             >
+              @if (opt.color) {
+                <span class="arcana-select__dot" [style.background]="opt.color" aria-hidden="true"></span>
+              }
               <span class="arcana-select__item-body">
                 <span class="arcana-select__item-label">{{ opt.label }}</span>
                 @if (opt.description) {
@@ -154,6 +184,14 @@ interface PanelPos {
             </li>
           }
         </ul>
+
+        @if (showFooter && multiple) {
+          <div class="arcana-select__footer">
+            <span class="arcana-select__footer-count">{{ footerCountText }}</span>
+            <button type="button" class="arcana-select__footer-clear"
+                    (click)="onFooterClearClick($event)">{{ clearLabel }}</button>
+          </div>
+        }
       </div>
     </ng-template>
   `
@@ -176,6 +214,18 @@ export class ArcanaSelectComponent implements OnDestroy {
   @Input() clearable = true;
   @Input() searchable = false;
   @Input() searchPlaceholder = "Buscar...";
+  /** `"labels"` (default) ou `"dots"` (bolinhas coloridas no trigger; requer `multiple`). */
+  @Input() triggerMode: "labels" | "dots" = "labels";
+  /** Classe FontAwesome de um ícone à esquerda no trigger. */
+  @Input() icon = "";
+  /** Cor CSS inline aplicada no `icon`. */
+  @Input() iconColor = "";
+  /** Rodapé do painel (só em `multiple`) com contagem + botão de limpar. */
+  @Input() showFooter = false;
+  /** Texto da contagem; `{count}` vira o total selecionado. */
+  @Input() footerCountLabel = "{count} selecionada(s)";
+  /** Rótulo do botão de limpar do rodapé. */
+  @Input() clearLabel = "Limpar";
   @Input() className = "";
 
   @Output() valueChange = new EventEmitter<unknown>();
@@ -237,6 +287,25 @@ export class ArcanaSelectComponent implements OnDestroy {
 
   get canClear(): boolean {
     return this.clearable && !this.disabled && this.hasValue;
+  }
+
+  /** Modo bolinhas só faz sentido em multi-select. */
+  get isDotsMode(): boolean {
+    return this.triggerMode === "dots" && this.multiple;
+  }
+
+  get selectedCount(): number {
+    if (this.multiple) return Array.isArray(this.value) ? (this.value as unknown[]).length : 0;
+    return this.hasValue ? 1 : 0;
+  }
+
+  get footerCountText(): string {
+    return String(this.footerCountLabel).replace("{count}", String(this.selectedCount));
+  }
+
+  /** Cor da bolinha; fallback zinc-500 quando a opção não define `color`. */
+  dotColor(opt: SelectOption): string {
+    return opt.color || "#71717a";
   }
 
   get rootClass(): string {
@@ -356,6 +425,13 @@ export class ArcanaSelectComponent implements OnDestroy {
   onClearClick(ev: Event): void {
     ev.stopPropagation();
     this.clear();
+  }
+
+  /** Limpar do rodapé: emite `[]` e MANTÉM o painel aberto. */
+  onFooterClearClick(ev: Event): void {
+    ev.stopPropagation();
+    this.clear();
+    this.cdr.markForCheck();
   }
 
   private moveHighlight(delta: 1 | -1): void {

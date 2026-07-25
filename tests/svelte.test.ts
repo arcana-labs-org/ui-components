@@ -12,7 +12,7 @@ import {
   ArcanaInputMask,
   ArcanaLoadingOverlay,
   ArcanaNumberStepper,
-  ArcanaOnboardingPanel,
+  ArcanaActionPanel,
   ArcanaRadioCardGroup,
   ArcanaRequiredFieldsDialog,
   ArcanaSegmentedOptions,
@@ -30,6 +30,7 @@ import DropdownFixture from "./fixtures/DropdownFixture.svelte";
 import DialogFixture from "./fixtures/DialogFixture.svelte";
 import SettingsFixture from "./fixtures/SettingsFixture.svelte";
 import SpecSheetFixture from "./fixtures/SpecSheetFixture.svelte";
+import AccordionFixture from "./fixtures/AccordionFixture.svelte";
 
 let cleanups: Array<() => void> = [];
 
@@ -49,6 +50,19 @@ function render(Component: any, props: Record<string, unknown>) {
 const click = (element: Element | null) => {
   element?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   flushSync();
+};
+
+/**
+ * happy-dom não roda transições CSS (`transitionend` nunca dispara), então a animação do
+ * accordion só assenta pelo fallback por timeout do `core/collapse` — daí o polling.
+ */
+const waitForStyle = async (predicate: () => boolean, timeoutMs = 1500) => {
+  const started = Date.now();
+  while (!predicate()) {
+    if (Date.now() - started > timeoutMs) throw new Error("waitForStyle: timeout");
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    flushSync();
+  }
 };
 
 afterEach(() => {
@@ -496,20 +510,20 @@ describe("Svelte adapter — lote 3 (overlay/composição)", () => {
     expect(document.body.querySelector(".arcana-dialog-overlay")).toBeNull();
   });
 
-  it("ArcanaOnboardingPanel renders visual + CTA and forwards action", () => {
+  it("ArcanaActionPanel renders visual + CTA and forwards action", () => {
     const onAction = vi.fn();
-    const { target } = render(ArcanaOnboardingPanel, {
+    const { target } = render(ArcanaActionPanel, {
       icon: "fa-solid fa-clock",
       title: "Configure horários",
       description: "Cadastre intervalos.",
       actionLabel: "Adicionar",
       onAction,
     });
-    const panel = target.querySelector(".arcana-onboarding")!;
-    expect(panel.querySelector(".arcana-onboarding__title")?.textContent).toBe("Configure horários");
-    expect(panel.querySelector(".arcana-onboarding__desc")?.textContent).toContain("Cadastre");
-    expect(panel.querySelectorAll(".arcana-onboarding__ring")).toHaveLength(2);
-    const cta = panel.querySelector(".arcana-onboarding__action .arcana-button")!;
+    const panel = target.querySelector(".arcana-action-panel")!;
+    expect(panel.querySelector(".arcana-action-panel__title")?.textContent).toBe("Configure horários");
+    expect(panel.querySelector(".arcana-action-panel__desc")?.textContent).toContain("Cadastre");
+    expect(panel.querySelectorAll(".arcana-action-panel__ring")).toHaveLength(2);
+    const cta = panel.querySelector(".arcana-action-panel__action .arcana-button")!;
     click(cta);
     expect(onAction).toHaveBeenCalledOnce();
   });
@@ -574,5 +588,34 @@ describe("Svelte adapter — lote 3 (overlay/composição)", () => {
     expect(emptyValue.textContent).toBe("Não informado");
 
     expect(sheet.querySelector(".arcana-spec-sheet__footer .spec-edit")).toBeTruthy();
+  });
+  it("ArcanaAccordion: com `animated`, o conteúdo abre e fecha", async () => {
+    const { target } = render(AccordionFixture, { animated: true });
+    const content = target.querySelector(".arcana-accordion-content") as HTMLElement;
+    expect(content.classList.contains("arcana-accordion-content--animated")).toBe(true);
+    // Repouso inicial: fechado.
+    expect(content.style.display).toBe("none");
+
+    // Abre: visível já no início da transição.
+    click(target.querySelector(".arcana-accordion-trigger"));
+    expect(target.querySelector(".arcana-accordion-item")!.classList.contains("open")).toBe(true);
+    expect(content.style.display).not.toBe("none");
+    // Ao assentar, os estilos inline da animação somem (volta pra height auto).
+    await waitForStyle(() => content.style.height === "");
+
+    // Fecha: só sai do layout quando a transição termina.
+    click(target.querySelector(".arcana-accordion-trigger"));
+    await waitForStyle(() => content.style.display === "none");
+  });
+
+  it("ArcanaAccordion: sem `animated` (default), alterna display na hora", () => {
+    const { target } = render(AccordionFixture, {});
+    const content = target.querySelector(".arcana-accordion-content") as HTMLElement;
+    expect(content.classList.contains("arcana-accordion-content--animated")).toBe(false);
+    expect(content.style.display).toBe("none");
+    click(target.querySelector(".arcana-accordion-trigger"));
+    expect(content.style.display).toBe("");
+    click(target.querySelector(".arcana-accordion-trigger"));
+    expect(content.style.display).toBe("none");
   });
 });

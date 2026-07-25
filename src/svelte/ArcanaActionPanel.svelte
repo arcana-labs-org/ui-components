@@ -1,7 +1,7 @@
 <script lang="ts">
   /**
-   * `<ArcanaOnboardingPanel>` — Svelte 5 port do SFC Vue. Empty state / CTA panel pra
-   * primeiras configurações. Markup/classes `arcana-onboarding*` idênticos ao SFC.
+   * `<ArcanaActionPanel>` — Svelte 5 port do SFC Vue. Empty state / CTA panel pra
+   * primeiras configurações. Markup/classes `arcana-action-panel*` idênticos ao SFC.
    *
    * Equivalências Vue → Svelte 5:
    * - slot default → snippet `children` (fallback: `description`)
@@ -51,25 +51,25 @@
   const hasSubHint = $derived(Boolean(subHintSlot || subHint));
 </script>
 
-<div class="arcana-onboarding">
-  <div class="arcana-onboarding__visual">
-    <div class="arcana-onboarding__ring"></div>
-    <div class="arcana-onboarding__ring arcana-onboarding__ring--2"></div>
-    <div class="arcana-onboarding__icon">
+<div class="arcana-action-panel">
+  <div class="arcana-action-panel__visual">
+    <div class="arcana-action-panel__ring"></div>
+    <div class="arcana-action-panel__ring arcana-action-panel__ring--2"></div>
+    <div class="arcana-action-panel__icon">
       <i class={icon}></i>
     </div>
   </div>
 
-  <h3 class="arcana-onboarding__title">{title}</h3>
+  <h3 class="arcana-action-panel__title">{title}</h3>
 
   {#if hasDescription}
-    <p class="arcana-onboarding__desc">
+    <p class="arcana-action-panel__desc">
       {#if children}{@render children()}{:else}{description}{/if}
     </p>
   {/if}
 
   {#if hasActionZone}
-    <div class="arcana-onboarding__action">
+    <div class="arcana-action-panel__action">
       {#if action}
         {@render action()}
       {:else}
@@ -103,7 +103,7 @@
   {/if}
 
   {#if hasSubHint}
-    <p class="arcana-onboarding__sub-hint">
+    <p class="arcana-action-panel__sub-hint">
       {#if subHintSlot}
         {@render subHintSlot()}
       {:else}

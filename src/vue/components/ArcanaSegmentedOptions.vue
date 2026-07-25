@@ -18,7 +18,11 @@
             @click="select(opt)"
         >
             <span v-if="radio" class="arcana-segmented-options__radio" aria-hidden="true"></span>
-            <i v-if="opt.icon" :class="['arcana-segmented-options__icon', opt.icon]"></i>
+            <i
+                v-if="opt.icon"
+                :class="['arcana-segmented-options__icon', opt.icon]"
+                :style="opt.iconColor ? { color: opt.iconColor } : undefined"
+            ></i>
             <span>{{ opt.label }}</span>
         </button>
 
@@ -35,7 +39,15 @@ interface SegmentedOption {
     label: string
     value: string | number
     disabled?: boolean
+    /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
     icon?: string
+    /**
+     * Cor do ícone desta opção. Qualquer string CSS válida (hex, rgb, `var(...)`).
+     * Aplicada como inline style no `<i>`, então vence o CSS e permanece válida
+     * inclusive quando a opção está ativa (fundo escuro/colorido). Sem valor, o
+     * ícone herda a cor do texto do segmento.
+     */
+    iconColor?: string
 }
 
 /**
@@ -49,7 +61,8 @@ interface SegmentedOption {
  *
  * API:
  * - `modelValue` (v-model) — valor da opção ativa
- * - `options` — `Array<{ label, value, disabled?, icon? }>`
+ * - `options` — `Array<{ label, value, disabled?, icon?, iconColor? }>` (`iconColor` colore o
+ *   ícone daquela opção individualmente, inclusive quando ela está ativa)
  * - `disabled` — desabilita o grupo inteiro
  * - `compact` — altura/fonte reduzidas (uso inline em forms densos)
  * - `squared` — cantos menos arredondados (radius moderado no lugar do pill)

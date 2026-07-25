@@ -37,7 +37,7 @@ import ArcanaSettingsEditableField from "../../../src/vue/components/ArcanaSetti
 import ArcanaNotice from "../../../src/vue/components/ArcanaNotice.vue";
 import ArcanaEditFieldDialog from "../../../src/vue/components/ArcanaEditFieldDialog.vue";
 import ArcanaRequiredFieldsDialog from "../../../src/vue/components/ArcanaRequiredFieldsDialog.vue";
-import ArcanaOnboardingPanel from "../../../src/vue/components/ArcanaOnboardingPanel.vue";
+import ArcanaActionPanel from "../../../src/vue/components/ArcanaActionPanel.vue";
 import ArcanaLoadingOverlay from "../../../src/vue/components/ArcanaLoadingOverlay.vue";
 import ArcanaSkeleton from "../../../src/vue/components/ArcanaSkeleton.vue";
 import ArcanaSwitchCard from "../../../src/vue/components/ArcanaSwitchCard.vue";
@@ -198,12 +198,22 @@ const SelectDemo: Component = {
     return {
       single: null as string | null,
       many: [] as string[],
+      statuses: ["open", "confirmed", "shipped"] as string[],
       fruits: [
         { label: $dt.fruitApple, value: "apple" },
         { label: $dt.fruitBanana, value: "banana" },
         { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc },
         { label: $dt.fruitDurian, value: "durian", disabled: true },
         { label: $dt.fruitElderberry, value: "elderberry" }
+      ],
+      // `color` na opção vira uma bolinha; com trigger-mode="dots" o gatilho
+      // mostra só as bolinhas — o padrão do filtro de Situação em Pedidos.
+      statusOptions: [
+        { label: $dt.statusOpen, value: "open", color: "#10b981" },
+        { label: $dt.statusConfirmed, value: "confirmed", color: "#3b82f6" },
+        { label: $dt.statusShipped, value: "shipped", color: "#8b5cf6" },
+        { label: $dt.statusDelivered, value: "delivered", color: "#64748b" },
+        { label: $dt.statusCanceled, value: "canceled", color: "#ef4444" }
       ]
     };
   },
@@ -212,6 +222,22 @@ const SelectDemo: Component = {
       <ArcanaSelect v-model="single" :options="fruits" :placeholder="$dt.selectPickFruit" searchable />
       <ArcanaSelect v-model="many" :options="fruits" :placeholder="$dt.selectPickSeveral" multiple />
       <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.selectQuickFilterTitle }}</span>
+        <ArcanaSelect
+          v-model="statuses"
+          :options="statusOptions"
+          :placeholder="$dt.selectStatusPlaceholder"
+          multiple
+          trigger-mode="dots"
+          icon="fa-solid fa-flag"
+          :show-footer="true"
+          :footer-count-label="$dt.selectFooterCount"
+          :clear-label="$dt.selectClearLabel"
+        />
+        <p class="demo-note">{{ $dt.selectStatusLabel }}: <strong>[{{ statuses.join(", ") }}]</strong></p>
+      </div>
     </div>
   `
 };
@@ -434,10 +460,23 @@ const SegmentedOptionsDemo: Component = {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
       view: "list",
+      priority: "medium",
       options: [
         { label: $dt.segList, value: "list" },
         { label: $dt.segGrid, value: "grid" },
         { label: $dt.segBoard, value: "board" }
+      ],
+      iconOptions: [
+        { label: $dt.segList, value: "list", icon: "fa-solid fa-list" },
+        { label: $dt.segGrid, value: "grid", icon: "fa-solid fa-table-cells-large" },
+        { label: $dt.segBoard, value: "board", icon: "fa-solid fa-columns" }
+      ],
+      // `iconColor` colore o ícone de cada opção — útil pra semântica (verde =
+      // baixo risco, âmbar = atenção, vermelho = urgente).
+      colorOptions: [
+        { label: $dt.segLow, value: "low", icon: "fa-solid fa-circle-check", iconColor: "#16a34a" },
+        { label: $dt.segMedium, value: "medium", icon: "fa-solid fa-triangle-exclamation", iconColor: "#f59e0b" },
+        { label: $dt.segHigh, value: "high", icon: "fa-solid fa-fire", iconColor: "#dc2626" }
       ]
     };
   },
@@ -445,7 +484,18 @@ const SegmentedOptionsDemo: Component = {
     <div class="demo-stack" style="max-width: 440px">
       <ArcanaSegmentedOptions v-model="view" :options="options" aria-label="View mode" />
       <ArcanaSegmentedOptions v-model="view" :options="options" :compact="true" :squared="true" />
-      <p class="demo-note">{{ $dt.viewLabel }}: <strong>{{ view }}</strong></p>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.segWithIcons }}</span>
+        <ArcanaSegmentedOptions v-model="view" :options="iconOptions" />
+      </div>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.segColoredIcons }}</span>
+        <ArcanaSegmentedOptions v-model="priority" :options="colorOptions" />
+      </div>
+
+      <p class="demo-note">{{ $dt.viewLabel }}: <strong>{{ view }}</strong> · {{ $dt.segPriorityLabel }}: <strong>{{ priority }}</strong></p>
     </div>
   `
 };
@@ -491,7 +541,7 @@ const ArcanaInputCurrencyDemo: Component = {
 
 const AccordionDemo: Component = {
   components: { ArcanaAccordion, ArcanaAccordionItem },
-  data: () => ({ open: "shipping" as string | null }),
+  data: () => ({ open: "shipping" as string | null, openAnimated: "shipping" as string | null }),
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaAccordion v-model="open">
@@ -500,6 +550,15 @@ const AccordionDemo: Component = {
         <ArcanaAccordionItem name="warranty" :title="$dt.accWarranty" :disabled="true">{{ $dt.accWarrantyBody }}</ArcanaAccordionItem>
       </ArcanaAccordion>
       <p class="demo-note">{{ $dt.accOpenSingleLabel }}: <strong>{{ open ?? "null" }}</strong></p>
+
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.accAnimatedTitle }}</span>
+        <ArcanaAccordion v-model="openAnimated" :animated="true">
+          <ArcanaAccordionItem name="shipping" :title="$dt.accShipping">{{ $dt.accShippingBody }}</ArcanaAccordionItem>
+          <ArcanaAccordionItem name="returns" :title="$dt.accReturns">{{ $dt.accReturnsBody }}</ArcanaAccordionItem>
+        </ArcanaAccordion>
+        <p class="demo-note">{{ $dt.accAnimatedHint }}</p>
+      </div>
     </div>
   `
 };
@@ -850,14 +909,14 @@ const RequiredFieldsDialogDemo: Component = {
   `
 };
 
-/* ──────────────────────── ArcanaOnboardingPanel ────────────────────── */
+/* ──────────────────────── ArcanaActionPanel ────────────────────── */
 
-const OnboardingPanelDemo: Component = {
-  components: { ArcanaOnboardingPanel },
+const ActionPanelDemo: Component = {
+  components: { ArcanaActionPanel },
   data: () => ({ last: "—" }),
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaOnboardingPanel
+      <ArcanaActionPanel
         icon="fa-solid fa-folder-open"
         :title="$dt.onboardingTitle"
         :description="$dt.onboardingDescription"
@@ -1058,7 +1117,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "searchable", type: "boolean", default: "false", description: "Adds a filter input at the top of the dropdown." },
       { name: "clearable", type: "boolean", default: "true", description: "Shows an X on hover to clear the value." },
       { name: "disabled", type: "boolean", default: "false", description: "Disables the select." },
-      { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." }
+      { name: "size", type: "sm | md | lg", default: "md", description: "Trigger height/padding." },
+      { name: "option.color", type: "string", default: "undefined", description: "Any CSS colour on an option renders a dot before its label — for status/tag palettes." },
+      { name: "triggerMode", type: "labels | dots", default: "labels", description: "With 'dots' + multiple, the trigger shows only the coloured dots of what's selected (quick-filter pattern) instead of the labels." },
+      { name: "icon / iconColor", type: "string", default: "''", description: "FontAwesome class (and optional colour) rendered at the left of the trigger." },
+      { name: "showFooter", type: "boolean", default: "false", description: "In multiple mode, adds a footer to the panel with the selected count and a clear button." },
+      { name: "footerCountLabel", type: "string", default: "'{count} selecionada(s)'", description: "Footer counter text; {count} is replaced by the number of selected options." },
+      { name: "clearLabel", type: "string", default: "'Limpar'", description: "Label of the footer's clear button (clears the selection, keeping the panel open)." }
     ],
     events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
     vueSnippet: [
@@ -1511,7 +1576,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     demo: AccordionDemo,
     props: [
       { name: "modelValue", type: "string | string[] | null", default: "null", description: "Open item name (single mode) or array of open names (multiple mode)." },
-      { name: "accordion", type: "boolean", default: "true", description: "true → one panel open at a time; false → multiple panels can be open." }
+      { name: "accordion", type: "boolean", default: "true", description: "true → one panel open at a time; false → multiple panels can be open." },
+      { name: "animated", type: "boolean", default: "false", description: "Animates open/close with a height + fade transition (~200ms). Each <ArcanaAccordionItem> also accepts it, taking precedence over the container. Honours prefers-reduced-motion." }
     ],
     events: ["update:modelValue(value) — v-model update", "Provides accordionApi to child <ArcanaAccordionItem> via provide/inject"],
     vueSnippet: [
@@ -1985,7 +2051,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   },
 
   onboardingPanel: {
-    demo: OnboardingPanelDemo,
+    demo: ActionPanelDemo,
     props: [
       { name: "icon", type: "string", default: "— (required)", description: "FontAwesome class for the central gradient icon." },
       { name: "title", type: "string", default: "— (required)", description: "Big panel title." },
@@ -2004,11 +2070,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
-      "import { ArcanaOnboardingPanel } from '@arcanalabs/ui-components/vue'",
+      "import { ArcanaActionPanel } from '@arcanalabs/ui-components/vue'",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaOnboardingPanel",
+      "  <ArcanaActionPanel",
       "    icon=\"fa-solid fa-file-shield\"",
       "    title=\"Configure seu certificado\"",
       "    description=\"O certificado A1 é necessário para emitir NF-e.\"",

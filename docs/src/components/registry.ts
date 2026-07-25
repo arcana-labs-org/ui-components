@@ -56,7 +56,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-edit-field-dialog", name: "ArcanaEditFieldDialog", label: "Edit Field Dialog", category: "overlay", docKey: "editFieldModal" },
   { id: "arcana-required-fields-dialog", name: "ArcanaRequiredFieldsDialog", label: "Required Fields Dialog", category: "overlay", docKey: "requiredFieldsDialog" },
   { id: "arcana-notice", name: "ArcanaNotice", label: "Notice", category: "overlay", docKey: "notice" },
-  { id: "arcana-onboarding-panel", name: "ArcanaOnboardingPanel", label: "Onboarding Panel", category: "overlay", docKey: "onboardingPanel" },
+  { id: "arcana-action-panel", name: "ArcanaActionPanel", label: "Action Panel", category: "overlay", docKey: "onboardingPanel" },
 
   // ── Layout & navigation ────────────────────────────────────────────────
   { id: "arcana-tabs", name: "ArcanaTabs", label: "Tabs", category: "layoutNav", docKey: "tabs" },

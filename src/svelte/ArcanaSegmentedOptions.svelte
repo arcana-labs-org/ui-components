@@ -8,12 +8,21 @@
    * Equivalências Vue → Svelte 5:
    * - `modelValue` (v-model) → prop `value` + `onValueChange`; `emit('change')` → `onChange`
    * - `--seg-active` inline style preservado
+   * - `iconColor` por opção → inline style `color` no `<i>` (vence o CSS, inclusive na ativa)
    */
   export interface SegmentedOption {
     label: string;
     value: string | number;
     disabled?: boolean;
+    /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
     icon?: string;
+    /**
+     * Cor do ícone desta opção. Qualquer string CSS válida (hex, rgb, `var(...)`).
+     * Aplicada como inline style no `<i>`, então vence o CSS e permanece válida
+     * inclusive quando a opção está ativa (fundo escuro/colorido). Sem valor, o
+     * ícone herda a cor do texto do segmento.
+     */
+    iconColor?: string;
   }
 
   let {
@@ -99,7 +108,10 @@
       onclick={() => select(opt)}
     >
       {#if radio}<span class="arcana-segmented-options__radio" aria-hidden="true"></span>{/if}
-      {#if opt.icon}<i class={`arcana-segmented-options__icon ${opt.icon}`}></i>{/if}
+      {#if opt.icon}<i
+          class={`arcana-segmented-options__icon ${opt.icon}`}
+          style={opt.iconColor ? `color: ${opt.iconColor};` : undefined}
+        ></i>{/if}
       <span>{opt.label}</span>
     </button>
   {/each}

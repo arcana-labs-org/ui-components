@@ -21,7 +21,35 @@
             @click="toggle"
             @keydown="onTriggerKeydown"
         >
+            <!-- Ícone opcional (classe FontAwesome) à esquerda do label/bolinhas. -->
+            <i
+                v-if="icon"
+                class="arcana-select__icon"
+                :class="icon"
+                :style="iconColor ? { color: iconColor } : undefined"
+                aria-hidden="true"
+            ></i>
+
+            <!--
+                `triggerMode="dots"` (multi): em vez das labels, mostra uma bolinha
+                por opção selecionada (cor = `option.color`). Sem seleção cai no
+                placeholder do `__label` abaixo.
+            -->
             <span
+                v-if="isDotsMode && hasValue"
+                class="arcana-select__dots"
+            >
+                <span
+                    v-for="opt in selectedOptions"
+                    :key="String(opt.value)"
+                    class="arcana-select__dot"
+                    :style="{ background: dotColor(opt) }"
+                    :title="opt.label"
+                    :aria-label="opt.label"
+                ></span>
+            </span>
+            <span
+                v-else
                 class="arcana-select__label"
                 :class="{ 'arcana-select__label--placeholder': !hasValue }"
             >
@@ -143,6 +171,13 @@
                             @mouseenter="!opt.disabled && (highlightedIndex = idx)"
                             @click="onItemClick(opt)"
                         >
+                            <!-- Bolinha da cor da opção (quando `option.color` presente). -->
+                            <span
+                                v-if="opt.color"
+                                class="arcana-select__dot"
+                                :style="{ background: opt.color }"
+                                aria-hidden="true"
+                            ></span>
                             <span class="arcana-select__item-body">
                                 <span class="arcana-select__item-label">{{ opt.label }}</span>
                                 <span
@@ -171,6 +206,19 @@
                             {{ searchTerm.trim() ? 'Nenhum resultado' : 'Nenhuma opção' }}
                         </li>
                     </ul>
+
+                    <!--
+                        Rodapé (`showFooter` + `multiple`): contagem de selecionados +
+                        botão limpar. Fica sticky no fundo do panel; limpar NÃO fecha.
+                    -->
+                    <div v-if="showFooter && multiple" class="arcana-select__footer">
+                        <span class="arcana-select__footer-count">{{ footerCountText }}</span>
+                        <button
+                            type="button"
+                            class="arcana-select__footer-clear"
+                            @click.stop="clear"
+                        >{{ clearLabel }}</button>
+                    </div>
                 </div>
             </Transition>
         </Teleport>
@@ -194,9 +242,23 @@ import type { Component, PropType } from "vue"
  * API:
  * ────
  * - `modelValue` (v-model) — valor selecionado
- * - `options` — `Array<{ label, value, disabled? }>` ou `string[]`/`number[]`
+ * - `options` — `Array<{ label, value, disabled?, description?, color? }>` ou `string[]`/`number[]`
  * - `placeholder`, `disabled` — comportamento óbvio
  * - `size` — `'sm' | 'md' | 'lg'` (default `'md'`)
+ * - `icon` / `iconColor` — ícone FontAwesome à esquerda no trigger
+ * - `triggerMode` — `'labels'` (default) ou `'dots'` (multi: bolinhas coloridas no trigger)
+ * - `showFooter` / `footerCountLabel` / `clearLabel` — rodapé "N selecionada(s)" + limpar
+ *
+ * Filtro por cor (padrão do filtro de Situação do ERP):
+ * ────────────────────────────────────────────────────
+ * ```vue
+ * <ArcanaSelect
+ *   v-model="statusIds" multiple show-footer
+ *   trigger-mode="dots" icon="fa-solid fa-flag" placeholder="Situação"
+ *   :options="[{ label: 'Aberto', value: 1, color: '#10b981' }]"
+ *   footer-count-label="{count} selecionada(s)" clear-label="Limpar"
+ * />
+ * ```
  *
  * Acessibilidade:
  * ───────────────
@@ -220,6 +282,11 @@ interface SelectOption {
      * Útil pra explicar o que cada opção faz sem poluir a UI fora do menu aberto.
      */
     description?: string
+    /**
+     * Cor (qualquer valor CSS) da bolinha exibida antes do label no item do panel —
+     * e no trigger quando `triggerMode="dots"`. Ausente ⇒ sem bolinha no item.
+     */
+    color?: string
 }
 
 export default {
@@ -281,6 +348,45 @@ export default {
             type: String,
             default: 'Buscar...',
         },
+        /**
+         * Como o trigger representa a seleção:
+         * - `'labels'` (default) — labels separados por vírgula (comportamento histórico)
+         * - `'dots'` — só as bolinhas coloridas das opções selecionadas (requer `multiple`).
+         *   Sem seleção mostra o `placeholder` normalmente.
+         */
+        triggerMode: {
+            type: String as PropType<'labels' | 'dots'>,
+            default: 'labels',
+            validator: (value: string) => ['labels', 'dots'].includes(value),
+        },
+        /** Classe FontAwesome de um ícone renderizado à esquerda no trigger. */
+        icon: {
+            type: String,
+            default: '',
+        },
+        /** Cor CSS aplicada inline no `icon` (vence o cinza padrão). */
+        iconColor: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Renderiza um rodapé no panel (só em `multiple`) com a contagem de
+         * selecionados + botão de limpar. Limpar emite `[]` e mantém o panel aberto.
+         */
+        showFooter: {
+            type: Boolean,
+            default: false,
+        },
+        /** Texto da contagem no rodapé; `{count}` é substituído pelo total selecionado. */
+        footerCountLabel: {
+            type: String,
+            default: '{count} selecionada(s)',
+        },
+        /** Rótulo do botão de limpar no rodapé. */
+        clearLabel: {
+            type: String,
+            default: 'Limpar',
+        },
     },
 
     data() {
@@ -337,6 +443,20 @@ export default {
             return this.clearable && !this.disabled && this.hasValue
         },
 
+        /** Modo bolinhas só faz sentido em multi-select. */
+        isDotsMode(): boolean {
+            return this.triggerMode === 'dots' && this.multiple
+        },
+
+        selectedCount(): number {
+            if (this.multiple) return Array.isArray(this.modelValue) ? this.modelValue.length : 0
+            return this.hasValue ? 1 : 0
+        },
+
+        footerCountText(): string {
+            return String(this.footerCountLabel).replace('{count}', String(this.selectedCount))
+        },
+
         filteredOptions(): SelectOption[] {
             if (!this.searchable) return this.normalizedOptions
             const needle = this.searchTerm.trim().toLowerCase()
@@ -357,6 +477,11 @@ export default {
     },
 
     methods: {
+        /** Cor da bolinha; fallback zinc-500 quando a opção não define `color`. */
+        dotColor(opt: SelectOption): string {
+            return opt.color || '#71717a'
+        },
+
         isSelected(opt: SelectOption): boolean {
             if (this.multiple) {
                 return Array.isArray(this.modelValue) && (this.modelValue as any[]).includes(opt.value)

@@ -49,7 +49,7 @@ import ArcanaDropdownComponent from "./svelte/ArcanaDropdown.svelte";
 import ArcanaDropdownItemComponent from "./svelte/ArcanaDropdownItem.svelte";
 import ArcanaEditFieldDialogComponent from "./svelte/ArcanaEditFieldDialog.svelte";
 import ArcanaRequiredFieldsDialogComponent from "./svelte/ArcanaRequiredFieldsDialog.svelte";
-import ArcanaOnboardingPanelComponent from "./svelte/ArcanaOnboardingPanel.svelte";
+import ArcanaActionPanelComponent from "./svelte/ArcanaActionPanel.svelte";
 import ArcanaSettingsListComponent from "./svelte/ArcanaSettingsList.svelte";
 import ArcanaSettingsListGroupComponent from "./svelte/ArcanaSettingsListGroup.svelte";
 import ArcanaSettingsListItemComponent from "./svelte/ArcanaSettingsListItem.svelte";
@@ -181,7 +181,14 @@ export interface SegmentedOption {
   label: string;
   value: string | number;
   disabled?: boolean;
+  /** Classe do ícone (ex: FontAwesome `fa-solid fa-truck`). */
   icon?: string;
+  /**
+   * Cor do ícone desta opção. Qualquer string CSS válida (hex, rgb, `var(...)`).
+   * Aplicada como inline style no `<i>`, então vence o CSS e permanece válida
+   * inclusive quando a opção está ativa (fundo escuro/colorido).
+   */
+  iconColor?: string;
 }
 export interface ArcanaSegmentedOptionsProps {
   value?: string | number | null;
@@ -262,6 +269,8 @@ export const ArcanaTabs = ArcanaTabsComponent as unknown as Component<ArcanaTabs
 export interface ArcanaAccordionProps {
   value?: string | string[] | null;
   accordion?: boolean;
+  /** `false` (default): abre/fecha instantâneo. `true`: slide de altura + fade (~200ms). */
+  animated?: boolean;
   onValueChange?: (value: string | string[] | null) => void;
   class?: string;
   children?: Snippet;
@@ -272,6 +281,8 @@ export interface ArcanaAccordionItemProps {
   name: string;
   title?: string | Snippet;
   disabled?: boolean;
+  /** `undefined` = herda o `animated` do `<ArcanaAccordion>`; informado = tem precedência. */
+  animated?: boolean;
   class?: string;
   children?: Snippet;
 }
@@ -283,6 +294,8 @@ export interface SelectOption {
   value: string | number | boolean | null;
   disabled?: boolean;
   description?: string;
+  /** Cor CSS da bolinha do item (e do trigger em `triggerMode="dots"`). */
+  color?: string;
 }
 export interface ArcanaSelectProps {
   value?: unknown;
@@ -294,6 +307,18 @@ export interface ArcanaSelectProps {
   clearable?: boolean;
   searchable?: boolean;
   searchPlaceholder?: string;
+  /** `"labels"` (default) ou `"dots"` (bolinhas coloridas no trigger; requer `multiple`). */
+  triggerMode?: "labels" | "dots";
+  /** Classe FontAwesome de um ícone à esquerda no trigger. */
+  icon?: string;
+  /** Cor CSS inline aplicada no `icon`. */
+  iconColor?: string;
+  /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
+  showFooter?: boolean;
+  /** Texto da contagem; `{count}` vira o total selecionado. */
+  footerCountLabel?: string;
+  /** Rótulo do botão de limpar do rodapé. */
+  clearLabel?: string;
   onValueChange?: (value: unknown) => void;
   onChange?: (value: unknown) => void;
   class?: string;
@@ -653,8 +678,8 @@ export interface ArcanaRequiredFieldsDialogHandle {
 }
 export const ArcanaRequiredFieldsDialog = ArcanaRequiredFieldsDialogComponent as unknown as Component<ArcanaRequiredFieldsDialogProps>;
 
-/* ── ArcanaOnboardingPanel ────────────────────────────────────────────────── */
-export interface ArcanaOnboardingPanelProps {
+/* ── ArcanaActionPanel ────────────────────────────────────────────────── */
+export interface ArcanaActionPanelProps {
   icon: string;
   title: string;
   description?: string;
@@ -671,7 +696,7 @@ export interface ArcanaOnboardingPanelProps {
   onAction?: () => void;
   onSecondaryAction?: () => void;
 }
-export const ArcanaOnboardingPanel = ArcanaOnboardingPanelComponent as unknown as Component<ArcanaOnboardingPanelProps>;
+export const ArcanaActionPanel = ArcanaActionPanelComponent as unknown as Component<ArcanaActionPanelProps>;
 
 /* ── ArcanaSettingsList (família) ─────────────────────────────────────────── */
 export type SettingsGroupIconColor =

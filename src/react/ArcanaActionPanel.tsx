@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { ArcanaButton } from "./ArcanaButton";
 
 /**
- * `<ArcanaOnboardingPanel>` — React port do SFC Vue. Empty state / CTA panel para
- * primeiras configurações. Markup/classes `arcana-onboarding*` idênticos ao SFC.
+ * `<ArcanaActionPanel>` — React port do SFC Vue. Empty state / CTA panel para
+ * primeiras configurações. Markup/classes `arcana-action-panel*` idênticos ao SFC.
  *
  * Equivalências Vue → React:
  * - slot default → `children` (fallback: `description`)
@@ -11,7 +11,7 @@ import { ArcanaButton } from "./ArcanaButton";
  * - slot `#sub-hint` → prop `subHintSlot` (ReactNode; substitui o sub-hint padrão)
  * - `emit('action'|'secondary-action')` → `onAction` / `onSecondaryAction`
  */
-export interface ArcanaOnboardingPanelProps {
+export interface ArcanaActionPanelProps {
     icon: string;
     title: string;
     description?: string;
@@ -32,7 +32,7 @@ export interface ArcanaOnboardingPanelProps {
     onSecondaryAction?: () => void;
 }
 
-export function ArcanaOnboardingPanel({
+export function ArcanaActionPanel({
     icon,
     title,
     description = "",
@@ -48,29 +48,29 @@ export function ArcanaOnboardingPanel({
     subHintSlot,
     onAction,
     onSecondaryAction,
-}: ArcanaOnboardingPanelProps) {
+}: ArcanaActionPanelProps) {
     const hasDescription = Boolean(children) || Boolean(description);
     const hasActionZone = Boolean(action || actionLabel || secondaryActionLabel);
     const hasSubHint = Boolean(subHintSlot || subHint);
 
     return (
-        <div className="arcana-onboarding">
-            <div className="arcana-onboarding__visual">
-                <div className="arcana-onboarding__ring" />
-                <div className="arcana-onboarding__ring arcana-onboarding__ring--2" />
-                <div className="arcana-onboarding__icon">
+        <div className="arcana-action-panel">
+            <div className="arcana-action-panel__visual">
+                <div className="arcana-action-panel__ring" />
+                <div className="arcana-action-panel__ring arcana-action-panel__ring--2" />
+                <div className="arcana-action-panel__icon">
                     <i className={icon} />
                 </div>
             </div>
 
-            <h3 className="arcana-onboarding__title">{title}</h3>
+            <h3 className="arcana-action-panel__title">{title}</h3>
 
             {hasDescription && (
-                <p className="arcana-onboarding__desc">{children ?? description}</p>
+                <p className="arcana-action-panel__desc">{children ?? description}</p>
             )}
 
             {hasActionZone && (
-                <div className="arcana-onboarding__action">
+                <div className="arcana-action-panel__action">
                     {action ?? (
                         <>
                             {actionLabel && (
@@ -102,7 +102,7 @@ export function ArcanaOnboardingPanel({
             )}
 
             {hasSubHint && (
-                <p className="arcana-onboarding__sub-hint">
+                <p className="arcana-action-panel__sub-hint">
                     {subHintSlot ?? (
                         <>
                             {subHintIcon && <i className={subHintIcon} />}
