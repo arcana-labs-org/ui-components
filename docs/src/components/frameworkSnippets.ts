@@ -20,22 +20,37 @@ export interface FrameworkTriple {
 
 export const FRAMEWORK_SNIPPETS: Record<DocumentedKey, FrameworkTriple> = {
   button: {
-    react: `import { ArcanaButton } from '@arcanalabs/ui-components/react'
+    react: `import { useState } from 'react'
+import { ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function Toolbar() {
-  function save() {
-    // …persist changes
-  }
+  const [clicks, setClicks] = useState(0)
   return (
     <>
-      <ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
-      <ArcanaButton variant="outline">Cancel</ArcanaButton>
-      <ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>
+      {/* Variants — 'primary' is the default */}
+      <ArcanaButton onClick={() => setClicks(clicks + 1)}>Primary</ArcanaButton>
+      <ArcanaButton variant="secondary">Secondary</ArcanaButton>
+      <ArcanaButton variant="outline">Outline</ArcanaButton>
+      <ArcanaButton variant="ghost">Ghost</ArcanaButton>
+      <ArcanaButton variant="success">Success</ArcanaButton>
+      <ArcanaButton variant="indigo">Indigo</ArcanaButton>
+      <ArcanaButton variant="destructive">Destructive</ArcanaButton>
+      <ArcanaButton variant="outline-danger">Outline danger</ArcanaButton>
+      <ArcanaButton disabled>Disabled</ArcanaButton>
 
-      {/* Icon + label */}
+      {/* Icon + label — the icon is just markup in the default slot */}
       <ArcanaButton variant="primary"><i className="fa-solid fa-plus" /> New</ArcanaButton>
-      {/* Icon only — pass aria-label for accessibility */}
+      <ArcanaButton variant="outline"><i className="fa-solid fa-download" /> Export</ArcanaButton>
+      <ArcanaButton variant="destructive"><i className="fa-solid fa-trash" /> Delete</ArcanaButton>
+      <ArcanaButton variant="success">Save <i className="fa-solid fa-arrow-right" /></ArcanaButton>
+
+      {/* Icon only — always pass aria-label for accessibility */}
       <ArcanaButton variant="outline" aria-label="Settings"><i className="fa-solid fa-gear" /></ArcanaButton>
+      <ArcanaButton variant="ghost" aria-label="More options"><i className="fa-solid fa-ellipsis" /></ArcanaButton>
+      <ArcanaButton variant="primary" aria-label="Add"><i className="fa-solid fa-plus" /></ArcanaButton>
+      <ArcanaButton variant="destructive" aria-label="Delete"><i className="fa-solid fa-trash" /></ArcanaButton>
+
+      <p>Primary clicked <strong>{clicks}</strong> times</p>
     </>
   )
 }`,
@@ -47,48 +62,87 @@ import { ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
   standalone: true,
   imports: [ArcanaButtonComponent],
   template: \`
-    <button arcanaButton variant="primary" (click)="save()">Save</button>
-    <button arcanaButton variant="outline">Cancel</button>
-    <button arcanaButton variant="destructive" [disabled]="busy">Delete</button>
+    <!-- Variants — 'primary' is the default -->
+    <button arcanaButton (click)="clicks = clicks + 1">Primary</button>
+    <button arcanaButton variant="secondary">Secondary</button>
+    <button arcanaButton variant="outline">Outline</button>
+    <button arcanaButton variant="ghost">Ghost</button>
+    <button arcanaButton variant="success">Success</button>
+    <button arcanaButton variant="indigo">Indigo</button>
+    <button arcanaButton variant="destructive">Destructive</button>
+    <button arcanaButton variant="outline-danger">Outline danger</button>
+    <button arcanaButton [disabled]="true">Disabled</button>
 
-    <!-- Icon + label -->
+    <!-- Icon + label — the icon is just markup projected into the button -->
     <button arcanaButton variant="primary"><i class="fa-solid fa-plus"></i> New</button>
-    <!-- Icon only — pass aria-label for accessibility -->
+    <button arcanaButton variant="outline"><i class="fa-solid fa-download"></i> Export</button>
+    <button arcanaButton variant="destructive"><i class="fa-solid fa-trash"></i> Delete</button>
+    <button arcanaButton variant="success">Save <i class="fa-solid fa-arrow-right"></i></button>
+
+    <!-- Icon only — always pass aria-label for accessibility -->
     <button arcanaButton variant="outline" aria-label="Settings"><i class="fa-solid fa-gear"></i></button>
+    <button arcanaButton variant="ghost" aria-label="More options"><i class="fa-solid fa-ellipsis"></i></button>
+    <button arcanaButton variant="primary" aria-label="Add"><i class="fa-solid fa-plus"></i></button>
+    <button arcanaButton variant="destructive" aria-label="Delete"><i class="fa-solid fa-trash"></i></button>
+
+    <p>Primary clicked <strong>{{ clicks }}</strong> times</p>
   \`
 })
 export class ToolbarComponent {
-  busy = false
-  save() { /* …persist changes */ }
+  clicks = 0
 }`,
     svelte: `<script lang="ts">
   import { ArcanaButton } from '@arcanalabs/ui-components/svelte'
 
-  let busy = $state(false)
-  function save() {
-    // …persist changes
-  }
+  let clicks = $state(0)
 </script>
 
-<ArcanaButton variant="primary" onClick={save}>Save</ArcanaButton>
-<ArcanaButton variant="outline">Cancel</ArcanaButton>
-<ArcanaButton variant="destructive" disabled={busy}>Delete</ArcanaButton>
+<!-- Variants — 'primary' is the default -->
+<ArcanaButton onClick={() => clicks++}>Primary</ArcanaButton>
+<ArcanaButton variant="secondary">Secondary</ArcanaButton>
+<ArcanaButton variant="outline">Outline</ArcanaButton>
+<ArcanaButton variant="ghost">Ghost</ArcanaButton>
+<ArcanaButton variant="success">Success</ArcanaButton>
+<ArcanaButton variant="indigo">Indigo</ArcanaButton>
+<ArcanaButton variant="destructive">Destructive</ArcanaButton>
+<ArcanaButton variant="outline-danger">Outline danger</ArcanaButton>
+<ArcanaButton disabled>Disabled</ArcanaButton>
 
-<!-- Icon + label -->
+<!-- Icon + label — the icon is just markup in the default slot -->
 <ArcanaButton variant="primary"><i class="fa-solid fa-plus"></i> New</ArcanaButton>
-<!-- Icon only — pass aria-label for accessibility -->
-<ArcanaButton variant="outline" aria-label="Settings"><i class="fa-solid fa-gear"></i></ArcanaButton>`
+<ArcanaButton variant="outline"><i class="fa-solid fa-download"></i> Export</ArcanaButton>
+<ArcanaButton variant="destructive"><i class="fa-solid fa-trash"></i> Delete</ArcanaButton>
+<ArcanaButton variant="success">Save <i class="fa-solid fa-arrow-right"></i></ArcanaButton>
+
+<!-- Icon only — always pass aria-label for accessibility -->
+<ArcanaButton variant="outline" aria-label="Settings"><i class="fa-solid fa-gear"></i></ArcanaButton>
+<ArcanaButton variant="ghost" aria-label="More options"><i class="fa-solid fa-ellipsis"></i></ArcanaButton>
+<ArcanaButton variant="primary" aria-label="Add"><i class="fa-solid fa-plus"></i></ArcanaButton>
+<ArcanaButton variant="destructive" aria-label="Delete"><i class="fa-solid fa-trash"></i></ArcanaButton>
+
+<p>Primary clicked <strong>{clicks}</strong> times</p>`
   },
 
   badge: {
     react: `import { ArcanaBadge } from '@arcanalabs/ui-components/react'
 
 export function Statuses() {
+  function filterByTag() { /* …apply filter */ }
   return (
     <>
+      {/* Colour variants — 'neutral' is the default */}
+      <ArcanaBadge>Neutral</ArcanaBadge>
+      <ArcanaBadge variant="blue">Blue</ArcanaBadge>
+      <ArcanaBadge variant="green">Green</ArcanaBadge>
+      <ArcanaBadge variant="red">Red</ArcanaBadge>
+      <ArcanaBadge variant="amber">Amber</ArcanaBadge>
+      <ArcanaBadge variant="violet">Violet</ArcanaBadge>
+
+      {/* Modifiers */}
       <ArcanaBadge variant="green" dot>Active</ArcanaBadge>
-      <ArcanaBadge variant="blue">12 records</ArcanaBadge>
-      <ArcanaBadge variant="red" size="sm">Overdue</ArcanaBadge>
+      <ArcanaBadge variant="red" dot>Offline</ArcanaBadge>
+      <ArcanaBadge variant="blue" size="sm">Small size</ArcanaBadge>
+      <ArcanaBadge variant="violet" clickable onClick={filterByTag}>Clickable</ArcanaBadge>
     </>
   )
 }`,
@@ -100,19 +154,43 @@ import { ArcanaBadgeComponent } from '@arcanalabs/ui-components/angular'
   standalone: true,
   imports: [ArcanaBadgeComponent],
   template: \`
+    <!-- Colour variants — 'neutral' is the default -->
+    <span arcanaBadge>Neutral</span>
+    <span arcanaBadge variant="blue">Blue</span>
+    <span arcanaBadge variant="green">Green</span>
+    <span arcanaBadge variant="red">Red</span>
+    <span arcanaBadge variant="amber">Amber</span>
+    <span arcanaBadge variant="violet">Violet</span>
+
+    <!-- Modifiers -->
     <span arcanaBadge variant="green" [dot]="true">Active</span>
-    <span arcanaBadge variant="blue">12 records</span>
-    <span arcanaBadge variant="red" size="sm">Overdue</span>
+    <span arcanaBadge variant="red" [dot]="true">Offline</span>
+    <span arcanaBadge variant="blue" size="sm">Small size</span>
+    <span arcanaBadge variant="violet" [clickable]="true" (click)="filterByTag()">Clickable</span>
   \`
 })
-export class StatusesComponent {}`,
+export class StatusesComponent {
+  filterByTag() { /* …apply filter */ }
+}`,
     svelte: `<script lang="ts">
   import { ArcanaBadge } from '@arcanalabs/ui-components/svelte'
+
+  function filterByTag() { /* …apply filter */ }
 </script>
 
+<!-- Colour variants — 'neutral' is the default -->
+<ArcanaBadge>Neutral</ArcanaBadge>
+<ArcanaBadge variant="blue">Blue</ArcanaBadge>
+<ArcanaBadge variant="green">Green</ArcanaBadge>
+<ArcanaBadge variant="red">Red</ArcanaBadge>
+<ArcanaBadge variant="amber">Amber</ArcanaBadge>
+<ArcanaBadge variant="violet">Violet</ArcanaBadge>
+
+<!-- Modifiers -->
 <ArcanaBadge variant="green" dot>Active</ArcanaBadge>
-<ArcanaBadge variant="blue">12 records</ArcanaBadge>
-<ArcanaBadge variant="red" size="sm">Overdue</ArcanaBadge>`
+<ArcanaBadge variant="red" dot>Offline</ArcanaBadge>
+<ArcanaBadge variant="blue" size="sm">Small size</ArcanaBadge>
+<ArcanaBadge variant="violet" clickable onClick={filterByTag}>Clickable</ArcanaBadge>`
   },
 
   input: {
@@ -160,16 +238,50 @@ export class FieldsComponent {
     react: `import { useState } from 'react'
 import { ArcanaSelect, type SelectOption } from '@arcanalabs/ui-components/react'
 
-const options: SelectOption[] = [
+const fruits: SelectOption[] = [
   { label: 'Apple', value: 'apple' },
   { label: 'Banana', value: 'banana' },
   { label: 'Cherry', value: 'cherry', description: 'seasonal' },
+  { label: 'Durian', value: 'durian', disabled: true },
+  { label: 'Elderberry', value: 'elderberry' },
+]
+
+// \`color\` on an option renders a dot; with triggerMode="dots" the trigger
+// shows only the dots — the pattern used by the order status quick filter.
+const statusOptions: SelectOption[] = [
+  { label: 'Open', value: 'open', color: '#10b981' },
+  { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
+  { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
+  { label: 'Delivered', value: 'delivered', color: '#64748b' },
+  { label: 'Canceled', value: 'canceled', color: '#ef4444' },
 ]
 
 export function FruitPicker() {
-  const [fruit, setFruit] = useState<string | null>(null)
+  const [single, setSingle] = useState<string | null>(null)
+  const [many, setMany] = useState<string[]>([])
+  const [statuses, setStatuses] = useState<string[]>(['open', 'confirmed', 'shipped'])
   return (
-    <ArcanaSelect value={fruit} onValueChange={(v) => setFruit(v as string | null)} options={options} searchable placeholder="Pick a fruit" />
+    <>
+      {/* Single + search */}
+      <ArcanaSelect value={single} onValueChange={(v) => setSingle(v as string | null)} options={fruits} searchable placeholder="Pick a fruit" />
+
+      {/* Multiple — value is an array */}
+      <ArcanaSelect value={many} onValueChange={(v) => setMany(v as string[])} options={fruits} multiple placeholder="Pick several" />
+
+      {/* Quick filter: dots trigger, leading icon and a footer with a clear action */}
+      <ArcanaSelect
+        value={statuses}
+        onValueChange={(v) => setStatuses(v as string[])}
+        options={statusOptions}
+        multiple
+        triggerMode="dots"
+        icon="fa-solid fa-flag"
+        showFooter
+        footerCountLabel="{count} selected"
+        clearLabel="Clear"
+        placeholder="Status"
+      />
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
@@ -180,29 +292,90 @@ import { ArcanaSelectComponent, type SelectOption } from '@arcanalabs/ui-compone
   standalone: true,
   imports: [ArcanaSelectComponent],
   template: \`
-    <div arcanaSelect [(value)]="fruit" [options]="options" [searchable]="true" placeholder="Pick a fruit"></div>
+    <!-- Single + search -->
+    <div arcanaSelect [(value)]="single" [options]="fruits" [searchable]="true" placeholder="Pick a fruit"></div>
+
+    <!-- Multiple — value is an array -->
+    <div arcanaSelect [(value)]="many" [options]="fruits" [multiple]="true" placeholder="Pick several"></div>
+
+    <!-- Quick filter: dots trigger, leading icon and a footer with a clear action -->
+    <div arcanaSelect
+      [(value)]="statuses"
+      [options]="statusOptions"
+      [multiple]="true"
+      triggerMode="dots"
+      icon="fa-solid fa-flag"
+      [showFooter]="true"
+      footerCountLabel="{count} selected"
+      clearLabel="Clear"
+      placeholder="Status"></div>
   \`
 })
 export class FruitPickerComponent {
-  fruit: string | null = null
-  options: SelectOption[] = [
+  single: string | null = null
+  many: string[] = []
+  statuses: string[] = ['open', 'confirmed', 'shipped']
+  fruits: SelectOption[] = [
     { label: 'Apple', value: 'apple' },
     { label: 'Banana', value: 'banana' },
     { label: 'Cherry', value: 'cherry', description: 'seasonal' },
+    { label: 'Durian', value: 'durian', disabled: true },
+    { label: 'Elderberry', value: 'elderberry' },
+  ]
+  // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
+  // shows only the dots — the pattern used by the order status quick filter.
+  statusOptions: SelectOption[] = [
+    { label: 'Open', value: 'open', color: '#10b981' },
+    { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
+    { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
+    { label: 'Delivered', value: 'delivered', color: '#64748b' },
+    { label: 'Canceled', value: 'canceled', color: '#ef4444' },
   ]
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSelect, type SelectOption } from '@arcanalabs/ui-components/svelte'
 
-  let fruit = $state<string | null>(null)
-  const options: SelectOption[] = [
+  let single = $state<string | null>(null)
+  let many = $state<string[]>([])
+  let statuses = $state<string[]>(['open', 'confirmed', 'shipped'])
+
+  const fruits: SelectOption[] = [
     { label: 'Apple', value: 'apple' },
     { label: 'Banana', value: 'banana' },
     { label: 'Cherry', value: 'cherry', description: 'seasonal' },
+    { label: 'Durian', value: 'durian', disabled: true },
+    { label: 'Elderberry', value: 'elderberry' },
+  ]
+  // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
+  // shows only the dots — the pattern used by the order status quick filter.
+  const statusOptions: SelectOption[] = [
+    { label: 'Open', value: 'open', color: '#10b981' },
+    { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
+    { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
+    { label: 'Delivered', value: 'delivered', color: '#64748b' },
+    { label: 'Canceled', value: 'canceled', color: '#ef4444' },
   ]
 </script>
 
-<ArcanaSelect value={fruit} onValueChange={(v) => (fruit = v as string | null)} {options} searchable placeholder="Pick a fruit" />`
+<!-- Single + search -->
+<ArcanaSelect value={single} onValueChange={(v) => (single = v as string | null)} options={fruits} searchable placeholder="Pick a fruit" />
+
+<!-- Multiple — value is an array -->
+<ArcanaSelect value={many} onValueChange={(v) => (many = v as string[])} options={fruits} multiple placeholder="Pick several" />
+
+<!-- Quick filter: dots trigger, leading icon and a footer with a clear action -->
+<ArcanaSelect
+  value={statuses}
+  onValueChange={(v) => (statuses = v as string[])}
+  options={statusOptions}
+  multiple
+  triggerMode="dots"
+  icon="fa-solid fa-flag"
+  showFooter
+  footerCountLabel={'{count} selected'}
+  clearLabel="Clear"
+  placeholder="Status"
+/>`
   },
 
   treeSelect: {
@@ -302,69 +475,155 @@ export class CostCentreFieldComponent {
     react: `import { useState } from 'react'
 import { ArcanaCheckbox } from '@arcanalabs/ui-components/react'
 
-export function Terms() {
-  const [accepted, setAccepted] = useState(false)
-  return <ArcanaCheckbox value={accepted} onValueChange={setAccepted} label="I accept the terms" />
+export function DocumentPicker() {
+  const [items, setItems] = useState({ invoices: true, receipts: false, statements: false })
+  const values = Object.values(items)
+  const allChecked = values.every(Boolean)
+  const someChecked = values.some(Boolean) && !allChecked
+  function toggleAll(value: boolean) {
+    setItems({ invoices: value, receipts: value, statements: value })
+  }
+  return (
+    <>
+      {/* Tri-state parent: \`indeterminate\` renders the dash, not the tick */}
+      <ArcanaCheckbox value={allChecked} indeterminate={someChecked} onValueChange={toggleAll} label="Select all" />
+
+      <ArcanaCheckbox value={items.invoices} onValueChange={(v) => setItems({ ...items, invoices: v })} label="Invoices" />
+      <ArcanaCheckbox value={items.receipts} onValueChange={(v) => setItems({ ...items, receipts: v })} label="Receipts" />
+      <ArcanaCheckbox value={items.statements} onValueChange={(v) => setItems({ ...items, statements: v })} label="Statements" />
+
+      <ArcanaCheckbox value={false} disabled label="Archived (disabled)" />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaCheckboxComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-terms',
+  selector: 'app-document-picker',
   standalone: true,
   imports: [ArcanaCheckboxComponent],
-  template: \`<label arcanaCheckbox [(value)]="accepted" label="I accept the terms"></label>\`
+  template: \`
+    <!-- Tri-state parent: [indeterminate] renders the dash, not the tick -->
+    <label arcanaCheckbox [value]="allChecked" [indeterminate]="someChecked" (valueChange)="toggleAll($event)" label="Select all"></label>
+
+    <label arcanaCheckbox [(value)]="items.invoices" label="Invoices"></label>
+    <label arcanaCheckbox [(value)]="items.receipts" label="Receipts"></label>
+    <label arcanaCheckbox [(value)]="items.statements" label="Statements"></label>
+
+    <label arcanaCheckbox [value]="false" [disabled]="true" label="Archived (disabled)"></label>
+  \`
 })
-export class TermsComponent {
-  accepted = false
+export class DocumentPickerComponent {
+  items = { invoices: true, receipts: false, statements: false }
+
+  get allChecked(): boolean {
+    return Object.values(this.items).every(Boolean)
+  }
+  get someChecked(): boolean {
+    return Object.values(this.items).some(Boolean) && !this.allChecked
+  }
+  toggleAll(value: boolean) {
+    this.items = { invoices: value, receipts: value, statements: value }
+  }
 }`,
     svelte: `<script lang="ts">
   import { ArcanaCheckbox } from '@arcanalabs/ui-components/svelte'
-  let accepted = $state(false)
+
+  let items = $state({ invoices: true, receipts: false, statements: false })
+  const allChecked = $derived(Object.values(items).every(Boolean))
+  const someChecked = $derived(Object.values(items).some(Boolean) && !allChecked)
+
+  function toggleAll(value: boolean) {
+    items = { invoices: value, receipts: value, statements: value }
+  }
 </script>
 
-<ArcanaCheckbox value={accepted} onValueChange={(v) => (accepted = v)} label="I accept the terms" />`
+<!-- Tri-state parent: \`indeterminate\` renders the dash, not the tick -->
+<ArcanaCheckbox value={allChecked} indeterminate={someChecked} onValueChange={toggleAll} label="Select all" />
+
+<ArcanaCheckbox value={items.invoices} onValueChange={(v) => (items.invoices = v)} label="Invoices" />
+<ArcanaCheckbox value={items.receipts} onValueChange={(v) => (items.receipts = v)} label="Receipts" />
+<ArcanaCheckbox value={items.statements} onValueChange={(v) => (items.statements = v)} label="Statements" />
+
+<ArcanaCheckbox value={false} disabled label="Archived (disabled)" />`
   },
 
   switch: {
     react: `import { useState } from 'react'
 import { ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
-export function AutoRenew() {
-  const [autoRenew, setAutoRenew] = useState(true)
+export function Preferences() {
+  const [notifications, setNotifications] = useState(true)
+  const [beta, setBeta] = useState(false)
   return (
-    <label className="form-row">
-      <span>Auto-renew</span>
-      <ArcanaSwitch value={autoRenew} onValueChange={setAutoRenew} ariaLabel="Auto-renew" />
-    </label>
+    <>
+      <label className="form-row">
+        <ArcanaSwitch value={notifications} onValueChange={setNotifications} ariaLabel="Notifications" />
+        <span>Notifications ({notifications ? 'on' : 'off'})</span>
+      </label>
+      <label className="form-row">
+        <ArcanaSwitch value={beta} onValueChange={setBeta} ariaLabel="Beta features" />
+        <span>Beta features ({beta ? 'on' : 'off'})</span>
+      </label>
+
+      {/* Sizes and disabled state */}
+      <ArcanaSwitch value={notifications} onValueChange={setNotifications} size="sm" ariaLabel="small" />
+      <ArcanaSwitch value={notifications} onValueChange={setNotifications} size="md" ariaLabel="medium" />
+      <ArcanaSwitch value={notifications} onValueChange={setNotifications} size="lg" ariaLabel="large" />
+      <ArcanaSwitch value disabled ariaLabel="disabled" />
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-auto-renew',
+  selector: 'app-preferences',
   standalone: true,
   imports: [ArcanaSwitchComponent],
   template: \`
     <label class="form-row">
-      <span>Auto-renew</span>
-      <button arcanaSwitch [(value)]="autoRenew" ariaLabel="Auto-renew"></button>
+      <button arcanaSwitch [(value)]="notifications" ariaLabel="Notifications"></button>
+      <span>Notifications ({{ notifications ? 'on' : 'off' }})</span>
     </label>
+    <label class="form-row">
+      <button arcanaSwitch [(value)]="beta" ariaLabel="Beta features"></button>
+      <span>Beta features ({{ beta ? 'on' : 'off' }})</span>
+    </label>
+
+    <!-- Sizes and disabled state -->
+    <button arcanaSwitch [(value)]="notifications" size="sm" ariaLabel="small"></button>
+    <button arcanaSwitch [(value)]="notifications" size="md" ariaLabel="medium"></button>
+    <button arcanaSwitch [(value)]="notifications" size="lg" ariaLabel="large"></button>
+    <button arcanaSwitch [value]="true" [disabled]="true" ariaLabel="disabled"></button>
   \`
 })
-export class AutoRenewComponent {
-  autoRenew = true
+export class PreferencesComponent {
+  notifications = true
+  beta = false
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
-  let autoRenew = $state(true)
+
+  let notifications = $state(true)
+  let beta = $state(false)
 </script>
 
 <label class="form-row">
-  <span>Auto-renew</span>
-  <ArcanaSwitch value={autoRenew} onValueChange={(v) => (autoRenew = v)} ariaLabel="Auto-renew" />
-</label>`
+  <ArcanaSwitch value={notifications} onValueChange={(v) => (notifications = v)} ariaLabel="Notifications" />
+  <span>Notifications ({notifications ? 'on' : 'off'})</span>
+</label>
+<label class="form-row">
+  <ArcanaSwitch value={beta} onValueChange={(v) => (beta = v)} ariaLabel="Beta features" />
+  <span>Beta features ({beta ? 'on' : 'off'})</span>
+</label>
+
+<!-- Sizes and disabled state -->
+<ArcanaSwitch value={notifications} onValueChange={(v) => (notifications = v)} size="sm" ariaLabel="small" />
+<ArcanaSwitch value={notifications} onValueChange={(v) => (notifications = v)} size="md" ariaLabel="medium" />
+<ArcanaSwitch value={notifications} onValueChange={(v) => (notifications = v)} size="lg" ariaLabel="large" />
+<ArcanaSwitch value disabled ariaLabel="disabled" />`
   },
 
   tabs: {
@@ -544,28 +803,62 @@ export class DocumentComponent {
     react: `import { useState } from 'react'
 import { ArcanaInputBoolean } from '@arcanalabs/ui-components/react'
 
-export function ActiveFilter() {
-  const [active, setActive] = useState<unknown>(1)
-  return <ArcanaInputBoolean value={active} onValueChange={setActive} variation="status" clearable={false} />
+export function BooleanFilters() {
+  const [answer, setAnswer] = useState<unknown>(null)
+  const [status, setStatus] = useState<unknown>(1)
+  const [filter, setFilter] = useState<unknown>(null)
+  return (
+    <>
+      {/* Default variation — Yes / No */}
+      <ArcanaInputBoolean value={answer} onValueChange={setAnswer} placeholder="Yes / No" />
+
+      {/* 'status' — Active / Inactive */}
+      <ArcanaInputBoolean value={status} onValueChange={setStatus} variation="status" />
+
+      {/* 'nullable' — adds a "not set" option, ideal for filters */}
+      <ArcanaInputBoolean value={filter} onValueChange={setFilter} variation="nullable" placeholder="Has value?" />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaInputBooleanComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-active-filter',
+  selector: 'app-boolean-filters',
   standalone: true,
   imports: [ArcanaInputBooleanComponent],
-  template: \`<div arcanaInputBoolean [(value)]="active" variation="status" [clearable]="false"></div>\`
+  template: \`
+    <!-- Default variation — Yes / No -->
+    <div arcanaInputBoolean [(value)]="answer" placeholder="Yes / No"></div>
+
+    <!-- 'status' — Active / Inactive -->
+    <div arcanaInputBoolean [(value)]="status" variation="status"></div>
+
+    <!-- 'nullable' — adds a "not set" option, ideal for filters -->
+    <div arcanaInputBoolean [(value)]="filter" variation="nullable" placeholder="Has value?"></div>
+  \`
 })
-export class ActiveFilterComponent {
-  active: unknown = 1
+export class BooleanFiltersComponent {
+  answer: unknown = null
+  status: unknown = 1
+  filter: unknown = null
 }`,
     svelte: `<script lang="ts">
   import { ArcanaInputBoolean } from '@arcanalabs/ui-components/svelte'
-  let active = $state<unknown>(1)
+
+  let answer = $state<unknown>(null)
+  let status = $state<unknown>(1)
+  let filter = $state<unknown>(null)
 </script>
 
-<ArcanaInputBoolean value={active} onValueChange={(v) => (active = v)} variation="status" clearable={false} />`
+<!-- Default variation — Yes / No -->
+<ArcanaInputBoolean value={answer} onValueChange={(v) => (answer = v)} placeholder="Yes / No" />
+
+<!-- 'status' — Active / Inactive -->
+<ArcanaInputBoolean value={status} onValueChange={(v) => (status = v)} variation="status" />
+
+<!-- 'nullable' — adds a "not set" option, ideal for filters -->
+<ArcanaInputBoolean value={filter} onValueChange={(v) => (filter = v)} variation="nullable" placeholder="Has value?" />`
   },
 
   numberStepper: {
@@ -573,8 +866,18 @@ export class ActiveFilterComponent {
 import { ArcanaNumberStepper } from '@arcanalabs/ui-components/react'
 
 export function Quantity() {
-  const [qty, setQty] = useState<number | null>(1)
-  return <ArcanaNumberStepper value={qty} onValueChange={setQty} min={0} max={10} ariaLabel="Quantity" />
+  const [qty, setQty] = useState<number | null>(2)
+  const [weight, setWeight] = useState<number | null>(10)
+  return (
+    <>
+      <ArcanaNumberStepper value={qty} onValueChange={setQty} min={0} max={10} ariaLabel="Quantity" />
+
+      {/* \`step\` changes the increment of each click */}
+      <ArcanaNumberStepper value={weight} onValueChange={setWeight} min={0} max={100} step={5} ariaLabel="Weight" />
+
+      <ArcanaNumberStepper value={5} disabled ariaLabel="Disabled" />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaNumberStepperComponent } from '@arcanalabs/ui-components/angular'
@@ -583,17 +886,32 @@ import { ArcanaNumberStepperComponent } from '@arcanalabs/ui-components/angular'
   selector: 'app-quantity',
   standalone: true,
   imports: [ArcanaNumberStepperComponent],
-  template: \`<div arcanaNumberStepper [(value)]="qty" [min]="0" [max]="10" ariaLabel="Quantity"></div>\`
+  template: \`
+    <div arcanaNumberStepper [(value)]="qty" [min]="0" [max]="10" ariaLabel="Quantity"></div>
+
+    <!-- [step] changes the increment of each click -->
+    <div arcanaNumberStepper [(value)]="weight" [min]="0" [max]="100" [step]="5" ariaLabel="Weight"></div>
+
+    <div arcanaNumberStepper [value]="5" [disabled]="true" ariaLabel="Disabled"></div>
+  \`
 })
 export class QuantityComponent {
-  qty: number | null = 1
+  qty: number | null = 2
+  weight: number | null = 10
 }`,
     svelte: `<script lang="ts">
   import { ArcanaNumberStepper } from '@arcanalabs/ui-components/svelte'
-  let qty = $state<number | null>(1)
+
+  let qty = $state<number | null>(2)
+  let weight = $state<number | null>(10)
 </script>
 
-<ArcanaNumberStepper value={qty} onValueChange={(v) => (qty = v)} min={0} max={10} ariaLabel="Quantity" />`
+<ArcanaNumberStepper value={qty} onValueChange={(v) => (qty = v)} min={0} max={10} ariaLabel="Quantity" />
+
+<!-- \`step\` changes the increment of each click -->
+<ArcanaNumberStepper value={weight} onValueChange={(v) => (weight = v)} min={0} max={100} step={5} ariaLabel="Weight" />
+
+<ArcanaNumberStepper value={5} disabled ariaLabel="Disabled" />`
   },
 
   multiSelectPopover: {
@@ -687,11 +1005,40 @@ import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-com
 const options: SegmentedOption[] = [
   { label: 'List', value: 'list' },
   { label: 'Grid', value: 'grid' },
+  { label: 'Board', value: 'board' },
+]
+
+const iconOptions: SegmentedOption[] = [
+  { label: 'List', value: 'list', icon: 'fa-solid fa-list' },
+  { label: 'Grid', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+  { label: 'Board', value: 'board', icon: 'fa-solid fa-columns' },
+]
+
+// \`iconColor\` tints each option's icon — handy for semantics
+// (green = low risk, amber = attention, red = urgent).
+const colorOptions: SegmentedOption[] = [
+  { label: 'Low', value: 'low', icon: 'fa-solid fa-circle-check', iconColor: '#16a34a' },
+  { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },
+  { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
 ]
 
 export function ViewMode() {
   const [view, setView] = useState<string | number | null>('list')
-  return <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
+  const [priority, setPriority] = useState<string | number | null>('medium')
+  return (
+    <>
+      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} ariaLabel="View mode" />
+
+      {/* Denser, square-cornered variant */}
+      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={options} compact squared />
+
+      {/* With icons */}
+      <ArcanaSegmentedOptions value={view} onValueChange={setView} options={iconOptions} />
+
+      {/* With coloured icons */}
+      <ArcanaSegmentedOptions value={priority} onValueChange={setPriority} options={colorOptions} />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaSegmentedOptionsComponent, type SegmentedOption } from '@arcanalabs/ui-components/angular'
@@ -700,26 +1047,75 @@ import { ArcanaSegmentedOptionsComponent, type SegmentedOption } from '@arcanala
   selector: 'app-view-mode',
   standalone: true,
   imports: [ArcanaSegmentedOptionsComponent],
-  template: \`<div arcanaSegmentedOptions [(value)]="view" [options]="options" ariaLabel="View mode"></div>\`
+  template: \`
+    <div arcanaSegmentedOptions [(value)]="view" [options]="options" ariaLabel="View mode"></div>
+
+    <!-- Denser, square-cornered variant -->
+    <div arcanaSegmentedOptions [(value)]="view" [options]="options" [compact]="true" [squared]="true"></div>
+
+    <!-- With icons -->
+    <div arcanaSegmentedOptions [(value)]="view" [options]="iconOptions"></div>
+
+    <!-- With coloured icons -->
+    <div arcanaSegmentedOptions [(value)]="priority" [options]="colorOptions"></div>
+  \`
 })
 export class ViewModeComponent {
   view: string | number | null = 'list'
+  priority: string | number | null = 'medium'
   options: SegmentedOption[] = [
     { label: 'List', value: 'list' },
     { label: 'Grid', value: 'grid' },
+    { label: 'Board', value: 'board' },
+  ]
+  iconOptions: SegmentedOption[] = [
+    { label: 'List', value: 'list', icon: 'fa-solid fa-list' },
+    { label: 'Grid', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+    { label: 'Board', value: 'board', icon: 'fa-solid fa-columns' },
+  ]
+  // iconColor tints each option's icon — handy for semantics
+  // (green = low risk, amber = attention, red = urgent).
+  colorOptions: SegmentedOption[] = [
+    { label: 'Low', value: 'low', icon: 'fa-solid fa-circle-check', iconColor: '#16a34a' },
+    { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },
+    { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
   ]
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSegmentedOptions, type SegmentedOption } from '@arcanalabs/ui-components/svelte'
 
   let view = $state<string | number | null>('list')
+  let priority = $state<string | number | null>('medium')
+
   const options: SegmentedOption[] = [
     { label: 'List', value: 'list' },
     { label: 'Grid', value: 'grid' },
+    { label: 'Board', value: 'board' },
+  ]
+  const iconOptions: SegmentedOption[] = [
+    { label: 'List', value: 'list', icon: 'fa-solid fa-list' },
+    { label: 'Grid', value: 'grid', icon: 'fa-solid fa-table-cells-large' },
+    { label: 'Board', value: 'board', icon: 'fa-solid fa-columns' },
+  ]
+  // \`iconColor\` tints each option's icon — handy for semantics
+  // (green = low risk, amber = attention, red = urgent).
+  const colorOptions: SegmentedOption[] = [
+    { label: 'Low', value: 'low', icon: 'fa-solid fa-circle-check', iconColor: '#16a34a' },
+    { label: 'Medium', value: 'medium', icon: 'fa-solid fa-triangle-exclamation', iconColor: '#f59e0b' },
+    { label: 'High', value: 'high', icon: 'fa-solid fa-fire', iconColor: '#dc2626' },
   ]
 </script>
 
-<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />`
+<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} ariaLabel="View mode" />
+
+<!-- Denser, square-cornered variant -->
+<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} {options} compact squared />
+
+<!-- With icons -->
+<ArcanaSegmentedOptions value={view} onValueChange={(v) => (view = v)} options={iconOptions} />
+
+<!-- With coloured icons -->
+<ArcanaSegmentedOptions value={priority} onValueChange={(v) => (priority = v)} options={colorOptions} />`
   },
 
   datePicker: {
@@ -728,13 +1124,17 @@ import { ArcanaDatePicker } from '@arcanalabs/ui-components/react'
 
 export function Dates() {
   const [date, setDate] = useState('2026-07-24')                       // 'YYYY-MM-DD'
+  const [month, setMonth] = useState('2026-07')                        // 'YYYY-MM'
+  const [year, setYear] = useState('2026')                             // 'YYYY'
   const [range, setRange] = useState<[string, string]>(['2026-07-01', '2026-07-15'])
   const [at, setAt] = useState('2026-07-24 14:30')                     // 'YYYY-MM-DD HH:mm'
   return (
     <>
-      <ArcanaDatePicker type="date" value={date} onValueChange={setDate} />
-      <ArcanaDatePicker type="daterange" value={range} onValueChange={setRange} locale="en" />
-      <ArcanaDatePicker type="datetime" value={at} onValueChange={setAt} />
+      <ArcanaDatePicker type="date" value={date} onValueChange={(v) => setDate(v as string)} />
+      <ArcanaDatePicker type="month" value={month} onValueChange={(v) => setMonth(v as string)} />
+      <ArcanaDatePicker type="year" value={year} onValueChange={(v) => setYear(v as string)} />
+      <ArcanaDatePicker type="daterange" value={range} onValueChange={(v) => setRange(v as [string, string])} locale="en" />
+      <ArcanaDatePicker type="datetime" value={at} onValueChange={(v) => setAt(v as string)} />
     </>
   )
 }`,
@@ -747,23 +1147,34 @@ import { ArcanaDatePickerComponent } from '@arcanalabs/ui-components/angular'
   imports: [ArcanaDatePickerComponent],
   template: \`
     <div arcanaDatePicker type="date" [(value)]="date"></div>
+    <div arcanaDatePicker type="month" [(value)]="month"></div>
+    <div arcanaDatePicker type="year" [(value)]="year"></div>
     <div arcanaDatePicker type="daterange" [(value)]="range" locale="en"></div>
     <div arcanaDatePicker type="datetime" [(value)]="at"></div>
   \`
 })
 export class DatesComponent {
-  date = '2026-07-24'
+  date = '2026-07-24'          // 'YYYY-MM-DD'
+  month = '2026-07'            // 'YYYY-MM'
+  year = '2026'                // 'YYYY'
   range: [string, string] = ['2026-07-01', '2026-07-15']
-  at = '2026-07-24 14:30'
+  at = '2026-07-24 14:30'      // 'YYYY-MM-DD HH:mm'
 }`,
     svelte: `<script lang="ts">
   import { ArcanaDatePicker } from '@arcanalabs/ui-components/svelte'
-  let date = $state('2026-07-24')
-  let at = $state('2026-07-24 14:30')
+
+  let date = $state('2026-07-24')          // 'YYYY-MM-DD'
+  let month = $state('2026-07')            // 'YYYY-MM'
+  let year = $state('2026')                // 'YYYY'
+  let range = $state<[string, string]>(['2026-07-01', '2026-07-15'])
+  let at = $state('2026-07-24 14:30')      // 'YYYY-MM-DD HH:mm'
 </script>
 
-<ArcanaDatePicker type="date" value={date} onValueChange={(v) => (date = v)} />
-<ArcanaDatePicker type="datetime" value={at} onValueChange={(v) => (at = v)} />`
+<ArcanaDatePicker type="date" value={date} onValueChange={(v) => (date = v as string)} />
+<ArcanaDatePicker type="month" value={month} onValueChange={(v) => (month = v as string)} />
+<ArcanaDatePicker type="year" value={year} onValueChange={(v) => (year = v as string)} />
+<ArcanaDatePicker type="daterange" value={range} onValueChange={(v) => (range = v as [string, string])} locale="en" />
+<ArcanaDatePicker type="datetime" value={at} onValueChange={(v) => (at = v as string)} />`
   },
 
   inputCurrency: {
@@ -800,11 +1211,21 @@ import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/
 
 export function Faq() {
   const [open, setOpen] = useState<string | string[] | null>('shipping')
+  const [openAnimated, setOpenAnimated] = useState<string | string[] | null>('shipping')
   return (
-    <ArcanaAccordion value={open} onValueChange={setOpen}>
-      <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
-      <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
-    </ArcanaAccordion>
+    <>
+      <ArcanaAccordion value={open} onValueChange={setOpen}>
+        <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="warranty" title="Warranty" disabled>12 months against defects.</ArcanaAccordionItem>
+      </ArcanaAccordion>
+
+      {/* \`animated\` slides the body open/closed instead of toggling instantly */}
+      <ArcanaAccordion value={openAnimated} onValueChange={setOpenAnimated} animated>
+        <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
+        <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
+      </ArcanaAccordion>
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
@@ -818,18 +1239,35 @@ import { ArcanaAccordionComponent, ArcanaAccordionItemComponent } from '@arcanal
     <div arcanaAccordion [(value)]="open">
       <div arcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</div>
       <div arcanaAccordionItem name="returns" title="Returns">30-day free returns.</div>
+      <div arcanaAccordionItem name="warranty" title="Warranty" [disabled]="true">12 months against defects.</div>
+    </div>
+
+    <!-- [animated] slides the body open/closed instead of toggling instantly -->
+    <div arcanaAccordion [(value)]="openAnimated" [animated]="true">
+      <div arcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</div>
+      <div arcanaAccordionItem name="returns" title="Returns">30-day free returns.</div>
     </div>
   \`
 })
 export class FaqComponent {
   open: string | string[] | null = 'shipping'
+  openAnimated: string | string[] | null = 'shipping'
 }`,
     svelte: `<script lang="ts">
   import { ArcanaAccordion, ArcanaAccordionItem } from '@arcanalabs/ui-components/svelte'
+
   let open = $state<string | string[] | null>('shipping')
+  let openAnimated = $state<string | string[] | null>('shipping')
 </script>
 
 <ArcanaAccordion value={open} onValueChange={(v) => (open = v)}>
+  <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
+  <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
+  <ArcanaAccordionItem name="warranty" title="Warranty" disabled>12 months against defects.</ArcanaAccordionItem>
+</ArcanaAccordion>
+
+<!-- \`animated\` slides the body open/closed instead of toggling instantly -->
+<ArcanaAccordion value={openAnimated} onValueChange={(v) => (openAnimated = v)} animated>
   <ArcanaAccordionItem name="shipping" title="Shipping">Ships in 2–3 days.</ArcanaAccordionItem>
   <ArcanaAccordionItem name="returns" title="Returns">30-day free returns.</ArcanaAccordionItem>
 </ArcanaAccordion>`
@@ -928,121 +1366,202 @@ export class RowActionsComponent {
   },
 
   dropdownItem: {
-    react: `import { ArcanaDropdown, ArcanaDropdownItem } from '@arcanalabs/ui-components/react'
+    react: `import { useState } from 'react'
+import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function Menu() {
+  const [last, setLast] = useState('—')
   return (
-    <ArcanaDropdown size="comfortable" trigger={<button>Menu ▾</button>}>
-      <ArcanaDropdownItem icon="fa-solid fa-user" suffix={<span>⌘P</span>}>Profile</ArcanaDropdownItem>
-      <ArcanaDropdownItem variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
-    </ArcanaDropdown>
+    <>
+      <ArcanaDropdown
+        placement="bottom-start"
+        size="comfortable"
+        trigger={<ArcanaButton variant="outline">Open menu ▾</ArcanaButton>}
+      >
+        {/* \`suffix\` renders on the right — usually a keyboard shortcut */}
+        <ArcanaDropdownItem icon="fa-solid fa-user" suffix={<span>⌘P</span>} onClick={() => setLast('Profile')}>Profile</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-check" variant="success" onClick={() => setLast('Approve')}>Approve</ArcanaDropdownItem>
+        <ArcanaDropdownItem icon="fa-solid fa-flag" variant="warning" onClick={() => setLast('Flag')}>Flag for review</ArcanaDropdownItem>
+        {/* \`divided\` draws a separator above the item */}
+        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={() => setLast('Delete')}>Delete</ArcanaDropdownItem>
+      </ArcanaDropdown>
+
+      <p>Last action: <strong>{last}</strong></p>
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaDropdownComponent, ArcanaDropdownItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [ArcanaDropdownComponent, ArcanaDropdownItemComponent],
+  imports: [ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent],
   template: \`
-    <div arcanaDropdown size="comfortable">
-      <button arcanaDropdownTrigger>Menu ▾</button>
-      <div arcanaDropdownItem icon="fa-solid fa-user" suffix="⌘P">Profile</div>
-      <div arcanaDropdownItem variant="danger" [divided]="true" (click)="del()">Delete</div>
+    <div arcanaDropdown placement="bottom-start" size="comfortable">
+      <button arcanaDropdownTrigger arcanaButton variant="outline">Open menu ▾</button>
+
+      <!-- suffix renders on the right — usually a keyboard shortcut -->
+      <div arcanaDropdownItem icon="fa-solid fa-user" suffix="⌘P" (click)="last = 'Profile'">Profile</div>
+      <div arcanaDropdownItem icon="fa-solid fa-check" variant="success" (click)="last = 'Approve'">Approve</div>
+      <div arcanaDropdownItem icon="fa-solid fa-flag" variant="warning" (click)="last = 'Flag'">Flag for review</div>
+      <!-- [divided] draws a separator above the item -->
+      <div arcanaDropdownItem icon="fa-solid fa-trash" variant="danger" [divided]="true" (click)="last = 'Delete'">Delete</div>
     </div>
+
+    <p>Last action: <strong>{{ last }}</strong></p>
   \`
 })
 export class MenuComponent {
-  del() {}
+  last = '—'
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaDropdown, ArcanaDropdownItem } from '@arcanalabs/ui-components/svelte'
-  function del() {}
+  import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/svelte'
+
+  let last = $state('—')
 </script>
 
-<ArcanaDropdown size="comfortable">
-  {#snippet trigger({ toggle })}<button onclick={toggle}>Menu ▾</button>{/snippet}
-  <ArcanaDropdownItem icon="fa-solid fa-user">
+<ArcanaDropdown placement="bottom-start" size="comfortable">
+  {#snippet trigger({ toggle })}
+    <ArcanaButton variant="outline" onClick={toggle}>Open menu ▾</ArcanaButton>
+  {/snippet}
+
+  <!-- the \`suffix\` snippet renders on the right — usually a keyboard shortcut -->
+  <ArcanaDropdownItem icon="fa-solid fa-user" onClick={() => (last = 'Profile')}>
     Profile
     {#snippet suffix()}⌘P{/snippet}
   </ArcanaDropdownItem>
-  <ArcanaDropdownItem variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
-</ArcanaDropdown>`
+  <ArcanaDropdownItem icon="fa-solid fa-check" variant="success" onClick={() => (last = 'Approve')}>Approve</ArcanaDropdownItem>
+  <ArcanaDropdownItem icon="fa-solid fa-flag" variant="warning" onClick={() => (last = 'Flag')}>Flag for review</ArcanaDropdownItem>
+  <!-- \`divided\` draws a separator above the item -->
+  <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={() => (last = 'Delete')}>Delete</ArcanaDropdownItem>
+</ArcanaDropdown>
+
+<p>Last action: <strong>{last}</strong></p>`
   },
 
   table: {
-    react: `import { ArcanaTable, type ArcanaTableColumn } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaTable, ArcanaBadge, type ArcanaTableColumn } from '@arcanalabs/ui-components/react'
 
 const columns: ArcanaTableColumn[] = [
   { key: 'sku', label: 'SKU', width: '96px' },
-  { key: 'name', label: 'Product', render: ({ row }) => <strong>{row.name}</strong> },
+  // A custom cell can render any component — here a status badge next to the name.
+  { key: 'name', label: 'Product', render: ({ row }) => (
+    <>
+      <strong>{row.name}</strong>
+      <ArcanaBadge variant={row.status === 'low' ? 'amber' : 'green'} size="sm">
+        {row.status === 'low' ? 'Low stock' : 'In stock'}
+      </ArcanaBadge>
+    </>
+  ) },
+  { key: 'qty', label: 'Qty', align: 'right' },
   { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
 ]
-const rows = [{ sku: 'GLP-13', name: 'Botijão P13', total: 260 }]
+const rows = [
+  { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
+  { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
+  { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+]
 
 export function ProductsTable() {
   return (
     <ArcanaTable columns={columns} rows={rows} footer={
-      <tr><td colSpan={2}>Total</td><td className="arcana-table__td--right">R$ 260,00</td></tr>
+      <tr><td colSpan={3}>Total of items</td><td className="arcana-table__td--right">R$ 785,00</td></tr>
     } />
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaTableComponent, type ArcanaTableColumn } from '@arcanalabs/ui-components/angular'
+import { ArcanaTableComponent, ArcanaBadgeComponent, type ArcanaTableColumn } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-products-table',
   standalone: true,
-  imports: [ArcanaTableComponent],
+  imports: [ArcanaTableComponent, ArcanaBadgeComponent],
   template: \`
     <div arcanaTable [columns]="columns" [rows]="rows" [cellTemplates]="{ name: nameCell }" [footerTemplate]="foot"></div>
-    <ng-template #nameCell let-row="row"><strong>{{ row.name }}</strong></ng-template>
-    <ng-template #foot><tr><td colspan="2">Total</td><td class="arcana-table__td--right">R$ 260,00</td></tr></ng-template>
+
+    <!-- A custom cell can render any component — here a status badge next to the name. -->
+    <ng-template #nameCell let-row="row">
+      <strong>{{ row.name }}</strong>
+      <span arcanaBadge [variant]="row.status === 'low' ? 'amber' : 'green'" size="sm">
+        {{ row.status === 'low' ? 'Low stock' : 'In stock' }}
+      </span>
+    </ng-template>
+    <ng-template #foot><tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">R$ 785,00</td></tr></ng-template>
   \`
 })
 export class ProductsTableComponent {
   columns: ArcanaTableColumn[] = [
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product' },
+    { key: 'qty', label: 'Qty', align: 'right' },
     { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
   ]
-  rows = [{ sku: 'GLP-13', name: 'Botijão P13', total: 260 }]
+  rows = [
+    { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
+    { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
+    { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+  ]
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaTable, type ArcanaTableColumn } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaTable, ArcanaBadge, type ArcanaTableColumn } from '@arcanalabs/ui-components/svelte'
 
   const columns: ArcanaTableColumn[] = [
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product', render: nameCell },
+    { key: 'qty', label: 'Qty', align: 'right' },
     { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
   ]
-  const rows = [{ sku: 'GLP-13', name: 'Botijão P13', total: 260 }]
+  const rows = [
+    { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
+    { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
+    { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+  ]
 </script>
 
-{#snippet nameCell({ row })}<strong>{row.name}</strong>{/snippet}
+<!-- A custom cell can render any component — here a status badge next to the name. -->
+{#snippet nameCell({ row })}
+  <strong>{row.name}</strong>
+  <ArcanaBadge variant={row.status === 'low' ? 'amber' : 'green'} size="sm">
+    {row.status === 'low' ? 'Low stock' : 'In stock'}
+  </ArcanaBadge>
+{/snippet}
 
 <ArcanaTable {columns} {rows}>
-  {#snippet footer()}<tr><td colspan="2">Total</td><td class="arcana-table__td--right">R$ 260,00</td></tr>{/snippet}
+  {#snippet footer()}<tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">R$ 785,00</td></tr>{/snippet}
 </ArcanaTable>`
   },
 
   specSheet: {
     react: `import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
 
+const form = {
+  trading_name: 'Arcana Labs Tecnologia LTDA',
+  document_number: '12.345.678/0001-90',
+  state_registration: '',                 // empty → renders the "not provided" text
+  phone: '(11) 4002-8922',
+  email: 'contato@arcanalabs.com',
+}
+
 export function OrgSheet() {
   return (
     <ArcanaSpecSheet
-      docNum="Cadastro Nº 042"
+      docNum="Record Nº 042"
       title="Arcana Labs"
       metaLabel="Status"
-      meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>}
-      footer={<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>}
+      meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>}
+      footer={<ArcanaButton variant="outline">Change data</ArcanaButton>}
     >
-      <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
-        <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} />
+      <ArcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+        <ArcanaSpecSheetField label="Legal name" value={form.trading_name} />
         <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-        <ArcanaSpecSheetField label="Inscrição Estadual" value={form.state_registration} />
+        <ArcanaSpecSheetField label="State registration" value={form.state_registration} />
+      </ArcanaSpecSheetSection>
+
+      {/* A second section — each one gets its own number, icon and accent colour */}
+      <ArcanaSpecSheetSection title="Contact" sectionNum="§ 02" icon="fa-solid fa-phone" iconColor="emerald">
+        <ArcanaSpecSheetField label="Phone" value={form.phone} />
+        <ArcanaSpecSheetField label="E-mail" value={form.email} />
       </ArcanaSpecSheetSection>
     </ArcanaSpecSheet>
   )
@@ -1055,125 +1574,198 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
   standalone: true,
   imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <article arcanaSpecSheet docNum="Cadastro Nº 042" title="Arcana Labs" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
-      <section arcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" [columns]="3">
-        <div arcanaSpecSheetField label="Razão Social" [value]="form.trading_name"></div>
+    <article arcanaSpecSheet docNum="Record Nº 042" title="Arcana Labs" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
+      <section arcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" [columns]="3">
+        <div arcanaSpecSheetField label="Legal name" [value]="form.trading_name"></div>
         <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
-        <div arcanaSpecSheetField label="Inscrição Estadual" [value]="form.state_registration"></div>
+        <div arcanaSpecSheetField label="State registration" [value]="form.state_registration"></div>
+      </section>
+
+      <!-- A second section — each one gets its own number, icon and accent colour -->
+      <section arcanaSpecSheetSection title="Contact" sectionNum="§ 02" icon="fa-solid fa-phone" iconColor="emerald">
+        <div arcanaSpecSheetField label="Phone" [value]="form.phone"></div>
+        <div arcanaSpecSheetField label="E-mail" [value]="form.email"></div>
       </section>
     </article>
-    <ng-template #meta><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></ng-template>
-    <ng-template #foot><button arcanaButton variant="outline">Alterar Dados</button></ng-template>
+    <ng-template #meta><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span></ng-template>
+    <ng-template #foot><button arcanaButton variant="outline">Change data</button></ng-template>
   \`
 })
 export class OrgSheetComponent {
-  form = { trading_name: 'Arcana Labs Tecnologia LTDA', document_number: '12.345.678/0001-90', state_registration: '110.042.490.114' }
+  form = {
+    trading_name: 'Arcana Labs Tecnologia LTDA',
+    document_number: '12.345.678/0001-90',
+    state_registration: '',                 // empty → renders the "not provided" text
+    phone: '(11) 4002-8922',
+    email: 'contato@arcanalabs.com',
+  }
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
-  const form = { trading_name: 'Arcana Labs Tecnologia LTDA', document_number: '12.345.678/0001-90', state_registration: '110.042.490.114' }
+
+  const form = {
+    trading_name: 'Arcana Labs Tecnologia LTDA',
+    document_number: '12.345.678/0001-90',
+    state_registration: '',                 // empty → renders the "not provided" text
+    phone: '(11) 4002-8922',
+    email: 'contato@arcanalabs.com',
+  }
 </script>
 
-<ArcanaSpecSheet docNum="Cadastro Nº 042" title="Arcana Labs" metaLabel="Status">
-  {#snippet meta()}<span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>{/snippet}
-  <ArcanaSpecSheetSection title="Dados Cadastrais" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
-    <ArcanaSpecSheetField label="Razão Social" value={form.trading_name} />
+<ArcanaSpecSheet docNum="Record Nº 042" title="Arcana Labs" metaLabel="Status">
+  {#snippet meta()}<span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>{/snippet}
+
+  <ArcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+    <ArcanaSpecSheetField label="Legal name" value={form.trading_name} />
     <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-    <ArcanaSpecSheetField label="Inscrição Estadual" value={form.state_registration} />
+    <ArcanaSpecSheetField label="State registration" value={form.state_registration} />
   </ArcanaSpecSheetSection>
-  {#snippet footer()}<ArcanaButton variant="outline">Alterar Dados</ArcanaButton>{/snippet}
+
+  <!-- A second section — each one gets its own number, icon and accent colour -->
+  <ArcanaSpecSheetSection title="Contact" sectionNum="§ 02" icon="fa-solid fa-phone" iconColor="emerald">
+    <ArcanaSpecSheetField label="Phone" value={form.phone} />
+    <ArcanaSpecSheetField label="E-mail" value={form.email} />
+  </ArcanaSpecSheetSection>
+
+  {#snippet footer()}<ArcanaButton variant="outline">Change data</ArcanaButton>{/snippet}
 </ArcanaSpecSheet>`
   },
 
   specSheetSection: {
-    react: `import { ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
 
-// Nested inside a <ArcanaSpecSheet>.
 export function Financials() {
   return (
-    <ArcanaSpecSheetSection
-      title="Financeiro"
-      sectionNum="§ 03"
-      icon="fa-solid fa-dollar-sign"
-      iconColor="amber"
-      columns={3}
-      actions={<ArcanaButton variant="ghost">Alterar</ArcanaButton>}
-    >
-      <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
-      <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
-    </ArcanaSpecSheetSection>
+    // \`flat\` drops the sheet chrome so the sections stand on their own.
+    <ArcanaSpecSheet flat>
+      <ArcanaSpecSheetSection
+        title="Financial"
+        sectionNum="§ 03"
+        icon="fa-solid fa-dollar-sign"
+        iconColor="amber"
+        columns={3}
+        actions={<ArcanaButton variant="ghost">Change</ArcanaButton>}
+      >
+        <ArcanaSpecSheetField label="Credit limit" value="R$ 5.000,00" />
+        <ArcanaSpecSheetField label="Balance" value="R$ 1.240,00" />
+        <ArcanaSpecSheetField label="Due date" value="Every 10th" />
+      </ArcanaSpecSheetSection>
+
+      {/* \`noRowDividers\` removes the rules between rows — good for free text */}
+      <ArcanaSpecSheetSection title="Notes" icon="fa-solid fa-note-sticky" iconColor="violet" noRowDividers>
+        <ArcanaSpecSheetField label="Internal notes" value="Customer prefers morning deliveries." span={2} />
+      </ArcanaSpecSheetSection>
+    </ArcanaSpecSheet>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-financials',
   standalone: true,
-  imports: [ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
+  imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <!-- Nested inside a <article arcanaSpecSheet> -->
-    <section arcanaSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
-      <div arcanaSpecSheetField label="Limite" value="R$ 5.000,00"></div>
-      <div arcanaSpecSheetField label="Saldo" value="R$ 1.240,00"></div>
-    </section>
-    <ng-template #acts><button arcanaButton variant="ghost">Alterar</button></ng-template>
+    <!-- [flat] drops the sheet chrome so the sections stand on their own. -->
+    <article arcanaSpecSheet [flat]="true">
+      <section arcanaSpecSheetSection title="Financial" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
+        <div arcanaSpecSheetField label="Credit limit" value="R$ 5.000,00"></div>
+        <div arcanaSpecSheetField label="Balance" value="R$ 1.240,00"></div>
+        <div arcanaSpecSheetField label="Due date" value="Every 10th"></div>
+      </section>
+
+      <!-- [noRowDividers] removes the rules between rows — good for free text -->
+      <section arcanaSpecSheetSection title="Notes" icon="fa-solid fa-note-sticky" iconColor="violet" [noRowDividers]="true">
+        <div arcanaSpecSheetField label="Internal notes" value="Customer prefers morning deliveries." [span]="2"></div>
+      </section>
+    </article>
+    <ng-template #acts><button arcanaButton variant="ghost">Change</button></ng-template>
   \`
 })
 export class FinancialsComponent {}`,
     svelte: `<script lang="ts">
-  import { ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<!-- Nested inside a <ArcanaSpecSheet> -->
-<ArcanaSpecSheetSection title="Financeiro" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
-  {#snippet actions()}<ArcanaButton variant="ghost">Alterar</ArcanaButton>{/snippet}
-  <ArcanaSpecSheetField label="Limite" value="R$ 5.000,00" />
-  <ArcanaSpecSheetField label="Saldo" value="R$ 1.240,00" />
-</ArcanaSpecSheetSection>`
+<!-- \`flat\` drops the sheet chrome so the sections stand on their own. -->
+<ArcanaSpecSheet flat>
+  <ArcanaSpecSheetSection title="Financial" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
+    {#snippet actions()}<ArcanaButton variant="ghost">Change</ArcanaButton>{/snippet}
+    <ArcanaSpecSheetField label="Credit limit" value="R$ 5.000,00" />
+    <ArcanaSpecSheetField label="Balance" value="R$ 1.240,00" />
+    <ArcanaSpecSheetField label="Due date" value="Every 10th" />
+  </ArcanaSpecSheetSection>
+
+  <!-- \`noRowDividers\` removes the rules between rows — good for free text -->
+  <ArcanaSpecSheetSection title="Notes" icon="fa-solid fa-note-sticky" iconColor="violet" noRowDividers>
+    <ArcanaSpecSheetField label="Internal notes" value="Customer prefers morning deliveries." span={2} />
+  </ArcanaSpecSheetSection>
+</ArcanaSpecSheet>`
   },
 
   specSheetField: {
-    react: `import { ArcanaSpecSheetField } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField } from '@arcanalabs/ui-components/react'
 
+// Fields always live inside a section — the section drives the column grid.
 export function Fields() {
   return (
-    <>
-      <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-      <ArcanaSpecSheetField label="Observações" value="" emptyText="Não informado" />
-      <ArcanaSpecSheetField label="Status" span={2}>
-        <span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
-      </ArcanaSpecSheetField>
-    </>
+    <ArcanaSpecSheet flat>
+      <ArcanaSpecSheetSection columns={2}>
+        <ArcanaSpecSheetField label="Name" value="Ana Ribeiro" />
+
+        {/* Empty value → \`emptyText\` is rendered in the muted style */}
+        <ArcanaSpecSheetField label="Nickname" value="" emptyText="Not provided" />
+
+        {/* Children replace the value entirely; \`span\` widens the field */}
+        <ArcanaSpecSheetField label="Status" span={2}>
+          <span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>
+        </ArcanaSpecSheetField>
+      </ArcanaSpecSheetSection>
+    </ArcanaSpecSheet>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSpecSheetFieldComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent } from '@arcanalabs/ui-components/angular'
 
+// Fields always live inside a section — the section drives the column grid.
 @Component({
   selector: 'app-fields',
   standalone: true,
-  imports: [ArcanaSpecSheetFieldComponent],
+  imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent],
   template: \`
-    <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
-    <div arcanaSpecSheetField label="Observações" value="" emptyText="Não informado"></div>
-    <div arcanaSpecSheetField label="Status" [span]="2" [valueTemplate]="status"></div>
-    <ng-template #status><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span></ng-template>
+    <article arcanaSpecSheet [flat]="true">
+      <section arcanaSpecSheetSection [columns]="2">
+        <div arcanaSpecSheetField label="Name" value="Ana Ribeiro"></div>
+
+        <!-- Empty value → emptyText is rendered in the muted style -->
+        <div arcanaSpecSheetField label="Nickname" value="" emptyText="Not provided"></div>
+
+        <!-- [valueTemplate] replaces the value entirely; [span] widens the field -->
+        <div arcanaSpecSheetField label="Status" [span]="2" [valueTemplate]="status"></div>
+      </section>
+    </article>
+    <ng-template #status><span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span></ng-template>
   \`
 })
-export class FieldsComponent {
-  form = { document_number: '12.345.678/0001-90' }
-}`,
+export class FieldsComponent {}`,
     svelte: `<script lang="ts">
-  import { ArcanaSpecSheetField } from '@arcanalabs/ui-components/svelte'
-  const form = { document_number: '12.345.678/0001-90' }
+  import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-<ArcanaSpecSheetField label="Observações" value="" emptyText="Não informado" />
-<ArcanaSpecSheetField label="Status" span={2}>
-  <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Ativo</span>
-</ArcanaSpecSheetField>`
+<!-- Fields always live inside a section — the section drives the column grid. -->
+<ArcanaSpecSheet flat>
+  <ArcanaSpecSheetSection columns={2}>
+    <ArcanaSpecSheetField label="Name" value="Ana Ribeiro" />
+
+    <!-- Empty value → \`emptyText\` is rendered in the muted style -->
+    <ArcanaSpecSheetField label="Nickname" value="" emptyText="Not provided" />
+
+    <!-- Children replace the value entirely; \`span\` widens the field -->
+    <ArcanaSpecSheetField label="Status" span={2}>
+      <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>
+    </ArcanaSpecSheetField>
+  </ArcanaSpecSheetSection>
+</ArcanaSpecSheet>`
   },
 
   summaryTiles: {
@@ -1181,11 +1773,20 @@ export class FieldsComponent {
 
 export function Kpis() {
   return (
-    <ArcanaSummaryTilesGroup columns={3}>
-      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
-      <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
-    </ArcanaSummaryTilesGroup>
+    <>
+      {/* Grid layout — \`columns\` sets how many tiles fit per row */}
+      <ArcanaSummaryTilesGroup columns={3}>
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
+        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+      </ArcanaSummaryTilesGroup>
+
+      {/* format="rows" stacks the tiles — ideal for narrow sidebars */}
+      <ArcanaSummaryTilesGroup format="rows">
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
+      </ArcanaSummaryTilesGroup>
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
@@ -1196,10 +1797,17 @@ import { ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent } from '@a
   standalone: true,
   imports: [ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent],
   template: \`
+    <!-- Grid layout — [columns] sets how many tiles fit per row -->
     <div arcanaSummaryTilesGroup [columns]="3">
-      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas"></div>
-      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00"></div>
+      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods"></div>
+      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods"></div>
       <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00"></div>
+    </div>
+
+    <!-- format="rows" stacks the tiles — ideal for narrow sidebars -->
+    <div arcanaSummaryTilesGroup format="rows">
+      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods"></div>
+      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods"></div>
     </div>
   \`
 })
@@ -1208,34 +1816,73 @@ export class KpisComponent {}`,
   import { ArcanaSummaryTilesGroup, ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
 </script>
 
+<!-- Grid layout — \`columns\` sets how many tiles fit per row -->
 <ArcanaSummaryTilesGroup columns={3}>
-  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Entradas" value="R$ 1.250,00" sub="4 formas" />
-  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Despesas" value="R$ 85,00" />
+  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
+  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
   <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+</ArcanaSummaryTilesGroup>
+
+<!-- format="rows" stacks the tiles — ideal for narrow sidebars -->
+<ArcanaSummaryTilesGroup format="rows">
+  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
+  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
 </ArcanaSummaryTilesGroup>`
   },
 
   summaryTile: {
-    react: `import { ArcanaSummaryTile } from '@arcanalabs/ui-components/react'
+    react: `import { ArcanaSummaryTile, ArcanaBadge } from '@arcanalabs/ui-components/react'
 
-export function Approved() {
-  return <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />
+export function Kpis() {
+  return (
+    <>
+      {/* One tile per tone */}
+      <ArcanaSummaryTile tone="neutral" icon="fa-solid fa-box" label="Orders" value="128" sub="today" />
+      <ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Approved" value="112" />
+      <ArcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Canceled" value="16" />
+
+      {/* \`valueSlot\` replaces the plain value with any node */}
+      <ArcanaSummaryTile
+        tone="indigo"
+        icon="fa-solid fa-percent"
+        label="Conversion"
+        valueSlot={<ArcanaBadge variant="green">87.5%</ArcanaBadge>}
+      />
+    </>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSummaryTileComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSummaryTileComponent, ArcanaBadgeComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-approved',
+  selector: 'app-kpis',
   standalone: true,
-  imports: [ArcanaSummaryTileComponent],
-  template: \`<div arcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje"></div>\`
+  imports: [ArcanaSummaryTileComponent, ArcanaBadgeComponent],
+  template: \`
+    <!-- One tile per tone -->
+    <div arcanaSummaryTile tone="neutral" icon="fa-solid fa-box" label="Orders" value="128" sub="today"></div>
+    <div arcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Approved" value="112"></div>
+    <div arcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Canceled" value="16"></div>
+
+    <!-- Content projected as [tileValue] replaces the plain value -->
+    <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-percent" label="Conversion">
+      <span tileValue><span arcanaBadge variant="green">87.5%</span></span>
+    </div>
+  \`
 })
-export class ApprovedComponent {}`,
+export class KpisComponent {}`,
     svelte: `<script lang="ts">
-  import { ArcanaSummaryTile } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSummaryTile, ArcanaBadge } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Aprovados" value="112" sub="hoje" />`
+<!-- One tile per tone -->
+<ArcanaSummaryTile tone="neutral" icon="fa-solid fa-box" label="Orders" value="128" sub="today" />
+<ArcanaSummaryTile tone="positive" icon="fa-solid fa-check" label="Approved" value="112" />
+<ArcanaSummaryTile tone="negative" icon="fa-solid fa-xmark" label="Canceled" value="16" />
+
+<!-- The \`valueSlot\` snippet replaces the plain value -->
+{#snippet conversion()}<ArcanaBadge variant="green">87.5%</ArcanaBadge>{/snippet}
+<ArcanaSummaryTile tone="indigo" icon="fa-solid fa-percent" label="Conversion" valueSlot={conversion} />`
   },
 
   settingsList: {
@@ -1244,10 +1891,21 @@ import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcan
 
 export function Settings() {
   const [enabled, setEnabled] = useState(true)
+  const [email, setEmail] = useState(false)
   return (
     <ArcanaSettingsList>
-      <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
-        <ArcanaSwitch value={enabled} onValueChange={setEnabled} ariaLabel="Recursos avançados" />
+      <ArcanaSettingsListItem label="Advanced features" caption="Enables internal functionality.">
+        <ArcanaSwitch value={enabled} onValueChange={setEnabled} ariaLabel="Advanced features" />
+      </ArcanaSettingsListItem>
+
+      <ArcanaSettingsListItem label="E-mail notifications" caption="Daily activity digest.">
+        <ArcanaSwitch value={email} onValueChange={setEmail} ariaLabel="E-mail" />
+      </ArcanaSettingsListItem>
+
+      {/* The trailing slot takes any control — not just a switch */}
+      <ArcanaSettingsListItem label="Plan" caption="Your current subscription.">
+        <span className="arcana-settings-list__current-value">Professional</span>
+        <button className="arcana-settings-list__edit-btn" type="button">Change</button>
       </ArcanaSettingsListItem>
     </ArcanaSettingsList>
   )
@@ -1261,171 +1919,384 @@ import { ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwi
   imports: [ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
     <div arcanaSettingsList>
-      <div arcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
-        <button arcanaSwitch [(value)]="enabled" ariaLabel="Recursos avançados"></button>
+      <div arcanaSettingsListItem label="Advanced features" caption="Enables internal functionality.">
+        <button arcanaSwitch [(value)]="enabled" ariaLabel="Advanced features"></button>
+      </div>
+
+      <div arcanaSettingsListItem label="E-mail notifications" caption="Daily activity digest.">
+        <button arcanaSwitch [(value)]="email" ariaLabel="E-mail"></button>
+      </div>
+
+      <!-- The trailing slot takes any control — not just a switch -->
+      <div arcanaSettingsListItem label="Plan" caption="Your current subscription.">
+        <span class="arcana-settings-list__current-value">Professional</span>
+        <button class="arcana-settings-list__edit-btn" type="button">Change</button>
       </div>
     </div>
   \`
 })
 export class SettingsComponent {
   enabled = true
+  email = false
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
+
   let enabled = $state(true)
+  let email = $state(false)
 </script>
 
 <ArcanaSettingsList>
-  <ArcanaSettingsListItem label="Recursos avançados" caption="Habilita funcionalidades internas.">
-    <ArcanaSwitch value={enabled} onValueChange={(v) => (enabled = v)} ariaLabel="Recursos avançados" />
+  <ArcanaSettingsListItem label="Advanced features" caption="Enables internal functionality.">
+    <ArcanaSwitch value={enabled} onValueChange={(v) => (enabled = v)} ariaLabel="Advanced features" />
+  </ArcanaSettingsListItem>
+
+  <ArcanaSettingsListItem label="E-mail notifications" caption="Daily activity digest.">
+    <ArcanaSwitch value={email} onValueChange={(v) => (email = v)} ariaLabel="E-mail" />
+  </ArcanaSettingsListItem>
+
+  <!-- The trailing slot takes any control — not just a switch -->
+  <ArcanaSettingsListItem label="Plan" caption="Your current subscription.">
+    <span class="arcana-settings-list__current-value">Professional</span>
+    <button class="arcana-settings-list__edit-btn" type="button">Change</button>
   </ArcanaSettingsListItem>
 </ArcanaSettingsList>`
   },
 
   settingsListGroup: {
-    react: `import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem } from '@arcanalabs/ui-components/react'
+    react: `import { useState } from 'react'
+import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
 export function OrderSettings() {
+  const [accept, setAccept] = useState(true)
+  const [autoConfirm, setAutoConfirm] = useState(false)
+  const [tracking, setTracking] = useState(true)
   return (
     <ArcanaSettingsList>
-      <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-        <ArcanaSettingsListItem label="Aceitar pedidos">…</ArcanaSettingsListItem>
+      <ArcanaSettingsListGroup title="Orders" icon="fa-solid fa-cart-shopping" iconColor="indigo" sectionNum="§ 01" meta="2 settings">
+        <ArcanaSettingsListItem label="Accept orders" caption="Turn the storefront on or off.">
+          <ArcanaSwitch value={accept} onValueChange={setAccept} ariaLabel="Accept orders" />
+        </ArcanaSettingsListItem>
+        {/* \`nested\` indents a dependent setting */}
+        <ArcanaSettingsListItem label="Auto-confirm" caption="Skips manual review." nested>
+          <ArcanaSwitch value={autoConfirm} onValueChange={setAutoConfirm} ariaLabel="Auto-confirm" />
+        </ArcanaSettingsListItem>
+      </ArcanaSettingsListGroup>
+
+      {/* Collapsible group, starting closed and in the denser spacing */}
+      <ArcanaSettingsListGroup title="Delivery" icon="fa-solid fa-truck" iconColor="emerald" collapsible defaultCollapsed compact>
+        <ArcanaSettingsListItem label="Real-time tracking">
+          <ArcanaSwitch value={tracking} onValueChange={setTracking} ariaLabel="Real-time tracking" />
+        </ArcanaSettingsListItem>
       </ArcanaSettingsListGroup>
     </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-order-settings',
   standalone: true,
-  imports: [ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent],
+  imports: [ArcanaSettingsListComponent, ArcanaSettingsListGroupComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
     <div arcanaSettingsList>
-      <section arcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-        <div arcanaSettingsListItem label="Aceitar pedidos">…</div>
+      <section arcanaSettingsListGroup title="Orders" icon="fa-solid fa-cart-shopping" iconColor="indigo" sectionNum="§ 01" meta="2 settings">
+        <div arcanaSettingsListItem label="Accept orders" caption="Turn the storefront on or off.">
+          <button arcanaSwitch [(value)]="accept" ariaLabel="Accept orders"></button>
+        </div>
+        <!-- [nested] indents a dependent setting -->
+        <div arcanaSettingsListItem label="Auto-confirm" caption="Skips manual review." [nested]="true">
+          <button arcanaSwitch [(value)]="autoConfirm" ariaLabel="Auto-confirm"></button>
+        </div>
+      </section>
+
+      <!-- Collapsible group, starting closed and in the denser spacing -->
+      <section arcanaSettingsListGroup title="Delivery" icon="fa-solid fa-truck" iconColor="emerald" [collapsible]="true" [defaultCollapsed]="true" [compact]="true">
+        <div arcanaSettingsListItem label="Real-time tracking">
+          <button arcanaSwitch [(value)]="tracking" ariaLabel="Real-time tracking"></button>
+        </div>
       </section>
     </div>
   \`
 })
-export class OrderSettingsComponent {}`,
+export class OrderSettingsComponent {
+  accept = true
+  autoConfirm = false
+  tracking = true
+}`,
     svelte: `<script lang="ts">
-  import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsList, ArcanaSettingsListGroup, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
+
+  let accept = $state(true)
+  let autoConfirm = $state(false)
+  let tracking = $state(true)
 </script>
 
 <ArcanaSettingsList>
-  <ArcanaSettingsListGroup title="Pedidos" icon="fa-solid fa-cart-shopping" iconColor="indigo" meta="2 configs">
-    <ArcanaSettingsListItem label="Aceitar pedidos">…</ArcanaSettingsListItem>
+  <ArcanaSettingsListGroup title="Orders" icon="fa-solid fa-cart-shopping" iconColor="indigo" sectionNum="§ 01" meta="2 settings">
+    <ArcanaSettingsListItem label="Accept orders" caption="Turn the storefront on or off.">
+      <ArcanaSwitch value={accept} onValueChange={(v) => (accept = v)} ariaLabel="Accept orders" />
+    </ArcanaSettingsListItem>
+    <!-- \`nested\` indents a dependent setting -->
+    <ArcanaSettingsListItem label="Auto-confirm" caption="Skips manual review." nested>
+      <ArcanaSwitch value={autoConfirm} onValueChange={(v) => (autoConfirm = v)} ariaLabel="Auto-confirm" />
+    </ArcanaSettingsListItem>
+  </ArcanaSettingsListGroup>
+
+  <!-- Collapsible group, starting closed and in the denser spacing -->
+  <ArcanaSettingsListGroup title="Delivery" icon="fa-solid fa-truck" iconColor="emerald" collapsible defaultCollapsed compact>
+    <ArcanaSettingsListItem label="Real-time tracking">
+      <ArcanaSwitch value={tracking} onValueChange={(v) => (tracking = v)} ariaLabel="Real-time tracking" />
+    </ArcanaSettingsListItem>
   </ArcanaSettingsListGroup>
 </ArcanaSettingsList>`
   },
 
   settingsListItem: {
     react: `import { useState } from 'react'
-import { ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
+import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/react'
 
-export function EmailRow() {
-  const [notifyEmail, setNotifyEmail] = useState(true)
+export function Rows() {
+  const [subscription, setSubscription] = useState(true)
+  const [showWebApp, setShowWebApp] = useState(false)
   return (
-    <ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-      <ArcanaSwitch value={notifyEmail} onValueChange={setNotifyEmail} ariaLabel="E-mail" />
-    </ArcanaSettingsListItem>
+    <ArcanaSettingsList>
+      {/* \`label\` accepts a node, so it can carry a badge */}
+      <ArcanaSettingsListItem
+        label={<>Subscription v2 <span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span></>}
+        caption="New SaaS billing engine."
+      >
+        <ArcanaSwitch value={subscription} onValueChange={setSubscription} ariaLabel="Subscription v2" />
+      </ArcanaSettingsListItem>
+
+      {/* \`nested\` indents a dependent setting */}
+      <ArcanaSettingsListItem label="Show in the web app" caption="Visible on the customer portal." nested>
+        <ArcanaSwitch value={showWebApp} onValueChange={setShowWebApp} ariaLabel="Show in the web app" />
+      </ArcanaSettingsListItem>
+
+      {/* \`disabled\` dims the whole row — disable the control too */}
+      <ArcanaSettingsListItem label="Unavailable feature" caption="Not included in your plan." disabled>
+        <ArcanaSwitch value={false} disabled ariaLabel="Unavailable feature" />
+      </ArcanaSettingsListItem>
+    </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSettingsListItemComponent, ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-email-row',
+  selector: 'app-rows',
   standalone: true,
-  imports: [ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
+  imports: [ArcanaSettingsListComponent, ArcanaSettingsListItemComponent, ArcanaSwitchComponent],
   template: \`
-    <div arcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-      <button arcanaSwitch [(value)]="notifyEmail" ariaLabel="E-mail"></button>
+    <div arcanaSettingsList>
+      <!-- [labelTemplate] replaces the plain label, so it can carry a badge -->
+      <div arcanaSettingsListItem [labelTemplate]="subLabel" caption="New SaaS billing engine.">
+        <button arcanaSwitch [(value)]="subscription" ariaLabel="Subscription v2"></button>
+      </div>
+
+      <!-- [nested] indents a dependent setting -->
+      <div arcanaSettingsListItem label="Show in the web app" caption="Visible on the customer portal." [nested]="true">
+        <button arcanaSwitch [(value)]="showWebApp" ariaLabel="Show in the web app"></button>
+      </div>
+
+      <!-- [disabled] dims the whole row — disable the control too -->
+      <div arcanaSettingsListItem label="Unavailable feature" caption="Not included in your plan." [disabled]="true">
+        <button arcanaSwitch [value]="false" [disabled]="true" ariaLabel="Unavailable feature"></button>
+      </div>
     </div>
+    <ng-template #subLabel>
+      Subscription v2 <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>
+    </ng-template>
   \`
 })
-export class EmailRowComponent {
-  notifyEmail = true
+export class RowsComponent {
+  subscription = true
+  showWebApp = false
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
-  let notifyEmail = $state(true)
+  import { ArcanaSettingsList, ArcanaSettingsListItem, ArcanaSwitch } from '@arcanalabs/ui-components/svelte'
+
+  let subscription = $state(true)
+  let showWebApp = $state(false)
 </script>
 
-<ArcanaSettingsListItem label="Notificações por e-mail" caption="Resumo diário.">
-  <ArcanaSwitch value={notifyEmail} onValueChange={(v) => (notifyEmail = v)} ariaLabel="E-mail" />
-</ArcanaSettingsListItem>`
+<!-- \`label\` accepts a snippet, so it can carry a badge -->
+{#snippet subLabel()}
+  Subscription v2 <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>
+{/snippet}
+
+<ArcanaSettingsList>
+  <ArcanaSettingsListItem label={subLabel} caption="New SaaS billing engine.">
+    <ArcanaSwitch value={subscription} onValueChange={(v) => (subscription = v)} ariaLabel="Subscription v2" />
+  </ArcanaSettingsListItem>
+
+  <!-- \`nested\` indents a dependent setting -->
+  <ArcanaSettingsListItem label="Show in the web app" caption="Visible on the customer portal." nested>
+    <ArcanaSwitch value={showWebApp} onValueChange={(v) => (showWebApp = v)} ariaLabel="Show in the web app" />
+  </ArcanaSettingsListItem>
+
+  <!-- \`disabled\` dims the whole row — disable the control too -->
+  <ArcanaSettingsListItem label="Unavailable feature" caption="Not included in your plan." disabled>
+    <ArcanaSwitch value={false} disabled ariaLabel="Unavailable feature" />
+  </ArcanaSettingsListItem>
+</ArcanaSettingsList>`
   },
 
   settingsEditableField: {
     react: `import { useState } from 'react'
-import { ArcanaSettingsList, ArcanaSettingsEditableField } from '@arcanalabs/ui-components/react'
+import { ArcanaSettingsList, ArcanaSettingsEditableField, type SelectOption } from '@arcanalabs/ui-components/react'
 
-export function DiscountRow() {
+const planOptions: SelectOption[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Professional', value: 'pro' },
+  { label: 'Enterprise', value: 'enterprise' },
+]
+
+export function AccountSettings() {
+  const [name, setName] = useState<string | number | boolean | null>('Arcana Labs HQ')
   const [discount, setDiscount] = useState<string | number | boolean | null>('1500.00')
+  const [plan, setPlan] = useState<string | number | boolean | null>('pro')
+  function autoSave(value: string | number | boolean | null) { /* …persist */ }
   return (
     <ArcanaSettingsList>
+      {/* Each \`type\` opens the matching editor in the modal */}
       <ArcanaSettingsEditableField
-        label="Desconto 1ª compra"
-        caption="Valor unitário aplicado."
+        editLabel="Change"
+        label="Unit name"
+        caption="Shown on invoices."
+        type="text"
+        value={name}
+        onValueChange={setName}
+        onSave={autoSave}
+      />
+      <ArcanaSettingsEditableField
+        editLabel="Change"
+        label="First-purchase discount"
+        caption="Per-unit amount applied."
         type="currency"
         value={discount}
         onValueChange={setDiscount}
+        onSave={autoSave}
+      />
+      <ArcanaSettingsEditableField
+        editLabel="Change"
+        label="Plan"
+        caption="Your current subscription."
+        type="select"
+        options={planOptions}
+        value={plan}
+        onValueChange={setPlan}
         onSave={autoSave}
       />
     </ArcanaSettingsList>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaSettingsListComponent, ArcanaSettingsEditableFieldComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaSettingsListComponent, ArcanaSettingsEditableFieldComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-discount-row',
+  selector: 'app-account-settings',
   standalone: true,
   imports: [ArcanaSettingsListComponent, ArcanaSettingsEditableFieldComponent],
   template: \`
     <div arcanaSettingsList>
-      <div arcanaSettingsEditableField label="Desconto 1ª compra" caption="Valor unitário aplicado." type="currency" [(value)]="discount" (save)="autoSave($event)"></div>
+      <!-- Each type opens the matching editor in the modal -->
+      <div arcanaSettingsEditableField editLabel="Change" label="Unit name" caption="Shown on invoices." type="text" [(value)]="name" (save)="autoSave($event)"></div>
+      <div arcanaSettingsEditableField editLabel="Change" label="First-purchase discount" caption="Per-unit amount applied." type="currency" [(value)]="discount" (save)="autoSave($event)"></div>
+      <div arcanaSettingsEditableField editLabel="Change" label="Plan" caption="Your current subscription." type="select" [options]="planOptions" [(value)]="plan" (save)="autoSave($event)"></div>
     </div>
   \`
 })
-export class DiscountRowComponent {
+export class AccountSettingsComponent {
+  name: unknown = 'Arcana Labs HQ'
   discount: unknown = '1500.00'
+  plan: unknown = 'pro'
+  planOptions: SelectOption[] = [
+    { label: 'Basic', value: 'basic' },
+    { label: 'Professional', value: 'pro' },
+    { label: 'Enterprise', value: 'enterprise' },
+  ]
   autoSave(value: unknown) { /* …persist */ }
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaSettingsList, ArcanaSettingsEditableField } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaSettingsList, ArcanaSettingsEditableField, type SelectOption } from '@arcanalabs/ui-components/svelte'
 
+  let name = $state<string | number | boolean | null>('Arcana Labs HQ')
   let discount = $state<string | number | boolean | null>('1500.00')
-  function autoSave(value: unknown) { /* …persist */ }
+  let plan = $state<string | number | boolean | null>('pro')
+
+  const planOptions: SelectOption[] = [
+    { label: 'Basic', value: 'basic' },
+    { label: 'Professional', value: 'pro' },
+    { label: 'Enterprise', value: 'enterprise' },
+  ]
+  function autoSave(value: string | number | boolean | null) { /* …persist */ }
 </script>
 
 <ArcanaSettingsList>
+  <!-- Each \`type\` opens the matching editor in the modal -->
   <ArcanaSettingsEditableField
-    label="Desconto 1ª compra"
-    caption="Valor unitário aplicado."
+    editLabel="Change"
+    label="Unit name"
+    caption="Shown on invoices."
+    type="text"
+    value={name}
+    onValueChange={(v) => (name = v)}
+    onSave={autoSave}
+  />
+  <ArcanaSettingsEditableField
+    editLabel="Change"
+    label="First-purchase discount"
+    caption="Per-unit amount applied."
     type="currency"
     value={discount}
     onValueChange={(v) => (discount = v)}
+    onSave={autoSave}
+  />
+  <ArcanaSettingsEditableField
+    editLabel="Change"
+    label="Plan"
+    caption="Your current subscription."
+    type="select"
+    options={planOptions}
+    value={plan}
+    onValueChange={(v) => (plan = v)}
     onSave={autoSave}
   />
 </ArcanaSettingsList>`
   },
 
   notice: {
-    react: `import { ArcanaNotice } from '@arcanalabs/ui-components/react'
+    react: `import { useState } from 'react'
+import { ArcanaNotice } from '@arcanalabs/ui-components/react'
 
-export function Notices({ dismissed, onHide }) {
+export function Notices() {
+  const [dismissed, setDismissed] = useState(false)
   return (
     <>
-      <ArcanaNotice variant="warning" title="Pagamento manual">
-        Pix e Boleto geram um link novo de cobrança a cada ciclo.
+      {/* One notice per variant — each brings its own icon */}
+      <ArcanaNotice variant="info" title="Heads-up">
+        This workspace is running on the trial plan.
       </ArcanaNotice>
+      <ArcanaNotice variant="blue" title="What's new">
+        Order routing now supports multiple warehouses.
+      </ArcanaNotice>
+      <ArcanaNotice variant="success" title="Integration activated">
+        Your WhatsApp number is connected and verified.
+      </ArcanaNotice>
+      <ArcanaNotice variant="warning" title="Manual payment">
+        Pix and bank slip issue a new charge link every cycle.
+      </ArcanaNotice>
+      <ArcanaNotice variant="pending" title="Awaiting confirmation">
+        The bank has not cleared this payment yet.
+      </ArcanaNotice>
+
+      {/* \`dismissible\` renders the close button and fires onDismiss */}
       {!dismissed && (
-        <ArcanaNotice variant="destructive" title="Falha" dismissible onDismiss={onHide}>
-          Tente novamente.
+        <ArcanaNotice variant="destructive" title="Something went wrong" dismissible onDismiss={() => setDismissed(true)}>
+          Please try again.
         </ArcanaNotice>
       )}
     </>
@@ -1439,87 +2310,142 @@ import { ArcanaNoticeComponent } from '@arcanalabs/ui-components/angular'
   standalone: true,
   imports: [ArcanaNoticeComponent],
   template: \`
-    <div arcanaNotice variant="warning" title="Pagamento manual">
-      Pix e Boleto geram um link novo de cobrança a cada ciclo.
+    <!-- One notice per variant — each brings its own icon -->
+    <div arcanaNotice variant="info" title="Heads-up">
+      This workspace is running on the trial plan.
     </div>
-    <div arcanaNotice variant="destructive" title="Falha" [dismissible]="true" (dismiss)="hide()">
-      Tente novamente.
+    <div arcanaNotice variant="blue" title="What's new">
+      Order routing now supports multiple warehouses.
     </div>
+    <div arcanaNotice variant="success" title="Integration activated">
+      Your WhatsApp number is connected and verified.
+    </div>
+    <div arcanaNotice variant="warning" title="Manual payment">
+      Pix and bank slip issue a new charge link every cycle.
+    </div>
+    <div arcanaNotice variant="pending" title="Awaiting confirmation">
+      The bank has not cleared this payment yet.
+    </div>
+
+    <!-- [dismissible] renders the close button and fires (dismiss) -->
+    @if (!dismissed) {
+      <div arcanaNotice variant="destructive" title="Something went wrong" [dismissible]="true" (dismiss)="dismissed = true">
+        Please try again.
+      </div>
+    }
   \`
 })
 export class NoticesComponent {
-  hide() {}
+  dismissed = false
 }`,
     svelte: `<script lang="ts">
   import { ArcanaNotice } from '@arcanalabs/ui-components/svelte'
-  function hide() {}
+
+  let dismissed = $state(false)
 </script>
 
-<ArcanaNotice variant="warning" title="Pagamento manual">
-  Pix e Boleto geram um link novo de cobrança a cada ciclo.
+<!-- One notice per variant — each brings its own icon -->
+<ArcanaNotice variant="info" title="Heads-up">
+  This workspace is running on the trial plan.
 </ArcanaNotice>
-<ArcanaNotice variant="destructive" title="Falha" dismissible onDismiss={hide}>
-  Tente novamente.
-</ArcanaNotice>`
+<ArcanaNotice variant="blue" title="What's new">
+  Order routing now supports multiple warehouses.
+</ArcanaNotice>
+<ArcanaNotice variant="success" title="Integration activated">
+  Your WhatsApp number is connected and verified.
+</ArcanaNotice>
+<ArcanaNotice variant="warning" title="Manual payment">
+  Pix and bank slip issue a new charge link every cycle.
+</ArcanaNotice>
+<ArcanaNotice variant="pending" title="Awaiting confirmation">
+  The bank has not cleared this payment yet.
+</ArcanaNotice>
+
+<!-- \`dismissible\` renders the close button and fires onDismiss -->
+{#if !dismissed}
+  <ArcanaNotice variant="destructive" title="Something went wrong" dismissible onDismiss={() => (dismissed = true)}>
+    Please try again.
+  </ArcanaNotice>
+{/if}`
   },
 
   editFieldModal: {
     react: `import { useRef, useState } from 'react'
-import { ArcanaEditFieldDialog, ArcanaSelect, ArcanaButton, type ArcanaEditFieldDialogHandle } from '@arcanalabs/ui-components/react'
+import { ArcanaEditFieldDialog, ArcanaInput, ArcanaButton, type ArcanaEditFieldDialogHandle } from '@arcanalabs/ui-components/react'
 
-export function PlanRow({ planOptions }) {
+export function NameRow() {
   const modal = useRef<ArcanaEditFieldDialogHandle>(null)
-  const [plan, setPlan] = useState('pro')
-  function savePlan() {
-    // …persist
+  const [value, setValue] = useState('Arcana Labs HQ')
+  const [saved, setSaved] = useState('Arcana Labs HQ')
+  // \`onSave\` does NOT auto-close — validate first, then call hide().
+  function save() {
+    setSaved(value)
     modal.current?.hide()
   }
   return (
     <>
-      <ArcanaButton onClick={() => modal.current?.show()}>Alterar Plano</ArcanaButton>
-      <ArcanaEditFieldDialog ref={modal} title="Alterar Plano" onSave={savePlan}>
-        <ArcanaSelect value={plan} onValueChange={(v) => setPlan(v as string)} options={planOptions} />
+      <ArcanaButton onClick={() => modal.current?.show()}>Change name</ArcanaButton>
+      <p>Saved value: <strong>{saved}</strong></p>
+
+      <ArcanaEditFieldDialog
+        ref={modal}
+        title="Change unit name"
+        description="This name appears on invoices and reports."
+        onSave={save}
+      >
+        <ArcanaInput value={value} onValueChange={(v) => setValue(v as string)} placeholder="Unit name" />
       </ArcanaEditFieldDialog>
     </>
   )
 }`,
-    angular: `import { Component, Input } from '@angular/core'
-import { ArcanaEditFieldDialogComponent, ArcanaSelectComponent, ArcanaButtonComponent, type SelectOption } from '@arcanalabs/ui-components/angular'
+    angular: `import { Component } from '@angular/core'
+import { ArcanaEditFieldDialogComponent, ArcanaInputComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-plan-row',
+  selector: 'app-name-row',
   standalone: true,
-  imports: [ArcanaEditFieldDialogComponent, ArcanaSelectComponent, ArcanaButtonComponent],
+  imports: [ArcanaEditFieldDialogComponent, ArcanaInputComponent, ArcanaButtonComponent],
   template: \`
-    <button arcanaButton (click)="m.show()">Alterar Plano</button>
-    <div arcanaEditFieldDialog #m title="Alterar Plano" (save)="savePlan(m)">
-      <div arcanaSelect [(value)]="plan" [options]="planOptions"></div>
+    <button arcanaButton (click)="m.show()">Change name</button>
+    <p>Saved value: <strong>{{ saved }}</strong></p>
+
+    <div arcanaEditFieldDialog #m title="Change unit name" description="This name appears on invoices and reports." (save)="save(m)">
+      <input arcanaInput [(value)]="value" placeholder="Unit name" />
     </div>
   \`
 })
-export class PlanRowComponent {
-  @Input() planOptions: SelectOption[] = []
-  plan = 'pro'
-  savePlan(m: ArcanaEditFieldDialogComponent) {
-    // …persist
+export class NameRowComponent {
+  value: string | number | null = 'Arcana Labs HQ'
+  saved = 'Arcana Labs HQ'
+  // (save) does NOT auto-close — validate first, then call hide().
+  save(m: ArcanaEditFieldDialogComponent) {
+    this.saved = String(this.value)
     m.hide()
   }
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaEditFieldDialog, ArcanaSelect, ArcanaButton, type SelectOption } from '@arcanalabs/ui-components/svelte'
+  import { ArcanaEditFieldDialog, ArcanaInput, ArcanaButton } from '@arcanalabs/ui-components/svelte'
 
-  let { planOptions }: { planOptions: SelectOption[] } = $props()
   let modal: ArcanaEditFieldDialog
-  let plan = $state('pro')
-  function savePlan() {
-    // …persist
+  let value = $state('Arcana Labs HQ')
+  let saved = $state('Arcana Labs HQ')
+  // \`onSave\` does NOT auto-close — validate first, then call hide().
+  function save() {
+    saved = value
     modal.hide()
   }
 </script>
 
-<ArcanaButton onClick={() => modal.show()}>Alterar Plano</ArcanaButton>
-<ArcanaEditFieldDialog bind:this={modal} title="Alterar Plano" onSave={savePlan}>
-  <ArcanaSelect value={plan} onValueChange={(v) => (plan = v as string)} options={planOptions} />
+<ArcanaButton onClick={() => modal.show()}>Change name</ArcanaButton>
+<p>Saved value: <strong>{saved}</strong></p>
+
+<ArcanaEditFieldDialog
+  bind:this={modal}
+  title="Change unit name"
+  description="This name appears on invoices and reports."
+  onSave={save}
+>
+  <ArcanaInput value={value} onValueChange={(v) => (value = v as string)} placeholder="Unit name" />
 </ArcanaEditFieldDialog>`
   },
 
@@ -1618,43 +2544,70 @@ export class EmptyProjectsComponent {
 
   loadingOverlay: {
     react: `import { useState } from 'react'
-import { ArcanaLoadingOverlay } from '@arcanalabs/ui-components/react'
+import { ArcanaLoadingOverlay, ArcanaButton } from '@arcanalabs/ui-components/react'
 
 export function Card() {
-  const [saving, setSaving] = useState(false)
+  const [loading, setLoading] = useState(false)
+  function run() {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 1600)
+  }
   return (
-    <div style={{ position: 'relative' }}>
-      {/* card content */}
-      <ArcanaLoadingOverlay visible={saving} text="Salvando…" />
-    </div>
+    <>
+      {/* The parent MUST be position: relative — the overlay is absolute */}
+      <div style={{ position: 'relative' }}>
+        <p>Order summary</p>
+        <p>Click Save to cover this card with the overlay.</p>
+        <ArcanaLoadingOverlay visible={loading} text="Saving…" />
+      </div>
+
+      <ArcanaButton onClick={run} disabled={loading}>Save</ArcanaButton>
+    </>
   )
 }`,
     angular: `import { Component } from '@angular/core'
-import { ArcanaLoadingOverlayComponent } from '@arcanalabs/ui-components/angular'
+import { ArcanaLoadingOverlayComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ArcanaLoadingOverlayComponent],
+  imports: [ArcanaLoadingOverlayComponent, ArcanaButtonComponent],
   template: \`
+    <!-- The parent MUST be position: relative — the overlay is absolute -->
     <div style="position: relative">
-      <!-- card content -->
-      <div arcanaLoadingOverlay [visible]="saving" text="Salvando…"></div>
+      <p>Order summary</p>
+      <p>Click Save to cover this card with the overlay.</p>
+      <div arcanaLoadingOverlay [visible]="loading" text="Saving…"></div>
     </div>
+
+    <button arcanaButton (click)="run()" [disabled]="loading">Save</button>
   \`
 })
 export class CardComponent {
-  saving = false
+  loading = false
+  run() {
+    this.loading = true
+    setTimeout(() => { this.loading = false }, 1600)
+  }
 }`,
     svelte: `<script lang="ts">
-  import { ArcanaLoadingOverlay } from '@arcanalabs/ui-components/svelte'
-  let saving = $state(false)
+  import { ArcanaLoadingOverlay, ArcanaButton } from '@arcanalabs/ui-components/svelte'
+
+  let loading = $state(false)
+  function run() {
+    loading = true
+    setTimeout(() => { loading = false }, 1600)
+  }
 </script>
 
+<!-- The parent MUST be position: relative — the overlay is absolute -->
 <div style="position: relative">
-  <!-- card content -->
-  <ArcanaLoadingOverlay visible={saving} text="Salvando…" />
-</div>`
+  <p>Order summary</p>
+  <p>Click Save to cover this card with the overlay.</p>
+  <ArcanaLoadingOverlay visible={loading} text="Saving…" />
+</div>
+
+<ArcanaButton onClick={run} disabled={loading}>Save</ArcanaButton>`
   },
 
   skeleton: {
@@ -1663,9 +2616,23 @@ export class CardComponent {
 export function CardSkeleton() {
   return (
     <>
-      <ArcanaSkeleton width="40px" height="40px" rounded="full" />
-      <ArcanaSkeleton width="200px" height="14px" />
-      <ArcanaSkeleton width="60%" height="12px" />
+      {/* Avatar + two text lines */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <ArcanaSkeleton width="40px" height="40px" rounded="full" />
+        <div style={{ display: 'grid', gap: 8, flex: 1 }}>
+          <ArcanaSkeleton width="70%" height="12px" />
+          <ArcanaSkeleton width="45%" height="10px" />
+        </div>
+      </div>
+
+      {/* Block placeholder — width defaults to 100% */}
+      <ArcanaSkeleton height="80px" rounded="lg" />
+
+      {/* Button placeholders */}
+      <div style={{ display: 'flex', gap: 8 }}>
+        <ArcanaSkeleton width="84px" height="28px" rounded="md" />
+        <ArcanaSkeleton width="84px" height="28px" rounded="md" />
+      </div>
     </>
   )
 }`,
@@ -1677,9 +2644,23 @@ import { ArcanaSkeletonComponent } from '@arcanalabs/ui-components/angular'
   standalone: true,
   imports: [ArcanaSkeletonComponent],
   template: \`
-    <span arcanaSkeleton width="40px" height="40px" rounded="full"></span>
-    <span arcanaSkeleton width="200px" height="14px"></span>
-    <span arcanaSkeleton width="60%" height="12px"></span>
+    <!-- Avatar + two text lines -->
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span arcanaSkeleton width="40px" height="40px" rounded="full"></span>
+      <div style="display: grid; gap: 8px; flex: 1">
+        <span arcanaSkeleton width="70%" height="12px"></span>
+        <span arcanaSkeleton width="45%" height="10px"></span>
+      </div>
+    </div>
+
+    <!-- Block placeholder — width defaults to 100% -->
+    <span arcanaSkeleton height="80px" rounded="lg"></span>
+
+    <!-- Button placeholders -->
+    <div style="display: flex; gap: 8px">
+      <span arcanaSkeleton width="84px" height="28px" rounded="md"></span>
+      <span arcanaSkeleton width="84px" height="28px" rounded="md"></span>
+    </div>
   \`
 })
 export class CardSkeletonComponent {}`,
@@ -1687,9 +2668,23 @@ export class CardSkeletonComponent {}`,
   import { ArcanaSkeleton } from '@arcanalabs/ui-components/svelte'
 </script>
 
-<ArcanaSkeleton width="40px" height="40px" rounded="full" />
-<ArcanaSkeleton width="200px" height="14px" />
-<ArcanaSkeleton width="60%" height="12px" />`
+<!-- Avatar + two text lines -->
+<div style="display: flex; align-items: center; gap: 12px">
+  <ArcanaSkeleton width="40px" height="40px" rounded="full" />
+  <div style="display: grid; gap: 8px; flex: 1">
+    <ArcanaSkeleton width="70%" height="12px" />
+    <ArcanaSkeleton width="45%" height="10px" />
+  </div>
+</div>
+
+<!-- Block placeholder — width defaults to 100% -->
+<ArcanaSkeleton height="80px" rounded="lg" />
+
+<!-- Button placeholders -->
+<div style="display: flex; gap: 8px">
+  <ArcanaSkeleton width="84px" height="28px" rounded="md" />
+  <ArcanaSkeleton width="84px" height="28px" rounded="md" />
+</div>`
   },
 
   switchCard: {
