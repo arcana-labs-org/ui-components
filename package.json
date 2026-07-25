@@ -1,6 +1,6 @@
 {
   "name": "@arcanalabs/ui-components",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Arcana Labs UI Components — a typed, framework-native shadcn-style component library for Vue 3, React, Angular and Svelte.",
   "keywords": [
     "ui",

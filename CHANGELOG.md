@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.8.1 — 2026-07-25
+
+### Correções
+- **`ArcanaAccordionItem` passou a anunciar o estado para leitores de tela.** O gatilho sempre foi um `<button>` nativo, então o teclado já funcionava, mas faltava `aria-expanded` — quem usa leitor de tela não sabia se a seção estava aberta ou fechada (WCAG 4.1.2, nível A). O padrão de disclosure foi completado com `aria-controls`, `id` no painel e `role="region"`, nos quatro frameworks. Puramente aditivo: nenhuma classe CSS, prop ou evento mudou.
+
+### Documentação
+- **40 props públicas que não apareciam na tabela** foram documentadas, em 14 componentes — entre eles `Input` (6 ausentes), `Dialog` (5), `SettingsEditableField` (7) e `Select` (3). A API não mudou; ela apenas passou a estar visível.
+- **`ArcanaContextMenuItem` entrou no catálogo.** Era o único componente exportado sem página própria, enquanto o irmão `ArcanaDropdownItem` já tinha. Ganhou demonstração ao vivo, tabela de props, lista de eventos e exemplos nos quatro frameworks.
+- Novo relatório de qualidade em `docs/reports/`, com nota por componente em profissionalismo, customização e production-readiness, e a rubrica usada para calculá-las.
+
+### Testes
+- Suíte de 211 para 239. `Skeleton`, `SwitchCard` e `SwitchRow` não tinham nenhum teste; `Notice`, `SpecSheetSection`, `SpecSheetField`, `SettingsListItem`, `DropdownItem` e `EditFieldDialog` apareciam apenas de passagem no cenário de outros componentes.
+
 ## 1.8.0 — 2026-07-25
 
 ### Alterações que exigem atenção
