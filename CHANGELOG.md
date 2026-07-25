@@ -1,6 +1,37 @@
 # Changelog
 
-## Não publicado
+## 1.8.0 — 2026-07-25
+
+### Alterações que exigem atenção
+- **`maska` deixou de ser dependência de runtime e passou a ser _peer dependency_ opcional.** Antes ela vinha junto, automaticamente, ao instalar a lib; agora quem usa **`ArcanaInputMask` precisa instalá-la explicitamente**:
+
+  ```bash
+  npm i maska
+  ```
+
+  Como o peer é declarado opcional, **o npm não avisa na instalação**: se o pacote faltar, a falha aparece só quando o componente é renderizado, como módulo não encontrado. Quem não usa `ArcanaInputMask` não precisa fazer nada. No Vue, o registro da diretiva (`app.use(Maska)`) continua igual.
+
+### Documentação
+- **Nova seção "Dependencies"** no guia de início, listando cada pacote com faixa de versão, tipo (runtime / peer / peer opcional) e para que serve. A tabela é gerada a partir do próprio `package.json` no build, então não tem como ficar desatualizada.
+- Corrigido um erro que estava no README e nos 8 idiomas da documentação: ambos afirmavam que o `ArcanaDatePicker` dependia de `maska`. Ele nunca usou.
+
+## 1.7.0 — 2026-07-25
+
+### Novos recursos
+- **Dez componentes novos**, nos quatro frameworks, com documentação, tabela de props e exemplos: `ArcanaRate`, `ArcanaAvatar`, `ArcanaAvatarGroup`, `ArcanaStatistic`, `ArcanaCountdown`, `ArcanaProgress`, `ArcanaAspectRatio`, `ArcanaHoverCard`, `ArcanaScrollArea` e `ArcanaContextMenu`.
+- **Sistema de cores no modelo Radix**: 31 escalas de 12 degraus, em claro e escuro, com variantes alpha. Trocar a paleta é uma classe no elemento raiz — `.arcana-accent-violet` para o acento, `.arcana-gray-slate` para o neutro, `.arcana-dark` para o modo escuro. Os componentes só leem tokens semânticos, então todos acompanham.
+
+### Alterações que exigem atenção
+- **O tom neutro mudou** do `zinc` (Tailwind) para o `gray` do Radix. O deslocamento é sutil e uniforme (`#18181b` → `#202020` no texto principal, `#71717a` → `#646464` no secundário). Os botões de estado seguem os degraus do Radix e ficam visivelmente diferentes: o `warning` passou a ser âmbar claro com texto escuro.
+
+### Correções
+- **Modo escuro passou a funcionar de fato.** Os tokens de uso viviam apenas no `:root` e eram substituídos com os valores claros; redefinir as escalas em `.arcana-dark` não os alcançava, e o resultado era texto quase-preto sobre fundo escuro.
+- **Contraste**: o anel de foco subiu de 1,9:1 para 16,3:1 (o mínimo do WCAG 1.4.11 é 3:1); o texto do botão `warning` no escuro subiu de 1,3:1 para 7,2:1; o botão `ghost` saiu de 3,3:1 para 5,9:1.
+- A versão exibida no cabeçalho da documentação passou a vir do `package.json` — estava congelada em "v0.x".
+
+> As versões 1.6.0 e 1.6.1 não têm entrada aqui.
+
+## 1.5.0 — 2026-07-25
 
 ### Alterações que exigem atenção
 - **`ArcanaSegmentedOptions` renomeado para `ArcanaSegmentedControl`** (seletor Angular `arcanaSegmentedControl`, classe Angular `ArcanaSegmentedControlComponent`, tipo de props `ArcanaSegmentedControlProps`; classes CSS `.arcana-segmented-options*` → `.arcana-segmented-control*`). O tipo da opção continua se chamando `SegmentedOption`. Quem importa o nome antigo — ou estiliza as classes antigas — precisa atualizar.
