@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0 — 2026-07-24
+
+### Novos recursos
+- **`ArcanaTreeSelect`**: novo componente de seleção hierárquica (portado do tree-select de centros de custo do ERP e tornado agnóstico de domínio). A hierarquia entra por `options` (`TreeSelectNode[]`); suporta seleção única ou `multiple` (com tags removíveis), busca que filtra preservando os ancestrais e destaca o termo, `allowParentSelection` (por padrão só folhas selecionam — clicar num nó-pai apenas expande), auto-expansão do caminho até o valor e `clearable`. Disponível nos quatro frameworks.
+
 ## 1.1.0 — 2026-07-24
 
 ### Novos recursos
