@@ -24,6 +24,7 @@ export const es: Messages = {
     defaultPreviewCaption: "componente en vivo · interactúa con él",
     sectionExampleAria: "Ejemplo de {title}",
     githubStars: "{count} estrellas en GitHub",
+    npmPackage: "@arcanalabs/ui-components en npm",
     footer: "Arcana UI Components · MIT"
   },
 

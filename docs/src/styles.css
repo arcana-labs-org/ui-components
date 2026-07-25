@@ -1224,7 +1224,10 @@ table.ref-table td .t-type {
 }
 
 @media (max-width: 480px) {
-  .gh-link span { display: none; }
+  /* Só os ícones no mobile — o aria-label carrega o nome. */
+  .gh-link span,
+  .npm-link span { display: none; }
+  .gh-link .gh-stars { display: inline-flex; }
   .fw-btn { padding: 5px 8px; }
   .top-nav-link { padding: 6px 7px; font-size: 12.5px; }
   .content { padding: 24px 14px 88px; }
@@ -1348,3 +1351,17 @@ table.ref-table td .t-type {
 .dep-kind--peerOptional { background: #f1f5f9; border-color: var(--border); color: var(--muted); }
 
 .deps-note { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+/* ── Link para o pacote no npm (ao lado do link do GitHub) ───────────────── */
+.npm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+/* Vermelho do npm no hover — o do GitHub usa o accent da docs, então os dois
+   links continuam distinguíveis mesmo com os rótulos escondidos no mobile. */
+.npm-link:hover { color: #cb3837; text-decoration: none; }
+.npm-link svg { width: 18px; height: 18px; }

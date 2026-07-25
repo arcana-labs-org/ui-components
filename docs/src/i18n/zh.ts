@@ -24,6 +24,7 @@ export const zh: Messages = {
     defaultPreviewCaption: "实时组件 · 可交互",
     sectionExampleAria: "{title} 示例",
     githubStars: "GitHub 上 {count} 个星标",
+    npmPackage: "@arcanalabs/ui-components 在 npm 上",
     footer: "Arcana UI Components · MIT"
   },
 

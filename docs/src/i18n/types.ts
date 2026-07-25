@@ -118,6 +118,8 @@ export interface Messages {
     sectionExampleAria: string;
     /** aria-label of the GitHub star count; {count} placeholder. */
     githubStars: string;
+    /** aria-label do link para a página do pacote no npm. */
+    npmPackage: string;
     /** Footer line under the content. */
     footer: string;
   };

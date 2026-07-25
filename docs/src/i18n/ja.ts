@@ -24,6 +24,7 @@ export const ja: Messages = {
     defaultPreviewCaption: "ライブコンポーネント · 操作できます",
     sectionExampleAria: "{title} の例",
     githubStars: "GitHub で {count} スター",
+    npmPackage: "npm の @arcanalabs/ui-components",
     footer: "Arcana UI Components · MIT"
   },
 
