@@ -158,7 +158,7 @@ export const ja: Messages = {
       blurb: "マスク付きの <c>DD/MM/AAAA</c> 入力とカレンダーポップオーバーを組み合わせた shadcn 日付フィールドで、<c>v-model</c> は ISO の <c>YYYY-MM-DD</c> 文字列です。"
     },
     inputCurrency: {
-      blurb: "入力に合わせて整形する通貨入力（<c>v-money3</c> 上に構築）で、小数桁数の設定と <c>min</c>/<c>max</c> の制限を備え、デフォルトは BRL です。"
+      blurb: "通貨入力。入力に合わせて右から左へ整形し、小数桁は設定可能で <c>min</c>/<c>max</c> による制限に対応。既定は BRL。"
     },
     accordion: {
       blurb: "折りたたみ可能な <c>ArcanaAccordionItem</c> 群のコンテナで、単一または複数開けるモード向けに <c>v-model</c> をバインドします。"

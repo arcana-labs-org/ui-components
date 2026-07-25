@@ -158,7 +158,7 @@ export const en: Messages = {
       blurb: "A self-contained calendar field (no Element Plus) with five <c>type</c>s — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> and <c>datetime</c> — with Intl-based month/weekday names via the <c>locale</c> prop."
     },
     inputCurrency: {
-      blurb: "A currency input (on <c>v-money3</c>) that formats as you type, with configurable decimals and <c>min</c>/<c>max</c> clamping; BRL by default."
+      blurb: "A currency input that formats right-to-left as you type, with configurable decimals and <c>min</c>/<c>max</c> clamping; BRL by default."
     },
     accordion: {
       blurb: "The container for collapsible <c>ArcanaAccordionItem</c>s, binding a <c>v-model</c> for single- or multiple-open mode."

@@ -158,7 +158,7 @@ export const zh: Messages = {
       blurb: "将带掩码的 <c>DD/MM/AAAA</c> 输入框与日历弹出层配对的 shadcn 日期字段；<c>v-model</c> 为 ISO <c>YYYY-MM-DD</c> 字符串。"
     },
     inputCurrency: {
-      blurb: "基于 <c>v-money3</c> 的货币输入框，输入时即时格式化，小数位可配置并按 <c>min</c>/<c>max</c> 钳制；默认 BRL。"
+      blurb: "货币输入框，输入时从右向左格式化，小数位可配置并支持 <c>min</c>/<c>max</c> 限制；默认 BRL。"
     },
     accordion: {
       blurb: "可折叠 <c>ArcanaAccordionItem</c> 的容器，通过 <c>v-model</c> 绑定单开或多开模式。"

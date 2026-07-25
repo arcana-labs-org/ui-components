@@ -158,7 +158,7 @@ export const de: Messages = {
       blurb: "Ein Datumsfeld im arcana-Stil, das ein maskiertes <c>DD/MM/AAAA</c>-Eingabefeld mit einem Kalender-Popover verbindet; das <c>v-model</c> ist ein ISO-String <c>YYYY-MM-DD</c>."
     },
     inputCurrency: {
-      blurb: "Ein Währungsfeld (auf <c>v-money3</c>), das während der Eingabe formatiert, mit konfigurierbaren Nachkommastellen und <c>min</c>/<c>max</c>-Begrenzung; standardmäßig BRL."
+      blurb: "Ein Währungsfeld, das während der Eingabe von rechts nach links formatiert, mit konfigurierbaren Nachkommastellen und <c>min</c>/<c>max</c>-Begrenzung; standardmäßig BRL."
     },
     accordion: {
       blurb: "Der Container für einklappbare <c>ArcanaAccordionItem</c>s, der ein <c>v-model</c> für Einzel- oder Mehrfach-Öffnen-Modus bindet."

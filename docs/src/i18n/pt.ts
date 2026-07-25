@@ -158,7 +158,7 @@ export const pt: Messages = {
       blurb: "Um campo de data shadcn que combina um input mascarado <c>DD/MM/AAAA</c> com um popover de calendário; o <c>v-model</c> é uma string ISO <c>YYYY-MM-DD</c>."
     },
     inputCurrency: {
-      blurb: "Um input de moeda (sobre <c>v-money3</c>) que formata enquanto você digita, com decimais configuráveis e limites <c>min</c>/<c>max</c>; BRL por padrão."
+      blurb: "Um input de moeda que formata da direita para a esquerda enquanto você digita, com decimais configuráveis e limites <c>min</c>/<c>max</c>; BRL por padrão."
     },
     accordion: {
       blurb: "O contêiner para <c>ArcanaAccordionItem</c>s colapsáveis, com um <c>v-model</c> para modo de abertura única ou múltipla."
