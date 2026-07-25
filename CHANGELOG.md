@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 — 2026-07-25
+
+### Correções
+- **Documentação**: a aba "Código" do `ArcanaTreeSelect` quebrava a página (os exemplos de React, Angular e Svelte não haviam sido incluídos). Os três foram adicionados, e a verificação de tipos passou a cobrir o site de documentação para que essa classe de erro falhe no build em vez de chegar à tela.
+
 ## 1.2.0 — 2026-07-24
 
 ### Novos recursos
