@@ -1,6 +1,6 @@
 {
   "name": "@arcanalabs/ui-components",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Arcana Labs UI Components — a typed, framework-native shadcn-style component library for Vue 3, React, Angular and Svelte.",
   "keywords": [
     "ui",
@@ -70,7 +70,7 @@
     "dev": "vite --config docs/vite.config.ts",
     "docs:dev": "vite --config docs/vite.config.ts",
     "docs:build": "vite build --config docs/vite.config.ts",
-    "build": "vite build && npm run build:angular",
+    "build": "npm run build:palette && vite build && npm run build:angular",
     "build:angular": "ngc -p tsconfig.angular.json",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
@@ -78,7 +78,8 @@
     "check": "npm run typecheck && npm run typecheck:docs && npm test && npm run build && npm run docs:build",
     "prepublishOnly": "npm run check",
     "release:dry": "npm pack --dry-run",
-    "typecheck:docs": "vue-tsc --noEmit -p tsconfig.docs.json"
+    "typecheck:docs": "vue-tsc --noEmit -p tsconfig.docs.json",
+    "build:palette": "node scripts/build-palette.mjs"
   },
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
@@ -119,11 +120,12 @@
   },
   "devDependencies": {
     "@angular/common": "^21.2.18",
-    "@fortawesome/fontawesome-free": "^7.2.0",
     "@angular/compiler": "^21.2.18",
     "@angular/compiler-cli": "^21.2.18",
     "@angular/core": "^21.2.18",
     "@angular/platform-browser": "^21.2.18",
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "@radix-ui/colors": "^3.0.0",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "@testing-library/react": "^16.1.0",
     "@testing-library/svelte": "^5.4.2",

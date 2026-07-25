@@ -1,0 +1,130 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaRate — avaliação por estrelas
+   ─────────────────────────────────────────────────────────────────────────
+   COR — nada de hex fixo: a estrela cheia sai de `--arcana-rate-color` (prop
+   `color`, chega como inline style) com fallback no token `--arcana-warning-solid`;
+   a vazia sai de `--arcana-rate-void-color` (prop `voidColor`) com fallback no
+   degrau 6 da escala neutra. Trocar a paleta ou ligar o modo escuro re-resolve
+   tudo sozinho.
+
+   TAMANHO — a prop `size` (`sm | md | lg`, default `md`) aplica a classe
+   modificadora `.arcana-rate--{size}`, que só define os DEFAULTS dos tokens
+   abaixo. Para um tamanho fora da escala, sobrescreva o token no próprio
+   elemento (inline style, classe do app, `:root`…) — o `size` é só o fallback:
+
+     --arcana-rate-icon-size   lado (largura = altura) de cada estrela
+     --arcana-rate-gap         espaço entre as estrelas
+     --arcana-rate-font-size   fonte do rótulo (`showText`) e da nota (`showScore`)
+
+   ESTRUTURA — cada item empilha DUAS camadas absolutas do mesmo ícone: a vazia
+   (100% de largura) e a cheia, cuja largura vem inline em `%`. É isso que dá a
+   meia-estrela (`allowHalf`, 50%) e também o preenchimento contínuo de uma média
+   em modo `readonly` (ex: 4.3 → 30% da quinta estrela).
+   ───────────────────────────────────────────────────────────────────────── */
+.arcana-rate {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--arcana-rate-gap, 4px);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1;
+}
+
+/* Escala de tamanhos — cada uma só troca os defaults dos tokens. */
+.arcana-rate--sm {
+    --arcana-rate-icon-size: 16px;
+    --arcana-rate-gap: 2px;
+    --arcana-rate-font-size: 12px;
+}
+
+.arcana-rate--md {
+    --arcana-rate-icon-size: 20px;
+    --arcana-rate-gap: 4px;
+    --arcana-rate-font-size: 13px;
+}
+
+.arcana-rate--lg {
+    --arcana-rate-icon-size: 26px;
+    --arcana-rate-gap: 5px;
+    --arcana-rate-font-size: 15px;
+}
+
+.arcana-rate.is-disabled {
+    opacity: 0.55;
+}
+
+/* Item = uma estrela. É ele que carrega `role="radio"` e o tabindex rotativo. */
+.arcana-rate__item {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    width: var(--arcana-rate-icon-size, 20px);
+    height: var(--arcana-rate-icon-size, 20px);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--arcana-rate-void-color, var(--arcana-gray-6));
+    transition: transform 120ms ease;
+}
+
+.arcana-rate:not(.is-disabled):not(.is-readonly) .arcana-rate__item:hover {
+    transform: scale(1.14);
+}
+
+.arcana-rate.is-disabled .arcana-rate__item,
+.arcana-rate.is-readonly .arcana-rate__item {
+    cursor: default;
+}
+
+.arcana-rate__item:focus-visible {
+    outline: 2px solid var(--arcana-focus-ring);
+    outline-offset: 2px;
+}
+
+/*
+ * Camadas do ícone. `left/top/height` em vez de `inset: 0` de propósito: a camada
+ * cheia recebe `width` inline (%), e com `right: 0` também declarado o elemento
+ * ficaria sobre-restringido.
+ */
+.arcana-rate__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.arcana-rate__icon--void {
+    width: 100%;
+}
+
+.arcana-rate__icon--filled {
+    width: 0;
+    color: var(--arcana-rate-color, var(--arcana-warning-solid));
+}
+
+/* Largura fixa no SVG: sem ela o ícone encolheria junto com o recorte da camada
+   cheia (viraria uma estrela magra, não meia estrela). */
+.arcana-rate__icon svg {
+    display: block;
+    width: var(--arcana-rate-icon-size, 20px);
+    height: var(--arcana-rate-icon-size, 20px);
+    fill: currentColor;
+}
+
+.arcana-rate__text,
+.arcana-rate__score {
+    margin-left: 4px;
+    font-size: var(--arcana-rate-font-size, 13px);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.arcana-rate__text {
+    color: var(--arcana-text-muted);
+}
+
+.arcana-rate__score {
+    color: var(--arcana-text);
+    font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,137 @@
+/**
+ * ArcanaCountdown — contagem regressiva. Mesma anatomia do ArcanaStatistic, com classes
+ * próprias (os dois podem conviver na mesma tela sem herdar regras um do outro).
+ *
+ * Anatomia:
+ *   .arcana-countdown                 wrapper vertical (`role="timer"`)
+ *     .arcana-countdown__title
+ *     .arcana-countdown__content      linha [prefixo] VALOR [sufixo] (baseline)
+ *       .arcana-countdown__prefix
+ *       .arcana-countdown__value
+ *       .arcana-countdown__suffix
+ *
+ * Estados: `.is-finished` (zerou) e `.is-paused` (congelado).
+ *
+ * Cores: só tokens de uso — acompanha a paleta ativa e o `.arcana-dark`.
+ *
+ * Custom properties (fallback = valor do `size`):
+ *   --arcana-countdown-value-size / --arcana-countdown-title-size
+ *   --arcana-countdown-affix-size / --arcana-countdown-gap
+ *   --arcana-countdown-value-color   (é o que a prop `valueColor` seta inline)
+ */
+
+.arcana-countdown {
+    display: flex;
+    flex-direction: column;
+    gap: var(--arcana-countdown-gap, 4px);
+    min-width: 0;
+    color: var(--arcana-text);
+}
+
+.arcana-countdown__title {
+    font-size: var(--arcana-countdown-title-size, 12.5px);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--arcana-text-muted);
+}
+
+.arcana-countdown__content {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+}
+
+.arcana-countdown__value {
+    font-size: var(--arcana-countdown-value-size, 26px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    /* Dígitos de largura fixa: sem isso o contador "treme" a cada segundo. */
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    color: var(--arcana-countdown-value-color, var(--arcana-text));
+}
+
+.arcana-countdown__prefix,
+.arcana-countdown__suffix {
+    font-size: var(--arcana-countdown-affix-size, 14px);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--arcana-text-muted);
+}
+
+/* ── tamanhos ────────────────────────────────────────────────────────────── */
+
+.arcana-countdown--sm .arcana-countdown__value {
+    font-size: var(--arcana-countdown-value-size, 18px);
+}
+.arcana-countdown--sm .arcana-countdown__title {
+    font-size: var(--arcana-countdown-title-size, 11.5px);
+}
+.arcana-countdown--sm .arcana-countdown__prefix,
+.arcana-countdown--sm .arcana-countdown__suffix {
+    font-size: var(--arcana-countdown-affix-size, 12px);
+}
+
+.arcana-countdown--md .arcana-countdown__value {
+    font-size: var(--arcana-countdown-value-size, 26px);
+}
+.arcana-countdown--md .arcana-countdown__title {
+    font-size: var(--arcana-countdown-title-size, 12.5px);
+}
+.arcana-countdown--md .arcana-countdown__prefix,
+.arcana-countdown--md .arcana-countdown__suffix {
+    font-size: var(--arcana-countdown-affix-size, 14px);
+}
+
+.arcana-countdown--lg .arcana-countdown__value {
+    font-size: var(--arcana-countdown-value-size, 34px);
+}
+.arcana-countdown--lg .arcana-countdown__title {
+    font-size: var(--arcana-countdown-title-size, 13.5px);
+}
+.arcana-countdown--lg .arcana-countdown__prefix,
+.arcana-countdown--lg .arcana-countdown__suffix {
+    font-size: var(--arcana-countdown-affix-size, 16px);
+}
+
+.arcana-countdown--xl .arcana-countdown__value {
+    font-size: var(--arcana-countdown-value-size, 44px);
+}
+.arcana-countdown--xl .arcana-countdown__title {
+    font-size: var(--arcana-countdown-title-size, 15px);
+}
+.arcana-countdown--xl .arcana-countdown__prefix,
+.arcana-countdown--xl .arcana-countdown__suffix {
+    font-size: var(--arcana-countdown-affix-size, 18px);
+}
+
+/* ── tons ────────────────────────────────────────────────────────────────── */
+
+.arcana-countdown--neutral {
+    --arcana-countdown-value-color: var(--arcana-text);
+}
+.arcana-countdown--success {
+    --arcana-countdown-value-color: var(--arcana-success-text);
+}
+.arcana-countdown--danger {
+    --arcana-countdown-value-color: var(--arcana-danger-text);
+}
+.arcana-countdown--warning {
+    --arcana-countdown-value-color: var(--arcana-warning-text);
+}
+.arcana-countdown--info {
+    --arcana-countdown-value-color: var(--arcana-info-text);
+}
+
+/* ── estados ─────────────────────────────────────────────────────────────── */
+
+.arcana-countdown.is-finished .arcana-countdown__value {
+    color: var(--arcana-countdown-value-color, var(--arcana-text-muted));
+    opacity: 0.75;
+}
+
+.arcana-countdown.is-paused .arcana-countdown__value {
+    opacity: 0.6;
+}

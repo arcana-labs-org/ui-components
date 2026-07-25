@@ -1,0 +1,141 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaAvatar + ArcanaAvatarGroup
+   ─────────────────────────────────────────────────────────────────────────
+   COR — nada de hex fixo. O fundo do fallback (iniciais/ícone) sai de
+   `--arcana-avatar-color` (prop `color`, chega como inline style) com fallback no
+   token `--arcana-solid` (= acento da paleta); o texto usa `--arcana-on-solid`.
+   O anel que separa avatares empilhados usa `--arcana-surface`, então acompanha o
+   modo escuro sozinho.
+
+   TAMANHO — resolvido por uma cadeia de dois tokens, montada em
+   `--arcana-avatar-resolved`:
+
+     var(--arcana-avatar-size, var(--arcana-avatar-own-size, 40px))
+      │                         │                            └ default (md)
+      │                         └ tamanho PRÓPRIO do avatar: vem da classe
+      │                           `.arcana-avatar--{xs..xl}` ou, quando a prop
+      │                           `size` é numérica, de um inline style
+      └ tamanho EXTERNO: setado pelo `.arcana-avatar-group` (prop `size` do grupo)
+        e herdado pelos filhos, ou pelo app em qualquer ancestral.
+
+   Como o grupo seta `--arcana-avatar-size` NELE e o avatar nunca seta esse token
+   em si mesmo, a herança faz o tamanho do grupo vencer o tamanho próprio de cada
+   filho — é assim que `size` do grupo se propaga inclusive para avatares
+   projetados por slot/children/ng-content, sem o grupo precisar tocar nos filhos.
+   Um override pontual continua sendo CSS comum: `--arcana-avatar-size` inline no
+   próprio avatar vence tudo (declaração própria ganha de herdada).
+   ───────────────────────────────────────────────────────────────────────── */
+.arcana-avatar {
+    --arcana-avatar-resolved: var(--arcana-avatar-size, var(--arcana-avatar-own-size, 40px));
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: var(--arcana-avatar-resolved);
+    height: var(--arcana-avatar-resolved);
+    overflow: hidden;
+    background: var(--arcana-avatar-color, var(--arcana-solid));
+    color: var(--arcana-on-solid);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: calc(var(--arcana-avatar-resolved) * 0.4);
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    user-select: none;
+    vertical-align: middle;
+}
+
+/* Escala de tamanhos — cada uma só troca o tamanho PRÓPRIO (ver cadeia acima). */
+.arcana-avatar--xs { --arcana-avatar-own-size: 24px; }
+.arcana-avatar--sm { --arcana-avatar-own-size: 32px; }
+.arcana-avatar--md { --arcana-avatar-own-size: 40px; }
+.arcana-avatar--lg { --arcana-avatar-own-size: 48px; }
+.arcana-avatar--xl { --arcana-avatar-own-size: 64px; }
+
+.arcana-avatar--circle { border-radius: 9999px; }
+.arcana-avatar--square { border-radius: calc(var(--arcana-avatar-resolved) * 0.18); }
+
+/* Com imagem o fundo colorido do fallback só apareceria por 1 frame (ou nas
+   bordas de uma imagem transparente) — vira um cinza neutro. */
+.arcana-avatar.has-image {
+    background: var(--arcana-ui);
+    color: var(--arcana-text-muted);
+}
+
+.arcana-avatar__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--arcana-avatar-fit, cover);
+}
+
+.arcana-avatar__initials {
+    letter-spacing: 0.02em;
+}
+
+/* Fallback por classe de ícone (FontAwesome & cia). */
+.arcana-avatar__icon {
+    font-size: calc(var(--arcana-avatar-resolved) * 0.44);
+    line-height: 1;
+}
+
+/* Fallback final: silhueta inline (não depende de nenhuma fonte de ícone). */
+.arcana-avatar__glyph {
+    display: block;
+    width: 62%;
+    height: 62%;
+    fill: currentColor;
+    opacity: 0.92;
+}
+
+/* ── Grupo empilhado ─────────────────────────────────────────────────────── */
+.arcana-avatar-group {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+/*
+ * Sobreposição: cada avatar (menos o primeiro) sobe por cima do anterior via
+ * margem negativa. O valor vem de `--arcana-avatar-group-overlap` (props
+ * `overlap`/`spacing`, inline style); sem ele, 30% do tamanho do avatar.
+ * Seletor de filho direto para pegar tanto os avatares vindos da prop `avatars`
+ * quanto os projetados por slot/children/ng-content.
+ */
+.arcana-avatar-group > * + * {
+    margin-left: calc(
+        -1 * var(--arcana-avatar-group-overlap, calc(var(--arcana-avatar-size, 40px) * 0.3))
+    );
+}
+
+/* Anel na cor da superfície: é ele que separa visualmente os avatares empilhados. */
+.arcana-avatar-group .arcana-avatar {
+    box-shadow: 0 0 0 var(--arcana-avatar-group-ring-width, 2px)
+        var(--arcana-avatar-group-ring, var(--arcana-surface));
+}
+
+/* `size` do grupo → token EXTERNO, herdado pelos filhos (ver cadeia no topo). */
+.arcana-avatar-group--xs { --arcana-avatar-size: 24px; }
+.arcana-avatar-group--sm { --arcana-avatar-size: 32px; }
+.arcana-avatar-group--md { --arcana-avatar-size: 40px; }
+.arcana-avatar-group--lg { --arcana-avatar-size: 48px; }
+.arcana-avatar-group--xl { --arcana-avatar-size: 64px; }
+
+/*
+ * `shape` do grupo também normaliza os filhos projetados: especificidade 0,2,0
+ * vence a classe própria `.arcana-avatar--{shape}` (0,1,0) de cada avatar.
+ */
+.arcana-avatar-group--circle .arcana-avatar { border-radius: 9999px; }
+.arcana-avatar-group--square .arcana-avatar {
+    border-radius: calc(var(--arcana-avatar-resolved) * 0.18);
+}
+
+/* Bolha "+N" — neutra, para não competir com os avatares reais. */
+.arcana-avatar-group .arcana-avatar-group__overflow {
+    background: var(--arcana-ui-active);
+    color: var(--arcana-text-muted);
+    font-size: calc(var(--arcana-avatar-resolved) * 0.34);
+    font-weight: 700;
+    letter-spacing: 0;
+}

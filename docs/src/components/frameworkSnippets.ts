@@ -3021,5 +3021,1225 @@ export class BillingCycleComponent {
   onIcon="fa-solid fa-table-cells-large"
   ariaLabel="View mode"
 />`
+  },
+
+  rate: {
+    react: `import { useState } from 'react'
+import { ArcanaRate } from '@arcanalabs/ui-components/react'
+
+export function ReviewRating() {
+  const [rating, setRating] = useState(3)
+  const [half, setHalf] = useState(3.5)
+  const [described, setDescribed] = useState(4)
+
+  return (
+    <>
+      {/* Basic — interactive */}
+      <ArcanaRate value={rating} onValueChange={setRating} />
+      <p>Your rating: <strong>{rating}</strong></p>
+
+      {/* Half stars + numeric score */}
+      <ArcanaRate value={half} onValueChange={setHalf} allowHalf showScore />
+
+      {/* Descriptive text instead of the score */}
+      <ArcanaRate
+        value={described}
+        onValueChange={setDescribed}
+        showText
+        texts={['Terrible', 'Poor', 'Average', 'Good', 'Excellent']}
+      />
+
+      {/* Read-only — showing an average */}
+      <ArcanaRate value={4.3} readonly allowHalf showScore />
+      <p>Average of 128 reviews</p>
+
+      {/* Sizes */}
+      <ArcanaRate value={4} readonly size="sm" /> <span>Small</span>
+      <ArcanaRate value={4} readonly size="md" /> <span>Medium</span>
+      <ArcanaRate value={4} readonly size="lg" /> <span>Large</span>
+
+      {/* Custom colours and disabled */}
+      <ArcanaRate value={4} readonly color="var(--arcana-warning-solid)" />
+      <ArcanaRate value={4} readonly color="#e11d48" voidColor="#fecdd3" />
+      <ArcanaRate value={3} disabled /> <span>Disabled</span>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaRateComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-review-rating',
+  standalone: true,
+  imports: [ArcanaRateComponent],
+  template: \`
+    <!-- Basic — interactive -->
+    <div arcanaRate [(value)]="rating"></div>
+    <p>Your rating: <strong>{{ rating }}</strong></p>
+
+    <!-- Half stars + numeric score -->
+    <div arcanaRate [(value)]="half" [allowHalf]="true" [showScore]="true"></div>
+
+    <!-- Descriptive text instead of the score -->
+    <div arcanaRate [(value)]="described" [showText]="true" [texts]="ratingTexts"></div>
+
+    <!-- Read-only — showing an average -->
+    <div arcanaRate [value]="4.3" [readonly]="true" [allowHalf]="true" [showScore]="true"></div>
+    <p>Average of 128 reviews</p>
+
+    <!-- Sizes -->
+    <div arcanaRate [value]="4" [readonly]="true" size="sm"></div> <span>Small</span>
+    <div arcanaRate [value]="4" [readonly]="true" size="md"></div> <span>Medium</span>
+    <div arcanaRate [value]="4" [readonly]="true" size="lg"></div> <span>Large</span>
+
+    <!-- Custom colours and disabled -->
+    <div arcanaRate [value]="4" [readonly]="true" color="var(--arcana-warning-solid)"></div>
+    <div arcanaRate [value]="4" [readonly]="true" color="#e11d48" voidColor="#fecdd3"></div>
+    <div arcanaRate [value]="3" [disabled]="true"></div> <span>Disabled</span>
+  \`
+})
+export class ReviewRatingComponent {
+  rating = 3
+  half = 3.5
+  described = 4
+  ratingTexts = ['Terrible', 'Poor', 'Average', 'Good', 'Excellent']
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaRate } from '@arcanalabs/ui-components/svelte'
+
+  let rating = $state(3)
+  let half = $state(3.5)
+  let described = $state(4)
+  const ratingTexts = ['Terrible', 'Poor', 'Average', 'Good', 'Excellent']
+</script>
+
+<!-- Basic — interactive -->
+<ArcanaRate value={rating} onValueChange={(v) => (rating = v)} />
+<p>Your rating: <strong>{rating}</strong></p>
+
+<!-- Half stars + numeric score -->
+<ArcanaRate value={half} onValueChange={(v) => (half = v)} allowHalf showScore />
+
+<!-- Descriptive text instead of the score -->
+<ArcanaRate value={described} onValueChange={(v) => (described = v)} showText texts={ratingTexts} />
+
+<!-- Read-only — showing an average -->
+<ArcanaRate value={4.3} readonly allowHalf showScore />
+<p>Average of 128 reviews</p>
+
+<!-- Sizes -->
+<ArcanaRate value={4} readonly size="sm" /> <span>Small</span>
+<ArcanaRate value={4} readonly size="md" /> <span>Medium</span>
+<ArcanaRate value={4} readonly size="lg" /> <span>Large</span>
+
+<!-- Custom colours and disabled -->
+<ArcanaRate value={4} readonly color="var(--arcana-warning-solid)" />
+<ArcanaRate value={4} readonly color="#e11d48" voidColor="#fecdd3" />
+<ArcanaRate value={3} disabled /> <span>Disabled</span>`
+  },
+
+  avatar: {
+    react: `import { ArcanaAvatar } from '@arcanalabs/ui-components/react'
+
+export function AvatarShowcase() {
+  return (
+    <>
+      {/* Fallback cascade — image, initials, icon, silhouette */}
+      <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+      <ArcanaAvatar initials="AM" alt="Alice Moreau" />
+      <ArcanaAvatar icon="fa-solid fa-user-tie" alt="Account manager" />
+      <ArcanaAvatar alt="Unknown member" />
+      <p>A broken image falls back to the next step, automatically.</p>
+
+      {/* Shapes */}
+      <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="circle" /> <span>Circle</span>
+      <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="square" /> <span>Square</span>
+
+      {/* Sizes — named steps and an exact pixel value */}
+      <ArcanaAvatar initials="XS" size="xs" />
+      <ArcanaAvatar initials="SM" size="sm" />
+      <ArcanaAvatar initials="MD" size="md" />
+      <ArcanaAvatar initials="LG" size="lg" />
+      <ArcanaAvatar initials="XL" size="xl" />
+      <ArcanaAvatar src="https://i.pravatar.cc/120?img=45" alt="Team member portrait" size={64} />
+      <p>Named steps or an exact pixel value</p>
+
+      {/* Custom background colour */}
+      <ArcanaAvatar initials="AM" color="#6366f1" />
+      <ArcanaAvatar initials="BR" color="#10b981" />
+      <ArcanaAvatar icon="fa-solid fa-robot" color="#f59e0b" />
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaAvatarComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-avatar-showcase',
+  standalone: true,
+  imports: [ArcanaAvatarComponent],
+  template: \`
+    <!-- Fallback cascade — image, initials, icon, silhouette -->
+    <span arcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait"></span>
+    <span arcanaAvatar initials="AM" alt="Alice Moreau"></span>
+    <span arcanaAvatar icon="fa-solid fa-user-tie" alt="Account manager"></span>
+    <span arcanaAvatar alt="Unknown member"></span>
+    <p>A broken image falls back to the next step, automatically.</p>
+
+    <!-- Shapes -->
+    <span arcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="circle"></span> <span>Circle</span>
+    <span arcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="square"></span> <span>Square</span>
+
+    <!-- Sizes — named steps and an exact pixel value -->
+    <span arcanaAvatar initials="XS" size="xs"></span>
+    <span arcanaAvatar initials="SM" size="sm"></span>
+    <span arcanaAvatar initials="MD" size="md"></span>
+    <span arcanaAvatar initials="LG" size="lg"></span>
+    <span arcanaAvatar initials="XL" size="xl"></span>
+    <span arcanaAvatar src="https://i.pravatar.cc/120?img=45" alt="Team member portrait" [size]="64"></span>
+    <p>Named steps or an exact pixel value</p>
+
+    <!-- Custom background colour -->
+    <span arcanaAvatar initials="AM" color="#6366f1"></span>
+    <span arcanaAvatar initials="BR" color="#10b981"></span>
+    <span arcanaAvatar icon="fa-solid fa-robot" color="#f59e0b"></span>
+  \`
+})
+export class AvatarShowcaseComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaAvatar } from '@arcanalabs/ui-components/svelte'
+</script>
+
+<!-- Fallback cascade — image, initials, icon, silhouette -->
+<ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+<ArcanaAvatar initials="AM" alt="Alice Moreau" />
+<ArcanaAvatar icon="fa-solid fa-user-tie" alt="Account manager" />
+<ArcanaAvatar alt="Unknown member" />
+<p>A broken image falls back to the next step, automatically.</p>
+
+<!-- Shapes -->
+<ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="circle" /> <span>Circle</span>
+<ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="square" /> <span>Square</span>
+
+<!-- Sizes — named steps and an exact pixel value -->
+<ArcanaAvatar initials="XS" size="xs" />
+<ArcanaAvatar initials="SM" size="sm" />
+<ArcanaAvatar initials="MD" size="md" />
+<ArcanaAvatar initials="LG" size="lg" />
+<ArcanaAvatar initials="XL" size="xl" />
+<ArcanaAvatar src="https://i.pravatar.cc/120?img=45" alt="Team member portrait" size={64} />
+<p>Named steps or an exact pixel value</p>
+
+<!-- Custom background colour -->
+<ArcanaAvatar initials="AM" color="#6366f1" />
+<ArcanaAvatar initials="BR" color="#10b981" />
+<ArcanaAvatar icon="fa-solid fa-robot" color="#f59e0b" />`
+  },
+
+  avatarGroup: {
+    react: `import { ArcanaAvatarGroup, ArcanaAvatar } from '@arcanalabs/ui-components/react'
+import type { AvatarGroupItem } from '@arcanalabs/ui-components/react'
+
+const team: AvatarGroupItem[] = [
+  { initials: 'AM', alt: 'Alice Moreau' },
+  { initials: 'BR', alt: 'Ben Rivas' },
+  { initials: 'CS', alt: 'Cora Silva' },
+  { initials: 'DL', alt: 'Dan Lee' },
+  { initials: 'EM', alt: 'Elena Marx' }
+]
+
+export function TeamAvatars() {
+  return (
+    <>
+      {/* Data-driven with an overflow bubble */}
+      <ArcanaAvatarGroup avatars={team} max={3} ariaLabel="Project team" />
+      <p>Project team</p>
+
+      {/* Sizes and shape */}
+      <ArcanaAvatarGroup avatars={team} max={3} size="sm" />
+      <ArcanaAvatarGroup avatars={team} max={3} size="lg" shape="square" />
+
+      {/* Spacing instead of overlap */}
+      <ArcanaAvatarGroup avatars={team} max={4} /> <span>Overlapping (default)</span>
+      <ArcanaAvatarGroup avatars={team} max={4} spacing={4} /> <span>Spaced apart</span>
+
+      {/* Composition — children instead of the array */}
+      <ArcanaAvatarGroup overflowCount={7} size="md" ariaLabel="Project team">
+        <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Alice Moreau" />
+        <ArcanaAvatar initials="BR" alt="Ben Rivas" color="#10b981" />
+        <ArcanaAvatar icon="fa-solid fa-user-tie" alt="Cora Silva" color="#6366f1" />
+      </ArcanaAvatarGroup>
+      <p>Composed children with an explicit overflow count</p>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaAvatarGroupComponent, ArcanaAvatarComponent } from '@arcanalabs/ui-components/angular'
+import type { AvatarGroupItem } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-team-avatars',
+  standalone: true,
+  imports: [ArcanaAvatarGroupComponent, ArcanaAvatarComponent],
+  template: \`
+    <!-- Data-driven with an overflow bubble -->
+    <div arcanaAvatarGroup [avatars]="team" [max]="3" ariaLabel="Project team"></div>
+    <p>Project team</p>
+
+    <!-- Sizes and shape -->
+    <div arcanaAvatarGroup [avatars]="team" [max]="3" size="sm"></div>
+    <div arcanaAvatarGroup [avatars]="team" [max]="3" size="lg" shape="square"></div>
+
+    <!-- Spacing instead of overlap -->
+    <div arcanaAvatarGroup [avatars]="team" [max]="4"></div> <span>Overlapping (default)</span>
+    <div arcanaAvatarGroup [avatars]="team" [max]="4" [spacing]="4"></div> <span>Spaced apart</span>
+
+    <!-- Composition — children instead of the array -->
+    <div arcanaAvatarGroup [overflowCount]="7" size="md" ariaLabel="Project team">
+      <span arcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Alice Moreau"></span>
+      <span arcanaAvatar initials="BR" alt="Ben Rivas" color="#10b981"></span>
+      <span arcanaAvatar icon="fa-solid fa-user-tie" alt="Cora Silva" color="#6366f1"></span>
+    </div>
+    <p>Composed children with an explicit overflow count</p>
+  \`
+})
+export class TeamAvatarsComponent {
+  team: AvatarGroupItem[] = [
+    { initials: 'AM', alt: 'Alice Moreau' },
+    { initials: 'BR', alt: 'Ben Rivas' },
+    { initials: 'CS', alt: 'Cora Silva' },
+    { initials: 'DL', alt: 'Dan Lee' },
+    { initials: 'EM', alt: 'Elena Marx' }
+  ]
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaAvatarGroup, ArcanaAvatar } from '@arcanalabs/ui-components/svelte'
+  import type { AvatarGroupItem } from '@arcanalabs/ui-components/svelte'
+
+  const team: AvatarGroupItem[] = [
+    { initials: 'AM', alt: 'Alice Moreau' },
+    { initials: 'BR', alt: 'Ben Rivas' },
+    { initials: 'CS', alt: 'Cora Silva' },
+    { initials: 'DL', alt: 'Dan Lee' },
+    { initials: 'EM', alt: 'Elena Marx' }
+  ]
+</script>
+
+<!-- Data-driven with an overflow bubble -->
+<ArcanaAvatarGroup avatars={team} max={3} ariaLabel="Project team" />
+<p>Project team</p>
+
+<!-- Sizes and shape -->
+<ArcanaAvatarGroup avatars={team} max={3} size="sm" />
+<ArcanaAvatarGroup avatars={team} max={3} size="lg" shape="square" />
+
+<!-- Spacing instead of overlap -->
+<ArcanaAvatarGroup avatars={team} max={4} /> <span>Overlapping (default)</span>
+<ArcanaAvatarGroup avatars={team} max={4} spacing={4} /> <span>Spaced apart</span>
+
+<!-- Composition — children instead of the array -->
+<ArcanaAvatarGroup overflowCount={7} size="md" ariaLabel="Project team">
+  <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Alice Moreau" />
+  <ArcanaAvatar initials="BR" alt="Ben Rivas" color="#10b981" />
+  <ArcanaAvatar icon="fa-solid fa-user-tie" alt="Cora Silva" color="#6366f1" />
+</ArcanaAvatarGroup>
+<p>Composed children with an explicit overflow count</p>`
+  },
+
+  statistic: {
+    react: `import { ArcanaStatistic } from '@arcanalabs/ui-components/react'
+
+export function SalesPanel() {
+  return (
+    <>
+      {/* Basic */}
+      <ArcanaStatistic value={1284} title="Active users" />
+
+      {/* Precision and separators */}
+      <ArcanaStatistic value={1234567.891} precision={2} groupSeparator="," decimalSeparator="." title="Monthly revenue" />
+      <ArcanaStatistic value={1234567.891} precision={2} groupSeparator="." decimalSeparator="," title="Same number, pt-BR separators" />
+
+      {/* Prefix, suffix and icon */}
+      <ArcanaStatistic value={48250.75} precision={2} prefix="$" icon="fa-solid fa-arrow-trend-up" title="Monthly revenue" />
+      <ArcanaStatistic value={3.42} precision={2} suffix="%" title="Conversion rate" />
+      {/* The same three spots are also slots, for rich content */}
+      <ArcanaStatistic
+        value={99.98}
+        precision={2}
+        tone="success"
+        titleSlot="Uptime"
+        suffixSlot={<span style={{ fontSize: '.6em' }}>%</span>}
+      />
+
+      {/* Tones */}
+      <ArcanaStatistic value={1284} title="Orders" tone="neutral" />
+      <ArcanaStatistic value={99.98} precision={2} suffix="%" title="Uptime" tone="success" />
+      <ArcanaStatistic value={2.1} precision={1} suffix="%" title="Churn" tone="danger" />
+      <ArcanaStatistic value={17} title="Pending reviews" tone="warning" />
+      <ArcanaStatistic value={42} title="Open tickets" tone="info" />
+
+      {/* Sizes */}
+      <ArcanaStatistic value={1284} title="Orders" size="sm" />
+      <ArcanaStatistic value={1284} title="Orders" size="md" />
+      <ArcanaStatistic value={1284} title="Orders" size="lg" />
+      <ArcanaStatistic value={1284} title="Orders" size="xl" />
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaStatisticComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-sales-panel',
+  standalone: true,
+  imports: [ArcanaStatisticComponent],
+  template: \`
+    <!-- Basic -->
+    <div arcanaStatistic [value]="1284" title="Active users"></div>
+
+    <!-- Precision and separators -->
+    <div arcanaStatistic [value]="1234567.891" [precision]="2" groupSeparator="," decimalSeparator="." title="Monthly revenue"></div>
+    <div arcanaStatistic [value]="1234567.891" [precision]="2" groupSeparator="." decimalSeparator="," title="Same number, pt-BR separators"></div>
+
+    <!-- Prefix, suffix and icon -->
+    <div arcanaStatistic [value]="48250.75" [precision]="2" prefix="$" icon="fa-solid fa-arrow-trend-up" title="Monthly revenue"></div>
+    <div arcanaStatistic [value]="3.42" [precision]="2" suffix="%" title="Conversion rate"></div>
+    <!-- The same three spots are also slots, for rich content -->
+    <div arcanaStatistic [value]="99.98" [precision]="2" tone="success">
+      <span statTitle>Uptime</span>
+      <span statSuffix style="font-size: .6em">%</span>
+    </div>
+
+    <!-- Tones -->
+    <div arcanaStatistic [value]="1284" title="Orders" tone="neutral"></div>
+    <div arcanaStatistic [value]="99.98" [precision]="2" suffix="%" title="Uptime" tone="success"></div>
+    <div arcanaStatistic [value]="2.1" [precision]="1" suffix="%" title="Churn" tone="danger"></div>
+    <div arcanaStatistic [value]="17" title="Pending reviews" tone="warning"></div>
+    <div arcanaStatistic [value]="42" title="Open tickets" tone="info"></div>
+
+    <!-- Sizes -->
+    <div arcanaStatistic [value]="1284" title="Orders" size="sm"></div>
+    <div arcanaStatistic [value]="1284" title="Orders" size="md"></div>
+    <div arcanaStatistic [value]="1284" title="Orders" size="lg"></div>
+    <div arcanaStatistic [value]="1284" title="Orders" size="xl"></div>
+  \`
+})
+export class SalesPanelComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaStatistic } from '@arcanalabs/ui-components/svelte'
+</script>
+
+<!-- Basic -->
+<ArcanaStatistic value={1284} title="Active users" />
+
+<!-- Precision and separators -->
+<ArcanaStatistic value={1234567.891} precision={2} groupSeparator="," decimalSeparator="." title="Monthly revenue" />
+<ArcanaStatistic value={1234567.891} precision={2} groupSeparator="." decimalSeparator="," title="Same number, pt-BR separators" />
+
+<!-- Prefix, suffix and icon -->
+<ArcanaStatistic value={48250.75} precision={2} prefix="$" icon="fa-solid fa-arrow-trend-up" title="Monthly revenue" />
+<ArcanaStatistic value={3.42} precision={2} suffix="%" title="Conversion rate" />
+<!-- The same three spots are also slots, for rich content -->
+{#snippet uptimeTitle()}Uptime{/snippet}
+{#snippet percent()}<span style="font-size: .6em">%</span>{/snippet}
+<ArcanaStatistic value={99.98} precision={2} tone="success" titleSlot={uptimeTitle} suffixSlot={percent} />
+
+<!-- Tones -->
+<ArcanaStatistic value={1284} title="Orders" tone="neutral" />
+<ArcanaStatistic value={99.98} precision={2} suffix="%" title="Uptime" tone="success" />
+<ArcanaStatistic value={2.1} precision={1} suffix="%" title="Churn" tone="danger" />
+<ArcanaStatistic value={17} title="Pending reviews" tone="warning" />
+<ArcanaStatistic value={42} title="Open tickets" tone="info" />
+
+<!-- Sizes -->
+<ArcanaStatistic value={1284} title="Orders" size="sm" />
+<ArcanaStatistic value={1284} title="Orders" size="md" />
+<ArcanaStatistic value={1284} title="Orders" size="lg" />
+<ArcanaStatistic value={1284} title="Orders" size="xl" />`
+  },
+
+  countdown: {
+    react: `import { useMemo, useState } from 'react'
+import { ArcanaButton, ArcanaCountdown } from '@arcanalabs/ui-components/react'
+
+export function DeadlinePanel() {
+  // The target instant, computed once — two hours from now.
+  const deadline = useMemo(() => Date.now() + 2 * 60 * 60 * 1000, [])
+  const [paused, setPaused] = useState(true)
+
+  return (
+    <>
+      {/* Basic — time left until a deadline */}
+      <ArcanaCountdown value={deadline} />
+
+      {/* Custom format */}
+      <ArcanaCountdown value={deadline} format="D[d] HH:mm:ss" />
+      <ArcanaCountdown value={deadline} format="mm:ss" />
+
+      {/* Title, prefix and suffix */}
+      <ArcanaCountdown
+        value={deadline}
+        title="Flash sale ends in"
+        prefixSlot={<i className="fa-solid fa-hourglass-half" />}
+        suffixSlot={<i className="fa-solid fa-bolt" />}
+      />
+
+      {/* Tones and sizes */}
+      <ArcanaCountdown value={deadline} title="Flash sale ends in" tone="danger" size="lg" />
+      <ArcanaCountdown value={deadline} title="Session expires in" tone="success" size="sm" />
+
+      {/* Paused */}
+      <ArcanaCountdown value={deadline} paused={paused} onFinish={() => console.log('done')} />
+      <ArcanaButton variant="outline" onClick={() => setPaused(!paused)}>Pause / resume</ArcanaButton>
+      <p>Fires the finish event when it reaches zero.</p>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaButtonComponent, ArcanaCountdownComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-deadline-panel',
+  standalone: true,
+  imports: [ArcanaButtonComponent, ArcanaCountdownComponent],
+  template: \`
+    <!-- Basic — time left until a deadline -->
+    <div arcanaCountdown [value]="deadline"></div>
+
+    <!-- Custom format -->
+    <div arcanaCountdown [value]="deadline" format="D[d] HH:mm:ss"></div>
+    <div arcanaCountdown [value]="deadline" format="mm:ss"></div>
+
+    <!-- Title, prefix and suffix -->
+    <div arcanaCountdown [value]="deadline" title="Flash sale ends in">
+      <i countdownPrefix class="fa-solid fa-hourglass-half"></i>
+      <i countdownSuffix class="fa-solid fa-bolt"></i>
+    </div>
+
+    <!-- Tones and sizes -->
+    <div arcanaCountdown [value]="deadline" title="Flash sale ends in" tone="danger" size="lg"></div>
+    <div arcanaCountdown [value]="deadline" title="Session expires in" tone="success" size="sm"></div>
+
+    <!-- Paused -->
+    <div arcanaCountdown [value]="deadline" [paused]="paused" (finish)="onFinish()"></div>
+    <button arcanaButton variant="outline" (click)="paused = !paused">Pause / resume</button>
+    <p>Fires the finish event when it reaches zero.</p>
+  \`
+})
+export class DeadlinePanelComponent {
+  /** The target instant, computed once — two hours from now. */
+  readonly deadline = Date.now() + 2 * 60 * 60 * 1000
+  paused = true
+
+  onFinish() {
+    console.log('done')
+  }
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaButton, ArcanaCountdown } from '@arcanalabs/ui-components/svelte'
+
+  // The target instant, computed once — two hours from now.
+  const deadline = Date.now() + 2 * 60 * 60 * 1000
+  let paused = $state(true)
+</script>
+
+<!-- Basic — time left until a deadline -->
+<ArcanaCountdown value={deadline} />
+
+<!-- Custom format -->
+<ArcanaCountdown value={deadline} format="D[d] HH:mm:ss" />
+<ArcanaCountdown value={deadline} format="mm:ss" />
+
+<!-- Title, prefix and suffix -->
+{#snippet hourglass()}<i class="fa-solid fa-hourglass-half"></i>{/snippet}
+{#snippet bolt()}<i class="fa-solid fa-bolt"></i>{/snippet}
+<ArcanaCountdown value={deadline} title="Flash sale ends in" prefixSlot={hourglass} suffixSlot={bolt} />
+
+<!-- Tones and sizes -->
+<ArcanaCountdown value={deadline} title="Flash sale ends in" tone="danger" size="lg" />
+<ArcanaCountdown value={deadline} title="Session expires in" tone="success" size="sm" />
+
+<!-- Paused -->
+<ArcanaCountdown value={deadline} {paused} onFinish={() => console.log('done')} />
+<ArcanaButton variant="outline" onClick={() => (paused = !paused)}>Pause / resume</ArcanaButton>
+<p>Fires the finish event when it reaches zero.</p>`
+  },
+
+  progress: {
+    react: `import { ArcanaProgress } from '@arcanalabs/ui-components/react'
+
+export function ProgressPanel() {
+  return (
+    <>
+      {/* Determinate */}
+      <ArcanaProgress value={25} showValue ariaLabel="Uploading" /> <span>Uploading</span>
+      <ArcanaProgress value={60} showValue ariaLabel="Storage used" /> <span>Storage used</span>
+      <ArcanaProgress value={100} showValue ariaLabel="Complete" /> <span>Complete</span>
+
+      {/* Indeterminate — value is null */}
+      <ArcanaProgress value={null} ariaLabel="Uploading" />
+      <p>No known total — the bar loops.</p>
+
+      {/* Tones */}
+      <ArcanaProgress value={40} tone="accent" />
+      <ArcanaProgress value={70} tone="success" />
+      <ArcanaProgress value={90} tone="danger" />
+      <ArcanaProgress value={55} tone="warning" />
+      <ArcanaProgress value={30} tone="info" />
+
+      {/* Variants and radius */}
+      <ArcanaProgress value={60} variant="solid" />
+      <ArcanaProgress value={60} variant="soft" />
+      <ArcanaProgress value={60} radius="none" />
+      <ArcanaProgress value={60} radius="full" />
+
+      {/* Sizes */}
+      <ArcanaProgress value={60} size="sm" />
+      <ArcanaProgress value={60} size="md" />
+      <ArcanaProgress value={60} size="lg" />
+
+      {/* Custom label through the value slot */}
+      <ArcanaProgress value={3} max={5} showValue valueSlot={<strong>3 of 5 steps</strong>} />
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaProgressComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-progress-panel',
+  standalone: true,
+  imports: [ArcanaProgressComponent],
+  template: \`
+    <!-- Determinate -->
+    <div arcanaProgress [value]="25" [showValue]="true" ariaLabel="Uploading"></div> <span>Uploading</span>
+    <div arcanaProgress [value]="60" [showValue]="true" ariaLabel="Storage used"></div> <span>Storage used</span>
+    <div arcanaProgress [value]="100" [showValue]="true" ariaLabel="Complete"></div> <span>Complete</span>
+
+    <!-- Indeterminate — value is null -->
+    <div arcanaProgress [value]="null" ariaLabel="Uploading"></div>
+    <p>No known total — the bar loops.</p>
+
+    <!-- Tones -->
+    <div arcanaProgress [value]="40" tone="accent"></div>
+    <div arcanaProgress [value]="70" tone="success"></div>
+    <div arcanaProgress [value]="90" tone="danger"></div>
+    <div arcanaProgress [value]="55" tone="warning"></div>
+    <div arcanaProgress [value]="30" tone="info"></div>
+
+    <!-- Variants and radius -->
+    <div arcanaProgress [value]="60" variant="solid"></div>
+    <div arcanaProgress [value]="60" variant="soft"></div>
+    <div arcanaProgress [value]="60" radius="none"></div>
+    <div arcanaProgress [value]="60" radius="full"></div>
+
+    <!-- Sizes -->
+    <div arcanaProgress [value]="60" size="sm"></div>
+    <div arcanaProgress [value]="60" size="md"></div>
+    <div arcanaProgress [value]="60" size="lg"></div>
+
+    <!-- Custom label through the value slot -->
+    <div arcanaProgress [value]="3" [max]="5" [showValue]="true">
+      <strong progressValue>3 of 5 steps</strong>
+    </div>
+  \`
+})
+export class ProgressPanelComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaProgress } from '@arcanalabs/ui-components/svelte'
+</script>
+
+<!-- Determinate -->
+<ArcanaProgress value={25} showValue ariaLabel="Uploading" /> <span>Uploading</span>
+<ArcanaProgress value={60} showValue ariaLabel="Storage used" /> <span>Storage used</span>
+<ArcanaProgress value={100} showValue ariaLabel="Complete" /> <span>Complete</span>
+
+<!-- Indeterminate — value is null -->
+<ArcanaProgress value={null} ariaLabel="Uploading" />
+<p>No known total — the bar loops.</p>
+
+<!-- Tones -->
+<ArcanaProgress value={40} tone="accent" />
+<ArcanaProgress value={70} tone="success" />
+<ArcanaProgress value={90} tone="danger" />
+<ArcanaProgress value={55} tone="warning" />
+<ArcanaProgress value={30} tone="info" />
+
+<!-- Variants and radius -->
+<ArcanaProgress value={60} variant="solid" />
+<ArcanaProgress value={60} variant="soft" />
+<ArcanaProgress value={60} radius="none" />
+<ArcanaProgress value={60} radius="full" />
+
+<!-- Sizes -->
+<ArcanaProgress value={60} size="sm" />
+<ArcanaProgress value={60} size="md" />
+<ArcanaProgress value={60} size="lg" />
+
+<!-- Custom label through the value slot -->
+<ArcanaProgress value={3} max={5} showValue>
+  {#snippet valueSlot()}<strong>3 of 5 steps</strong>{/snippet}
+</ArcanaProgress>`
+  },
+
+  aspectRatio: {
+    react: `import { ArcanaAspectRatio } from '@arcanalabs/ui-components/react'
+
+export function MediaGrid() {
+  return (
+    <>
+      {/* Default — 16 / 9 */}
+      <ArcanaAspectRatio>
+        <img src="https://picsum.photos/seed/arcana1/800/600" alt="Landscape photograph" />
+      </ArcanaAspectRatio>
+
+      {/* Square and portrait */}
+      <ArcanaAspectRatio ratio={1}>
+        <img src="https://picsum.photos/seed/arcana2/800/600" alt="Landscape photograph" />
+      </ArcanaAspectRatio>
+      <span>1 / 1</span>
+      <ArcanaAspectRatio ratio={3 / 4}>
+        <img src="https://picsum.photos/seed/arcana3/800/600" alt="Landscape photograph" />
+      </ArcanaAspectRatio>
+      <span>3 / 4</span>
+
+      {/* Classic 4 / 3 */}
+      <ArcanaAspectRatio ratio={4 / 3}>
+        <img src="https://picsum.photos/seed/arcana4/800/600" alt="Landscape photograph" />
+      </ArcanaAspectRatio>
+      <span>4 / 3</span>
+
+      {/* Any embedded content — here a coloured placeholder */}
+      <ArcanaAspectRatio ratio={16 / 9}>
+        <div style={{ display: 'grid', placeItems: 'center', width: '100%', height: '100%', background: 'var(--arcana-bg-subtle)' }}>
+          Works with iframes, maps and video too
+        </div>
+      </ArcanaAspectRatio>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaAspectRatioComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-media-grid',
+  standalone: true,
+  imports: [ArcanaAspectRatioComponent],
+  template: \`
+    <!-- Default — 16 / 9 -->
+    <div arcanaAspectRatio>
+      <img src="https://picsum.photos/seed/arcana1/800/600" alt="Landscape photograph" />
+    </div>
+
+    <!-- Square and portrait -->
+    <div arcanaAspectRatio [ratio]="1">
+      <img src="https://picsum.photos/seed/arcana2/800/600" alt="Landscape photograph" />
+    </div>
+    <span>1 / 1</span>
+    <div arcanaAspectRatio [ratio]="3 / 4">
+      <img src="https://picsum.photos/seed/arcana3/800/600" alt="Landscape photograph" />
+    </div>
+    <span>3 / 4</span>
+
+    <!-- Classic 4 / 3 -->
+    <div arcanaAspectRatio [ratio]="4 / 3">
+      <img src="https://picsum.photos/seed/arcana4/800/600" alt="Landscape photograph" />
+    </div>
+    <span>4 / 3</span>
+
+    <!-- Any embedded content — here a coloured placeholder -->
+    <div arcanaAspectRatio [ratio]="16 / 9">
+      <div class="placeholder">Works with iframes, maps and video too</div>
+    </div>
+  \`,
+  styles: [\`
+    .placeholder {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      background: var(--arcana-bg-subtle);
+    }
+  \`]
+})
+export class MediaGridComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaAspectRatio } from '@arcanalabs/ui-components/svelte'
+</script>
+
+<!-- Default — 16 / 9 -->
+<ArcanaAspectRatio>
+  <img src="https://picsum.photos/seed/arcana1/800/600" alt="Landscape photograph" />
+</ArcanaAspectRatio>
+
+<!-- Square and portrait -->
+<ArcanaAspectRatio ratio={1}>
+  <img src="https://picsum.photos/seed/arcana2/800/600" alt="Landscape photograph" />
+</ArcanaAspectRatio>
+<span>1 / 1</span>
+<ArcanaAspectRatio ratio={3 / 4}>
+  <img src="https://picsum.photos/seed/arcana3/800/600" alt="Landscape photograph" />
+</ArcanaAspectRatio>
+<span>3 / 4</span>
+
+<!-- Classic 4 / 3 -->
+<ArcanaAspectRatio ratio={4 / 3}>
+  <img src="https://picsum.photos/seed/arcana4/800/600" alt="Landscape photograph" />
+</ArcanaAspectRatio>
+<span>4 / 3</span>
+
+<!-- Any embedded content — here a coloured placeholder -->
+<ArcanaAspectRatio ratio={16 / 9}>
+  <div class="placeholder">Works with iframes, maps and video too</div>
+</ArcanaAspectRatio>
+
+<style>
+  .placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--arcana-bg-subtle);
+  }
+</style>`
+  },
+
+  scrollArea: {
+    react: `import { ArcanaScrollArea } from '@arcanalabs/ui-components/react'
+
+const rows = Array.from({ length: 12 }, (_, i) => 'Item ' + (i + 1))
+
+export function ScrollPanels() {
+  return (
+    <>
+      {/* Vertical with a max height */}
+      <p>Vertical, capped height</p>
+      <ArcanaScrollArea maxHeight={180}>
+        {rows.map((row) => <div key={row}>{row}</div>)}
+      </ArcanaScrollArea>
+
+      {/* Horizontal */}
+      <p>Horizontal</p>
+      <ArcanaScrollArea orientation="horizontal">
+        <div style={{ display: 'flex', gap: 12 }}>
+          {rows.map((row) => <div key={row} style={{ minWidth: 160 }}>{row}</div>)}
+        </div>
+      </ArcanaScrollArea>
+
+      {/* Both axes */}
+      <p>Both axes</p>
+      <ArcanaScrollArea orientation="both" height={180}>
+        <div style={{ width: 1200 }}>
+          {rows.map((row) => <div key={row}>{row}</div>)}
+        </div>
+      </ArcanaScrollArea>
+
+      {/* Always-visible vs auto-hiding scrollbars */}
+      <p>Scrollbar always visible</p>
+      <ArcanaScrollArea maxHeight={140} type="always">
+        {rows.map((row) => <div key={row}>{row}</div>)}
+      </ArcanaScrollArea>
+      <p>Scrollbar appears on hover</p>
+      <ArcanaScrollArea maxHeight={140} type="hover">
+        {rows.map((row) => <div key={row}>{row}</div>)}
+      </ArcanaScrollArea>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaScrollAreaComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-scroll-panels',
+  standalone: true,
+  imports: [ArcanaScrollAreaComponent],
+  template: \`
+    <!-- Vertical with a max height -->
+    <p>Vertical, capped height</p>
+    <div arcanaScrollArea [maxHeight]="180">
+      @for (row of rows; track row) { <div>{{ row }}</div> }
+    </div>
+
+    <!-- Horizontal -->
+    <p>Horizontal</p>
+    <div arcanaScrollArea orientation="horizontal">
+      <div class="row">
+        @for (row of rows; track row) { <div class="card">{{ row }}</div> }
+      </div>
+    </div>
+
+    <!-- Both axes -->
+    <p>Both axes</p>
+    <div arcanaScrollArea orientation="both" [height]="180">
+      <div class="wide">
+        @for (row of rows; track row) { <div>{{ row }}</div> }
+      </div>
+    </div>
+
+    <!-- Always-visible vs auto-hiding scrollbars -->
+    <p>Scrollbar always visible</p>
+    <div arcanaScrollArea [maxHeight]="140" type="always">
+      @for (row of rows; track row) { <div>{{ row }}</div> }
+    </div>
+    <p>Scrollbar appears on hover</p>
+    <div arcanaScrollArea [maxHeight]="140" type="hover">
+      @for (row of rows; track row) { <div>{{ row }}</div> }
+    </div>
+  \`,
+  styles: [\`
+    .row { display: flex; gap: 12px; }
+    .card { min-width: 160px; }
+    .wide { width: 1200px; }
+  \`]
+})
+export class ScrollPanelsComponent {
+  rows = Array.from({ length: 12 }, (_, i) => 'Item ' + (i + 1))
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaScrollArea } from '@arcanalabs/ui-components/svelte'
+
+  const rows = Array.from({ length: 12 }, (_, i) => 'Item ' + (i + 1))
+</script>
+
+<!-- Vertical with a max height -->
+<p>Vertical, capped height</p>
+<ArcanaScrollArea maxHeight={180}>
+  {#each rows as row (row)}<div>{row}</div>{/each}
+</ArcanaScrollArea>
+
+<!-- Horizontal -->
+<p>Horizontal</p>
+<ArcanaScrollArea orientation="horizontal">
+  <div class="row">
+    {#each rows as row (row)}<div class="card">{row}</div>{/each}
+  </div>
+</ArcanaScrollArea>
+
+<!-- Both axes -->
+<p>Both axes</p>
+<ArcanaScrollArea orientation="both" height={180}>
+  <div class="wide">
+    {#each rows as row (row)}<div>{row}</div>{/each}
+  </div>
+</ArcanaScrollArea>
+
+<!-- Always-visible vs auto-hiding scrollbars -->
+<p>Scrollbar always visible</p>
+<ArcanaScrollArea maxHeight={140} type="always">
+  {#each rows as row (row)}<div>{row}</div>{/each}
+</ArcanaScrollArea>
+<p>Scrollbar appears on hover</p>
+<ArcanaScrollArea maxHeight={140} type="hover">
+  {#each rows as row (row)}<div>{row}</div>{/each}
+</ArcanaScrollArea>
+
+<style>
+  .row { display: flex; gap: 12px; }
+  .card { min-width: 160px; }
+  .wide { width: 1200px; }
+</style>`
+  },
+
+  hoverCard: {
+    react: `import { ArcanaHoverCard, ArcanaAvatar } from '@arcanalabs/ui-components/react'
+
+function ProfileCard() {
+  return (
+    <div>
+      <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Dana Whitfield" size="lg" />
+      <strong>Dana Whitfield</strong>
+      <span>@danaw</span>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+      <span>1.2k followers</span>
+    </div>
+  )
+}
+
+export function ProfileLinks() {
+  return (
+    <>
+      {/* Basic — a profile preview on a link */}
+      <ArcanaHoverCard trigger={<a href="#profile">Dana Whitfield</a>}>
+        <ProfileCard />
+      </ArcanaHoverCard>
+
+      {/* Sides */}
+      <p>One trigger per side</p>
+      <ArcanaHoverCard side="top" trigger={<a href="#profile">Dana Whitfield</a>}><ProfileCard /></ArcanaHoverCard>
+      <ArcanaHoverCard side="right" trigger={<a href="#profile">Dana Whitfield</a>}><ProfileCard /></ArcanaHoverCard>
+      <ArcanaHoverCard side="bottom" trigger={<a href="#profile">Dana Whitfield</a>}><ProfileCard /></ArcanaHoverCard>
+      <ArcanaHoverCard side="left" trigger={<a href="#profile">Dana Whitfield</a>}><ProfileCard /></ArcanaHoverCard>
+
+      {/* Alignment and offset */}
+      <ArcanaHoverCard align="start" offset={16} trigger={<a href="#profile">Dana Whitfield</a>}>
+        <ProfileCard />
+      </ArcanaHoverCard>
+
+      {/* Delays */}
+      <ArcanaHoverCard openDelay={0} closeDelay={0} trigger={<a href="#profile">Instant</a>}>
+        <ProfileCard />
+      </ArcanaHoverCard>
+      <ArcanaHoverCard openDelay={600} trigger={<a href="#profile">Slow (600 ms)</a>}>
+        <ProfileCard />
+      </ArcanaHoverCard>
+
+      {/* Disabled */}
+      <ArcanaHoverCard disabled trigger={<a href="#profile">Disabled — nothing opens</a>}>
+        <ProfileCard />
+      </ArcanaHoverCard>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaHoverCardComponent, ArcanaAvatarComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-profile-links',
+  standalone: true,
+  imports: [ArcanaHoverCardComponent, ArcanaAvatarComponent],
+  template: \`
+    <!-- Basic — a profile preview on a link -->
+    <span arcanaHoverCard>
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <div>
+        <span arcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Dana Whitfield" size="lg"></span>
+        <strong>Dana Whitfield</strong>
+        <span>&#64;danaw</span>
+        <p>Design systems lead. Writes about accessibility and colour.</p>
+        <span>1.2k followers</span>
+      </div>
+    </span>
+
+    <!-- Sides -->
+    <p>One trigger per side</p>
+    <span arcanaHoverCard side="top">
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+    <span arcanaHoverCard side="right">
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+    <span arcanaHoverCard side="bottom">
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+    <span arcanaHoverCard side="left">
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+
+    <!-- Alignment and offset -->
+    <span arcanaHoverCard align="start" [offset]="16">
+      <a arcanaHoverCardTrigger href="#profile">Dana Whitfield</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+
+    <!-- Delays -->
+    <span arcanaHoverCard [openDelay]="0" [closeDelay]="0">
+      <a arcanaHoverCardTrigger href="#profile">Instant</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+    <span arcanaHoverCard [openDelay]="600">
+      <a arcanaHoverCardTrigger href="#profile">Slow (600 ms)</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+
+    <!-- Disabled -->
+    <span arcanaHoverCard [disabled]="true">
+      <a arcanaHoverCardTrigger href="#profile">Disabled — nothing opens</a>
+      <p>Design systems lead. Writes about accessibility and colour.</p>
+    </span>
+  \`
+})
+export class ProfileLinksComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaHoverCard, ArcanaAvatar } from '@arcanalabs/ui-components/svelte'
+</script>
+
+{#snippet profileCard()}
+  <div>
+    <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Dana Whitfield" size="lg" />
+    <strong>Dana Whitfield</strong>
+    <span>@danaw</span>
+    <p>Design systems lead. Writes about accessibility and colour.</p>
+    <span>1.2k followers</span>
+  </div>
+{/snippet}
+
+<!-- Basic — a profile preview on a link -->
+<ArcanaHoverCard>
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+
+<!-- Sides -->
+<p>One trigger per side</p>
+<ArcanaHoverCard side="top">
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+<ArcanaHoverCard side="right">
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+<ArcanaHoverCard side="bottom">
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+<ArcanaHoverCard side="left">
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+
+<!-- Alignment and offset -->
+<ArcanaHoverCard align="start" offset={16}>
+  {#snippet trigger()}<a href="#profile">Dana Whitfield</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+
+<!-- Delays -->
+<ArcanaHoverCard openDelay={0} closeDelay={0}>
+  {#snippet trigger()}<a href="#profile">Instant</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+<ArcanaHoverCard openDelay={600}>
+  {#snippet trigger()}<a href="#profile">Slow (600 ms)</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>
+
+<!-- Disabled -->
+<ArcanaHoverCard disabled>
+  {#snippet trigger()}<a href="#profile">Disabled — nothing opens</a>{/snippet}
+  {@render profileCard()}
+</ArcanaHoverCard>`
+  },
+
+  contextMenu: {
+    react: `import { useState } from 'react'
+import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/react'
+import type { ArcanaContextMenuItemSpec } from '@arcanalabs/ui-components/react'
+
+const items: ArcanaContextMenuItemSpec[] = [
+  { label: 'Open', icon: 'fa-regular fa-folder-open' },
+  { label: 'Rename', icon: 'fa-solid fa-pen' },
+  { label: 'Duplicate', icon: 'fa-solid fa-copy', suffix: '⌘D' },
+  { label: 'Share', icon: 'fa-solid fa-share-nodes', divided: true },
+  { label: 'Delete', icon: 'fa-solid fa-trash', variant: 'danger', divided: true },
+  { label: 'Move to folder', icon: 'fa-solid fa-folder-tree', disabled: true }
+]
+
+export function LibraryItem() {
+  const [last, setLast] = useState('none yet')
+
+  return (
+    <>
+      {/* Data-driven items — right-click the area */}
+      <ArcanaContextMenu items={items} ariaLabel="Library item actions" trigger={<div>Right-click this area</div>} />
+
+      {/* Reacting to the selection */}
+      <ArcanaContextMenu
+        items={items}
+        onSelect={(item) => setLast(item.label)}
+        trigger={<div>Right-click this area</div>}
+      />
+      <p>Last action: <strong>{last}</strong></p>
+
+      {/* Composition — children instead of the array */}
+      <ArcanaContextMenu trigger={<div>Right-click this area</div>}>
+        <ArcanaContextMenuItem icon="fa-regular fa-folder-open" onSelect={() => setLast('Open')}>Open</ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-box-archive" onSelect={() => setLast('Archive')}>Archive</ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" divided onSelect={() => setLast('Delete')}>Delete</ArcanaContextMenuItem>
+      </ArcanaContextMenu>
+
+      {/* Disabled — the native menu comes back */}
+      <ArcanaContextMenu disabled items={items} trigger={<div>Disabled — the browser menu shows instead</div>} />
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaContextMenuComponent, ArcanaContextMenuItemComponent } from '@arcanalabs/ui-components/angular'
+import type { ArcanaContextMenuItemSpec } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-library-item',
+  standalone: true,
+  imports: [ArcanaContextMenuComponent, ArcanaContextMenuItemComponent],
+  template: \`
+    <!-- Data-driven items — right-click the area -->
+    <div arcanaContextMenu [items]="items" ariaLabel="Library item actions">
+      <div arcanaContextMenuTrigger>Right-click this area</div>
+    </div>
+
+    <!-- Reacting to the selection -->
+    <div arcanaContextMenu [items]="items" (selected)="last = $event.item.label">
+      <div arcanaContextMenuTrigger>Right-click this area</div>
+    </div>
+    <p>Last action: <strong>{{ last }}</strong></p>
+
+    <!-- Composition — children instead of the array -->
+    <div arcanaContextMenu>
+      <div arcanaContextMenuTrigger>Right-click this area</div>
+      <div arcanaContextMenuItem icon="fa-regular fa-folder-open" (selected)="last = 'Open'">Open</div>
+      <div arcanaContextMenuItem icon="fa-solid fa-box-archive" (selected)="last = 'Archive'">Archive</div>
+      <div arcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" [divided]="true" (selected)="last = 'Delete'">Delete</div>
+    </div>
+
+    <!-- Disabled — the native menu comes back -->
+    <div arcanaContextMenu [disabled]="true" [items]="items">
+      <div arcanaContextMenuTrigger>Disabled — the browser menu shows instead</div>
+    </div>
+  \`
+})
+export class LibraryItemComponent {
+  last = 'none yet'
+  items: ArcanaContextMenuItemSpec[] = [
+    { label: 'Open', icon: 'fa-regular fa-folder-open' },
+    { label: 'Rename', icon: 'fa-solid fa-pen' },
+    { label: 'Duplicate', icon: 'fa-solid fa-copy', suffix: '⌘D' },
+    { label: 'Share', icon: 'fa-solid fa-share-nodes', divided: true },
+    { label: 'Delete', icon: 'fa-solid fa-trash', variant: 'danger', divided: true },
+    { label: 'Move to folder', icon: 'fa-solid fa-folder-tree', disabled: true }
+  ]
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/svelte'
+  import type { ArcanaContextMenuItemSpec } from '@arcanalabs/ui-components/svelte'
+
+  let last = $state('none yet')
+
+  const items: ArcanaContextMenuItemSpec[] = [
+    { label: 'Open', icon: 'fa-regular fa-folder-open' },
+    { label: 'Rename', icon: 'fa-solid fa-pen' },
+    { label: 'Duplicate', icon: 'fa-solid fa-copy', suffix: '⌘D' },
+    { label: 'Share', icon: 'fa-solid fa-share-nodes', divided: true },
+    { label: 'Delete', icon: 'fa-solid fa-trash', variant: 'danger', divided: true },
+    { label: 'Move to folder', icon: 'fa-solid fa-folder-tree', disabled: true }
+  ]
+</script>
+
+<!-- Data-driven items — right-click the area -->
+<ArcanaContextMenu {items} ariaLabel="Library item actions">
+  {#snippet trigger()}<div>Right-click this area</div>{/snippet}
+</ArcanaContextMenu>
+
+<!-- Reacting to the selection -->
+<ArcanaContextMenu {items} onSelect={(item) => (last = item.label)}>
+  {#snippet trigger()}<div>Right-click this area</div>{/snippet}
+</ArcanaContextMenu>
+<p>Last action: <strong>{last}</strong></p>
+
+<!-- Composition — children instead of the array -->
+<ArcanaContextMenu>
+  {#snippet trigger()}<div>Right-click this area</div>{/snippet}
+  <ArcanaContextMenuItem icon="fa-regular fa-folder-open" onSelect={() => (last = 'Open')}>Open</ArcanaContextMenuItem>
+  <ArcanaContextMenuItem icon="fa-solid fa-box-archive" onSelect={() => (last = 'Archive')}>Archive</ArcanaContextMenuItem>
+  <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" divided onSelect={() => (last = 'Delete')}>Delete</ArcanaContextMenuItem>
+</ArcanaContextMenu>
+
+<!-- Disabled — the native menu comes back -->
+<ArcanaContextMenu disabled {items}>
+  {#snippet trigger()}<div>Disabled — the browser menu shows instead</div>{/snippet}
+</ArcanaContextMenu>`
   }
 };

@@ -35,6 +35,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-radio-card-group", name: "ArcanaRadioCardGroup", label: "Radio Card Group", category: "forms", docKey: "radioCardGroup" },
   { id: "arcana-segmented-control", name: "ArcanaSegmentedControl", label: "Segmented Control", category: "forms", docKey: "segmentedOptions" },
   { id: "arcana-date-picker", name: "ArcanaDatePicker", label: "Date Picker", category: "forms", docKey: "datePicker" },
+  { id: "arcana-rate", name: "ArcanaRate", label: "Rate", category: "forms", docKey: "rate" },
 
   // ── Data display ───────────────────────────────────────────────────────
   { id: "arcana-badge", name: "ArcanaBadge", label: "Badge", category: "dataDisplay", docKey: "badge" },
@@ -48,6 +49,10 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-settings-list-group", name: "ArcanaSettingsListGroup", label: "Settings List Group", category: "dataDisplay", docKey: "settingsListGroup" },
   { id: "arcana-settings-list-item", name: "ArcanaSettingsListItem", label: "Settings List Item", category: "dataDisplay", docKey: "settingsListItem" },
   { id: "arcana-settings-editable-field", name: "ArcanaSettingsEditableField", label: "Settings Editable Field", category: "dataDisplay", docKey: "settingsEditableField" },
+  { id: "arcana-avatar", name: "ArcanaAvatar", label: "Avatar", category: "dataDisplay", docKey: "avatar" },
+  { id: "arcana-avatar-group", name: "ArcanaAvatarGroup", label: "Avatar Group", category: "dataDisplay", docKey: "avatarGroup" },
+  { id: "arcana-statistic", name: "ArcanaStatistic", label: "Statistic", category: "dataDisplay", docKey: "statistic" },
+  { id: "arcana-countdown", name: "ArcanaCountdown", label: "Countdown", category: "dataDisplay", docKey: "countdown" },
 
   // ── Overlay ────────────────────────────────────────────────────────────
   { id: "arcana-dialog", name: "ArcanaDialog", label: "Dialog", category: "overlay", docKey: "dialog" },
@@ -57,6 +62,8 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-required-fields-dialog", name: "ArcanaRequiredFieldsDialog", label: "Required Fields Dialog", category: "overlay", docKey: "requiredFieldsDialog" },
   { id: "arcana-notice", name: "ArcanaNotice", label: "Notice", category: "overlay", docKey: "notice" },
   { id: "arcana-action-panel", name: "ArcanaActionPanel", label: "Action Panel", category: "overlay", docKey: "onboardingPanel" },
+  { id: "arcana-hover-card", name: "ArcanaHoverCard", label: "Hover Card", category: "overlay", docKey: "hoverCard" },
+  { id: "arcana-context-menu", name: "ArcanaContextMenu", label: "Context Menu", category: "overlay", docKey: "contextMenu" },
 
   // ── Layout & navigation ────────────────────────────────────────────────
   { id: "arcana-tabs", name: "ArcanaTabs", label: "Tabs", category: "layoutNav", docKey: "tabs" },
@@ -65,10 +72,13 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-switch-card", name: "ArcanaSwitchCard", label: "Switch Card", category: "layoutNav", docKey: "switchCard" },
   { id: "arcana-switch-row", name: "ArcanaSwitchRow", label: "Switch Row", category: "layoutNav", docKey: "switchRow" },
   { id: "arcana-switch-segmented", name: "ArcanaSwitchSegmented", label: "Switch Segmented", category: "layoutNav", docKey: "switchSegmented" },
+  { id: "arcana-aspect-ratio", name: "ArcanaAspectRatio", label: "Aspect Ratio", category: "layoutNav", docKey: "aspectRatio" },
+  { id: "arcana-scroll-area", name: "ArcanaScrollArea", label: "Scroll Area", category: "layoutNav", docKey: "scrollArea" },
 
   // ── Feedback ───────────────────────────────────────────────────────────
   { id: "arcana-skeleton", name: "ArcanaSkeleton", label: "Skeleton", category: "feedback", docKey: "skeleton" },
-  { id: "arcana-loading-overlay", name: "ArcanaLoadingOverlay", label: "Loading Overlay", category: "feedback", docKey: "loadingOverlay" }
+  { id: "arcana-loading-overlay", name: "ArcanaLoadingOverlay", label: "Loading Overlay", category: "feedback", docKey: "loadingOverlay" },
+  { id: "arcana-progress", name: "ArcanaProgress", label: "Progress", category: "feedback", docKey: "progress" }
 ];
 
 /** Sidebar category order. */

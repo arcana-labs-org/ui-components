@@ -43,6 +43,18 @@ import ArcanaSkeleton from "../../../src/vue/components/ArcanaSkeleton.vue";
 import ArcanaSwitchCard from "../../../src/vue/components/ArcanaSwitchCard.vue";
 import ArcanaSwitchRow from "../../../src/vue/components/ArcanaSwitchRow.vue";
 import ArcanaSwitchSegmented from "../../../src/vue/components/ArcanaSwitchSegmented.vue";
+// ── Batch 4 ──
+import ArcanaRate from "../../../src/vue/components/ArcanaRate.vue";
+import ArcanaAvatar from "../../../src/vue/components/ArcanaAvatar.vue";
+import ArcanaAvatarGroup from "../../../src/vue/components/ArcanaAvatarGroup.vue";
+import ArcanaStatistic from "../../../src/vue/components/ArcanaStatistic.vue";
+import ArcanaCountdown from "../../../src/vue/components/ArcanaCountdown.vue";
+import ArcanaProgress from "../../../src/vue/components/ArcanaProgress.vue";
+import ArcanaAspectRatio from "../../../src/vue/components/ArcanaAspectRatio.vue";
+import ArcanaScrollArea from "../../../src/vue/components/ArcanaScrollArea.vue";
+import ArcanaHoverCard from "../../../src/vue/components/ArcanaHoverCard.vue";
+import ArcanaContextMenu from "../../../src/vue/components/ArcanaContextMenu.vue";
+import ArcanaContextMenuItem from "../../../src/vue/components/ArcanaContextMenuItem.vue";
 
 export interface PropRow {
   name: string;
@@ -1104,6 +1116,617 @@ const SwitchSegmentedDemo: Component = {
       </div>
 
       <p class="demo-note">{{ $dt.switchSegCycleLabel }}: <strong>{{ yearly ? 'annual' : 'monthly' }}</strong> · {{ $dt.switchSegEnvLabel }}: <strong>{{ env ? 'production' : 'sandbox' }}</strong></p>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaRate ────────────────────────────── */
+
+const RateDemo: Component = {
+  components: { ArcanaRate },
+  data: () => ({ rating: 3, half: 3.5, textual: 4 }),
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Basic — interactive -->
+      <div class="demo-field">
+        <ArcanaRate v-model="rating" :aria-label="$dt.rateValueLabel" />
+        <p class="demo-note">{{ $dt.rateValueLabel }}: <strong>{{ rating }}</strong></p>
+      </div>
+
+      <!-- Half stars + numeric score -->
+      <ArcanaRate v-model="half" :allow-half="true" :show-score="true" />
+
+      <!-- Descriptive text instead of the score -->
+      <ArcanaRate
+        v-model="textual"
+        :show-text="true"
+        :texts="[$dt.rateText1, $dt.rateText2, $dt.rateText3, $dt.rateText4, $dt.rateText5]"
+      />
+
+      <!-- Read-only — showing an average -->
+      <div class="demo-field">
+        <ArcanaRate :model-value="4.3" :readonly="true" :show-score="true" />
+        <p class="demo-note">{{ $dt.rateAverageNote }}</p>
+      </div>
+
+      <!-- Sizes -->
+      <div class="demo-row" style="align-items: center">
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.rateSizeSm }}</span>
+          <ArcanaRate :model-value="4" size="sm" :readonly="true" />
+        </div>
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.rateSizeMd }}</span>
+          <ArcanaRate :model-value="4" size="md" :readonly="true" />
+        </div>
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.rateSizeLg }}</span>
+          <ArcanaRate :model-value="4" size="lg" :readonly="true" />
+        </div>
+      </div>
+
+      <!-- Custom colours and disabled -->
+      <div class="demo-row" style="align-items: center">
+        <ArcanaRate :model-value="4" :readonly="true" color="var(--arcana-warning-solid)" />
+        <ArcanaRate :model-value="3" :readonly="true" color="#8b5cf6" void-color="#e4e4e7" />
+        <div class="demo-field">
+          <ArcanaRate :model-value="2" :disabled="true" />
+          <span class="demo-field-label">{{ $dt.rateDisabledNote }}</span>
+        </div>
+      </div>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaAvatar ──────────────────────────── */
+
+const AvatarDemo: Component = {
+  components: { ArcanaAvatar },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Fallback cascade — image, initials, icon, silhouette -->
+      <div class="demo-field">
+        <div class="demo-row" style="align-items: center">
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+          <ArcanaAvatar initials="AM" />
+          <ArcanaAvatar icon="fa-solid fa-user-tie" />
+          <ArcanaAvatar />
+        </div>
+        <p class="demo-note">{{ $dt.avatarFallbackNote }}</p>
+      </div>
+
+      <!-- Shapes -->
+      <div class="demo-row" style="align-items: center">
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.avatarShapeCircle }}</span>
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="circle" />
+        </div>
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.avatarShapeSquare }}</span>
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=45" alt="Team member portrait" shape="square" />
+        </div>
+      </div>
+
+      <!-- Sizes — named steps and an exact pixel value -->
+      <div class="demo-field">
+        <div class="demo-row" style="align-items: center">
+          <ArcanaAvatar initials="XS" size="xs" />
+          <ArcanaAvatar initials="SM" size="sm" />
+          <ArcanaAvatar initials="MD" size="md" />
+          <ArcanaAvatar initials="LG" size="lg" />
+          <ArcanaAvatar initials="XL" size="xl" />
+          <ArcanaAvatar initials="64" :size="64" />
+        </div>
+        <p class="demo-note">{{ $dt.avatarSizesNote }}</p>
+      </div>
+
+      <!-- Custom background colour -->
+      <div class="demo-row" style="align-items: center">
+        <ArcanaAvatar initials="AM" color="#6366f1" />
+        <ArcanaAvatar initials="BR" color="#10b981" />
+        <ArcanaAvatar icon="fa-solid fa-building" color="#f59e0b" />
+      </div>
+    </div>
+  `
+};
+
+/* ───────────────────────── ArcanaAvatarGroup ───────────────────────── */
+
+const AvatarGroupDemo: Component = {
+  components: { ArcanaAvatarGroup, ArcanaAvatar },
+  data: () => ({
+    team: [
+      { initials: "AM", alt: "Ana Moreira", color: "#6366f1" },
+      { initials: "BR", alt: "Bruno Reis", color: "#10b981" },
+      { initials: "CS", alt: "Carla Silva", color: "#f59e0b" },
+      { initials: "DL", alt: "Diego Lopes", color: "#ef4444" },
+      { initials: "EM", alt: "Elena Marques", color: "#8b5cf6" }
+    ]
+  }),
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Data-driven with an overflow bubble -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.avatarGroupTeamLabel }}</span>
+        <ArcanaAvatarGroup :avatars="team" :max="3" :aria-label="$dt.avatarGroupTeamLabel" />
+      </div>
+
+      <!-- Sizes and shape -->
+      <div class="demo-row" style="align-items: center; gap: 24px">
+        <ArcanaAvatarGroup :avatars="team" :max="4" size="sm" />
+        <ArcanaAvatarGroup :avatars="team" :max="4" size="lg" shape="square" />
+      </div>
+
+      <!-- Spacing instead of overlap -->
+      <div class="demo-row" style="align-items: center; gap: 24px">
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.avatarGroupOverlapNote }}</span>
+          <ArcanaAvatarGroup :avatars="team" :max="4" />
+        </div>
+        <div class="demo-field">
+          <span class="demo-field-label">{{ $dt.avatarGroupSpacingNote }}</span>
+          <ArcanaAvatarGroup :avatars="team" :max="4" :spacing="4" />
+        </div>
+      </div>
+
+      <!-- Composition — children instead of the array -->
+      <div class="demo-field">
+        <ArcanaAvatarGroup :overflow-count="7" size="md">
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+          <ArcanaAvatar initials="BR" color="#10b981" />
+          <ArcanaAvatar icon="fa-solid fa-user-tie" color="#0ea5e9" />
+        </ArcanaAvatarGroup>
+        <p class="demo-note">{{ $dt.avatarGroupCompositionNote }}</p>
+      </div>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaStatistic ───────────────────────── */
+
+const StatisticDemo: Component = {
+  components: { ArcanaStatistic },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Basic -->
+      <ArcanaStatistic :value="1284" :title="$dt.statActiveUsers" />
+
+      <!-- Precision and separators -->
+      <div class="demo-row" style="gap: 32px">
+        <ArcanaStatistic
+          :value="1234567.891"
+          :precision="2"
+          group-separator=","
+          decimal-separator="."
+          :title="$dt.statRevenue"
+        />
+        <div class="demo-field">
+          <ArcanaStatistic
+            :value="1234567.891"
+            :precision="2"
+            group-separator="."
+            decimal-separator=","
+            :title="$dt.statRevenue"
+          />
+          <p class="demo-note">{{ $dt.statLocaleNote }}</p>
+        </div>
+      </div>
+
+      <!-- Prefix, suffix and icon -->
+      <div class="demo-row" style="gap: 32px">
+        <ArcanaStatistic
+          :value="48250.75"
+          :precision="2"
+          prefix="$"
+          icon="fa-solid fa-arrow-trend-up"
+          :title="$dt.statRevenue"
+          tone="success"
+        />
+        <ArcanaStatistic :value="3.8" :precision="1" suffix="%" :title="$dt.statConversion" />
+        <!-- The same three spots are also slots, for rich content -->
+        <ArcanaStatistic :value="99.98" :precision="2" tone="success">
+          <template #title>{{ $dt.statUptime }}</template>
+          <template #suffix><span style="font-size: .6em">%</span></template>
+        </ArcanaStatistic>
+      </div>
+
+      <!-- Tones -->
+      <div class="demo-row" style="gap: 32px">
+        <ArcanaStatistic :value="1284" :title="$dt.statOrders" tone="neutral" />
+        <ArcanaStatistic :value="892" :title="$dt.statActiveUsers" tone="success" />
+        <ArcanaStatistic :value="2.4" :precision="1" suffix="%" :title="$dt.statChurn" tone="danger" />
+        <ArcanaStatistic :value="17" :title="$dt.statPending" tone="warning" />
+        <ArcanaStatistic :value="42" :title="$dt.statTickets" tone="info" />
+      </div>
+
+      <!-- Sizes -->
+      <div class="demo-row" style="gap: 32px; align-items: baseline">
+        <ArcanaStatistic :value="1284" :title="$dt.statOrders" size="sm" />
+        <ArcanaStatistic :value="1284" :title="$dt.statOrders" size="md" />
+        <ArcanaStatistic :value="1284" :title="$dt.statOrders" size="lg" />
+        <ArcanaStatistic :value="1284" :title="$dt.statOrders" size="xl" />
+      </div>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaCountdown ───────────────────────── */
+
+const CountdownDemo: Component = {
+  components: { ArcanaCountdown, ArcanaButton },
+  data() {
+    // Targets are computed at mount time, so the demo is always counting down
+    // (a hard-coded date would be in the past by the time you read this).
+    const now = Date.now();
+    return {
+      deadline: now + 2 * 60 * 60 * 1000,
+      longDeadline: now + 3 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000,
+      shortDeadline: now + 15 * 60 * 1000,
+      isPaused: true
+    };
+  },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Basic — time left until a deadline -->
+      <div class="demo-field">
+        <ArcanaCountdown :value="deadline" />
+        <p class="demo-note">{{ $dt.countdownFinishedNote }}</p>
+      </div>
+
+      <!-- Custom format -->
+      <div class="demo-row" style="gap: 32px">
+        <ArcanaCountdown :value="longDeadline" format="D[d] HH:mm:ss" />
+        <ArcanaCountdown :value="shortDeadline" format="mm:ss" />
+      </div>
+
+      <!-- Title, prefix and suffix -->
+      <ArcanaCountdown :value="deadline" :title="$dt.countdownFlashSale">
+        <template #prefix><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i></template>
+        <template #suffix><i class="fa-solid fa-bolt" aria-hidden="true"></i></template>
+      </ArcanaCountdown>
+
+      <!-- Tones and sizes -->
+      <div class="demo-row" style="gap: 32px; align-items: baseline">
+        <ArcanaCountdown :value="shortDeadline" :title="$dt.countdownSessionExpires" tone="danger" size="lg" />
+        <ArcanaCountdown :value="longDeadline" :title="$dt.countdownMaintenance" tone="success" size="sm" />
+      </div>
+
+      <!-- Paused -->
+      <div class="demo-field">
+        <ArcanaCountdown :value="deadline" :paused="isPaused" />
+        <div class="demo-row">
+          <ArcanaButton variant="outline" @click="isPaused = !isPaused">{{ $dt.countdownToggle }}</ArcanaButton>
+        </div>
+      </div>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaProgress ────────────────────────── */
+
+const ProgressDemo: Component = {
+  components: { ArcanaProgress },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 380px">
+      <!-- Determinate -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.progressUploading }}</span>
+        <ArcanaProgress :value="25" :show-value="true" :aria-label="$dt.progressUploading" />
+      </div>
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.progressStorage }}</span>
+        <ArcanaProgress :value="60" :show-value="true" :aria-label="$dt.progressStorage" />
+      </div>
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.progressComplete }}</span>
+        <ArcanaProgress :value="100" :show-value="true" tone="success" :aria-label="$dt.progressComplete" />
+      </div>
+
+      <!-- Indeterminate — value is null -->
+      <div class="demo-field">
+        <ArcanaProgress :value="null" :show-value="true" :aria-label="$dt.progressUploading" />
+        <p class="demo-note">{{ $dt.progressIndeterminateNote }}</p>
+      </div>
+
+      <!-- Tones -->
+      <ArcanaProgress :value="70" tone="accent" />
+      <ArcanaProgress :value="70" tone="success" />
+      <ArcanaProgress :value="70" tone="danger" />
+      <ArcanaProgress :value="70" tone="warning" />
+      <ArcanaProgress :value="70" tone="info" />
+
+      <!-- Variants and radius -->
+      <ArcanaProgress :value="45" variant="solid" />
+      <ArcanaProgress :value="45" variant="soft" />
+      <ArcanaProgress :value="45" radius="none" />
+      <ArcanaProgress :value="45" radius="full" />
+
+      <!-- Sizes -->
+      <ArcanaProgress :value="55" size="sm" />
+      <ArcanaProgress :value="55" size="md" />
+      <ArcanaProgress :value="55" size="lg" />
+
+      <!-- Custom label through the value slot -->
+      <ArcanaProgress :value="3" :max="5" :show-value="true">
+        <template #value>{{ $dt.progressCustomLabel }}</template>
+      </ArcanaProgress>
+    </div>
+  `
+};
+
+/* ───────────────────────── ArcanaAspectRatio ───────────────────────── */
+
+const AspectRatioDemo: Component = {
+  components: { ArcanaAspectRatio },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Default — 16 / 9 -->
+      <div style="max-width: 380px">
+        <ArcanaAspectRatio style="--arcana-aspect-ratio-radius: 10px">
+          <img src="https://picsum.photos/seed/arcana1/800/600" :alt="$dt.aspectCoverAlt" />
+        </ArcanaAspectRatio>
+      </div>
+
+      <!-- Square and portrait -->
+      <div class="demo-row" style="gap: 16px">
+        <div class="demo-field" style="width: 180px">
+          <span class="demo-field-label">{{ $dt.aspectSquareNote }}</span>
+          <ArcanaAspectRatio :ratio="1" style="--arcana-aspect-ratio-radius: 10px">
+            <img src="https://picsum.photos/seed/arcana2/800/800" :alt="$dt.aspectCoverAlt" />
+          </ArcanaAspectRatio>
+        </div>
+        <div class="demo-field" style="width: 180px">
+          <span class="demo-field-label">{{ $dt.aspectPortraitNote }}</span>
+          <ArcanaAspectRatio :ratio="3 / 4" style="--arcana-aspect-ratio-radius: 10px">
+            <img src="https://picsum.photos/seed/arcana3/600/800" :alt="$dt.aspectCoverAlt" />
+          </ArcanaAspectRatio>
+        </div>
+      </div>
+
+      <!-- Classic 4 / 3 -->
+      <div class="demo-field" style="width: 240px">
+        <span class="demo-field-label">{{ $dt.aspectClassicNote }}</span>
+        <ArcanaAspectRatio :ratio="4 / 3" style="--arcana-aspect-ratio-radius: 10px">
+          <img src="https://picsum.photos/seed/arcana4/800/600" :alt="$dt.aspectCoverAlt" />
+        </ArcanaAspectRatio>
+      </div>
+
+      <!-- Any embedded content — here a coloured placeholder -->
+      <div style="max-width: 380px">
+        <ArcanaAspectRatio :ratio="16 / 9" style="--arcana-aspect-ratio-radius: 10px">
+          <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #6366f1, #0ea5e9); color: #fff; font-size: 13px; text-align: center; padding: 12px">
+            {{ $dt.aspectEmbedNote }}
+          </div>
+        </ArcanaAspectRatio>
+      </div>
+    </div>
+  `
+};
+
+/* ────────────────────────── ArcanaScrollArea ───────────────────────── */
+
+const ScrollAreaDemo: Component = {
+  components: { ArcanaScrollArea },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 420px">
+      <!-- Vertical with a max height -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.scrollVerticalNote }}</span>
+        <ArcanaScrollArea :max-height="180" style="border: 1px solid var(--border); border-radius: 8px">
+          <div style="padding: 8px 12px">
+            <p v-for="n in 12" :key="n" style="margin: 0; padding: 6px 0; font-size: 13px">
+              {{ $dt.scrollItemPrefix }} {{ n }}
+            </p>
+          </div>
+        </ArcanaScrollArea>
+      </div>
+
+      <!-- Horizontal -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.scrollHorizontalNote }}</span>
+        <ArcanaScrollArea orientation="horizontal" style="border: 1px solid var(--border); border-radius: 8px">
+          <div style="display: flex; gap: 10px; padding: 12px; width: max-content">
+            <div v-for="n in 8" :key="n" class="demo-panel" style="width: 130px; flex: 0 0 auto; text-align: center">
+              {{ $dt.scrollItemPrefix }} {{ n }}
+            </div>
+          </div>
+        </ArcanaScrollArea>
+      </div>
+
+      <!-- Both axes -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.scrollBothNote }}</span>
+        <ArcanaScrollArea orientation="both" :height="180" style="border: 1px solid var(--border); border-radius: 8px">
+          <div style="width: 760px; padding: 8px 12px">
+            <p v-for="n in 12" :key="n" style="margin: 0; padding: 6px 0; font-size: 13px; white-space: nowrap">
+              {{ $dt.scrollItemPrefix }} {{ n }}
+            </p>
+          </div>
+        </ArcanaScrollArea>
+      </div>
+
+      <!-- Always-visible vs auto-hiding scrollbars -->
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.scrollTypeAlways }}</span>
+        <ArcanaScrollArea type="always" :max-height="120" style="border: 1px solid var(--border); border-radius: 8px">
+          <div style="padding: 8px 12px">
+            <p v-for="n in 10" :key="n" style="margin: 0; padding: 6px 0; font-size: 13px">
+              {{ $dt.scrollItemPrefix }} {{ n }}
+            </p>
+          </div>
+        </ArcanaScrollArea>
+      </div>
+      <div class="demo-field">
+        <span class="demo-field-label">{{ $dt.scrollTypeHover }}</span>
+        <ArcanaScrollArea type="hover" :max-height="120" style="border: 1px solid var(--border); border-radius: 8px">
+          <div style="padding: 8px 12px">
+            <p v-for="n in 10" :key="n" style="margin: 0; padding: 6px 0; font-size: 13px">
+              {{ $dt.scrollItemPrefix }} {{ n }}
+            </p>
+          </div>
+        </ArcanaScrollArea>
+      </div>
+    </div>
+  `
+};
+
+/* ────────────────────────── ArcanaHoverCard ────────────────────────── */
+
+const HoverCardDemo: Component = {
+  components: { ArcanaHoverCard, ArcanaAvatar },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Basic — a profile preview on a link -->
+      <div style="font-size: 14px">
+        <ArcanaHoverCard>
+          <template #trigger>
+            <a href="#" @click.prevent style="color: var(--arcana-text, #4f46e5); text-decoration: underline">{{ $dt.hoverProfileName }}</a>
+          </template>
+
+          <div style="display: flex; gap: 10px; align-items: center">
+            <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Profile picture" size="lg" />
+            <div>
+              <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+              <p class="arcana-hover-card__text">{{ $dt.hoverProfileHandle }}</p>
+            </div>
+          </div>
+          <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          <p class="arcana-hover-card__text"><strong>{{ $dt.hoverProfileFollowers }}</strong></p>
+        </ArcanaHoverCard>
+      </div>
+
+      <!-- Sides -->
+      <div class="demo-field">
+        <div class="demo-row" style="gap: 20px; font-size: 14px">
+          <ArcanaHoverCard side="top">
+            <template #trigger><a href="#" @click.prevent>top</a></template>
+            <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+            <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          </ArcanaHoverCard>
+          <ArcanaHoverCard side="right">
+            <template #trigger><a href="#" @click.prevent>right</a></template>
+            <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+            <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          </ArcanaHoverCard>
+          <ArcanaHoverCard side="bottom">
+            <template #trigger><a href="#" @click.prevent>bottom</a></template>
+            <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+            <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          </ArcanaHoverCard>
+          <ArcanaHoverCard side="left">
+            <template #trigger><a href="#" @click.prevent>left</a></template>
+            <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+            <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          </ArcanaHoverCard>
+        </div>
+        <p class="demo-note">{{ $dt.hoverSideNote }}</p>
+      </div>
+
+      <!-- Alignment and offset -->
+      <div style="font-size: 14px">
+        <ArcanaHoverCard side="bottom" align="start" :offset="16">
+          <template #trigger><a href="#" @click.prevent>{{ $dt.hoverProfileHandle }}</a></template>
+          <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
+          <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+        </ArcanaHoverCard>
+      </div>
+
+      <!-- Delays -->
+      <div class="demo-row" style="gap: 20px; font-size: 14px">
+        <ArcanaHoverCard :open-delay="0" :close-delay="0">
+          <template #trigger><a href="#" @click.prevent>{{ $dt.hoverDelayInstant }}</a></template>
+          <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+        </ArcanaHoverCard>
+        <ArcanaHoverCard :open-delay="600">
+          <template #trigger><a href="#" @click.prevent>{{ $dt.hoverDelaySlow }}</a></template>
+          <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+        </ArcanaHoverCard>
+      </div>
+
+      <!-- Disabled -->
+      <div class="demo-field">
+        <div style="font-size: 14px">
+          <ArcanaHoverCard :disabled="true">
+            <template #trigger><a href="#" @click.prevent>{{ $dt.hoverProfileHandle }}</a></template>
+            <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
+          </ArcanaHoverCard>
+        </div>
+        <p class="demo-note">{{ $dt.hoverDisabledNote }}</p>
+      </div>
+    </div>
+  `
+};
+
+/* ───────────────────────── ArcanaContextMenu ───────────────────────── */
+
+const ContextMenuDemo: Component = {
+  components: { ArcanaContextMenu, ArcanaContextMenuItem },
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      lastAction: null as string | null,
+      items: [
+        { label: $dt.contextOpen, icon: "fa-regular fa-folder-open" },
+        { label: $dt.contextRename, icon: "fa-solid fa-pen" },
+        { label: $dt.contextDuplicate, icon: "fa-solid fa-clone", suffix: "⌘D" },
+        { label: $dt.contextDisabledItem, icon: "fa-solid fa-folder-tree", disabled: true },
+        { label: $dt.contextShare, icon: "fa-solid fa-share-nodes", divided: true },
+        { label: $dt.contextDelete, icon: "fa-solid fa-trash", variant: "danger", divided: true }
+      ]
+    };
+  },
+  methods: {
+    onSelect(item: { label: string }) {
+      (this as unknown as { lastAction: string | null }).lastAction = item.label;
+    }
+  },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 420px">
+      <!-- Data-driven items — right-click the area -->
+      <ArcanaContextMenu :items="items" :aria-label="$dt.contextTriggerNote">
+        <template #trigger>
+          <div class="demo-panel" style="border-style: dashed; text-align: center; cursor: context-menu">
+            {{ $dt.contextTriggerNote }}
+          </div>
+        </template>
+      </ArcanaContextMenu>
+
+      <!-- Reacting to the selection -->
+      <div class="demo-field">
+        <ArcanaContextMenu :items="items" :aria-label="$dt.contextTriggerNote" @select="onSelect">
+          <template #trigger>
+            <div class="demo-panel" style="border-style: dashed; text-align: center; cursor: context-menu">
+              {{ $dt.contextTriggerNote }}
+            </div>
+          </template>
+        </ArcanaContextMenu>
+        <p class="demo-note">{{ $dt.contextLastAction }}: <strong>{{ lastAction || $dt.contextNoneYet }}</strong></p>
+      </div>
+
+      <!-- Composition — children instead of the array -->
+      <ArcanaContextMenu :aria-label="$dt.contextTriggerNote">
+        <template #trigger>
+          <div class="demo-panel" style="border-style: dashed; text-align: center; cursor: context-menu">
+            {{ $dt.contextTriggerNote }}
+          </div>
+        </template>
+
+        <ArcanaContextMenuItem icon="fa-regular fa-folder-open">{{ $dt.contextOpen }}</ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-box-archive">{{ $dt.contextArchive }}</ArcanaContextMenuItem>
+        <ArcanaContextMenuItem icon="fa-solid fa-trash" variant="danger" :divided="true">{{ $dt.contextDelete }}</ArcanaContextMenuItem>
+      </ArcanaContextMenu>
+
+      <!-- Disabled — the native menu comes back -->
+      <div class="demo-field">
+        <ArcanaContextMenu :items="items" :disabled="true">
+          <template #trigger>
+            <div class="demo-panel" style="border-style: dashed; text-align: center; cursor: context-menu">
+              {{ $dt.contextTriggerNote }}
+            </div>
+          </template>
+        </ArcanaContextMenu>
+        <p class="demo-note">{{ $dt.contextDisabledNote }}</p>
+      </div>
     </div>
   `
 };
@@ -2666,6 +3289,562 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "    on-icon=\"fa-solid fa-table-cells-large\"",
       "    aria-label=\"View mode\"",
       "  />",
+      "</template>"
+    ].join("\n")
+  },
+
+  /* ── Batch 4 ── */
+
+  rate: {
+    demo: RateDemo,
+    props: [
+      { name: "modelValue", type: "number", default: "0", description: "Current rating (v-model), clamped to 0…max." },
+      { name: "max", type: "number", default: "5", description: "How many stars are rendered." },
+      { name: "disabled", type: "boolean", default: "false", description: "Turns interaction off and dims the stars (aria-disabled)." },
+      { name: "readonly", type: "boolean", default: "false", description: "Turns interaction off but keeps full contrast — the mode for showing an average." },
+      { name: "allowHalf", type: "boolean", default: "false", description: "Half stars: the left half of a star means n − 0.5, and the keyboard step becomes 0.5." },
+      { name: "showText", type: "boolean", default: "false", description: "Shows the label of the current rating (texts[ceil(value) − 1]); wins over showScore." },
+      { name: "texts", type: "string[]", default: "[]", description: "Label per rating — texts[0] is rating 1, texts[max − 1] is rating max." },
+      { name: "showScore", type: "boolean", default: "false", description: "Shows the numeric rating next to the stars." },
+      { name: "size", type: "sm | md | lg", default: "md", description: "Star size, gap and font size." },
+      { name: "color", type: "string (CSS colour)", default: "''", description: "Filled-star colour; defaults to the --arcana-warning-solid token." },
+      { name: "voidColor", type: "string (CSS colour)", default: "''", description: "Empty-star colour; defaults to step 6 of the neutral scale." },
+      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the radiogroup." }
+    ],
+    events: [
+      "update:modelValue(value: number) — v-model update",
+      "change(value: number) — same payload, on every rating change"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaRate } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const rating = ref(3)",
+      "const half = ref(3.5)",
+      "const textual = ref(4)",
+      "",
+      "const texts = ['Terrible', 'Poor', 'Average', 'Good', 'Excellent']",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Basic — interactive -->",
+      "  <ArcanaRate v-model=\"rating\" aria-label=\"Your rating\" />",
+      "  <p>Your rating: {{ rating }}</p>",
+      "",
+      "  <!-- Half stars + numeric score -->",
+      "  <ArcanaRate v-model=\"half\" allow-half show-score />",
+      "",
+      "  <!-- Descriptive text instead of the score -->",
+      "  <ArcanaRate v-model=\"textual\" show-text :texts=\"texts\" />",
+      "",
+      "  <!-- Read-only — showing an average -->",
+      "  <ArcanaRate :model-value=\"4.3\" readonly show-score />",
+      "  <p>Average of 128 reviews</p>",
+      "",
+      "  <!-- Sizes -->",
+      "  <ArcanaRate :model-value=\"4\" size=\"sm\" readonly />",
+      "  <ArcanaRate :model-value=\"4\" size=\"md\" readonly />",
+      "  <ArcanaRate :model-value=\"4\" size=\"lg\" readonly />",
+      "",
+      "  <!-- Custom colours and disabled -->",
+      "  <ArcanaRate :model-value=\"4\" readonly color=\"var(--arcana-warning-solid)\" />",
+      "  <ArcanaRate :model-value=\"3\" readonly color=\"#8b5cf6\" void-color=\"#e4e4e7\" />",
+      "  <ArcanaRate :model-value=\"2\" disabled />",
+      "</template>"
+    ].join("\n")
+  },
+
+  avatar: {
+    demo: AvatarDemo,
+    props: [
+      { name: "src", type: "string", default: "''", description: "Image URL. A load error drops it from the cascade at runtime." },
+      { name: "alt", type: "string", default: "''", description: "Alt text of the native <img>." },
+      { name: "initials", type: "string", default: "''", description: "Short text fallback (CSS already uppercases it)." },
+      { name: "icon", type: "string", default: "''", description: "Icon-class fallback (e.g. fa-solid fa-user). Without initials/icon an inline SVG silhouette is used." },
+      { name: "size", type: "xs | sm | md | lg | xl | number (px)", default: "md", description: "Named step (md = 40px) or an exact pixel value; font, radius and icon derive from it." },
+      { name: "shape", type: "circle | square", default: "circle", description: "Outline of the avatar." },
+      { name: "color", type: "string (CSS colour)", default: "''", description: "Background of the fallback; defaults to the --arcana-solid accent token." }
+    ],
+    events: ["error(ev: Event) — the image failed to load; the component falls through to the next fallback step"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaAvatar } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Fallback cascade — image, initials, icon, silhouette -->",
+      "  <ArcanaAvatar src=\"https://i.pravatar.cc/120?img=12\" alt=\"Team member portrait\" />",
+      "  <ArcanaAvatar initials=\"AM\" />",
+      "  <ArcanaAvatar icon=\"fa-solid fa-user-tie\" />",
+      "  <ArcanaAvatar />",
+      "  <p>A broken image falls back to the next step, automatically.</p>",
+      "",
+      "  <!-- Shapes -->",
+      "  <ArcanaAvatar src=\"https://i.pravatar.cc/120?img=32\" alt=\"Team member portrait\" shape=\"circle\" />",
+      "  <ArcanaAvatar src=\"https://i.pravatar.cc/120?img=45\" alt=\"Team member portrait\" shape=\"square\" />",
+      "",
+      "  <!-- Sizes — named steps and an exact pixel value -->",
+      "  <ArcanaAvatar initials=\"XS\" size=\"xs\" />",
+      "  <ArcanaAvatar initials=\"SM\" size=\"sm\" />",
+      "  <ArcanaAvatar initials=\"MD\" size=\"md\" />",
+      "  <ArcanaAvatar initials=\"LG\" size=\"lg\" />",
+      "  <ArcanaAvatar initials=\"XL\" size=\"xl\" />",
+      "  <ArcanaAvatar initials=\"64\" :size=\"64\" />",
+      "",
+      "  <!-- Custom background colour -->",
+      "  <ArcanaAvatar initials=\"AM\" color=\"#6366f1\" />",
+      "  <ArcanaAvatar initials=\"BR\" color=\"#10b981\" />",
+      "  <ArcanaAvatar icon=\"fa-solid fa-building\" color=\"#f59e0b\" />",
+      "</template>"
+    ].join("\n")
+  },
+
+  avatarGroup: {
+    demo: AvatarGroupDemo,
+    props: [
+      { name: "avatars", type: "Array<{ src?, alt?, initials?, icon?, color? }>", default: "[]", description: "Data-driven list; only these entries are counted (and sliced) by max." },
+      { name: "max", type: "number", default: "0", description: "Max entries of `avatars` to render; the rest collapse into a +N bubble. 0 = no limit." },
+      { name: "overflowCount", type: "number", default: "0", description: "Manual +N, for the composition mode (the group never slices slot content). Adds to the computed overflow." },
+      { name: "size", type: "xs | sm | md | lg | xl | number (px)", default: "undefined", description: "Propagates to every child, slotted ones included. Omitted: each avatar keeps its own." },
+      { name: "shape", type: "circle | square", default: "undefined", description: "Normalises the shape of every child. Omitted: each avatar keeps its own." },
+      { name: "overlap", type: "number (px)", default: "30% of the size", description: "How much each avatar covers the previous one." },
+      { name: "spacing", type: "number (px)", default: "undefined", description: "Positive gap between avatars; when set it wins over overlap (the stack stops overlapping)." },
+      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the role=\"group\"." }
+    ],
+    events: ["Slots: default — <ArcanaAvatar> children, rendered after the data-driven ones"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaAvatar, ArcanaAvatarGroup } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const team = [",
+      "  { initials: 'AM', alt: 'Ana Moreira', color: '#6366f1' },",
+      "  { initials: 'BR', alt: 'Bruno Reis', color: '#10b981' },",
+      "  { initials: 'CS', alt: 'Carla Silva', color: '#f59e0b' },",
+      "  { initials: 'DL', alt: 'Diego Lopes', color: '#ef4444' },",
+      "  { initials: 'EM', alt: 'Elena Marques', color: '#8b5cf6' },",
+      "]",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Data-driven with an overflow bubble -->",
+      "  <ArcanaAvatarGroup :avatars=\"team\" :max=\"3\" aria-label=\"Project team\" />",
+      "",
+      "  <!-- Sizes and shape -->",
+      "  <ArcanaAvatarGroup :avatars=\"team\" :max=\"4\" size=\"sm\" />",
+      "  <ArcanaAvatarGroup :avatars=\"team\" :max=\"4\" size=\"lg\" shape=\"square\" />",
+      "",
+      "  <!-- Spacing instead of overlap -->",
+      "  <ArcanaAvatarGroup :avatars=\"team\" :max=\"4\" />",
+      "  <ArcanaAvatarGroup :avatars=\"team\" :max=\"4\" :spacing=\"4\" />",
+      "",
+      "  <!-- Composition — children instead of the array -->",
+      "  <ArcanaAvatarGroup :overflow-count=\"7\" size=\"md\">",
+      "    <ArcanaAvatar src=\"https://i.pravatar.cc/120?img=12\" alt=\"Team member portrait\" />",
+      "    <ArcanaAvatar initials=\"BR\" color=\"#10b981\" />",
+      "    <ArcanaAvatar icon=\"fa-solid fa-user-tie\" color=\"#0ea5e9\" />",
+      "  </ArcanaAvatarGroup>",
+      "</template>"
+    ].join("\n")
+  },
+
+  statistic: {
+    demo: StatisticDemo,
+    props: [
+      { name: "value", type: "number | string | null", default: "null", description: "The number on display. A string passes through untouched (escape hatch for pre-formatted values)." },
+      { name: "title", type: "string", default: "''", description: "Label above the value (or the #title slot)." },
+      { name: "label", type: "string", default: "''", description: "Alias of title; title wins when both are set." },
+      { name: "precision", type: "number", default: "undefined", description: "Fixed decimal places. Without it the number keeps its own." },
+      { name: "groupSeparator", type: "string", default: "','", description: "Thousands separator; '' turns grouping off." },
+      { name: "decimalSeparator", type: "string", default: "'.'", description: "Decimal separator." },
+      { name: "locale", type: "string", default: "''", description: "Switches formatting to Intl.NumberFormat(locale); the manual separators are then ignored. An invalid tag falls back to the manual path." },
+      { name: "formatter", type: "(value) => string", default: "undefined", description: "Full control over the rendered text; takes precedence over everything else." },
+      { name: "prefix / suffix", type: "string", default: "''", description: "Text before/after the value (or the slots of the same name)." },
+      { name: "tone", type: "neutral | success | danger | warning | info", default: "neutral", description: "Colours value + icon with the state tokens." },
+      { name: "valueColor", type: "string (CSS colour)", default: "''", description: "Arbitrary colour for the value; wins over tone." },
+      { name: "size", type: "sm | md | lg | xl", default: "md", description: "Value/title type scale." },
+      { name: "icon", type: "string", default: "''", description: "Icon class rendered before the prefix (e.g. fa-solid fa-arrow-trend-up)." }
+    ],
+    events: ["Slots: #title, #prefix, #suffix — each one overrides the prop of the same name"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaStatistic } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Basic -->",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Active users\" />",
+      "",
+      "  <!-- Precision and separators -->",
+      "  <ArcanaStatistic :value=\"1234567.891\" :precision=\"2\" group-separator=\",\" decimal-separator=\".\" title=\"Monthly revenue\" />",
+      "  <ArcanaStatistic :value=\"1234567.891\" :precision=\"2\" group-separator=\".\" decimal-separator=\",\" title=\"Monthly revenue\" />",
+      "  <p>Same number, pt-BR separators</p>",
+      "",
+      "  <!-- Prefix, suffix and icon -->",
+      "  <ArcanaStatistic",
+      "    :value=\"48250.75\"",
+      "    :precision=\"2\"",
+      "    prefix=\"$\"",
+      "    icon=\"fa-solid fa-arrow-trend-up\"",
+      "    title=\"Monthly revenue\"",
+      "    tone=\"success\"",
+      "  />",
+      "  <ArcanaStatistic :value=\"3.8\" :precision=\"1\" suffix=\"%\" title=\"Conversion rate\" />",
+      "  <!-- The same three spots are also slots, for rich content -->",
+      "  <ArcanaStatistic :value=\"99.98\" :precision=\"2\" tone=\"success\">",
+      "    <template #title>Uptime</template>",
+      "    <template #suffix><span style=\"font-size: .6em\">%</span></template>",
+      "  </ArcanaStatistic>",
+      "",
+      "  <!-- Tones -->",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Orders\" tone=\"neutral\" />",
+      "  <ArcanaStatistic :value=\"892\" title=\"Active users\" tone=\"success\" />",
+      "  <ArcanaStatistic :value=\"2.4\" :precision=\"1\" suffix=\"%\" title=\"Churn\" tone=\"danger\" />",
+      "  <ArcanaStatistic :value=\"17\" title=\"Pending reviews\" tone=\"warning\" />",
+      "  <ArcanaStatistic :value=\"42\" title=\"Open tickets\" tone=\"info\" />",
+      "",
+      "  <!-- Sizes -->",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Orders\" size=\"sm\" />",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Orders\" size=\"md\" />",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Orders\" size=\"lg\" />",
+      "  <ArcanaStatistic :value=\"1284\" title=\"Orders\" size=\"xl\" />",
+      "</template>"
+    ].join("\n")
+  },
+
+  countdown: {
+    demo: CountdownDemo,
+    props: [
+      { name: "value", type: "number | string | Date | null", default: "null", description: "Target instant: epoch in ms, a Date or an ISO string. An invalid/empty value renders zero instead of NaN." },
+      { name: "format", type: "string", default: "'HH:mm:ss'", description: "Tokens DD, D, HH, H, mm, m, ss, s, SSS, SS, S plus literals in brackets. The largest unit present absorbs the excess (50h render as 50:00:00)." },
+      { name: "prefix / suffix", type: "string", default: "''", description: "Text before/after the value (or the slots of the same name)." },
+      { name: "title", type: "string", default: "''", description: "Label above the value (or the #title slot)." },
+      { name: "tone", type: "neutral | success | danger | warning | info", default: "neutral", description: "Colours the value with the state tokens." },
+      { name: "valueColor", type: "string (CSS colour)", default: "''", description: "Arbitrary colour for the value; wins over tone." },
+      { name: "size", type: "sm | md | lg | xl", default: "md", description: "Value/title type scale." },
+      { name: "paused", type: "boolean", default: "false", description: "Freezes the countdown. Reactive: setting it back to false resumes." },
+      { name: "interval", type: "number (ms)", default: "auto", description: "Tick period. Automatic default: 50ms when the format shows milliseconds, 1000ms otherwise." }
+    ],
+    events: [
+      "change(remaining: number) — on every tick, with the time left in ms",
+      "finish() — once, when it reaches zero",
+      "Slots: #title, #prefix, #suffix",
+      "Methods (via ref): pause(), resume(), restart()"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaButton, ArcanaCountdown } from '@arcanalabs/ui-components/vue'",
+      "",
+      "// The target is an instant, not a duration.",
+      "const now = Date.now()",
+      "const deadline = now + 2 * 60 * 60 * 1000",
+      "const longDeadline = now + 3 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000",
+      "const shortDeadline = now + 15 * 60 * 1000",
+      "",
+      "const isPaused = ref(true)",
+      "",
+      "function onFinish() {",
+      "  // …the deadline passed",
+      "}",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Basic — time left until a deadline -->",
+      "  <ArcanaCountdown :value=\"deadline\" @finish=\"onFinish\" />",
+      "  <p>Fires the finish event when it reaches zero.</p>",
+      "",
+      "  <!-- Custom format -->",
+      "  <ArcanaCountdown :value=\"longDeadline\" format=\"D[d] HH:mm:ss\" />",
+      "  <ArcanaCountdown :value=\"shortDeadline\" format=\"mm:ss\" />",
+      "",
+      "  <!-- Title, prefix and suffix -->",
+      "  <ArcanaCountdown :value=\"deadline\" title=\"Flash sale ends in\">",
+      "    <template #prefix><i class=\"fa-solid fa-hourglass-half\" /></template>",
+      "    <template #suffix><i class=\"fa-solid fa-bolt\" /></template>",
+      "  </ArcanaCountdown>",
+      "",
+      "  <!-- Tones and sizes -->",
+      "  <ArcanaCountdown :value=\"shortDeadline\" title=\"Session expires in\" tone=\"danger\" size=\"lg\" />",
+      "  <ArcanaCountdown :value=\"longDeadline\" title=\"Maintenance window\" tone=\"success\" size=\"sm\" />",
+      "",
+      "  <!-- Paused -->",
+      "  <ArcanaCountdown :value=\"deadline\" :paused=\"isPaused\" />",
+      "  <ArcanaButton variant=\"outline\" @click=\"isPaused = !isPaused\">Pause / resume</ArcanaButton>",
+      "</template>"
+    ].join("\n")
+  },
+
+  progress: {
+    demo: ProgressDemo,
+    props: [
+      { name: "value", type: "number | null", default: "null", description: "0–max. null/undefined means indeterminate (continuous animation, no aria-valuenow). Out-of-range values are clamped." },
+      { name: "max", type: "number", default: "100", description: "Top of the scale; max <= 0 falls back to the default." },
+      { name: "size", type: "sm | md | lg", default: "md", description: "Track height." },
+      { name: "variant", type: "solid | soft", default: "solid", description: "solid fills with step 9 of the tone; soft uses step 8 over a tonal track." },
+      { name: "tone", type: "accent | success | danger | warning | info", default: "accent", description: "Colour of the indicator." },
+      { name: "showValue", type: "boolean", default: "false", description: "Shows the NN% label beside the bar (the #value slot overrides it)." },
+      { name: "indeterminateText", type: "string", default: "'…'", description: "Label used while indeterminate." },
+      { name: "radius", type: "none | sm | md | lg | full", default: "full", description: "Corner radius of track and indicator." },
+      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the progressbar — recommended when there is no visible label." }
+    ],
+    events: ["Slots: #value — replaces the label rendered when showValue is on"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaProgress } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Determinate -->",
+      "  <ArcanaProgress :value=\"25\" show-value aria-label=\"Uploading\" />",
+      "  <ArcanaProgress :value=\"60\" show-value aria-label=\"Storage used\" />",
+      "  <ArcanaProgress :value=\"100\" show-value tone=\"success\" aria-label=\"Complete\" />",
+      "",
+      "  <!-- Indeterminate — value is null -->",
+      "  <ArcanaProgress :value=\"null\" show-value aria-label=\"Uploading\" />",
+      "  <p>No known total — the bar loops.</p>",
+      "",
+      "  <!-- Tones -->",
+      "  <ArcanaProgress :value=\"70\" tone=\"accent\" />",
+      "  <ArcanaProgress :value=\"70\" tone=\"success\" />",
+      "  <ArcanaProgress :value=\"70\" tone=\"danger\" />",
+      "  <ArcanaProgress :value=\"70\" tone=\"warning\" />",
+      "  <ArcanaProgress :value=\"70\" tone=\"info\" />",
+      "",
+      "  <!-- Variants and radius -->",
+      "  <ArcanaProgress :value=\"45\" variant=\"solid\" />",
+      "  <ArcanaProgress :value=\"45\" variant=\"soft\" />",
+      "  <ArcanaProgress :value=\"45\" radius=\"none\" />",
+      "  <ArcanaProgress :value=\"45\" radius=\"full\" />",
+      "",
+      "  <!-- Sizes -->",
+      "  <ArcanaProgress :value=\"55\" size=\"sm\" />",
+      "  <ArcanaProgress :value=\"55\" size=\"md\" />",
+      "  <ArcanaProgress :value=\"55\" size=\"lg\" />",
+      "",
+      "  <!-- Custom label through the value slot -->",
+      "  <ArcanaProgress :value=\"3\" :max=\"5\" show-value>",
+      "    <template #value>3 of 5 steps</template>",
+      "  </ArcanaProgress>",
+      "</template>"
+    ].join("\n")
+  },
+
+  aspectRatio: {
+    demo: AspectRatioDemo,
+    props: [
+      { name: "ratio", type: "number", default: "16 / 9", description: "Width ÷ height. Non-finite values or <= 0 fall back to the default. No JavaScript involved — it becomes the CSS aspect-ratio property." },
+      { name: "--arcana-aspect-ratio-radius", type: "CSS custom property", default: "0", description: "Corner radius of the box (clips the media)." },
+      { name: "--arcana-aspect-ratio-background", type: "CSS custom property", default: "transparent", description: "Background shown while the media loads." },
+      { name: "--arcana-aspect-ratio-fit", type: "CSS custom property", default: "cover", description: "object-fit applied to direct img/video/iframe/canvas/svg children." }
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaAspectRatio } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Default — 16 / 9 -->",
+      "  <ArcanaAspectRatio style=\"--arcana-aspect-ratio-radius: 10px\">",
+      "    <img src=\"https://picsum.photos/seed/arcana1/800/600\" alt=\"Landscape photograph\" />",
+      "  </ArcanaAspectRatio>",
+      "",
+      "  <!-- Square and portrait -->",
+      "  <ArcanaAspectRatio :ratio=\"1\">",
+      "    <img src=\"https://picsum.photos/seed/arcana2/800/800\" alt=\"Landscape photograph\" />",
+      "  </ArcanaAspectRatio>",
+      "  <ArcanaAspectRatio :ratio=\"3 / 4\">",
+      "    <img src=\"https://picsum.photos/seed/arcana3/600/800\" alt=\"Landscape photograph\" />",
+      "  </ArcanaAspectRatio>",
+      "",
+      "  <!-- Classic 4 / 3 -->",
+      "  <ArcanaAspectRatio :ratio=\"4 / 3\">",
+      "    <img src=\"https://picsum.photos/seed/arcana4/800/600\" alt=\"Landscape photograph\" />",
+      "  </ArcanaAspectRatio>",
+      "",
+      "  <!-- Any embedded content — here a coloured placeholder -->",
+      "  <ArcanaAspectRatio :ratio=\"16 / 9\">",
+      "    <div class=\"placeholder\">Works with iframes, maps and video too</div>",
+      "  </ArcanaAspectRatio>",
+      "</template>"
+    ].join("\n")
+  },
+
+  scrollArea: {
+    demo: ScrollAreaDemo,
+    props: [
+      { name: "orientation", type: "vertical | horizontal | both", default: "vertical", description: "Which axes may scroll; the other one is overflow: hidden." },
+      { name: "height", type: "number (px) | string (CSS) | null", default: "null", description: "Fixed viewport height. Without height/maxHeight the height comes from the context." },
+      { name: "maxHeight", type: "number (px) | string (CSS) | null", default: "null", description: "Maximum viewport height." },
+      { name: "scrollbarSize", type: "number (px)", default: "10", description: "Scrollbar thickness (WebKit); on Firefox the thickness is 'thin'." },
+      { name: "type", type: "auto | always | hover", default: "auto", description: "auto: native behaviour; always: overflow scroll with a reserved gutter; hover: the thumb fades in on hover/focus." },
+      { name: "hideDelay", type: "number (ms)", default: "500", description: "Auto-hide delay of the thumb — only meaningful with type=\"hover\"." },
+      { name: "tabbable", type: "boolean", default: "true", description: "Puts tabindex=\"0\" on the viewport so the region scrolls by keyboard even with no focusable content." }
+    ],
+    events: ["Methods (via ref): viewport() — the element that actually scrolls (for scrollTo/scrollTop)"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaScrollArea } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const items = Array.from({ length: 12 }, (_, i) => `Item ${i + 1}`)",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Vertical with a max height -->",
+      "  <ArcanaScrollArea :max-height=\"180\">",
+      "    <p v-for=\"item in items\" :key=\"item\">{{ item }}</p>",
+      "  </ArcanaScrollArea>",
+      "",
+      "  <!-- Horizontal -->",
+      "  <ArcanaScrollArea orientation=\"horizontal\">",
+      "    <div class=\"row\">",
+      "      <div v-for=\"item in items\" :key=\"item\" class=\"card\">{{ item }}</div>",
+      "    </div>",
+      "  </ArcanaScrollArea>",
+      "",
+      "  <!-- Both axes -->",
+      "  <ArcanaScrollArea orientation=\"both\" :height=\"180\">",
+      "    <div style=\"width: 760px\">",
+      "      <p v-for=\"item in items\" :key=\"item\">{{ item }}</p>",
+      "    </div>",
+      "  </ArcanaScrollArea>",
+      "",
+      "  <!-- Always-visible vs auto-hiding scrollbars -->",
+      "  <ArcanaScrollArea type=\"always\" :max-height=\"120\">",
+      "    <p v-for=\"item in items\" :key=\"item\">{{ item }}</p>",
+      "  </ArcanaScrollArea>",
+      "  <ArcanaScrollArea type=\"hover\" :max-height=\"120\">",
+      "    <p v-for=\"item in items\" :key=\"item\">{{ item }}</p>",
+      "  </ArcanaScrollArea>",
+      "</template>"
+    ].join("\n")
+  },
+
+  hoverCard: {
+    demo: HoverCardDemo,
+    props: [
+      { name: "openDelay", type: "number (ms)", default: "300", description: "Wait after mouseenter before opening; keyboard focus opens immediately." },
+      { name: "closeDelay", type: "number (ms)", default: "150", description: "Grace period on leave — it is what lets the pointer travel from the trigger to the card." },
+      { name: "side", type: "top | right | bottom | left", default: "bottom", description: "Preferred side; flips automatically when it does not fit." },
+      { name: "align", type: "start | center | end", default: "center", description: "Alignment along the chosen side." },
+      { name: "placement", type: "'{side}-{align}' (e.g. bottom-start)", default: "undefined", description: "Shorthand; when set it wins over side/align." },
+      { name: "offset", type: "number (px)", default: "8", description: "Distance between trigger and card." },
+      { name: "disabled", type: "boolean", default: "false", description: "Never opens (and closes it if open)." },
+      { name: "panelClass", type: "string", default: "undefined", description: "Extra class on the teleported card — the way to theme a single instance, since it lives in <body>." }
+    ],
+    events: [
+      "open-change(open: boolean) — on every transition",
+      "Slots: #trigger (put a natively focusable element in it), default (the card content)"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaAvatar, ArcanaHoverCard } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Basic — a profile preview on a link -->",
+      "  <ArcanaHoverCard>",
+      "    <template #trigger><a href=\"/dana\">Dana Whitfield</a></template>",
+      "",
+      "    <ArcanaAvatar src=\"https://i.pravatar.cc/120?img=32\" alt=\"Profile picture\" size=\"lg\" />",
+      "    <p class=\"arcana-hover-card__title\">Dana Whitfield</p>",
+      "    <p class=\"arcana-hover-card__text\">@danaw</p>",
+      "    <p class=\"arcana-hover-card__text\">Design systems lead. Writes about accessibility and colour.</p>",
+      "    <p class=\"arcana-hover-card__text\"><strong>1.2k followers</strong></p>",
+      "  </ArcanaHoverCard>",
+      "",
+      "  <!-- Sides -->",
+      "  <ArcanaHoverCard side=\"top\"><template #trigger><a href=\"#\">top</a></template>…</ArcanaHoverCard>",
+      "  <ArcanaHoverCard side=\"right\"><template #trigger><a href=\"#\">right</a></template>…</ArcanaHoverCard>",
+      "  <ArcanaHoverCard side=\"bottom\"><template #trigger><a href=\"#\">bottom</a></template>…</ArcanaHoverCard>",
+      "  <ArcanaHoverCard side=\"left\"><template #trigger><a href=\"#\">left</a></template>…</ArcanaHoverCard>",
+      "",
+      "  <!-- Alignment and offset -->",
+      "  <ArcanaHoverCard side=\"bottom\" align=\"start\" :offset=\"16\">",
+      "    <template #trigger><a href=\"/dana\">@danaw</a></template>",
+      "    <p class=\"arcana-hover-card__title\">Dana Whitfield</p>",
+      "  </ArcanaHoverCard>",
+      "",
+      "  <!-- Delays -->",
+      "  <ArcanaHoverCard :open-delay=\"0\" :close-delay=\"0\">",
+      "    <template #trigger><a href=\"#\">Instant</a></template>",
+      "    <p class=\"arcana-hover-card__text\">Opens with no delay.</p>",
+      "  </ArcanaHoverCard>",
+      "  <ArcanaHoverCard :open-delay=\"600\">",
+      "    <template #trigger><a href=\"#\">Slow (600 ms)</a></template>",
+      "    <p class=\"arcana-hover-card__text\">Waits 600 ms before opening.</p>",
+      "  </ArcanaHoverCard>",
+      "",
+      "  <!-- Disabled -->",
+      "  <ArcanaHoverCard disabled>",
+      "    <template #trigger><a href=\"#\">@danaw</a></template>",
+      "    <p class=\"arcana-hover-card__text\">Disabled — nothing opens</p>",
+      "  </ArcanaHoverCard>",
+      "</template>"
+    ].join("\n")
+  },
+
+  contextMenu: {
+    demo: ContextMenuDemo,
+    props: [
+      { name: "items", type: "Array<{ label, icon?, suffix?, variant?, disabled?, divided?, closeOnClick? }>", default: "[]", description: "Data-driven mode — ignored when the default slot is used. variant is 'default' | 'danger' | 'success' | 'warning'; divided adds a separator above the item." },
+      { name: "disabled", type: "boolean", default: "false", description: "Never opens — the browser's native menu shows instead." },
+      { name: "panelClass", type: "string", default: "''", description: "Extra class on the teleported panel (theming a single portal)." },
+      { name: "ariaLabel", type: "string", default: "''", description: "Accessible name of the role=\"menu\"." }
+    ],
+    events: [
+      "open() — the menu opened at the pointer",
+      "close() — the menu closed (outside click, Escape, scroll, resize, selection or another context menu opening)",
+      "select(item, index) — a data-driven item was chosen",
+      "Slots: #trigger (props: open, close), default (props: close)"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaContextMenu, ArcanaContextMenuItem } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const lastAction = ref<string | null>(null)",
+      "",
+      "const items = [",
+      "  { label: 'Open', icon: 'fa-regular fa-folder-open' },",
+      "  { label: 'Rename', icon: 'fa-solid fa-pen' },",
+      "  { label: 'Duplicate', icon: 'fa-solid fa-clone', suffix: '⌘D' },",
+      "  { label: 'Move to folder', icon: 'fa-solid fa-folder-tree', disabled: true },",
+      "  { label: 'Share', icon: 'fa-solid fa-share-nodes', divided: true },",
+      "  { label: 'Delete', icon: 'fa-solid fa-trash', variant: 'danger', divided: true },",
+      "]",
+      "",
+      "function onSelect(item: { label: string }) {",
+      "  lastAction.value = item.label",
+      "}",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Data-driven items — right-click the area -->",
+      "  <ArcanaContextMenu :items=\"items\" aria-label=\"Right-click this area\">",
+      "    <template #trigger><div class=\"drop-zone\">Right-click this area</div></template>",
+      "  </ArcanaContextMenu>",
+      "",
+      "  <!-- Reacting to the selection -->",
+      "  <ArcanaContextMenu :items=\"items\" @select=\"onSelect\">",
+      "    <template #trigger><div class=\"drop-zone\">Right-click this area</div></template>",
+      "  </ArcanaContextMenu>",
+      "  <p>Last action: {{ lastAction ?? 'none yet' }}</p>",
+      "",
+      "  <!-- Composition — children instead of the array -->",
+      "  <ArcanaContextMenu>",
+      "    <template #trigger><div class=\"drop-zone\">Right-click this area</div></template>",
+      "",
+      "    <ArcanaContextMenuItem icon=\"fa-regular fa-folder-open\">Open</ArcanaContextMenuItem>",
+      "    <ArcanaContextMenuItem icon=\"fa-solid fa-box-archive\">Archive</ArcanaContextMenuItem>",
+      "    <ArcanaContextMenuItem icon=\"fa-solid fa-trash\" variant=\"danger\" divided>Delete</ArcanaContextMenuItem>",
+      "  </ArcanaContextMenu>",
+      "",
+      "  <!-- Disabled — the native menu comes back -->",
+      "  <ArcanaContextMenu :items=\"items\" disabled>",
+      "    <template #trigger><div class=\"drop-zone\">Right-click this area</div></template>",
+      "  </ArcanaContextMenu>",
+      "  <p>Disabled — the browser menu shows instead</p>",
       "</template>"
     ].join("\n")
   }

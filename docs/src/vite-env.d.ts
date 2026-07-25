@@ -6,3 +6,6 @@ declare module "*.vue" {
   const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>;
   export default component;
 }
+
+/** Versão do package.json, injetada pelo Vite (ver `define` em docs/vite.config.ts). */
+declare const __ARCANA_VERSION__: string;

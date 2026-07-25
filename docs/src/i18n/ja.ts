@@ -5,7 +5,7 @@ export const ja: Messages = {
   langName: "日本語",
 
   shell: {
-    kicker: "ドキュメント · v0.x",
+    kicker: "ドキュメント · v{version}",
     lead: "型付きの shadcn スタイルのコンポーネントライブラリです — Vue 3・React・Angular・Svelte で、同じ API、同じ見た目を、どのフレームワークでも。",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const ja: Messages = {
     usage: {
       title: "使い方",
       p1: "コンポーネントをインポートしてテンプレートに置くだけです。すべて同じ規約に従います。双方向の値には <c>v-model</c>、props は kebab-case、そして <c>update:modelValue</c> と並んで対応する <c>change</c> イベントを発行します。",
-      p2: "パレットはニュートラルな shadcn の <i>zinc</i> スケールなので、テーマ設定なしでもコンポーネントを並べて心地よく共存します。"
+      p2: "色は Radix モデルに沿った 12 段階のスケールから来ており、アクセントとニュートラルはルート要素のクラスで差し替えられます — 下の<b>カラー</b>の節を参照してください。"
     },
     styles: {
       title: "スタイル",
       p1: "スタイルシートはアプリのルートで一度だけインポートします：<c>import '@arcanalabs/ui-components/styles.css'</c>。すべてのコンポーネントの視覚トークンを含みます。",
       p2: "スタイルはコンポーネントごとにスコープされた素の CSS です — ランタイムのスタイルエンジンも、利用側での Tailwind 要件もありません。"
     },
+    palette: {
+      title: "カラー",
+      p1: "色は Radix モデルに沿った 12 段階のシステムです。各段には固定の役割があり、1 はアプリの背景、9 はコンポーネント自身を塗るソリッドな面、12 は最もコントラストの高いテキストです。ライトとダークで 31 のスケールを、それぞれ alpha バリアント付きで同梱しているので、トークンの意味はどこで使っても変わりません。",
+      p2: "パレットの切り替えはルート要素のクラス 1 つです。<c>.arcana-accent-violet</c> でアクセント、<c>.arcana-gray-slate</c> でニュートラル、<c>.arcana-dark</c> でダークモードを選びます。コンポーネントは意味的トークンしか読まないため、スタイルに一切手を入れなくてもすべてが追従します。"
+    },
     maska: {
       title: "v-maska の登録",
       p1: "一部のコンポーネント（<c>ArcanaInputMask</c>、<c>ArcanaDatePicker</c>）は <c>maska</c> パッケージの <c>v-maska</c> ディレクティブに依存します。アプリ作成時に一度グローバル登録してください。",
       p2: "マスクを使わないコンポーネントに追加設定は不要です — この手順はマスク付き入力をレンダリングする場合にのみ必要です。"
     }
+  },
+
+  palette: {
+    accentLabel: "アクセント",
+    grayLabel: "ニュートラル",
+    darkLabel: "ダークモード",
+    scaleCaption: "{scale} の 12 段階",
+    previewTitle: "選択したパレットでの実際のコンポーネント",
+    hint: "すべてのコンポーネントが意味的トークンを読むので、ルートのクラスを変えるだけでページ全体のテーマが変わります。"
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const ja: Messages = {
     },
     switchSegmented: {
       blurb: "スライドするインジケーター付きのセグメンテッドカプセル形の二値トグルで、オン/オフではなく\"A か B\"として読めます。"
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "<c>v-model</c> で操作する星評価です。<c>allowHalf</c> で半分の星、<c>showScore</c> や <c>texts</c> でキャプション、<c>readonly</c> で平均の表示に使えます。"
+    },
+    avatar: {
+      blurb: "画像 → <c>initials</c> → <c>icon</c> → シルエットの 4 段フォールバックを備えたユーザーアバターで、5 つの名前付きサイズか正確なピクセル値を指定できます。"
+    },
+    avatarGroup: {
+      blurb: "<c>avatars</c> 配列または子要素から作る重なり合ったアバター群で、<c>+N</c> のオーバーフローバブル付き。必要なら重なりの代わりに <c>spacing</c> も使えます。"
+    },
+    statistic: {
+      blurb: "<c>precision</c>、ロケールに応じた区切り、<c>prefix</c>/<c>suffix</c>、アイコン、5 つの意味的な <c>tone</c> を備えた整形済み KPI 数値です。"
+    },
+    countdown: {
+      blurb: "指定時刻までのライブなカウントダウン。トークン式の <c>format</c>（<c>D H m s S</c>）、<c>paused</c> 制御、<c>finish</c> イベントを備えます。"
+    },
+    progress: {
+      blurb: "<c>solid</c> と <c>soft</c> のプログレスバー。値に <c>null</c> を渡すと不確定ループになり、<c>value</c> スロットでラベルを自前に差し替えられます。"
+    },
+    aspectRatio: {
+      blurb: "任意の子要素を固定の <c>ratio</c> に保つ純 CSS のボックスで、画像・iframe・地図・動画に使え、JavaScript は一切不要です。"
+    },
+    scrollArea: {
+      blurb: "両軸に対応した、スタイル付きで自動的に隠れるスクロールバーを持つスクロールコンテナで、<c>height</c> や <c>maxHeight</c> で高さを制限します。"
+    },
+    hoverCard: {
+      blurb: "ホバーまたはフォーカス後 <c>openDelay</c> で開くリッチなプレビューパネル。<c>side</c>/<c>align</c>、あるいは <c>placement</c> の短縮指定で配置します。"
+    },
+    contextMenu: {
+      blurb: "<c>items</c> 配列（アイコン、サフィックス、<c>danger</c> バリアント、区切り線）から作る右クリックメニュー。子要素で組み立てることもできます。"
     }
   },
 
@@ -565,7 +611,95 @@ export const ja: Messages = {
     rcShippingStandard: "通常配送",
     rcShippingStandardDesc: "5〜7営業日で到着",
     rcShippingExpress: "速達配送",
-    rcShippingExpressDesc: "翌営業日に到着"
+    rcShippingExpressDesc: "翌営業日に到着",
+
+    // ── rate ──
+    rateValueLabel: "あなたの評価",
+    rateText1: "最悪",
+    rateText2: "悪い",
+    rateText3: "普通",
+    rateText4: "良い",
+    rateText5: "最高",
+    rateAverageNote: "128 件のレビューの平均",
+    rateSizeSm: "小",
+    rateSizeMd: "中",
+    rateSizeLg: "大",
+    rateDisabledNote: "無効",
+
+    // ── avatar ──
+    avatarFallbackNote: "画像が壊れていると、自動的に次の段へフォールバックします。",
+    avatarShapeCircle: "円形",
+    avatarShapeSquare: "四角",
+    avatarSizesNote: "名前付きサイズ、または正確なピクセル値",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "プロジェクトチーム",
+    avatarGroupOverlapNote: "重ねて表示（既定）",
+    avatarGroupSpacingNote: "間隔をあけて表示",
+    avatarGroupCompositionNote: "子要素で組み立て、オーバーフロー数を明示",
+
+    // ── statistic ──
+    statActiveUsers: "アクティブユーザー",
+    statRevenue: "月間売上",
+    statConversion: "コンバージョン率",
+    statOrders: "注文数",
+    statChurn: "解約率",
+    statUptime: "稼働率",
+    statPending: "未処理のレビュー",
+    statTickets: "未解決のチケット",
+    statLocaleNote: "同じ数値、pt-BR の区切り",
+
+    // ── countdown ──
+    countdownFlashSale: "タイムセール終了まで",
+    countdownSessionExpires: "セッション期限まで",
+    countdownMaintenance: "メンテナンス時間",
+    countdownToggle: "一時停止 / 再開",
+    countdownFinishedNote: "ゼロになると finish イベントを発行します。",
+
+    // ── progress ──
+    progressUploading: "アップロード中",
+    progressStorage: "使用中のストレージ",
+    progressComplete: "完了",
+    progressIndeterminateNote: "総量が不明 — バーはループします。",
+    progressCustomLabel: "5 ステップ中 3",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "横位置の写真",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "iframe や地図、動画にも使えます",
+
+    // ── scroll area ──
+    scrollVerticalNote: "縦方向、高さ上限あり",
+    scrollHorizontalNote: "横方向",
+    scrollBothNote: "両方向",
+    scrollTypeAlways: "スクロールバーを常に表示",
+    scrollTypeHover: "ホバー時にスクロールバーを表示",
+    scrollItemPrefix: "項目",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "デザインシステム責任者。アクセシビリティと色について執筆。",
+    hoverProfileFollowers: "フォロワー 1.2 千人",
+    hoverSideNote: "各サイドに 1 つずつトリガー",
+    hoverDelayInstant: "即時",
+    hoverDelaySlow: "遅め（600 ミリ秒）",
+    hoverDisabledNote: "無効 — 何も開きません",
+
+    // ── context menu ──
+    contextTriggerNote: "この領域を右クリック",
+    contextOpen: "開く",
+    contextRename: "名前を変更",
+    contextDuplicate: "複製",
+    contextShare: "共有",
+    contextDelete: "削除",
+    contextArchive: "アーカイブ",
+    contextDisabledItem: "フォルダへ移動",
+    contextLastAction: "最後の操作",
+    contextNoneYet: "まだありません",
+    contextDisabledNote: "無効 — 代わりにブラウザのメニューが表示されます"
 
   }
 };

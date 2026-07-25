@@ -1,4 +1,4 @@
-import { flushSync, mount, unmount } from "svelte";
+import { flushSync, mount, tick, unmount } from "svelte";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ArcanaInputCurrency,
@@ -27,6 +27,7 @@ import {
   ArcanaTreeSelect,
 } from "../src/svelte";
 import DropdownFixture from "./fixtures/DropdownFixture.svelte";
+import ContextMenuFixture from "./fixtures/ContextMenuFixture.svelte";
 import DialogFixture from "./fixtures/DialogFixture.svelte";
 import SettingsFixture from "./fixtures/SettingsFixture.svelte";
 import SpecSheetFixture from "./fixtures/SpecSheetFixture.svelte";
@@ -556,6 +557,44 @@ describe("Svelte adapter — lote 3 (overlay/composição)", () => {
     expect(onSelect).toHaveBeenCalledWith("rename");
     // closeOnClick (default) → menu fecha após seleção.
     expect(document.body.querySelector(".arcana-dropdown__menu")).toBeNull();
+  });
+
+  it("ArcanaContextMenu opens a portaled panel at the cursor; item click selects + closes", async () => {
+    const onSelect = vi.fn();
+    const onClose = vi.fn();
+    const { target } = render(ContextMenuFixture, { onSelect, onClose });
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
+
+    const root = target.querySelector(".arcana-context-menu")!;
+    root.dispatchEvent(
+      new MouseEvent("contextmenu", { bubbles: true, cancelable: true, clientX: 120, clientY: 80 })
+    );
+    flushSync();
+    // `openAt` posiciona depois de um `tick()` (o painel precisa existir pra ser medido).
+    await tick();
+    await tick();
+    flushSync();
+
+    const panel = document.body.querySelector(".arcana-context-menu__panel") as HTMLElement;
+    expect(panel).toBeTruthy();
+    expect(target.contains(panel)).toBe(false);
+    expect(panel.getAttribute("role")).toBe("menu");
+    expect(panel.getAttribute("aria-label")).toBe("Ações");
+    expect(panel.classList.contains("minha-tela")).toBe(true);
+    // Ancorado no ponto clicado (POINTER_GAP = 2), sem flip: cabe na viewport.
+    expect(panel.style.left).toBe("120px");
+    expect(panel.style.top).toBe("82px");
+
+    const items = panel.querySelectorAll(".arcana-context-menu-item");
+    expect(items).toHaveLength(2);
+    expect(items[1].classList.contains("arcana-context-menu-item--danger")).toBe(true);
+    expect(panel.querySelector(".arcana-context-menu-item__suffix")!.textContent!.trim()).toBe("⌘C");
+
+    click(items[0]);
+    expect(onSelect).toHaveBeenCalledWith("copy");
+    expect(onClose).toHaveBeenCalledTimes(1);
+    // closeOnClick (default) → painel some do body.
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
   });
 
   it("ArcanaRequiredFieldsDialog lists fields and shows via bind:this", () => {

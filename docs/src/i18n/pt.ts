@@ -5,7 +5,7 @@ export const pt: Messages = {
   langName: "Português",
 
   shell: {
-    kicker: "Documentação · v0.x",
+    kicker: "Documentação · v{version}",
     lead: "Uma biblioteca de componentes tipada, no estilo shadcn — Vue 3, React, Angular e Svelte, com a mesma API e o mesmo visual em qualquer framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const pt: Messages = {
     usage: {
       title: "Uso",
       p1: "Importe um componente e use no seu template. Todos seguem as mesmas convenções: <c>v-model</c> para valores bidirecionais, props em kebab-case e um evento <c>change</c> ao lado do <c>update:modelValue</c>.",
-      p2: "A paleta é a escala neutra shadcn <i>zinc</i>, então os componentes convivem bem lado a lado sem nenhuma configuração de tema."
+      p2: "A cor vem de escalas de 12 degraus no modelo Radix, com o acento e o neutro trocáveis por uma classe no elemento raiz — veja <b>Cores</b> logo abaixo."
     },
     styles: {
       title: "Estilos",
       p1: "Importe a folha de estilos uma vez, na raiz da aplicação: <c>import '@arcanalabs/ui-components/styles.css'</c>. Ela carrega os tokens visuais de todos os componentes.",
       p2: "Os estilos são CSS puro, escopado por componente — não há engine de estilo em runtime nem exigência de Tailwind no consumidor."
     },
+    palette: {
+      title: "Cores",
+      p1: "A cor é um sistema de 12 degraus no modelo Radix: cada degrau tem um papel fixo — o degrau 1 é o fundo da aplicação, o 9 é o preenchimento sólido com que o componente se pinta e o 12 é o texto de maior contraste. A biblioteca traz 31 escalas em claro e escuro, cada uma com variante alpha, então um token significa sempre a mesma coisa onde quer que caia.",
+      p2: "Trocar de paleta é pôr uma classe no elemento raiz: <c>.arcana-accent-violet</c> escolhe o acento, <c>.arcana-gray-slate</c> o neutro e <c>.arcana-dark</c> o modo escuro. Os componentes só consomem tokens semânticos, então todos acompanham a troca sem que você mexa em um estilo sequer."
+    },
     maska: {
       title: "Registrando o v-maska",
       p1: "Alguns componentes (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) dependem da diretiva <c>v-maska</c> do pacote <c>maska</c>. Registre-a globalmente uma vez ao criar o app.",
       p2: "Componentes que não usam máscara não exigem setup extra — este passo só é necessário se você renderizar um input com máscara."
     }
+  },
+
+  palette: {
+    accentLabel: "Acento",
+    grayLabel: "Neutro",
+    darkLabel: "Modo escuro",
+    scaleCaption: "Os 12 degraus de {scale}",
+    previewTitle: "Componentes reais sob a paleta escolhida",
+    hint: "Todo componente lê tokens semânticos, então trocar a classe da raiz re-tematiza a página inteira."
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const pt: Messages = {
     },
     switchSegmented: {
       blurb: "Um toggle binário no formato de cápsula segmentada com um indicador deslizante, lido como \"A ou B\" em vez de liga/desliga."
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "Uma avaliação por estrelas guiada por <c>v-model</c> — <c>allowHalf</c> para meias estrelas, <c>showScore</c> ou <c>texts</c> para uma legenda, e <c>readonly</c> para médias."
+    },
+    avatar: {
+      blurb: "Um avatar de usuário com cascata de quatro etapas — imagem, <c>initials</c>, <c>icon</c>, silhueta — em cinco tamanhos nomeados ou um valor exato em pixels."
+    },
+    avatarGroup: {
+      blurb: "Avatares sobrepostos vindos de um array <c>avatars</c> ou dos filhos, com uma bolha de excedente <c>+N</c> e <c>spacing</c> no lugar da sobreposição quando preciso."
+    },
+    statistic: {
+      blurb: "Um número de KPI formatado com <c>precision</c>, separadores cientes do locale, <c>prefix</c>/<c>suffix</c>, ícone e cinco <c>tone</c>s semânticos."
+    },
+    countdown: {
+      blurb: "Uma contagem regressiva ao vivo até um instante, com <c>format</c> por tokens (<c>D H m s S</c>), controle <c>paused</c> e evento <c>finish</c>."
+    },
+    progress: {
+      blurb: "Uma barra de progresso em <c>solid</c> ou <c>soft</c>; passe <c>null</c> como valor para o laço indeterminado, ou assuma o rótulo pelo slot <c>value</c>."
+    },
+    aspectRatio: {
+      blurb: "Uma caixa em CSS puro que mantém qualquer filho em um <c>ratio</c> fixo — imagens, iframes, mapas ou vídeo — sem nenhum JavaScript."
+    },
+    scrollArea: {
+      blurb: "Um contêiner de rolagem com barras estilizadas que somem sozinhas, em qualquer eixo, limitado por <c>height</c> ou <c>maxHeight</c>."
+    },
+    hoverCard: {
+      blurb: "Um painel de prévia rica que abre no hover ou no foco após <c>openDelay</c>, posicionado por <c>side</c>/<c>align</c> ou pelo atalho <c>placement</c>."
+    },
+    contextMenu: {
+      blurb: "Um menu de botão direito montado a partir de um array <c>items</c> (ícones, sufixos, variantes <c>danger</c>, divisores) ou composto pelos filhos."
     }
   },
 
@@ -565,7 +611,95 @@ export const pt: Messages = {
     rcShippingStandard: "Entrega padrão",
     rcShippingStandardDesc: "Chega em 5 a 7 dias úteis",
     rcShippingExpress: "Entrega expressa",
-    rcShippingExpressDesc: "Chega no próximo dia útil"
+    rcShippingExpressDesc: "Chega no próximo dia útil",
+
+    // ── rate ──
+    rateValueLabel: "Sua nota",
+    rateText1: "Péssimo",
+    rateText2: "Ruim",
+    rateText3: "Regular",
+    rateText4: "Bom",
+    rateText5: "Excelente",
+    rateAverageNote: "Média de 128 avaliações",
+    rateSizeSm: "Pequeno",
+    rateSizeMd: "Médio",
+    rateSizeLg: "Grande",
+    rateDisabledNote: "Desabilitado",
+
+    // ── avatar ──
+    avatarFallbackNote: "Uma imagem quebrada cai para a próxima etapa, automaticamente.",
+    avatarShapeCircle: "Círculo",
+    avatarShapeSquare: "Quadrado",
+    avatarSizesNote: "Tamanhos nomeados ou um valor exato em pixels",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "Time do projeto",
+    avatarGroupOverlapNote: "Sobreposto (padrão)",
+    avatarGroupSpacingNote: "Espaçado",
+    avatarGroupCompositionNote: "Filhos compostos com contagem de excedente explícita",
+
+    // ── statistic ──
+    statActiveUsers: "Usuários ativos",
+    statRevenue: "Receita mensal",
+    statConversion: "Taxa de conversão",
+    statOrders: "Pedidos",
+    statChurn: "Churn",
+    statUptime: "Disponibilidade",
+    statPending: "Avaliações pendentes",
+    statTickets: "Chamados abertos",
+    statLocaleNote: "Mesmo número, separadores pt-BR",
+
+    // ── countdown ──
+    countdownFlashSale: "A promoção relâmpago acaba em",
+    countdownSessionExpires: "A sessão expira em",
+    countdownMaintenance: "Janela de manutenção",
+    countdownToggle: "Pausar / retomar",
+    countdownFinishedNote: "Dispara o evento finish ao chegar a zero.",
+
+    // ── progress ──
+    progressUploading: "Enviando",
+    progressStorage: "Armazenamento usado",
+    progressComplete: "Concluído",
+    progressIndeterminateNote: "Sem total conhecido — a barra fica em laço.",
+    progressCustomLabel: "3 de 5 etapas",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "Fotografia em paisagem",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "Funciona também com iframes, mapas e vídeo",
+
+    // ── scroll area ──
+    scrollVerticalNote: "Vertical, altura limitada",
+    scrollHorizontalNote: "Horizontal",
+    scrollBothNote: "Ambos os eixos",
+    scrollTypeAlways: "Barra sempre visível",
+    scrollTypeHover: "Barra aparece no hover",
+    scrollItemPrefix: "Item",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "Líder de design systems. Escreve sobre acessibilidade e cor.",
+    hoverProfileFollowers: "1,2 mil seguidores",
+    hoverSideNote: "Um gatilho por lado",
+    hoverDelayInstant: "Instantâneo",
+    hoverDelaySlow: "Lento (600 ms)",
+    hoverDisabledNote: "Desabilitado — nada abre",
+
+    // ── context menu ──
+    contextTriggerNote: "Clique com o botão direito nesta área",
+    contextOpen: "Abrir",
+    contextRename: "Renomear",
+    contextDuplicate: "Duplicar",
+    contextShare: "Compartilhar",
+    contextDelete: "Excluir",
+    contextArchive: "Arquivar",
+    contextDisabledItem: "Mover para pasta",
+    contextLastAction: "Última ação",
+    contextNoneYet: "nenhuma ainda",
+    contextDisabledNote: "Desabilitado — o menu do navegador aparece no lugar"
 
   }
 };

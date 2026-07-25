@@ -15,4 +15,17 @@ export * from "./react/index";
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
 export { DateFormatter } from "./core/date";
+export {
+  DEFAULT_COUNTDOWN_FORMAT,
+  countdownTickInterval,
+  formatCountdown,
+  formatDuration,
+  parseCountdownTarget,
+  remainingMs,
+  splitDuration
+} from "./core/countdown";
+export type { CountdownParts } from "./core/countdown";
+export { formatStatisticValue } from "./core/statistic";
+export type { StatisticFormatOptions } from "./core/statistic";
+export { clampProgressValue, formatProgressLabel, progressPercent } from "./core/progress";
 export { acquireZIndex, releaseZIndex } from "./vue/services/dialog-stack";

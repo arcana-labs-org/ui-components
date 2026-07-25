@@ -5,7 +5,7 @@ export const es: Messages = {
   langName: "Español",
 
   shell: {
-    kicker: "Documentación · v0.x",
+    kicker: "Documentación · v{version}",
     lead: "Una biblioteca de componentes tipada, al estilo shadcn — Vue 3, React, Angular y Svelte, con la misma API y el mismo aspecto en cualquier framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const es: Messages = {
     usage: {
       title: "Uso",
       p1: "Importa un componente y colócalo en tu plantilla. Todos siguen las mismas convenciones: <c>v-model</c> para valores bidireccionales, props en kebab-case y un evento <c>change</c> junto a <c>update:modelValue</c>.",
-      p2: "La paleta es la escala neutra shadcn <i>zinc</i>, así que los componentes conviven bien entre sí sin configurar ningún tema."
+      p2: "El color viene de escalas de 12 pasos según el modelo Radix, con el acento y el neutro intercambiables mediante una clase en el elemento raíz — mira <b>Colores</b> más abajo."
     },
     styles: {
       title: "Estilos",
       p1: "Importa la hoja de estilos una vez, en la raíz de tu aplicación: <c>import '@arcanalabs/ui-components/styles.css'</c>. Contiene los tokens visuales de todos los componentes.",
       p2: "Los estilos son CSS puro, con scope por componente — no hay motor de estilos en runtime ni requisito de Tailwind en el consumidor."
     },
+    palette: {
+      title: "Colores",
+      p1: "El color es un sistema de 12 pasos según el modelo Radix: cada paso tiene un papel fijo — el paso 1 es el fondo de la aplicación, el 9 el relleno sólido con el que el componente se pinta y el 12 el texto de mayor contraste. La biblioteca incluye 31 escalas en claro y oscuro, cada una con variante alpha, así que un token significa siempre lo mismo allá donde caiga.",
+      p2: "Cambiar de paleta es poner una clase en el elemento raíz: <c>.arcana-accent-violet</c> elige el acento, <c>.arcana-gray-slate</c> el neutro y <c>.arcana-dark</c> el modo oscuro. Los componentes solo leen tokens semánticos, así que todos siguen el cambio sin tocar ni un estilo."
+    },
     maska: {
       title: "Registrar v-maska",
       p1: "Algunos componentes (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) dependen de la directiva <c>v-maska</c> del paquete <c>maska</c>. Regístrala globalmente una vez al crear la app.",
       p2: "Los componentes que no usan máscara no necesitan configuración extra — este paso solo hace falta si renderizas un input con máscara."
     }
+  },
+
+  palette: {
+    accentLabel: "Acento",
+    grayLabel: "Neutro",
+    darkLabel: "Modo oscuro",
+    scaleCaption: "Los 12 pasos de {scale}",
+    previewTitle: "Componentes reales con la paleta seleccionada",
+    hint: "Cada componente lee tokens semánticos, así que cambiar la clase raíz re-tematiza toda la página."
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const es: Messages = {
     },
     switchSegmented: {
       blurb: "Un toggle binario con forma de cápsula segmentada con un indicador deslizante, que se lee como \"A o B\" en lugar de on/off."
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "Una valoración por estrellas guiada por <c>v-model</c> — <c>allowHalf</c> para medias estrellas, <c>showScore</c> o <c>texts</c> para un pie, y <c>readonly</c> para promedios."
+    },
+    avatar: {
+      blurb: "Un avatar de usuario con una cascada de cuatro pasos — imagen, <c>initials</c>, <c>icon</c>, silueta — en cinco tamaños con nombre o un valor exacto en píxeles."
+    },
+    avatarGroup: {
+      blurb: "Avatares superpuestos a partir de un array <c>avatars</c> o de los hijos, con una burbuja de excedente <c>+N</c> y <c>spacing</c> en lugar de solape cuando hace falta."
+    },
+    statistic: {
+      blurb: "Un número KPI formateado con <c>precision</c>, separadores según el locale, <c>prefix</c>/<c>suffix</c>, icono y cinco <c>tone</c>s semánticos."
+    },
+    countdown: {
+      blurb: "Una cuenta atrás en vivo hasta un instante, con <c>format</c> por tokens (<c>D H m s S</c>), control <c>paused</c> y evento <c>finish</c>."
+    },
+    progress: {
+      blurb: "Una barra de progreso en <c>solid</c> o <c>soft</c>; pasa <c>null</c> como valor para el bucle indeterminado, o toma el control de la etiqueta con el slot <c>value</c>."
+    },
+    aspectRatio: {
+      blurb: "Una caja de CSS puro que mantiene cualquier hijo en un <c>ratio</c> fijo — imágenes, iframes, mapas o vídeo — sin nada de JavaScript."
+    },
+    scrollArea: {
+      blurb: "Un contenedor de scroll con barras estilizadas que se ocultan solas, en cualquier eje, limitado por <c>height</c> o <c>maxHeight</c>."
+    },
+    hoverCard: {
+      blurb: "Un panel de vista previa que se abre al pasar el ratón o al enfocar tras <c>openDelay</c>, colocado con <c>side</c>/<c>align</c> o con el atajo <c>placement</c>."
+    },
+    contextMenu: {
+      blurb: "Un menú contextual construido desde un array <c>items</c> (iconos, sufijos, variantes <c>danger</c>, separadores) o compuesto con los hijos."
     }
   },
 
@@ -565,7 +611,95 @@ export const es: Messages = {
     rcShippingStandard: "Envío estándar",
     rcShippingStandardDesc: "Llega en 5–7 días hábiles",
     rcShippingExpress: "Envío exprés",
-    rcShippingExpressDesc: "Llega al siguiente día hábil"
+    rcShippingExpressDesc: "Llega al siguiente día hábil",
+
+    // ── rate ──
+    rateValueLabel: "Tu valoración",
+    rateText1: "Pésimo",
+    rateText2: "Malo",
+    rateText3: "Regular",
+    rateText4: "Bueno",
+    rateText5: "Excelente",
+    rateAverageNote: "Promedio de 128 reseñas",
+    rateSizeSm: "Pequeño",
+    rateSizeMd: "Mediano",
+    rateSizeLg: "Grande",
+    rateDisabledNote: "Deshabilitado",
+
+    // ── avatar ──
+    avatarFallbackNote: "Una imagen rota cae al siguiente paso, automáticamente.",
+    avatarShapeCircle: "Círculo",
+    avatarShapeSquare: "Cuadrado",
+    avatarSizesNote: "Tamaños con nombre o un valor exacto en píxeles",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "Equipo del proyecto",
+    avatarGroupOverlapNote: "Superpuesto (por defecto)",
+    avatarGroupSpacingNote: "Separado",
+    avatarGroupCompositionNote: "Hijos compuestos con un recuento de excedente explícito",
+
+    // ── statistic ──
+    statActiveUsers: "Usuarios activos",
+    statRevenue: "Ingresos mensuales",
+    statConversion: "Tasa de conversión",
+    statOrders: "Pedidos",
+    statChurn: "Churn",
+    statUptime: "Disponibilidad",
+    statPending: "Reseñas pendientes",
+    statTickets: "Tickets abiertos",
+    statLocaleNote: "El mismo número, separadores pt-BR",
+
+    // ── countdown ──
+    countdownFlashSale: "La oferta flash termina en",
+    countdownSessionExpires: "La sesión expira en",
+    countdownMaintenance: "Ventana de mantenimiento",
+    countdownToggle: "Pausar / reanudar",
+    countdownFinishedNote: "Emite el evento finish al llegar a cero.",
+
+    // ── progress ──
+    progressUploading: "Subiendo",
+    progressStorage: "Almacenamiento usado",
+    progressComplete: "Completado",
+    progressIndeterminateNote: "Sin total conocido — la barra hace un bucle.",
+    progressCustomLabel: "3 de 5 pasos",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "Fotografía en horizontal",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "También funciona con iframes, mapas y vídeo",
+
+    // ── scroll area ──
+    scrollVerticalNote: "Vertical, altura limitada",
+    scrollHorizontalNote: "Horizontal",
+    scrollBothNote: "Ambos ejes",
+    scrollTypeAlways: "Barra siempre visible",
+    scrollTypeHover: "La barra aparece al pasar el ratón",
+    scrollItemPrefix: "Elemento",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "Líder de design systems. Escribe sobre accesibilidad y color.",
+    hoverProfileFollowers: "1,2 mil seguidores",
+    hoverSideNote: "Un disparador por lado",
+    hoverDelayInstant: "Instantáneo",
+    hoverDelaySlow: "Lento (600 ms)",
+    hoverDisabledNote: "Deshabilitado — no se abre nada",
+
+    // ── context menu ──
+    contextTriggerNote: "Haz clic derecho en esta área",
+    contextOpen: "Abrir",
+    contextRename: "Renombrar",
+    contextDuplicate: "Duplicar",
+    contextShare: "Compartir",
+    contextDelete: "Eliminar",
+    contextArchive: "Archivar",
+    contextDisabledItem: "Mover a carpeta",
+    contextLastAction: "Última acción",
+    contextNoneYet: "ninguna todavía",
+    contextDisabledNote: "Deshabilitado — se muestra el menú del navegador"
 
   }
 };

@@ -5,7 +5,7 @@ export const ru: Messages = {
   langName: "Русский",
 
   shell: {
-    kicker: "Документация · v0.x",
+    kicker: "Документация · v{version}",
     lead: "Типизированная библиотека компонентов в стиле shadcn — Vue 3, React, Angular и Svelte, с одинаковым API и одинаковым видом в любом фреймворке.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const ru: Messages = {
     usage: {
       title: "Использование",
       p1: "Импортируйте компонент и поместите его в шаблон. Все они следуют одним соглашениям: <c>v-model</c> для двусторонних значений, props в kebab-case и событие <c>change</c> рядом с <c>update:modelValue</c>.",
-      p2: "Палитра — нейтральная шкала shadcn <i>zinc</i>, поэтому компоненты хорошо сочетаются друг с другом без какой-либо настройки темы."
+      p2: "Цвет берётся из 12-ступенчатых шкал по модели Radix, а акцент и нейтральный меняются классом на корневом элементе — см. раздел <b>Цвета</b> ниже."
     },
     styles: {
       title: "Стили",
       p1: "Импортируйте таблицу стилей один раз, в корне приложения: <c>import '@arcanalabs/ui-components/styles.css'</c>. Она содержит визуальные токены всех компонентов.",
       p2: "Стили — это чистый CSS со скоупом на компонент — нет ни движка стилей во время выполнения, ни требования Tailwind на стороне потребителя."
     },
+    palette: {
+      title: "Цвета",
+      p1: "Цвет — это система из 12 ступеней по модели Radix: у каждой ступени своя фиксированная роль — ступень 1 это фон приложения, 9 — сплошная заливка, которой компонент закрашивает себя, 12 — текст с наибольшим контрастом. В библиотеке 31 шкала в светлой и тёмной темах, каждая с alpha-вариантом, поэтому токен всегда означает одно и то же, где бы он ни оказался.",
+      p2: "Смена палитры — это класс на корневом элементе: <c>.arcana-accent-violet</c> задаёт акцент, <c>.arcana-gray-slate</c> — нейтральный, а <c>.arcana-dark</c> — тёмный режим. Компоненты читают только семантические токены, поэтому все они подхватывают смену без правки хотя бы одного стиля."
+    },
     maska: {
       title: "Регистрация v-maska",
       p1: "Несколько компонентов (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) используют директиву <c>v-maska</c> из пакета <c>maska</c>. Зарегистрируйте её глобально один раз при создании приложения.",
       p2: "Компонентам без маски дополнительная настройка не нужна — этот шаг требуется только при отрисовке поля ввода с маской."
     }
+  },
+
+  palette: {
+    accentLabel: "Акцент",
+    grayLabel: "Нейтральный",
+    darkLabel: "Тёмный режим",
+    scaleCaption: "12 ступеней шкалы {scale}",
+    previewTitle: "Реальные компоненты с выбранной палитрой",
+    hint: "Каждый компонент читает семантические токены, поэтому смена класса на корне перекрашивает всю страницу."
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const ru: Messages = {
     },
     switchSegmented: {
       blurb: "Бинарный переключатель в форме сегментированной капсулы со скользящим индикатором, читающийся как «A или B», а не вкл/выкл."
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "Оценка звёздами через <c>v-model</c> — <c>allowHalf</c> для половинок, <c>showScore</c> или <c>texts</c> для подписи и <c>readonly</c> для средних значений."
+    },
+    avatar: {
+      blurb: "Аватар пользователя с четырёхступенчатым запасным вариантом — изображение, <c>initials</c>, <c>icon</c>, силуэт — в пяти именованных размерах или в точных пикселях."
+    },
+    avatarGroup: {
+      blurb: "Перекрывающиеся аватары из массива <c>avatars</c> или из дочерних элементов, с пузырьком переполнения <c>+N</c> и <c>spacing</c> вместо наложения, когда нужно."
+    },
+    statistic: {
+      blurb: "Отформатированное KPI-число с <c>precision</c>, разделителями с учётом локали, <c>prefix</c>/<c>suffix</c>, иконкой и пятью семантическими <c>tone</c>."
+    },
+    countdown: {
+      blurb: "Живой обратный отсчёт до момента времени, с токенным <c>format</c> (<c>D H m s S</c>), управлением <c>paused</c> и событием <c>finish</c>."
+    },
+    progress: {
+      blurb: "Полоса прогресса в вариантах <c>solid</c> и <c>soft</c>; значение <c>null</c> даёт неопределённый цикл, а слот <c>value</c> позволяет задать свою подпись."
+    },
+    aspectRatio: {
+      blurb: "Блок на чистом CSS, удерживающий любое содержимое в фиксированном <c>ratio</c> — изображения, iframe, карты или видео — без единой строки JavaScript."
+    },
+    scrollArea: {
+      blurb: "Контейнер прокрутки со стилизованными самоскрывающимися полосами по обеим осям, ограниченный через <c>height</c> или <c>maxHeight</c>."
+    },
+    hoverCard: {
+      blurb: "Панель подробного превью, открывающаяся при наведении или фокусе после <c>openDelay</c> и позиционируемая через <c>side</c>/<c>align</c> или сокращение <c>placement</c>."
+    },
+    contextMenu: {
+      blurb: "Меню по правому клику, собранное из массива <c>items</c> (иконки, суффиксы, варианты <c>danger</c>, разделители) или из дочерних элементов."
     }
   },
 
@@ -565,7 +611,95 @@ export const ru: Messages = {
     rcShippingStandard: "Обычная доставка",
     rcShippingStandardDesc: "Прибудет через 5–7 рабочих дней",
     rcShippingExpress: "Экспресс-доставка",
-    rcShippingExpressDesc: "Прибудет на следующий рабочий день"
+    rcShippingExpressDesc: "Прибудет на следующий рабочий день",
+
+    // ── rate ──
+    rateValueLabel: "Ваша оценка",
+    rateText1: "Ужасно",
+    rateText2: "Плохо",
+    rateText3: "Средне",
+    rateText4: "Хорошо",
+    rateText5: "Отлично",
+    rateAverageNote: "Среднее по 128 отзывам",
+    rateSizeSm: "Маленький",
+    rateSizeMd: "Средний",
+    rateSizeLg: "Большой",
+    rateDisabledNote: "Отключено",
+
+    // ── avatar ──
+    avatarFallbackNote: "Битое изображение автоматически откатывается на следующую ступень.",
+    avatarShapeCircle: "Круг",
+    avatarShapeSquare: "Квадрат",
+    avatarSizesNote: "Именованные размеры или точное значение в пикселях",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "Команда проекта",
+    avatarGroupOverlapNote: "С наложением (по умолчанию)",
+    avatarGroupSpacingNote: "С отступами",
+    avatarGroupCompositionNote: "Составленные дочерние элементы с явным счётчиком переполнения",
+
+    // ── statistic ──
+    statActiveUsers: "Активные пользователи",
+    statRevenue: "Ежемесячная выручка",
+    statConversion: "Конверсия",
+    statOrders: "Заказы",
+    statChurn: "Отток",
+    statUptime: "Аптайм",
+    statPending: "Отзывы на модерации",
+    statTickets: "Открытые тикеты",
+    statLocaleNote: "То же число, разделители pt-BR",
+
+    // ── countdown ──
+    countdownFlashSale: "Распродажа закончится через",
+    countdownSessionExpires: "Сессия истечёт через",
+    countdownMaintenance: "Окно обслуживания",
+    countdownToggle: "Пауза / продолжить",
+    countdownFinishedNote: "Испускает событие finish при достижении нуля.",
+
+    // ── progress ──
+    progressUploading: "Загрузка",
+    progressStorage: "Занято хранилища",
+    progressComplete: "Завершено",
+    progressIndeterminateNote: "Общий объём неизвестен — полоса зациклена.",
+    progressCustomLabel: "3 из 5 шагов",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "Горизонтальная фотография",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "Работает и с iframe, картами и видео",
+
+    // ── scroll area ──
+    scrollVerticalNote: "Вертикально, ограниченная высота",
+    scrollHorizontalNote: "Горизонтально",
+    scrollBothNote: "Обе оси",
+    scrollTypeAlways: "Полоса всегда видна",
+    scrollTypeHover: "Полоса появляется при наведении",
+    scrollItemPrefix: "Элемент",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "Руководит дизайн-системами. Пишет о доступности и цвете.",
+    hoverProfileFollowers: "1,2 тыс. подписчиков",
+    hoverSideNote: "По одному триггеру на сторону",
+    hoverDelayInstant: "Мгновенно",
+    hoverDelaySlow: "Медленно (600 мс)",
+    hoverDisabledNote: "Отключено — ничего не открывается",
+
+    // ── context menu ──
+    contextTriggerNote: "Кликните правой кнопкой по этой области",
+    contextOpen: "Открыть",
+    contextRename: "Переименовать",
+    contextDuplicate: "Дублировать",
+    contextShare: "Поделиться",
+    contextDelete: "Удалить",
+    contextArchive: "В архив",
+    contextDisabledItem: "Переместить в папку",
+    contextLastAction: "Последнее действие",
+    contextNoneYet: "пока нет",
+    contextDisabledNote: "Отключено — вместо него показывается меню браузера"
 
   }
 };

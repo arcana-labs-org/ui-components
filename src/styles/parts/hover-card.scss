@@ -1,0 +1,124 @@
+/**
+ * ArcanaHoverCard — cartão de preview que abre no hover (e no foco) do gatilho.
+ *
+ * O painel é TELEPORTADO pro `<body>` (Teleport/portal/embedded view) e
+ * posicionado com `position: fixed` pelo `placeHoverCard` (`core/hover-card`,
+ * que estende o `placePanel`), pra escapar de qualquer ancestral com
+ * `overflow: hidden` / `z-index` restritivo. Por isso estes seletores são
+ * GLOBAIS e o tema por instância passa pela prop `panelClass` — um seletor no
+ * wrapper do gatilho não alcança o painel.
+ *
+ * Estrutura (idêntica nos 4 frameworks):
+ *   .arcana-hover-card                → wrapper inline do gatilho
+ *     .arcana-hover-card__trigger     → slot do gatilho (recebe os eventos)
+ *   .arcana-hover-card__panel         → cartão, no <body> (+ `--{side}` efetivo)
+ *     .arcana-hover-card__arrow       → seta opcional (decorativa)
+ *
+ * Cores: 100% tokens (`src/styles/tokens.scss`) — segue paleta e modo escuro.
+ *
+ * Custom properties:
+ *   --arcana-hover-card-min-width / --arcana-hover-card-max-width
+ *   --arcana-hover-card-padding / --arcana-hover-card-radius
+ *   --arcana-hover-card-font-size / --arcana-hover-card-z-index
+ */
+
+.arcana-hover-card {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.arcana-hover-card__trigger {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* O gatilho costuma ser um link/botão do consumidor; o anel de foco só aparece
+   quando ELE não desenha o próprio (`:focus-visible` no wrapper). */
+.arcana-hover-card__trigger:focus-visible {
+    outline: 2px solid var(--arcana-focus-ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.arcana-hover-card.is-disabled .arcana-hover-card__trigger {
+    cursor: default;
+}
+
+.arcana-hover-card__panel {
+    position: fixed;
+    /* Acima do ArcanaDialog (10000/10001) e do painel do TreeSelect (10100):
+       o cartão pode nascer de um gatilho dentro de qualquer um deles. */
+    z-index: var(--arcana-hover-card-z-index, 10200);
+    box-sizing: border-box;
+    min-width: var(--arcana-hover-card-min-width, 180px);
+    max-width: var(--arcana-hover-card-max-width, 320px);
+    padding: var(--arcana-hover-card-padding, 12px 14px);
+    background: var(--arcana-surface);
+    color: var(--arcana-text);
+    border: 1px solid var(--arcana-border-subtle);
+    border-radius: var(--arcana-hover-card-radius, 8px);
+    box-shadow: var(--arcana-shadow-lg);
+    font-family: inherit;
+    font-size: var(--arcana-hover-card-font-size, 13px);
+    line-height: 1.5;
+    /* Não rouba foco (é hover, não popover modal) — sem outline nem tabindex. */
+    outline: none;
+    animation: arcana-hover-card-in 120ms ease-out;
+}
+
+/* A origem da animação segue o lado EFETIVO (pós-flip) devolvido pelo placement. */
+.arcana-hover-card__panel--bottom {
+    transform-origin: top center;
+}
+.arcana-hover-card__panel--top {
+    transform-origin: bottom center;
+}
+.arcana-hover-card__panel--right {
+    transform-origin: center left;
+}
+.arcana-hover-card__panel--left {
+    transform-origin: center right;
+}
+
+.arcana-hover-card__panel > :first-child {
+    margin-top: 0;
+}
+.arcana-hover-card__panel > :last-child {
+    margin-bottom: 0;
+}
+
+/* Blocos de conveniência pro conteúdo do cartão (opcionais). */
+.arcana-hover-card__title {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--arcana-text);
+}
+
+.arcana-hover-card__text {
+    margin: 0;
+    color: var(--arcana-text-muted);
+}
+
+.arcana-hover-card__separator {
+    height: 1px;
+    margin: 8px 0;
+    background: var(--arcana-border-subtle);
+}
+
+@keyframes arcana-hover-card-in {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .arcana-hover-card__panel {
+        animation: none;
+    }
+}

@@ -64,7 +64,18 @@ export type DocumentedKey =
   | "skeleton"
   | "switchCard"
   | "switchRow"
-  | "switchSegmented";
+  | "switchSegmented"
+  // ── Batch 4 ──
+  | "rate"
+  | "avatar"
+  | "avatarGroup"
+  | "statistic"
+  | "countdown"
+  | "progress"
+  | "aspectRatio"
+  | "scrollArea"
+  | "hoverCard"
+  | "contextMenu";
 
 export interface SectionProse {
   title: string;
@@ -83,6 +94,7 @@ export interface Messages {
   langName: string;
 
   shell: {
+    /** Linha acima do título. Placeholder `{version}` vem do package.json. */
     kicker: string;
     lead: string;
     /** Muted word next to the logo in the top bar. */
@@ -122,7 +134,22 @@ export interface Messages {
     install: SectionProse;
     usage: SectionProse;
     styles: SectionProse;
+    /** Sistema de cores: escalas de 12 degraus, acento, neutro e modo escuro. */
+    palette: SectionProse;
     maska: SectionProse;
+  };
+
+  /** Rótulos do explorador de paletas (seção "Colors" do getting started). */
+  palette: {
+    accentLabel: string;
+    grayLabel: string;
+    darkLabel: string;
+    /** Legenda da régua de 12 degraus; {scale} é o nome da escala. */
+    scaleCaption: string;
+    /** Título da faixa que mostra componentes reais sob o acento escolhido. */
+    previewTitle: string;
+    /** Nota curta explicando que a troca é só uma classe no elemento raiz. */
+    hint: string;
   };
 
   /** Column headers of every props reference table. */

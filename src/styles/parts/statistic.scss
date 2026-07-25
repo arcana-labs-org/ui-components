@@ -1,0 +1,141 @@
+/**
+ * ArcanaStatistic — número em destaque com rótulo.
+ *
+ * Anatomia:
+ *   .arcana-statistic                 wrapper vertical
+ *     .arcana-statistic__title        rótulo acima do valor
+ *     .arcana-statistic__content      linha [ícone] [prefixo] VALOR [sufixo] (baseline)
+ *       .arcana-statistic__icon
+ *       .arcana-statistic__prefix
+ *       .arcana-statistic__value
+ *       .arcana-statistic__suffix
+ *
+ * Cores: só tokens de uso (`--arcana-text`, `--arcana-text-muted`, `--arcana-{estado}-text`),
+ * então o componente acompanha a paleta ativa e o `.arcana-dark` sem nenhuma regra extra.
+ *
+ * Tamanho: cada dimensão sai de uma custom property com o valor do `size` como fallback, então
+ * dá pra afinar pontualmente no próprio elemento (ou em qualquer ancestral):
+ *   --arcana-statistic-value-size    fonte do valor
+ *   --arcana-statistic-title-size    fonte do título
+ *   --arcana-statistic-affix-size    fonte de prefixo/sufixo/ícone
+ *   --arcana-statistic-gap           espaço entre título e valor
+ *   --arcana-statistic-value-color   cor do valor (é o que a prop `valueColor` seta inline)
+ */
+
+.arcana-statistic {
+    display: flex;
+    flex-direction: column;
+    gap: var(--arcana-statistic-gap, 4px);
+    min-width: 0;
+    color: var(--arcana-text);
+}
+
+.arcana-statistic__title {
+    font-size: var(--arcana-statistic-title-size, 12.5px);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--arcana-text-muted);
+}
+
+.arcana-statistic__content {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+}
+
+.arcana-statistic__value {
+    font-size: var(--arcana-statistic-value-size, 26px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--arcana-statistic-value-color, var(--arcana-text));
+    overflow-wrap: anywhere;
+}
+
+.arcana-statistic__prefix,
+.arcana-statistic__suffix {
+    font-size: var(--arcana-statistic-affix-size, 14px);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--arcana-text-muted);
+}
+
+.arcana-statistic__icon {
+    /* `align-self` porque o ícone não tem baseline própria confiável. */
+    align-self: center;
+    display: inline-flex;
+    font-size: var(--arcana-statistic-affix-size, 14px);
+    color: var(--arcana-statistic-value-color, var(--arcana-text-muted));
+}
+
+/* ── tamanhos ────────────────────────────────────────────────────────────── */
+
+.arcana-statistic--sm .arcana-statistic__value {
+    font-size: var(--arcana-statistic-value-size, 18px);
+}
+.arcana-statistic--sm .arcana-statistic__title {
+    font-size: var(--arcana-statistic-title-size, 11.5px);
+}
+.arcana-statistic--sm .arcana-statistic__prefix,
+.arcana-statistic--sm .arcana-statistic__suffix,
+.arcana-statistic--sm .arcana-statistic__icon {
+    font-size: var(--arcana-statistic-affix-size, 12px);
+}
+
+.arcana-statistic--md .arcana-statistic__value {
+    font-size: var(--arcana-statistic-value-size, 26px);
+}
+.arcana-statistic--md .arcana-statistic__title {
+    font-size: var(--arcana-statistic-title-size, 12.5px);
+}
+.arcana-statistic--md .arcana-statistic__prefix,
+.arcana-statistic--md .arcana-statistic__suffix,
+.arcana-statistic--md .arcana-statistic__icon {
+    font-size: var(--arcana-statistic-affix-size, 14px);
+}
+
+.arcana-statistic--lg .arcana-statistic__value {
+    font-size: var(--arcana-statistic-value-size, 34px);
+}
+.arcana-statistic--lg .arcana-statistic__title {
+    font-size: var(--arcana-statistic-title-size, 13.5px);
+}
+.arcana-statistic--lg .arcana-statistic__prefix,
+.arcana-statistic--lg .arcana-statistic__suffix,
+.arcana-statistic--lg .arcana-statistic__icon {
+    font-size: var(--arcana-statistic-affix-size, 16px);
+}
+
+.arcana-statistic--xl .arcana-statistic__value {
+    font-size: var(--arcana-statistic-value-size, 44px);
+}
+.arcana-statistic--xl .arcana-statistic__title {
+    font-size: var(--arcana-statistic-title-size, 15px);
+}
+.arcana-statistic--xl .arcana-statistic__prefix,
+.arcana-statistic--xl .arcana-statistic__suffix,
+.arcana-statistic--xl .arcana-statistic__icon {
+    font-size: var(--arcana-statistic-affix-size, 18px);
+}
+
+/* ── tons ────────────────────────────────────────────────────────────────── */
+/* Setam a custom property da cor do valor; o `valueColor` inline vence porque
+   também escreve nela, só que no elemento (especificidade de inline style). */
+
+.arcana-statistic--neutral {
+    --arcana-statistic-value-color: var(--arcana-text);
+}
+.arcana-statistic--success {
+    --arcana-statistic-value-color: var(--arcana-success-text);
+}
+.arcana-statistic--danger {
+    --arcana-statistic-value-color: var(--arcana-danger-text);
+}
+.arcana-statistic--warning {
+    --arcana-statistic-value-color: var(--arcana-warning-text);
+}
+.arcana-statistic--info {
+    --arcana-statistic-value-color: var(--arcana-info-text);
+}

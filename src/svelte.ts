@@ -16,6 +16,7 @@
 import type { Component, Snippet } from "svelte";
 
 import type { CalendarMessages } from "./core/calendar-locale";
+import type { ArcanaContextMenuItemSpec, ArcanaContextMenuVariant } from "./core/context-menu";
 
 import ArcanaButtonComponent from "./svelte/ArcanaButton.svelte";
 import ArcanaBadgeComponent from "./svelte/ArcanaBadge.svelte";
@@ -25,6 +26,12 @@ import ArcanaSwitchComponent from "./svelte/ArcanaSwitch.svelte";
 import ArcanaSwitchRowComponent from "./svelte/ArcanaSwitchRow.svelte";
 import ArcanaSwitchCardComponent from "./svelte/ArcanaSwitchCard.svelte";
 import ArcanaSegmentedControlComponent from "./svelte/ArcanaSegmentedControl.svelte";
+import ArcanaStatisticComponent from "./svelte/ArcanaStatistic.svelte";
+import ArcanaCountdownComponent from "./svelte/ArcanaCountdown.svelte";
+import ArcanaProgressComponent from "./svelte/ArcanaProgress.svelte";
+import ArcanaRateComponent from "./svelte/ArcanaRate.svelte";
+import ArcanaAvatarComponent from "./svelte/ArcanaAvatar.svelte";
+import ArcanaAvatarGroupComponent from "./svelte/ArcanaAvatarGroup.svelte";
 import ArcanaSkeletonComponent from "./svelte/ArcanaSkeleton.svelte";
 import ArcanaNoticeComponent from "./svelte/ArcanaNotice.svelte";
 import ArcanaTabsComponent from "./svelte/ArcanaTabs.svelte";
@@ -47,6 +54,8 @@ import ArcanaLoadingOverlayComponent from "./svelte/ArcanaLoadingOverlay.svelte"
 import ArcanaDialogComponent from "./svelte/ArcanaDialog.svelte";
 import ArcanaDropdownComponent from "./svelte/ArcanaDropdown.svelte";
 import ArcanaDropdownItemComponent from "./svelte/ArcanaDropdownItem.svelte";
+import ArcanaContextMenuComponent from "./svelte/ArcanaContextMenu.svelte";
+import ArcanaContextMenuItemComponent from "./svelte/ArcanaContextMenuItem.svelte";
 import ArcanaEditFieldDialogComponent from "./svelte/ArcanaEditFieldDialog.svelte";
 import ArcanaRequiredFieldsDialogComponent from "./svelte/ArcanaRequiredFieldsDialog.svelte";
 import ArcanaActionPanelComponent from "./svelte/ArcanaActionPanel.svelte";
@@ -58,10 +67,26 @@ import ArcanaSettingsEditableFieldComponent from "./svelte/ArcanaSettingsEditabl
 import ArcanaSpecSheetComponent from "./svelte/ArcanaSpecSheet.svelte";
 import ArcanaSpecSheetSectionComponent from "./svelte/ArcanaSpecSheetSection.svelte";
 import ArcanaSpecSheetFieldComponent from "./svelte/ArcanaSpecSheetField.svelte";
+import ArcanaAspectRatioComponent from "./svelte/ArcanaAspectRatio.svelte";
+import ArcanaHoverCardComponent from "./svelte/ArcanaHoverCard.svelte";
+import ArcanaScrollAreaComponent from "./svelte/ArcanaScrollArea.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
 export { DateFormatter } from "./core/date";
+export {
+  DEFAULT_COUNTDOWN_FORMAT,
+  countdownTickInterval,
+  formatCountdown,
+  formatDuration,
+  parseCountdownTarget,
+  remainingMs,
+  splitDuration
+} from "./core/countdown";
+export type { CountdownParts } from "./core/countdown";
+export { formatStatisticValue } from "./core/statistic";
+export type { StatisticFormatOptions } from "./core/statistic";
+export { clampProgressValue, formatProgressLabel, progressPercent } from "./core/progress";
 export { acquireZIndex, releaseZIndex } from "./vue/services/dialog-stack";
 
 /* ── ArcanaButton ─────────────────────────────────────────────────────────── */
@@ -226,6 +251,175 @@ export interface ArcanaSegmentedControlProps {
   class?: string;
 }
 export const ArcanaSegmentedControl = ArcanaSegmentedControlComponent as unknown as Component<ArcanaSegmentedControlProps>;
+
+/* ── ArcanaStatistic ──────────────────────────────────────────────────────── */
+export type StatisticTone = "neutral" | "success" | "danger" | "warning" | "info";
+export type StatisticSize = "sm" | "md" | "lg" | "xl";
+export interface ArcanaStatisticProps {
+  /** Número exibido. String passa intacta (escape hatch pra valor já formatado). */
+  value?: number | string | null;
+  title?: string;
+  /** Alias de `title` (`title` vence quando os dois vêm). */
+  label?: string;
+  /** Casas decimais fixas. Omitido = mantém as casas do próprio número. */
+  precision?: number;
+  /** Separador de milhar (default `","`); `""` desliga o agrupamento. */
+  groupSeparator?: string;
+  /** Separador decimal (default `"."`). */
+  decimalSeparator?: string;
+  /** Quando informado, `Intl.NumberFormat` assume e ignora os separadores manuais. */
+  locale?: string;
+  /** Controle total da string final — tem precedência sobre todo o resto. */
+  formatter?: (value: number | string | null) => string;
+  prefix?: string;
+  suffix?: string;
+  tone?: StatisticTone;
+  /** Cor CSS arbitrária do valor; vence o `tone`. */
+  valueColor?: string;
+  size?: StatisticSize;
+  /** Classe do ícone (ex: `"fa-solid fa-arrow-trend-up"`). */
+  icon?: string;
+  titleSlot?: Snippet;
+  prefixSlot?: Snippet;
+  suffixSlot?: Snippet;
+  class?: string;
+  style?: string;
+}
+export const ArcanaStatistic = ArcanaStatisticComponent as unknown as Component<ArcanaStatisticProps>;
+
+/* ── ArcanaCountdown ──────────────────────────────────────────────────────── */
+export type CountdownTone = "neutral" | "success" | "danger" | "warning" | "info";
+export type CountdownSize = "sm" | "md" | "lg" | "xl";
+export interface ArcanaCountdownProps {
+  /** Instante ALVO: epoch em ms, `Date` ou string ISO. Inválido/vazio zera o contador. */
+  value?: number | string | Date | null;
+  /**
+   * Tokens `DD`,`D`,`HH`,`H`,`mm`,`m`,`ss`,`s`,`SSS`,`SS`,`S` + literais entre colchetes.
+   * A maior unidade presente absorve o excedente (50h → `50:00:00` em `HH:mm:ss`).
+   */
+  format?: string;
+  prefix?: string;
+  suffix?: string;
+  title?: string;
+  tone?: CountdownTone;
+  valueColor?: string;
+  size?: CountdownSize;
+  /** Pausa a contagem (o valor congela). Voltar pra `false` retoma. */
+  paused?: boolean;
+  /** Período do tick em ms. Default: 50ms com milissegundos no `format`, senão 1000ms. */
+  interval?: number;
+  onChange?: (remaining: number) => void;
+  onFinish?: () => void;
+  titleSlot?: Snippet;
+  prefixSlot?: Snippet;
+  suffixSlot?: Snippet;
+  class?: string;
+  style?: string;
+}
+export const ArcanaCountdown = ArcanaCountdownComponent as unknown as Component<ArcanaCountdownProps>;
+
+/* ── ArcanaProgress ───────────────────────────────────────────────────────── */
+export type ProgressTone = "accent" | "success" | "danger" | "warning" | "info";
+export type ProgressSize = "sm" | "md" | "lg";
+export type ProgressVariant = "solid" | "soft";
+export type ProgressRadius = "none" | "sm" | "md" | "lg" | "full";
+export interface ArcanaProgressProps {
+  /** 0–`max`. `null`/`undefined` = indeterminado. Fora da faixa é clampado. */
+  value?: number | null;
+  /** Teto da escala (default `100`). `max <= 0` cai pro default. */
+  max?: number;
+  size?: ProgressSize;
+  variant?: ProgressVariant;
+  tone?: ProgressTone;
+  /** Mostra o rótulo `NN%` ao lado da barra. */
+  showValue?: boolean;
+  /** Rótulo usado no modo indeterminado (default `"…"`). */
+  indeterminateText?: string;
+  radius?: ProgressRadius;
+  ariaLabel?: string;
+  valueSlot?: Snippet;
+  class?: string;
+  style?: string;
+}
+export const ArcanaProgress = ArcanaProgressComponent as unknown as Component<ArcanaProgressProps>;
+
+/* ── ArcanaRate ───────────────────────────────────────────────────────────── */
+export type RateSize = "sm" | "md" | "lg";
+export interface ArcanaRateProps {
+  value?: number;
+  max?: number;
+  disabled?: boolean;
+  /** Desliga a interação mantendo o contraste cheio — modo "exibir média". */
+  readonly?: boolean;
+  /** Meia estrela: clique/hover na metade esquerda vale `n - 0.5`; passo do teclado = `0.5`. */
+  allowHalf?: boolean;
+  showText?: boolean;
+  /** Rótulo por nota — `texts[0]` é a nota 1, `texts[max - 1]` a nota `max`. */
+  texts?: string[];
+  /** Nota numérica. Mutuamente exclusivo com `showText`, que vence. */
+  showScore?: boolean;
+  /** Custom além da escala: `--arcana-rate-icon-size`/`-gap`/`-font-size`. */
+  size?: RateSize;
+  /** Cor da estrela cheia. Default: token `--arcana-warning-solid`. */
+  color?: string;
+  /** Cor da estrela vazia. Default: degrau 6 da escala neutra. */
+  voidColor?: string;
+  ariaLabel?: string;
+  onValueChange?: (value: number) => void;
+  onChange?: (value: number) => void;
+  class?: string;
+}
+export const ArcanaRate = ArcanaRateComponent as unknown as Component<ArcanaRateProps>;
+
+/* ── ArcanaAvatar ─────────────────────────────────────────────────────────── */
+export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type AvatarShape = "circle" | "square";
+export interface ArcanaAvatarProps {
+  src?: string;
+  alt?: string;
+  /** Texto curto do fallback (o CSS aplica `text-transform: uppercase`). */
+  initials?: string;
+  /** Classe de ícone do fallback (ex: `fa-solid fa-user`). */
+  icon?: string;
+  /** Degrau da escala (default `"md"` = 40px) ou um número de px. */
+  size?: AvatarSize | number;
+  shape?: AvatarShape;
+  /** Cor de fundo do fallback. Default: token `--arcana-solid` (acento da paleta). */
+  color?: string;
+  onError?: (event: Event) => void;
+  class?: string;
+}
+export const ArcanaAvatar = ArcanaAvatarComponent as unknown as Component<ArcanaAvatarProps>;
+
+/* ── ArcanaAvatarGroup ────────────────────────────────────────────────────── */
+export interface AvatarGroupItem {
+  src?: string;
+  alt?: string;
+  initials?: string;
+  /** Classe de ícone do fallback (ex: `fa-solid fa-user`). */
+  icon?: string;
+  /** Cor de fundo do fallback deste avatar. */
+  color?: string;
+}
+export interface ArcanaAvatarGroupProps {
+  avatars?: AvatarGroupItem[];
+  /** Máximo de itens de `avatars` a exibir; o excedente vira "+N". `0` = sem limite. */
+  max?: number;
+  /** "+N" manual, para quando os avatares vêm pelo snippet (o grupo não fatia). */
+  overflowCount?: number;
+  /** Propaga aos filhos (inclusive os do snippet). Omitido = cada avatar usa o seu. */
+  size?: AvatarSize | number;
+  /** Normaliza os filhos (inclusive os do snippet). Omitido = cada avatar usa o seu. */
+  shape?: AvatarShape;
+  /** px que cada avatar cobre do anterior. Default: 30% do tamanho. */
+  overlap?: number;
+  /** Espaçamento positivo (px). Informado, vence o `overlap`. */
+  spacing?: number;
+  ariaLabel?: string;
+  children?: Snippet;
+  class?: string;
+}
+export const ArcanaAvatarGroup = ArcanaAvatarGroupComponent as unknown as Component<ArcanaAvatarGroupProps>;
 
 /* ── ArcanaSkeleton ───────────────────────────────────────────────────────── */
 export interface ArcanaSkeletonProps {
@@ -671,6 +865,45 @@ export interface ArcanaDropdownItemProps {
 }
 export const ArcanaDropdownItem = ArcanaDropdownItemComponent as unknown as Component<ArcanaDropdownItemProps>;
 
+/* ── ArcanaContextMenu (+Item) ────────────────────────────────────────────── */
+export type { ArcanaContextMenuItemSpec, ArcanaContextMenuVariant };
+
+export interface ArcanaContextMenuProps {
+  /** Não abre o menu — deixa o menu nativo do navegador aparecer. */
+  disabled?: boolean;
+  /** Classe extra no painel portado pro body (tematização de portais). */
+  panelClass?: string;
+  /** Rótulo acessível do `role="menu"`. */
+  ariaLabel?: string;
+  /** Modo data-driven — ignorado quando o snippet `children` é usado. */
+  items?: ArcanaContextMenuItemSpec[];
+  /** Snippet do gatilho (a área que responde ao clique direito) — recebe `{ open, close }`. */
+  trigger?: Snippet<[{ open: boolean; close: () => void }]>;
+  /** Snippet do painel (os itens) — recebe `{ close }`. */
+  children?: Snippet<[{ close: () => void }]>;
+  onOpen?: () => void;
+  onClose?: () => void;
+  /** Só no modo `items`. */
+  onSelect?: (item: ArcanaContextMenuItemSpec, index: number) => void;
+}
+export const ArcanaContextMenu = ArcanaContextMenuComponent as unknown as Component<ArcanaContextMenuProps>;
+
+export interface ArcanaContextMenuItemProps {
+  icon?: string;
+  /** Atalho exibido à direita (ex: "⌘C"). */
+  suffix?: string | Snippet;
+  variant?: ArcanaContextMenuVariant;
+  disabled?: boolean;
+  /** Separador acima deste item. */
+  divided?: boolean;
+  closeOnClick?: boolean;
+  children?: Snippet;
+  onClick?: (e: MouseEvent) => void;
+  /** Ativação semântica — também dispara pelo Enter/Espaço. */
+  onSelect?: (e: MouseEvent) => void;
+}
+export const ArcanaContextMenuItem = ArcanaContextMenuItemComponent as unknown as Component<ArcanaContextMenuItemProps>;
+
 /* ── ArcanaEditFieldDialog ────────────────────────────────────────────────── */
 export interface ArcanaEditFieldDialogProps {
   title: string;
@@ -836,3 +1069,62 @@ export interface ArcanaSpecSheetFieldProps {
   children?: Snippet;
 }
 export const ArcanaSpecSheetField = ArcanaSpecSheetFieldComponent as unknown as Component<ArcanaSpecSheetFieldProps>;
+
+/* ── ArcanaAspectRatio ────────────────────────────────────────────────────── */
+export interface ArcanaAspectRatioProps {
+  /** Largura ÷ altura. Default `16 / 9`; valores não-finitos ou ≤ 0 caem no default. */
+  ratio?: number;
+  class?: string;
+  children?: Snippet;
+}
+export const ArcanaAspectRatio = ArcanaAspectRatioComponent as unknown as Component<ArcanaAspectRatioProps>;
+
+/* ── ArcanaHoverCard ──────────────────────────────────────────────────────── */
+export type { HoverCardAlign, HoverCardPlacement, HoverCardSide } from "./core/hover-card";
+export interface ArcanaHoverCardProps {
+  /** ms até abrir depois do `mouseenter` (o foco por teclado abre na hora). Default `300`. */
+  openDelay?: number;
+  /** ms de carência antes de fechar (default `150`) — cobre o trajeto gatilho → cartão. */
+  closeDelay?: number;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  /** Atalho `"{side}-{align}"` (ex: `"bottom-start"`); vence `side`/`align`. */
+  placement?: string;
+  /** Distância entre gatilho e cartão em px. Default `8`. */
+  offset?: number;
+  disabled?: boolean;
+  /** Classe extra no cartão portado pro `<body>` (tema por instância). */
+  panelClass?: string;
+  /** O gatilho (slot `trigger` do Vue). */
+  trigger?: Snippet;
+  /** O conteúdo do cartão (slot default do Vue). */
+  children?: Snippet;
+  onOpenChange?: (open: boolean) => void;
+  class?: string;
+}
+export const ArcanaHoverCard = ArcanaHoverCardComponent as unknown as Component<ArcanaHoverCardProps>;
+
+/* ── ArcanaScrollArea ─────────────────────────────────────────────────────── */
+export type ScrollAreaOrientation = "vertical" | "horizontal" | "both";
+export type ScrollAreaType = "auto" | "always" | "hover";
+export interface ArcanaScrollAreaProps {
+  /** Eixos liberados. Default `"vertical"` (o outro eixo fica `overflow: hidden`). */
+  orientation?: ScrollAreaOrientation;
+  /** Altura fixa do viewport. `number` = px; string = valor CSS cru. */
+  height?: number | string | null;
+  /** Altura máxima do viewport. `number` = px; string = valor CSS cru. */
+  maxHeight?: number | string | null;
+  /** Espessura da barra em px (WebKit; no Firefox a espessura é `thin`). Default `10`. */
+  scrollbarSize?: number;
+  /** `"auto"` (default) | `"always"` (calha sempre) | `"hover"` (auto-ocultar). */
+  type?: ScrollAreaType;
+  /** Atraso do auto-ocultar (ms) — só com `type="hover"`. Default `500`. */
+  hideDelay?: number;
+  /** `tabindex={0}` no viewport pra rolar por teclado sem foco interno. Default `true`. */
+  tabbable?: boolean;
+  /** `bind:viewport` — o elemento que realmente rola (`scrollTo`, `scrollTop`, …). */
+  viewport?: HTMLDivElement;
+  class?: string;
+  children?: Snippet;
+}
+export const ArcanaScrollArea = ArcanaScrollAreaComponent as unknown as Component<ArcanaScrollAreaProps>;

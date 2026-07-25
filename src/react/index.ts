@@ -34,6 +34,57 @@ export type {
     SegmentedOption,
 } from "./ArcanaSegmentedControl";
 
+export { ArcanaRate } from "./ArcanaRate";
+export type { ArcanaRateProps, RateSize } from "./ArcanaRate";
+
+export { ArcanaAvatar } from "./ArcanaAvatar";
+export type { ArcanaAvatarProps, AvatarSize, AvatarShape } from "./ArcanaAvatar";
+
+export { ArcanaAvatarGroup } from "./ArcanaAvatarGroup";
+export type { ArcanaAvatarGroupProps, AvatarGroupItem } from "./ArcanaAvatarGroup";
+
+export { ArcanaStatistic } from "./ArcanaStatistic";
+export type {
+    ArcanaStatisticProps,
+    StatisticTone,
+    StatisticSize,
+} from "./ArcanaStatistic";
+
+export { ArcanaCountdown } from "./ArcanaCountdown";
+export type {
+    ArcanaCountdownProps,
+    ArcanaCountdownHandle,
+    CountdownTone,
+    CountdownSize,
+} from "./ArcanaCountdown";
+
+export { ArcanaProgress } from "./ArcanaProgress";
+export type {
+    ArcanaProgressProps,
+    ProgressTone,
+    ProgressSize,
+    ProgressVariant,
+    ProgressRadius,
+} from "./ArcanaProgress";
+
+export { ArcanaAspectRatio } from "./ArcanaAspectRatio";
+export type { ArcanaAspectRatioProps } from "./ArcanaAspectRatio";
+
+export { ArcanaHoverCard } from "./ArcanaHoverCard";
+export type { ArcanaHoverCardProps } from "./ArcanaHoverCard";
+export type {
+    HoverCardAlign,
+    HoverCardPlacement,
+    HoverCardSide,
+} from "../core/hover-card";
+
+export { ArcanaScrollArea } from "./ArcanaScrollArea";
+export type {
+    ArcanaScrollAreaProps,
+    ScrollAreaOrientation,
+    ScrollAreaType,
+} from "./ArcanaScrollArea";
+
 export { ArcanaSkeleton } from "./ArcanaSkeleton";
 export type { ArcanaSkeletonProps } from "./ArcanaSkeleton";
 
@@ -126,6 +177,16 @@ export type {
     ArcanaDropdownPlacement,
     ArcanaDropdownSize,
 } from "./ArcanaDropdown";
+
+export { ArcanaContextMenu, ArcanaContextMenuItem } from "./ArcanaContextMenu";
+export type {
+    ArcanaContextMenuProps,
+    ArcanaContextMenuItemProps,
+} from "./ArcanaContextMenu";
+export type {
+    ArcanaContextMenuItemSpec,
+    ArcanaContextMenuVariant,
+} from "../core/context-menu";
 
 export { ArcanaEditFieldDialog } from "./ArcanaEditFieldDialog";
 export type {

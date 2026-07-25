@@ -24,6 +24,8 @@ import {
   ArcanaCheckboxComponent,
   ArcanaDatePickerComponent,
   ArcanaDialogComponent,
+  ArcanaContextMenuComponent,
+  ArcanaContextMenuItemComponent,
   ArcanaDropdownComponent,
   ArcanaDropdownItemComponent,
   ArcanaInputBooleanComponent,
@@ -859,6 +861,59 @@ describe("Angular adapter", () => {
     fixture.detectChanges();
     expect(fixture.componentInstance.hits).toBe(1);
     expect(document.body.querySelector(".arcana-dropdown__menu")).toBeFalsy();
+  });
+
+  it("ArcanaContextMenu/Item: contextmenu abre o painel no body no cursor; item emite e fecha", () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaContextMenuComponent, ArcanaContextMenuItemComponent],
+      template: `
+        <div arcanaContextMenu #cm ariaLabel="Ações" panelClass="minha-tela">
+          <div arcanaContextMenuTrigger class="alvo">clique com o botão direito</div>
+          <div arcanaContextMenuItem icon="fa-solid fa-copy" suffix="⌘C" (selected)="hits = hits + 1">Copiar</div>
+          <div arcanaContextMenuItem [divided]="true" variant="danger">Excluir</div>
+        </div>
+      `
+    })
+    class Host {
+      hits = 0;
+      @ViewChild("cm") cm!: ArcanaContextMenuComponent;
+    }
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Host], providers: [provideZonelessChangeDetection()] });
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const root = el.querySelector(".arcana-context-menu")!;
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeFalsy();
+
+    root.dispatchEvent(
+      new MouseEvent("contextmenu", { bubbles: true, cancelable: true, clientX: 120, clientY: 80 })
+    );
+    fixture.detectChanges();
+
+    // Painel portado pro body, com role/aria de menu e ancorado no cursor.
+    const panel = document.body.querySelector(".arcana-context-menu__panel") as HTMLElement;
+    expect(panel).toBeTruthy();
+    expect(root.contains(panel)).toBe(false);
+    expect(panel.getAttribute("role")).toBe("menu");
+    expect(panel.getAttribute("aria-label")).toBe("Ações");
+    expect(panel.classList.contains("minha-tela")).toBe(true);
+    expect(panel.style.left).toBe("120px");
+    expect(panel.style.top).toBe("82px");
+
+    const items = panel.querySelectorAll(".arcana-context-menu-item");
+    expect(items).toHaveLength(2);
+    expect(items[0].getAttribute("role")).toBe("menuitem");
+    expect(panel.querySelector(".arcana-context-menu-item__suffix")?.textContent).toContain("⌘C");
+    expect(items[1].classList.contains("arcana-context-menu-item--danger")).toBe(true);
+    expect(panel.querySelector(".arcana-context-menu-item__separator")).toBeTruthy();
+
+    click(items[0]);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.hits).toBe(1);
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeFalsy();
   });
 
   it("ArcanaActionPanel: emite classes e dispara action no clique da CTA", () => {

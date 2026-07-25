@@ -5,7 +5,7 @@ export const zh: Messages = {
   langName: "中文",
 
   shell: {
-    kicker: "文档 · v0.x",
+    kicker: "文档 · v{version}",
     lead: "一个带类型、shadcn 风格的组件库——Vue 3、React、Angular 和 Svelte，在任何框架中都拥有相同的 API 和相同的外观。",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const zh: Messages = {
     usage: {
       title: "用法",
       p1: "导入一个组件并放入模板即可。所有组件遵循相同约定：用 <c>v-model</c> 进行双向绑定、prop 使用 kebab-case，并在 <c>update:modelValue</c> 旁提供对应的 <c>change</c> 事件。",
-      p2: "调色板采用中性的 shadcn <i>zinc</i> 色阶，因此组件彼此并列时无需任何主题配置也很协调。"
+      p2: "颜色来自 Radix 模型的 12 级色阶，强调色与中性色都可以通过根元素上的一个类替换——参见下方的<b>颜色</b>一节。"
     },
     styles: {
       title: "样式",
       p1: "在应用根部导入一次样式表：<c>import '@arcanalabs/ui-components/styles.css'</c>。它包含每个组件的视觉令牌。",
       p2: "样式是按组件作用域的纯 CSS——没有运行时样式引擎，也不要求使用方引入 Tailwind。"
     },
+    palette: {
+      title: "颜色",
+      p1: "颜色是遵循 Radix 模型的 12 级色阶体系：每一级都有固定职责——第 1 级是应用背景，第 9 级是组件用来填充自身的实色，第 12 级是对比度最高的文本。库中提供 31 套亮色与暗色色阶，每套都带 alpha 变体，因此同一个令牌无论用在哪里含义都一致。",
+      p2: "切换调色板只需在根元素上加一个类：<c>.arcana-accent-violet</c> 决定强调色，<c>.arcana-gray-slate</c> 决定中性色，<c>.arcana-dark</c> 切换暗色模式。组件只读取语义令牌，因此无需改动任何一处组件样式，它们都会随之变化。"
+    },
     maska: {
       title: "注册 v-maska",
       p1: "少数组件（<c>ArcanaInputMask</c>、<c>ArcanaDatePicker</c>）依赖来自 <c>maska</c> 包的 <c>v-maska</c> 指令。创建应用时全局注册一次即可。",
       p2: "不使用掩码的组件无需额外设置——只有渲染带掩码的输入框时才需要此步骤。"
     }
+  },
+
+  palette: {
+    accentLabel: "强调色",
+    grayLabel: "中性色",
+    darkLabel: "暗色模式",
+    scaleCaption: "{scale} 的 12 个色阶",
+    previewTitle: "所选调色板下的真实组件",
+    hint: "每个组件都读取语义令牌，所以切换根元素的类即可为整页重新配色。"
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const zh: Messages = {
     },
     switchSegmented: {
       blurb: "形似分段胶囊、带滑动指示器的二元切换，读起来像\"A 或 B\"而非开/关。"
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "由 <c>v-model</c> 驱动的星级评分——<c>allowHalf</c> 支持半星，<c>showScore</c> 或 <c>texts</c> 显示说明，<c>readonly</c> 用于展示平均分。"
+    },
+    avatar: {
+      blurb: "带四级回退的单个用户头像——图片、<c>initials</c>、<c>icon</c>、剪影——支持五档命名尺寸或精确的像素值。"
+    },
+    avatarGroup: {
+      blurb: "由 <c>avatars</c> 数组或子元素生成的重叠头像组，带 <c>+N</c> 溢出气泡；需要时可用 <c>spacing</c> 代替重叠。"
+    },
+    statistic: {
+      blurb: "格式化的 KPI 数字，支持 <c>precision</c>、区域感知的分隔符、<c>prefix</c>/<c>suffix</c>、图标和五种语义 <c>tone</c>。"
+    },
+    countdown: {
+      blurb: "面向某个时刻的实时倒计时，支持基于令牌的 <c>format</c>（<c>D H m s S</c>）、<c>paused</c> 控制和 <c>finish</c> 事件。"
+    },
+    progress: {
+      blurb: "<c>solid</c> 或 <c>soft</c> 两种进度条；把值传为 <c>null</c> 即进入不确定循环，也可通过 <c>value</c> 插槽接管标签。"
+    },
+    aspectRatio: {
+      blurb: "纯 CSS 容器，让任意子元素保持固定 <c>ratio</c>——图片、iframe、地图或视频——完全不用 JavaScript。"
+    },
+    scrollArea: {
+      blurb: "带样式化、可自动隐藏滚动条的滚动容器，支持两个方向，由 <c>height</c> 或 <c>maxHeight</c> 限定。"
+    },
+    hoverCard: {
+      blurb: "悬停或聚焦 <c>openDelay</c> 之后打开的富预览面板，通过 <c>side</c>/<c>align</c> 或 <c>placement</c> 简写定位。"
+    },
+    contextMenu: {
+      blurb: "由 <c>items</c> 数组构建的右键菜单（图标、后缀、<c>danger</c> 变体、分隔线），也可以用子元素组合。"
     }
   },
 
@@ -565,7 +611,95 @@ export const zh: Messages = {
     rcShippingStandard: "标准配送",
     rcShippingStandardDesc: "5–7 个工作日送达",
     rcShippingExpress: "快速配送",
-    rcShippingExpressDesc: "次个工作日送达"
+    rcShippingExpressDesc: "次个工作日送达",
+
+    // ── rate ──
+    rateValueLabel: "你的评分",
+    rateText1: "很差",
+    rateText2: "较差",
+    rateText3: "一般",
+    rateText4: "不错",
+    rateText5: "非常好",
+    rateAverageNote: "128 条评价的平均分",
+    rateSizeSm: "小",
+    rateSizeMd: "中",
+    rateSizeLg: "大",
+    rateDisabledNote: "已禁用",
+
+    // ── avatar ──
+    avatarFallbackNote: "图片加载失败时会自动回退到下一级。",
+    avatarShapeCircle: "圆形",
+    avatarShapeSquare: "方形",
+    avatarSizesNote: "命名尺寸或精确的像素值",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "项目团队",
+    avatarGroupOverlapNote: "重叠（默认）",
+    avatarGroupSpacingNote: "分开排列",
+    avatarGroupCompositionNote: "以子元素组合并显式指定溢出数量",
+
+    // ── statistic ──
+    statActiveUsers: "活跃用户",
+    statRevenue: "月收入",
+    statConversion: "转化率",
+    statOrders: "订单",
+    statChurn: "流失率",
+    statUptime: "可用率",
+    statPending: "待审评价",
+    statTickets: "未结工单",
+    statLocaleNote: "同一个数字，pt-BR 分隔符",
+
+    // ── countdown ──
+    countdownFlashSale: "限时抢购结束于",
+    countdownSessionExpires: "会话将在此后过期",
+    countdownMaintenance: "维护窗口",
+    countdownToggle: "暂停 / 继续",
+    countdownFinishedNote: "归零时触发 finish 事件。",
+
+    // ── progress ──
+    progressUploading: "上传中",
+    progressStorage: "已用存储",
+    progressComplete: "已完成",
+    progressIndeterminateNote: "总量未知——进度条循环播放。",
+    progressCustomLabel: "5 步中的第 3 步",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "横向照片",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "同样适用于 iframe、地图和视频",
+
+    // ── scroll area ──
+    scrollVerticalNote: "垂直，限制高度",
+    scrollHorizontalNote: "水平",
+    scrollBothNote: "双向",
+    scrollTypeAlways: "滚动条始终可见",
+    scrollTypeHover: "悬停时显示滚动条",
+    scrollItemPrefix: "项目",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "设计系统负责人，撰写关于无障碍与色彩的文章。",
+    hoverProfileFollowers: "1.2 千位关注者",
+    hoverSideNote: "每个方向一个触发器",
+    hoverDelayInstant: "即时",
+    hoverDelaySlow: "慢（600 毫秒）",
+    hoverDisabledNote: "已禁用——不会打开任何内容",
+
+    // ── context menu ──
+    contextTriggerNote: "右键点击此区域",
+    contextOpen: "打开",
+    contextRename: "重命名",
+    contextDuplicate: "复制",
+    contextShare: "分享",
+    contextDelete: "删除",
+    contextArchive: "归档",
+    contextDisabledItem: "移动到文件夹",
+    contextLastAction: "最近操作",
+    contextNoneYet: "暂无",
+    contextDisabledNote: "已禁用——改为显示浏览器菜单"
 
   }
 };

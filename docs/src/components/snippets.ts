@@ -206,3 +206,28 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
     ].join("\n")
   }
 };
+
+/* ─────────────────────────── Palette / colours ─────────────────────────── */
+
+/**
+ * Trocar de paleta é uma classe no elemento raiz — não há API de JavaScript e
+ * nada muda por framework. Por isso o mesmo trecho serve para os quatro.
+ */
+export const paletteSnippets: Record<Framework, SectionCode> = sameForAll(
+  "index.html",
+  [
+    "<!-- Accent, neutral and colour mode are plain CSS classes. Put them on the",
+    "     root element (or on any subtree you want themed differently). -->",
+    "<html class=\"arcana-accent-violet arcana-gray-slate\">",
+    "",
+    "<!-- Dark mode: add .arcana-dark. -->",
+    "<html class=\"arcana-accent-violet arcana-gray-slate arcana-dark\">",
+    "",
+    "<!-- Components never name a colour: they read semantic tokens, so every one",
+    "     of them follows the palette automatically. -->",
+    "<style>",
+    "  /* Need a one-off override? It is just CSS. */",
+    "  .checkout-panel { --arcana-solid: var(--arcana-jade-9); }",
+    "</style>"
+  ].join("\n")
+);

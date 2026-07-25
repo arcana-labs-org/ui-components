@@ -5,7 +5,7 @@ export const en: Messages = {
   langName: "English",
 
   shell: {
-    kicker: "Documentation · v0.x",
+    kicker: "Documentation · v{version}",
     lead: "A typed, arcana-style component library — Vue 3, React, Angular and Svelte, with the same API and the same look in every framework.",
     brandLib: "UI Components",
     docTitle: "Arcana UI Components",
@@ -50,18 +50,32 @@ export const en: Messages = {
     usage: {
       title: "Usage",
       p1: "Import a component and drop it into your template. Every component follows the same conventions: <c>v-model</c> for two-way values, kebab-case props, and a matching <c>change</c> event next to <c>update:modelValue</c>.",
-      p2: "The palette is the neutral shadcn <i>zinc</i> scale, so components sit comfortably next to each other with no theme configuration."
+      p2: "Colour comes from 12-step scales in the Radix model, with the accent and the neutral swappable through a class on the root element — see <b>Colors</b> below."
     },
     styles: {
       title: "Styles",
       p1: "Import the stylesheet once, at the root of your application: <c>import '@arcanalabs/ui-components/styles.css'</c>. It carries every component's visual tokens.",
       p2: "Styles are plain CSS scoped per component — there is no runtime style engine and no Tailwind requirement in the consumer."
     },
+    palette: {
+      title: "Colors",
+      p1: "Colour is a 12-step system in the Radix model: every step has a fixed job — step 1 is the app background, step 9 the solid fill a component paints itself with, step 12 the highest-contrast text. The library ships 31 scales in light and dark, each with an alpha variant, so a token always means the same thing wherever it lands.",
+      p2: "Switching palettes is a class on the root element: <c>.arcana-accent-violet</c> picks the accent, <c>.arcana-gray-slate</c> the neutral and <c>.arcana-dark</c> the dark mode. Components only ever read semantic tokens, so every one of them follows along without you touching a single component style."
+    },
     maska: {
       title: "Registering v-maska",
       p1: "A few components (<c>ArcanaInputMask</c>, <c>ArcanaDatePicker</c>) rely on the <c>v-maska</c> directive from the <c>maska</c> package. Register it globally once when you create the app.",
       p2: "Components that don't use masking need no extra setup — this step is only required if you render a masked input."
     }
+  },
+
+  palette: {
+    accentLabel: "Accent",
+    grayLabel: "Neutral",
+    darkLabel: "Dark mode",
+    scaleCaption: "The 12 steps of {scale}",
+    previewTitle: "Real components under the selected palette",
+    hint: "Every component reads semantic tokens, so switching the root class re-themes the whole page."
   },
 
   propsTable: {
@@ -197,6 +211,38 @@ export const en: Messages = {
     },
     switchSegmented: {
       blurb: "A binary toggle shaped like a segmented capsule with a sliding indicator, reading as \"A or B\" rather than on/off."
+    },
+
+    // ── Batch 4 ──
+    rate: {
+      blurb: "A star rating driven by <c>v-model</c> — <c>allowHalf</c> for half steps, <c>showScore</c> or <c>texts</c> for a caption, and <c>readonly</c> for averages."
+    },
+    avatar: {
+      blurb: "A single user avatar with a four-step fallback — image, <c>initials</c>, <c>icon</c>, silhouette — in five named sizes or an exact pixel value."
+    },
+    avatarGroup: {
+      blurb: "Overlapping avatars from an <c>avatars</c> array or from children, with a <c>+N</c> overflow bubble and <c>spacing</c> instead of overlap when you need it."
+    },
+    statistic: {
+      blurb: "A formatted KPI number with <c>precision</c>, locale-aware separators, <c>prefix</c>/<c>suffix</c>, an icon and five semantic <c>tone</c>s."
+    },
+    countdown: {
+      blurb: "A live countdown to a timestamp with a token-based <c>format</c> (<c>D H m s S</c>), a <c>paused</c> control and a <c>finish</c> event."
+    },
+    progress: {
+      blurb: "A progress bar in <c>solid</c> or <c>soft</c>; pass <c>null</c> as the value for an indeterminate loop, or take over the label through the <c>value</c> slot."
+    },
+    aspectRatio: {
+      blurb: "A pure-CSS box that keeps any child at a fixed <c>ratio</c> — images, iframes, maps or video — with no JavaScript at all."
+    },
+    scrollArea: {
+      blurb: "A scroll container with styled, auto-hiding scrollbars on either axis, bounded by <c>height</c> or <c>maxHeight</c>."
+    },
+    hoverCard: {
+      blurb: "A rich preview panel that opens on hover or focus after <c>openDelay</c>, positioned by <c>side</c>/<c>align</c> or a single <c>placement</c> shorthand."
+    },
+    contextMenu: {
+      blurb: "A right-click menu built from an <c>items</c> array (icons, suffixes, <c>danger</c> variants, dividers) or composed from children."
     }
   },
 
@@ -565,7 +611,95 @@ export const en: Messages = {
     rcShippingStandard: "Standard shipping",
     rcShippingStandardDesc: "Arrives in 5–7 business days",
     rcShippingExpress: "Express shipping",
-    rcShippingExpressDesc: "Arrives next business day"
+    rcShippingExpressDesc: "Arrives next business day",
+
+    // ── rate ──
+    rateValueLabel: "Your rating",
+    rateText1: "Terrible",
+    rateText2: "Poor",
+    rateText3: "Average",
+    rateText4: "Good",
+    rateText5: "Excellent",
+    rateAverageNote: "Average of 128 reviews",
+    rateSizeSm: "Small",
+    rateSizeMd: "Medium",
+    rateSizeLg: "Large",
+    rateDisabledNote: "Disabled",
+
+    // ── avatar ──
+    avatarFallbackNote: "A broken image falls back to the next step, automatically.",
+    avatarShapeCircle: "Circle",
+    avatarShapeSquare: "Square",
+    avatarSizesNote: "Named steps or an exact pixel value",
+
+    // ── avatar group ──
+    avatarGroupTeamLabel: "Project team",
+    avatarGroupOverlapNote: "Overlapping (default)",
+    avatarGroupSpacingNote: "Spaced apart",
+    avatarGroupCompositionNote: "Composed children with an explicit overflow count",
+
+    // ── statistic ──
+    statActiveUsers: "Active users",
+    statRevenue: "Monthly revenue",
+    statConversion: "Conversion rate",
+    statOrders: "Orders",
+    statChurn: "Churn",
+    statUptime: "Uptime",
+    statPending: "Pending reviews",
+    statTickets: "Open tickets",
+    statLocaleNote: "Same number, pt-BR separators",
+
+    // ── countdown ──
+    countdownFlashSale: "Flash sale ends in",
+    countdownSessionExpires: "Session expires in",
+    countdownMaintenance: "Maintenance window",
+    countdownToggle: "Pause / resume",
+    countdownFinishedNote: "Fires the finish event when it reaches zero.",
+
+    // ── progress ──
+    progressUploading: "Uploading",
+    progressStorage: "Storage used",
+    progressComplete: "Complete",
+    progressIndeterminateNote: "No known total — the bar loops.",
+    progressCustomLabel: "3 of 5 steps",
+
+    // ── aspect ratio ──
+    aspectCoverAlt: "Landscape photograph",
+    aspectSquareNote: "1 / 1",
+    aspectPortraitNote: "3 / 4",
+    aspectClassicNote: "4 / 3",
+    aspectEmbedNote: "Works with iframes, maps and video too",
+
+    // ── scroll area ──
+    scrollVerticalNote: "Vertical, capped height",
+    scrollHorizontalNote: "Horizontal",
+    scrollBothNote: "Both axes",
+    scrollTypeAlways: "Scrollbar always visible",
+    scrollTypeHover: "Scrollbar appears on hover",
+    scrollItemPrefix: "Item",
+
+    // ── hover card ──
+    hoverProfileName: "Dana Whitfield",
+    hoverProfileHandle: "@danaw",
+    hoverProfileBio: "Design systems lead. Writes about accessibility and colour.",
+    hoverProfileFollowers: "1.2k followers",
+    hoverSideNote: "One trigger per side",
+    hoverDelayInstant: "Instant",
+    hoverDelaySlow: "Slow (600 ms)",
+    hoverDisabledNote: "Disabled — nothing opens",
+
+    // ── context menu ──
+    contextTriggerNote: "Right-click this area",
+    contextOpen: "Open",
+    contextRename: "Rename",
+    contextDuplicate: "Duplicate",
+    contextShare: "Share",
+    contextDelete: "Delete",
+    contextArchive: "Archive",
+    contextDisabledItem: "Move to folder",
+    contextLastAction: "Last action",
+    contextNoneYet: "none yet",
+    contextDisabledNote: "Disabled — the browser menu shows instead"
 
   }
 };

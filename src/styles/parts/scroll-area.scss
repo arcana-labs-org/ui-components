@@ -1,0 +1,156 @@
+/**
+ * ArcanaScrollArea — área rolável com barra estilizada.
+ *
+ * A rolagem é NATIVA: só pintamos a barra (`::-webkit-scrollbar` no
+ * Chrome/Safari/Edge + `scrollbar-width`/`scrollbar-color` no Firefox). Nada de
+ * reimplementar scroll em JS — assim teclado (PageUp/Down, setas, Home/End),
+ * touch/inércia, scroll anchoring e leitores de tela continuam de graça.
+ *
+ * Estrutura (idêntica nos 4 frameworks):
+ *   .arcana-scroll-area                → wrapper (orientação + tipo + tokens)
+ *     .arcana-scroll-area__viewport    → elemento que ROLA (height/max-height)
+ *
+ * Modificadores:
+ *   --vertical | --horizontal | --both   eixos liberados
+ *   --type-auto    barra nativa (aparece quando há transbordo)
+ *   --type-always  `overflow: scroll` — a calha fica sempre reservada/visível
+ *   --type-hover   polegar transparente até hover/foco (auto-ocultar)
+ *
+ * Custom properties:
+ *   --arcana-scroll-area-size        espessura da barra (default 10px)
+ *   --arcana-scroll-area-radius      raio do polegar
+ *   --arcana-scroll-area-thumb       cor do polegar em repouso
+ *   --arcana-scroll-area-thumb-hover cor do polegar no hover
+ *   --arcana-scroll-area-track       cor da calha
+ *   --arcana-scroll-area-hide-delay  atraso do auto-ocultar (`--type-hover`)
+ *
+ * Cores: degraus ALPHA da escala neutra (`--arcana-gray-a*`), que funcionam
+ * sobre qualquer fundo e seguem paleta + modo escuro sem regra extra.
+ */
+
+.arcana-scroll-area {
+    --arcana-scroll-area-thumb-color: var(--arcana-scroll-area-thumb, var(--arcana-gray-a6));
+    --arcana-scroll-area-thumb-color-hover: var(--arcana-scroll-area-thumb-hover, var(--arcana-gray-a8));
+    --arcana-scroll-area-track-color: var(--arcana-scroll-area-track, transparent);
+
+    position: relative;
+    display: block;
+    min-width: 0;
+}
+
+.arcana-scroll-area__viewport {
+    box-sizing: border-box;
+    width: 100%;
+    /* `stable` reserva a calha: o conteúdo não pula quando a barra some/aparece. */
+    scrollbar-gutter: stable;
+
+    /* Firefox (não tem os pseudo-elementos do WebKit). `thin` é o mais próximo
+       da barra de 10px; `--arcana-scroll-area-size` só afeta WebKit. */
+    scrollbar-width: thin;
+    scrollbar-color: var(--arcana-scroll-area-thumb-color) var(--arcana-scroll-area-track-color);
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* ── eixos ──────────────────────────────────────────────────────────────── */
+
+.arcana-scroll-area--vertical .arcana-scroll-area__viewport {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.arcana-scroll-area--horizontal .arcana-scroll-area__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.arcana-scroll-area--both .arcana-scroll-area__viewport {
+    overflow: auto;
+}
+
+/* ── barra (WebKit/Blink) ───────────────────────────────────────────────── */
+
+.arcana-scroll-area__viewport::-webkit-scrollbar {
+    width: var(--arcana-scroll-area-size, 10px);
+    height: var(--arcana-scroll-area-size, 10px);
+}
+
+.arcana-scroll-area__viewport::-webkit-scrollbar-track {
+    background: var(--arcana-scroll-area-track-color);
+    border-radius: var(--arcana-scroll-area-radius, 999px);
+}
+
+.arcana-scroll-area__viewport::-webkit-scrollbar-thumb {
+    background: var(--arcana-scroll-area-thumb-color);
+    border-radius: var(--arcana-scroll-area-radius, 999px);
+    /* Borda transparente + `padding-box` afina o polegar sem mexer na área de
+       clique (o alvo continua com a espessura cheia). */
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.arcana-scroll-area__viewport::-webkit-scrollbar-thumb:hover {
+    background: var(--arcana-scroll-area-thumb-color-hover);
+    background-clip: padding-box;
+}
+
+.arcana-scroll-area__viewport::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ── tipos ──────────────────────────────────────────────────────────────── */
+
+/* `always`: calha sempre presente (útil pra evitar reflow em listas dinâmicas). */
+.arcana-scroll-area--type-always.arcana-scroll-area--vertical .arcana-scroll-area__viewport {
+    overflow-y: scroll;
+}
+.arcana-scroll-area--type-always.arcana-scroll-area--horizontal .arcana-scroll-area__viewport {
+    overflow-x: scroll;
+}
+.arcana-scroll-area--type-always.arcana-scroll-area--both .arcana-scroll-area__viewport {
+    overflow: scroll;
+}
+
+/* `hover`: polegar transparente em repouso, pintado no hover/foco. O
+   `transition-delay` faz o auto-ocultar (`hideDelay`); onde o browser não
+   anima pseudo-elemento de scrollbar, a troca só fica instantânea. */
+.arcana-scroll-area--type-hover .arcana-scroll-area__viewport {
+    scrollbar-color: transparent var(--arcana-scroll-area-track-color);
+    transition: scrollbar-color 150ms ease var(--arcana-scroll-area-hide-delay, 500ms);
+}
+
+.arcana-scroll-area--type-hover .arcana-scroll-area__viewport::-webkit-scrollbar-thumb {
+    background: transparent;
+    transition: background-color 150ms ease var(--arcana-scroll-area-hide-delay, 500ms);
+}
+
+.arcana-scroll-area--type-hover:hover .arcana-scroll-area__viewport,
+.arcana-scroll-area--type-hover .arcana-scroll-area__viewport:focus-within {
+    scrollbar-color: var(--arcana-scroll-area-thumb-color) var(--arcana-scroll-area-track-color);
+    transition-delay: 0ms;
+}
+
+.arcana-scroll-area--type-hover:hover .arcana-scroll-area__viewport::-webkit-scrollbar-thumb,
+.arcana-scroll-area--type-hover .arcana-scroll-area__viewport:focus-within::-webkit-scrollbar-thumb {
+    background: var(--arcana-scroll-area-thumb-color);
+    background-clip: padding-box;
+    transition-delay: 0ms;
+}
+
+.arcana-scroll-area--type-hover:hover .arcana-scroll-area__viewport::-webkit-scrollbar-thumb:hover,
+.arcana-scroll-area--type-hover .arcana-scroll-area__viewport:focus-within::-webkit-scrollbar-thumb:hover {
+    background: var(--arcana-scroll-area-thumb-color-hover);
+    background-clip: padding-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .arcana-scroll-area--type-hover .arcana-scroll-area__viewport,
+    .arcana-scroll-area--type-hover .arcana-scroll-area__viewport::-webkit-scrollbar-thumb {
+        transition: none;
+    }
+
+    .arcana-scroll-area__viewport {
+        scroll-behavior: auto;
+    }
+}

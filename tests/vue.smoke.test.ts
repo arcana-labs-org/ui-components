@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
+import { nextTick } from "vue";
 import { mount } from "@vue/test-utils";
 import {
+  ArcanaContextMenu,
   ArcanaButton,
   ArcanaBadge,
   ArcanaInput,
@@ -120,5 +122,107 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     expect(wrapper.find(".arcana-switch-segmented__option--on").text()).toBe("");
     // aria-label descarta o label vazio.
     expect(wrapper.attributes("aria-label")).toBe("Inativo");
+  });
+
+  it("ArcanaContextMenu: ↑/↓ navegam entre os itens e Escape fecha devolvendo o foco", async () => {
+    const wrapper = mount(ArcanaContextMenu, {
+      attachTo: document.body,
+      props: {
+        items: [{ label: "Copiar" }, { label: "Colar" }, { label: "Excluir", variant: "danger" }]
+      },
+      slots: { trigger: '<div class="alvo">alvo</div>' }
+    });
+
+    wrapper.element.dispatchEvent(
+      new MouseEvent("contextmenu", { bubbles: true, cancelable: true, clientX: 40, clientY: 40 })
+    );
+    await nextTick();
+    await nextTick();
+
+    const panel = document.body.querySelector(".arcana-context-menu__panel") as HTMLElement;
+    // Ao abrir, o foco vai pro painel (role="menu") — o teclado passa a valer.
+    expect(document.activeElement).toBe(panel);
+
+    const items = panel.querySelectorAll<HTMLElement>(".arcana-context-menu-item");
+    const key = (k: string) =>
+      panel.dispatchEvent(new KeyboardEvent("keydown", { key: k, bubbles: true, cancelable: true }));
+
+    key("ArrowDown");
+    expect(document.activeElement).toBe(items[0]);
+    key("ArrowDown");
+    expect(document.activeElement).toBe(items[1]);
+    key("ArrowUp");
+    expect(document.activeElement).toBe(items[0]);
+    // Wrap: ↑ no primeiro item vai pro último.
+    key("ArrowUp");
+    expect(document.activeElement).toBe(items[2]);
+
+    key("Escape");
+    await nextTick();
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
+    // Foco devolvido ao gatilho.
+    expect(document.activeElement).toBe(wrapper.element);
+
+    wrapper.unmount();
+  });
+
+  // ── ArcanaContextMenu ─────────────────────────────────────────────────────
+  // O menu de contexto é o único componente ancorado no CURSOR (e não no
+  // gatilho), então o teste fixa as duas pontas: onde o painel aparece e o que
+  // acontece ao escolher um item.
+  it("ArcanaContextMenu: contextmenu abre o painel no body nas coordenadas do cursor", async () => {
+    const wrapper = mount(ArcanaContextMenu, {
+      attachTo: document.body,
+      props: {
+        ariaLabel: "Ações",
+        panelClass: "minha-tela",
+        items: [
+          { label: "Copiar", icon: "fa-solid fa-copy", suffix: "⌘C" },
+          { label: "Excluir", variant: "danger", divided: true }
+        ]
+      },
+      slots: { trigger: '<div class="alvo">clique com o botão direito</div>' }
+    });
+
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
+
+    wrapper.element.dispatchEvent(
+      new MouseEvent("contextmenu", { bubbles: true, cancelable: true, clientX: 120, clientY: 80 })
+    );
+    await nextTick();
+    await nextTick();
+
+    // Teleportado pro <body> (fora da árvore do gatilho), com role/aria de menu.
+    const panel = document.body.querySelector(".arcana-context-menu__panel") as HTMLElement;
+    expect(panel).not.toBeNull();
+    expect(wrapper.element.contains(panel)).toBe(false);
+    expect(panel.getAttribute("role")).toBe("menu");
+    expect(panel.getAttribute("aria-label")).toBe("Ações");
+    expect(panel.classList.contains("minha-tela")).toBe(true);
+
+    // Ancorado no ponto do clique (POINTER_GAP = 2 abaixo do cursor), sem flip
+    // porque cabe na viewport do happy-dom.
+    expect(panel.style.position).toBe("fixed");
+    expect(panel.style.left).toBe("120px");
+    expect(panel.style.top).toBe("82px");
+
+    const items = panel.querySelectorAll(".arcana-context-menu-item");
+    expect(items).toHaveLength(2);
+    expect(items[0].getAttribute("role")).toBe("menuitem");
+    expect(panel.querySelector(".arcana-context-menu-item__suffix")!.textContent).toBe("⌘C");
+    expect(items[1].classList.contains("arcana-context-menu-item--danger")).toBe(true);
+    expect(panel.querySelector(".arcana-context-menu-item__separator")).not.toBeNull();
+
+    // Escolher um item emite `select` (item + índice) e fecha o menu.
+    (items[0] as HTMLButtonElement).click();
+    await nextTick();
+
+    expect(wrapper.emitted("select")).toBeTruthy();
+    expect(wrapper.emitted("select")![0][0]).toMatchObject({ label: "Copiar" });
+    expect(wrapper.emitted("select")![0][1]).toBe(0);
+    expect(wrapper.emitted("close")).toBeTruthy();
+    expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
+
+    wrapper.unmount();
   });
 });

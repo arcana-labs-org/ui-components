@@ -1,0 +1,166 @@
+/**
+ * Tokens de uso — a camada que os componentes consomem.
+ *
+ * `palette.scss` traz as escalas (12 degraus por cor). Aqui damos NOME DE USO a
+ * cada degrau, para que nenhum componente precise saber se o acento é violeta ou
+ * azul, nem qual degrau é "borda". Regra da casa:
+ *
+ *   componente  →  token de uso  →  degrau da escala  →  cor
+ *
+ * ── POR QUE ISTO É UM MONTE DE MIXIN E NÃO UM :root SIMPLES ────────────────
+ *
+ * Uma custom property com `var()` é substituída ONDE É DECLARADA, não onde é
+ * usada. Se `--arcana-text: var(--arcana-gray-12)` mora só no `:root`, ela é
+ * resolvida ali com o cinza CLARO e daí em diante só é herdada — redefinir
+ * `--arcana-gray-12` num `.arcana-dark` mais abaixo não a alcança mais. Na
+ * prática: texto quase-preto sobre fundo escuro.
+ *
+ * Por isso todo contexto que mexe nas escalas precisa REEMITIR os tokens de uso:
+ * `.arcana-dark`, cada `.arcana-accent-*` e cada `.arcana-gray-*`. Como as
+ * definições são idênticas, elas se resolvem corretamente em qualquer combinação
+ * — quem ganha a cascata substitui usando os valores DAQUELE elemento.
+ *
+ * A ordem de emissão importa e é deliberada:
+ *   :root → .arcana-dark → .arcana-accent-* → .arcana-gray-*
+ * `.arcana-dark` vem antes dos acentos para que um elemento com as duas classes
+ * mantenha o sólido cromático; e os blocos de acento não tocam em
+ * `--arcana-surface`, que depende só do modo claro/escuro.
+ *
+ * Ajuste pontual continua sendo CSS comum:
+ *   .minha-tela { --arcana-solid: var(--arcana-jade-9); }
+ */
+
+/* Tudo que deriva das escalas neutra/acento — repetido em todo contexto que as
+   troca. Não inclui `--arcana-surface` (é função do modo, não da escala) nem os
+   sólidos (variam entre neutro e cromático). */
+@mixin arcana-scale-tokens {
+  --arcana-surface-subtle: var(--arcana-gray-2);  /* faixas, cabeçalhos       */
+  --arcana-ui: var(--arcana-gray-3);              /* controle em repouso      */
+  --arcana-ui-hover: var(--arcana-gray-4);
+  --arcana-ui-active: var(--arcana-gray-5);
+
+  --arcana-border-subtle: var(--arcana-gray-6);   /* separadores              */
+  --arcana-border: var(--arcana-gray-7);          /* contorno de controle     */
+  --arcana-border-hover: var(--arcana-gray-8);
+  /* Pressionado. Sem este token o `:active` reusava `border-hover` e o contorno
+     parava de escurecer — o botão perdia o retorno visual do clique. */
+  --arcana-border-active: var(--arcana-gray-11);
+
+  --arcana-text: var(--arcana-gray-12);           /* principal                */
+  --arcana-text-muted: var(--arcana-gray-11);     /* secundário               */
+  --arcana-text-disabled: var(--arcana-gray-8);
+  --arcana-text-placeholder: var(--arcana-gray-9);
+
+  --arcana-shadow-sm: 0 1px 2px var(--arcana-gray-a3);
+  --arcana-shadow: 0 4px 12px var(--arcana-gray-a4);
+  --arcana-shadow-lg: 0 12px 32px var(--arcana-gray-a5);
+}
+
+/* Sólido do tema NEUTRO (sem classe de acento cromático). */
+@mixin arcana-neutral-solid {
+  /* O degrau 12 — o quase-preto histórico da lib. O 9 do cinza é um cinza médio:
+     usá-lo aqui clarearia o botão primário e derrubaria o texto branco a ~3:1. */
+  --arcana-solid: var(--arcana-gray-12);
+  /* O 11 NÃO serve de hover: é o tom de texto secundário (#646464 no claro), e o
+     botão saltaria de quase-preto para cinza médio. Uma pitada do 11 no 12
+     reproduz o realce sutil histórico (#18181b → #27272a) — e no escuro, onde o
+     12 é quase-branco, a mistura escurece, que é a direção certa lá. */
+  --arcana-solid-hover: color-mix(in oklab, var(--arcana-gray-12) 88%, var(--arcana-gray-11));
+  /* Pressionado volta à força total — não há degrau mais escuro que o 12. */
+  --arcana-solid-active: var(--arcana-gray-12);
+  --arcana-on-solid: var(--arcana-gray-1);
+  /* Segue o sólido, não o degrau 8: o 8 é "borda em hover" e no neutro dá
+     #bbbbbb, 1.9:1 sobre branco — abaixo do mínimo de 3:1 do WCAG 1.4.11. */
+  --arcana-focus-ring: var(--arcana-solid);
+}
+
+/* Sólido quando há acento cromático: o degrau 9 é o desenhado para isso. */
+@mixin arcana-chromatic-solid {
+  --arcana-solid: var(--arcana-accent-9);
+  --arcana-solid-hover: var(--arcana-accent-10);
+  /* Pressionado precisa se distinguir do hover, mas o 10 já é o último degrau
+     sólido — o 11 é cor de texto e clarearia o botão. Puxamos um pouco do 12
+     para dentro do 10: escurece no claro, clareia no escuro. */
+  --arcana-solid-active: color-mix(in oklab, var(--arcana-accent-10) 85%, var(--arcana-accent-12));
+  --arcana-on-solid: var(--arcana-on-accent);
+  --arcana-focus-ring: var(--arcana-solid);
+}
+
+/* Estados: não seguem o acento (erro precisa ser vermelho), mas seguem o MODO —
+   as escalas red/green/amber/blue mudam sob `.arcana-dark`. */
+@mixin arcana-state-tokens {
+  --arcana-danger-solid: var(--arcana-danger-9);
+  --arcana-danger-solid-hover: var(--arcana-danger-10);
+  /* NÃO use o degrau 11 aqui: é cor de texto e, no escuro, é CLARO — o botão
+     inverteria e o texto branco cairia para ~2:1. */
+  --arcana-danger-solid-active: color-mix(in oklab, var(--arcana-danger-10) 85%, var(--arcana-danger-12));
+  --arcana-danger-text: var(--arcana-danger-11);
+  --arcana-danger-bg: var(--arcana-danger-3);
+  --arcana-danger-border: var(--arcana-danger-7);
+
+  --arcana-success-solid: var(--arcana-success-9);
+  --arcana-success-solid-hover: var(--arcana-success-10);
+  --arcana-success-solid-active: color-mix(in oklab, var(--arcana-success-10) 85%, var(--arcana-success-12));
+  --arcana-success-text: var(--arcana-success-11);
+  --arcana-success-bg: var(--arcana-success-3);
+  --arcana-success-border: var(--arcana-success-7);
+
+  --arcana-warning-solid: var(--arcana-warning-9);
+  --arcana-warning-solid-hover: var(--arcana-warning-10);
+  --arcana-warning-solid-active: color-mix(in oklab, var(--arcana-warning-10) 85%, var(--arcana-warning-12));
+  --arcana-warning-text: var(--arcana-warning-11);
+  --arcana-warning-bg: var(--arcana-warning-3);
+  --arcana-warning-border: var(--arcana-warning-7);
+
+  --arcana-info-solid: var(--arcana-info-9);
+  --arcana-info-solid-hover: var(--arcana-info-10);
+  --arcana-info-solid-active: color-mix(in oklab, var(--arcana-info-10) 85%, var(--arcana-info-12));
+  --arcana-info-text: var(--arcana-info-11);
+  --arcana-info-bg: var(--arcana-info-3);
+  --arcana-info-border: var(--arcana-info-7);
+}
+
+/* ── emissão por contexto ─────────────────────────────────────────────────── */
+
+:root {
+  --arcana-surface: #ffffff;            /* cartões, painéis, dropdowns        */
+  @include arcana-scale-tokens;
+  @include arcana-neutral-solid;
+  @include arcana-state-tokens;
+}
+
+/* Antes dos acentos, de propósito: assim um elemento com `.arcana-dark
+   .arcana-accent-violet` mantém o sólido violeta (o bloco do acento vem depois).
+   No escuro a superfície deixa de ser branca e vira o degrau 2 — o 1 fica para o
+   fundo da página, senão cartão e página se confundem. */
+.arcana-dark {
+  --arcana-surface: var(--arcana-gray-2);
+  @include arcana-scale-tokens;
+  @include arcana-neutral-solid;
+  @include arcana-state-tokens;
+}
+
+/* Acentos: reemitem o que deriva das escalas e assumem o sólido cromático.
+   NÃO tocam em `--arcana-surface` — se tocassem, um acento aplicado dentro de
+   `.arcana-dark` devolveria o fundo branco. */
+@each $scale in $arcana-accent-scales {
+  @if $scale != gray {
+    .arcana-accent-#{$scale} {
+      @include arcana-scale-tokens;
+      @include arcana-chromatic-solid;
+    }
+  }
+}
+
+/* Acento neutro explícito: reemite as derivadas, mas mantém o sólido neutro. */
+.arcana-accent-gray {
+  @include arcana-scale-tokens;
+  @include arcana-neutral-solid;
+}
+
+/* Trocar só o neutro: reemite o que depende dele, sem mexer no sólido. */
+@each $scale in $arcana-gray-scales {
+  .arcana-gray-#{$scale} {
+    @include arcana-scale-tokens;
+  }
+}

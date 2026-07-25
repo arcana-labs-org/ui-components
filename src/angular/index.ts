@@ -27,6 +27,37 @@ export { ArcanaSwitchCardComponent } from "./arcana-switch-card.component";
 export { ArcanaSegmentedControlComponent } from "./arcana-segmented-control.component";
 export type { SegmentedOption, SegmentedControlSize } from "./arcana-segmented-control.component";
 
+export { ArcanaRateComponent } from "./arcana-rate.component";
+export type { RateSize } from "./arcana-rate.component";
+
+export { ArcanaAvatarComponent } from "./arcana-avatar.component";
+export type { AvatarSize, AvatarShape } from "./arcana-avatar.component";
+
+export { ArcanaAvatarGroupComponent } from "./arcana-avatar-group.component";
+export type { AvatarGroupItem } from "./arcana-avatar-group.component";
+
+export { ArcanaStatisticComponent } from "./arcana-statistic.component";
+export type { StatisticTone, StatisticSize } from "./arcana-statistic.component";
+
+export { ArcanaCountdownComponent } from "./arcana-countdown.component";
+export type { CountdownTone, CountdownSize } from "./arcana-countdown.component";
+
+export { ArcanaProgressComponent } from "./arcana-progress.component";
+export type {
+  ProgressTone,
+  ProgressSize,
+  ProgressVariant,
+  ProgressRadius
+} from "./arcana-progress.component";
+
+export { ArcanaAspectRatioComponent } from "./arcana-aspect-ratio.component";
+
+export { ArcanaHoverCardComponent } from "./arcana-hover-card.component";
+export type { HoverCardAlign, HoverCardPlacement, HoverCardSide } from "../core/hover-card";
+
+export { ArcanaScrollAreaComponent } from "./arcana-scroll-area.component";
+export type { ScrollAreaOrientation, ScrollAreaType } from "./arcana-scroll-area.component";
+
 export { ArcanaSkeletonComponent } from "./arcana-skeleton.component";
 export type { SkeletonRounded } from "./arcana-skeleton.component";
 
@@ -85,6 +116,10 @@ export { ArcanaDropdownComponent } from "./arcana-dropdown.component";
 export type { ArcanaDropdownPlacement, ArcanaDropdownSize } from "./arcana-dropdown.component";
 
 export { ArcanaDropdownItemComponent } from "./arcana-dropdown-item.component";
+
+export { ArcanaContextMenuComponent } from "./arcana-context-menu.component";
+export { ArcanaContextMenuItemComponent } from "./arcana-context-menu-item.component";
+export type { ArcanaContextMenuItemSpec, ArcanaContextMenuVariant } from "../core/context-menu";
 
 export { ArcanaEditFieldDialogComponent } from "./arcana-edit-field-dialog.component";
 

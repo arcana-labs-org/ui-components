@@ -1,0 +1,164 @@
+/**
+ * ArcanaProgress — barra de progresso determinada ou indeterminada.
+ *
+ * Anatomia:
+ *   .arcana-progress                  wrapper flex (barra + rótulo)
+ *     .arcana-progress__track         trilho — carrega `role="progressbar"` e os `aria-value*`
+ *       .arcana-progress__indicator   preenchimento
+ *     .arcana-progress__value         rótulo `NN%` opcional
+ *
+ * Modificadores: `--{sm|md|lg}`, `--{solid|soft}`, `--{accent|success|danger|warning|info}`,
+ * `--radius-{none|sm|md|lg|full}` e o estado `.is-indeterminate`.
+ *
+ * Cores: os tons resolvem por degrau da escala semântica (9 = sólido, 8 = soft, 3 = trilho
+ * tonal), então a barra segue a paleta ativa e o `.arcana-dark` sem regra extra.
+ *
+ * Custom properties (fallback = valor do `size`/`radius`):
+ *   --arcana-progress-height          altura do trilho
+ *   --arcana-progress-radius          raio das pontas
+ *   --arcana-progress-track-bg        fundo do trilho
+ *   --arcana-progress-indicator-bg    cor do preenchimento
+ *   --arcana-progress-duration        duração da transição de largura
+ */
+
+.arcana-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.arcana-progress__track {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    height: var(--arcana-progress-height, 8px);
+    border-radius: var(--arcana-progress-radius, 999px);
+    background: var(--arcana-progress-track-bg, var(--arcana-ui));
+}
+
+.arcana-progress__indicator {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--arcana-progress-indicator-bg, var(--arcana-solid));
+    transition: width var(--arcana-progress-duration, 240ms) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arcana-progress__value {
+    flex: 0 0 auto;
+    /* `ch` + tabular-nums: o rótulo não empurra a barra ao ir de 9% pra 100%. */
+    min-width: 4ch;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--arcana-text-muted);
+}
+
+/* ── tamanhos ────────────────────────────────────────────────────────────── */
+
+.arcana-progress--sm .arcana-progress__track {
+    height: var(--arcana-progress-height, 4px);
+}
+.arcana-progress--md .arcana-progress__track {
+    height: var(--arcana-progress-height, 8px);
+}
+.arcana-progress--lg .arcana-progress__track {
+    height: var(--arcana-progress-height, 14px);
+}
+
+/* ── raios ───────────────────────────────────────────────────────────────── */
+
+.arcana-progress--radius-none .arcana-progress__track {
+    border-radius: var(--arcana-progress-radius, 0);
+}
+.arcana-progress--radius-sm .arcana-progress__track {
+    border-radius: var(--arcana-progress-radius, 2px);
+}
+.arcana-progress--radius-md .arcana-progress__track {
+    border-radius: var(--arcana-progress-radius, 4px);
+}
+.arcana-progress--radius-lg .arcana-progress__track {
+    border-radius: var(--arcana-progress-radius, 8px);
+}
+.arcana-progress--radius-full .arcana-progress__track {
+    border-radius: var(--arcana-progress-radius, 999px);
+}
+
+/* ── tons × variantes ────────────────────────────────────────────────────── */
+/* solid: preenchimento no degrau 9 sobre trilho neutro.
+   soft:  preenchimento no degrau 8 sobre trilho tonal (degrau 3) — mais discreto. */
+
+.arcana-progress--accent.arcana-progress--solid {
+    --arcana-progress-indicator-bg: var(--arcana-solid);
+}
+.arcana-progress--success.arcana-progress--solid {
+    --arcana-progress-indicator-bg: var(--arcana-success-solid);
+}
+.arcana-progress--danger.arcana-progress--solid {
+    --arcana-progress-indicator-bg: var(--arcana-danger-solid);
+}
+.arcana-progress--warning.arcana-progress--solid {
+    --arcana-progress-indicator-bg: var(--arcana-warning-solid);
+}
+.arcana-progress--info.arcana-progress--solid {
+    --arcana-progress-indicator-bg: var(--arcana-info-solid);
+}
+
+.arcana-progress--accent.arcana-progress--soft {
+    --arcana-progress-indicator-bg: var(--arcana-accent-8);
+    --arcana-progress-track-bg: var(--arcana-accent-3);
+}
+.arcana-progress--success.arcana-progress--soft {
+    --arcana-progress-indicator-bg: var(--arcana-success-8);
+    --arcana-progress-track-bg: var(--arcana-success-bg);
+}
+.arcana-progress--danger.arcana-progress--soft {
+    --arcana-progress-indicator-bg: var(--arcana-danger-8);
+    --arcana-progress-track-bg: var(--arcana-danger-bg);
+}
+.arcana-progress--warning.arcana-progress--soft {
+    --arcana-progress-indicator-bg: var(--arcana-warning-8);
+    --arcana-progress-track-bg: var(--arcana-warning-bg);
+}
+.arcana-progress--info.arcana-progress--soft {
+    --arcana-progress-indicator-bg: var(--arcana-info-8);
+    --arcana-progress-track-bg: var(--arcana-info-bg);
+}
+
+/* ── indeterminado ───────────────────────────────────────────────────────── */
+/* Faixa de 40% varrendo o trilho: sem `aria-valuenow`, o CSS é quem comunica
+   "progresso desconhecido". A largura é fixa aqui — o inline `width` só existe
+   no modo determinado. */
+
+.arcana-progress.is-indeterminate .arcana-progress__indicator {
+    width: 40%;
+    transition: none;
+    animation: arcana-progress-indeterminate 1.15s ease-in-out infinite;
+}
+
+@keyframes arcana-progress-indeterminate {
+    0% {
+        transform: translateX(-105%);
+    }
+    100% {
+        transform: translateX(255%);
+    }
+}
+
+/* Sem movimento: a barra vira um bloco estático esmaecido (ainda legível como
+   "algo em andamento", sem varredura nem transição de largura). */
+@media (prefers-reduced-motion: reduce) {
+    .arcana-progress__indicator {
+        transition: none;
+    }
+
+    .arcana-progress.is-indeterminate .arcana-progress__indicator {
+        width: 100%;
+        animation: none;
+        opacity: 0.55;
+    }
+}

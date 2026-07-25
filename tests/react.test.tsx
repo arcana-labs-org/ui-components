@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import {
     ArcanaDialog,
     type ArcanaDialogHandle,
+    ArcanaContextMenu,
+    ArcanaContextMenuItem,
     ArcanaDropdown,
     ArcanaDropdownItem,
     ArcanaEditFieldDialog,
@@ -914,5 +916,54 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         expect(content.style.display).toBe("");
         fireEvent.click(container.querySelector(".arcana-accordion-trigger")!);
         expect(content.style.display).toBe("none");
+    });
+
+    // ── ArcanaContextMenu ─────────────────────────────────────────────────
+    it("ArcanaContextMenu: contextmenu abre o painel no body no cursor; item emite e fecha", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        const { container } = render(
+            <ArcanaContextMenu
+                ariaLabel="Ações"
+                panelClass="minha-tela"
+                onClose={onClose}
+                trigger={<div className="alvo">clique com o botão direito</div>}
+            >
+                <ArcanaContextMenuItem icon="fa-solid fa-copy" suffix="⌘C" onSelect={onSelect}>
+                    Copiar
+                </ArcanaContextMenuItem>
+                <ArcanaContextMenuItem variant="danger" divided>
+                    Excluir
+                </ArcanaContextMenuItem>
+            </ArcanaContextMenu>
+        );
+
+        expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
+
+        fireEvent.contextMenu(container.querySelector(".arcana-context-menu")!, {
+            clientX: 120,
+            clientY: 80,
+        });
+
+        // Em portal no <body> (fora do container do gatilho) e ancorado no cursor.
+        const panel = document.body.querySelector(".arcana-context-menu__panel") as HTMLElement;
+        expect(panel).not.toBeNull();
+        expect(container.contains(panel)).toBe(false);
+        expect(panel.getAttribute("role")).toBe("menu");
+        expect(panel.getAttribute("aria-label")).toBe("Ações");
+        expect(panel.classList.contains("minha-tela")).toBe(true);
+        expect(panel.style.left).toBe("120px");
+        expect(panel.style.top).toBe("82px");
+
+        const items = panel.querySelectorAll(".arcana-context-menu-item");
+        expect(items).toHaveLength(2);
+        expect(items[0].getAttribute("role")).toBe("menuitem");
+        expect(panel.querySelector(".arcana-context-menu-item__suffix")!.textContent).toBe("⌘C");
+        expect(items[1].classList.contains("arcana-context-menu-item--danger")).toBe(true);
+
+        fireEvent.click(items[0]);
+        expect(onSelect).toHaveBeenCalledTimes(1);
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(document.body.querySelector(".arcana-context-menu__panel")).toBeNull();
     });
 });

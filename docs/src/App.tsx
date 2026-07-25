@@ -3,7 +3,8 @@ import { DocsShell, type DocsGroup, type DocsSection } from "./components/DocsSh
 import { VueDemo } from "./components/VueDemo";
 import { COMPONENTS, CATEGORY_ORDER } from "./components/registry";
 import { COMPONENT_DOCS, type PropRow } from "./components/componentDocs";
-import { installCode, usageSnippets, stylesSnippets, maskaSnippets, frameworkCode, sameForAll } from "./components/snippets";
+import { installCode, usageSnippets, stylesSnippets, maskaSnippets, paletteSnippets, frameworkCode, sameForAll } from "./components/snippets";
+import { PaletteExplorer } from "./components/PaletteExplorer";
 import { FRAMEWORK_SNIPPETS } from "./components/frameworkSnippets";
 import { rich, useLang, type Messages } from "./i18n";
 
@@ -60,6 +61,14 @@ function buildGroups(msg: Messages): DocsGroup[] {
         title: gs.styles.title,
         body: <><P>{gs.styles.p1}</P><P>{gs.styles.p2}</P></>,
         code: stylesSnippets
+      },
+      {
+        id: "colors",
+        title: gs.palette.title,
+        body: <><P>{gs.palette.p1}</P><P>{gs.palette.p2}</P></>,
+        preview: <PaletteExplorer />,
+        previewLabel: msg.palette.previewTitle,
+        code: paletteSnippets
       },
       {
         id: "v-maska",

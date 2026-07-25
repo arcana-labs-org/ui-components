@@ -1275,3 +1275,59 @@ table.ref-table td .t-type {
 .events-block { margin-top: 16px; }
 .events-block .doc-list code { font-size: 12px; }
 .stub-note { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* ── Explorador de paletas (seção "Colors" do getting started) ─────────────
+   O `.palette-stage` carrega as classes de tema (`arcana-accent-*`,
+   `arcana-gray-*`, `arcana-dark`), então tudo dentro dele re-resolve os tokens
+   da lib. Por isso o painel usa `--arcana-surface`/`--arcana-text` e não as
+   variáveis da própria documentação: é o tema da lib que está em exibição. */
+.palette-explorer { display: flex; flex-direction: column; gap: 16px; }
+
+.palette-controls { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.palette-control { display: flex; flex-direction: column; gap: 8px; }
+.palette-control-label { font-size: 11.5px; font-family: var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+
+.palette-swatches { display: flex; flex-wrap: wrap; gap: 6px; max-width: 420px; }
+.palette-swatch {
+  width: 22px; height: 22px; padding: 0;
+  border: 1px solid rgba(0, 0, 0, .12); border-radius: 6px;
+  cursor: pointer; transition: transform .12s ease, box-shadow .12s ease;
+}
+.palette-swatch:hover { transform: scale(1.12); }
+.palette-swatch.is-active { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink); }
+.palette-swatch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.palette-classname { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+.palette-stage {
+  display: flex; flex-direction: column; gap: 18px;
+  padding: 18px; border-radius: 10px;
+  border: 1px solid var(--arcana-border-subtle);
+  background: var(--arcana-surface);
+  color: var(--arcana-text);
+}
+
+.palette-scale-caption { font-size: 11.5px; font-family: var(--font-mono); color: var(--arcana-text-muted); margin-bottom: 8px; }
+.palette-scale-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
+.palette-step {
+  height: 44px; border-radius: 4px;
+  display: flex; align-items: flex-end; justify-content: center;
+  font-family: var(--font-mono); font-size: 10px;
+}
+/* O número fica numa etiqueta própria: sobre os degraus 9–12 ele desapareceria
+   contra o fundo, e um `color` fixo falharia em metade da escala. */
+.palette-step span {
+  background: var(--arcana-surface); color: var(--arcana-text-muted);
+  border-radius: 3px; padding: 0 3px; margin-bottom: 3px; line-height: 1.5;
+}
+
+.palette-preview-title { font-size: 11.5px; font-family: var(--font-mono); color: var(--arcana-text-muted); margin-bottom: 10px; }
+.palette-preview-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+.palette-preview-row--stack { flex-direction: column; align-items: stretch; max-width: 380px; }
+.palette-preview-row:last-child { margin-bottom: 0; }
+
+.palette-hint { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+@media (max-width: 720px) {
+  .palette-scale-row { grid-template-columns: repeat(6, 1fr); }
+}

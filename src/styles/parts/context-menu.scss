@@ -1,0 +1,154 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaContextMenu / ArcanaContextMenuItem
+   Menu de contexto (botão direito). Compartilhado por Vue / React / Svelte /
+   Angular — os quatro ports emitem exatamente este markup.
+
+   Cores 100% em tokens (`tokens.scss`), nada de hex fixo: o menu segue a
+   paleta do app (`.arcana-accent-*`) e o modo escuro (`.arcana-dark`) sem
+   precisar de regra própria.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Raiz = a área que responde ao clique direito. `display: block` porque o
+   gatilho costuma ser uma região (linha de tabela, card, canvas), não um
+   botão. Recebe `tabindex="-1"` pra que o Escape possa devolver o foco. */
+.arcana-context-menu {
+  display: block;
+}
+
+.arcana-context-menu:focus {
+  /* Foco programático (volta do Escape): container não desenha anel. */
+  outline: none;
+}
+
+/* NÃO escopado de propósito: o painel é portado pro <body>, fora do escopo do
+   componente. Namespace `.arcana-context-menu__*` evita colisão. */
+.arcana-context-menu__panel {
+  position: fixed;
+  min-width: 180px;
+  max-width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 4px;
+  border: 1px solid var(--arcana-border-subtle);
+  border-radius: 8px;
+  background: var(--arcana-surface);
+  box-shadow: var(--arcana-shadow);
+  color: var(--arcana-text);
+  /* Acima do dropdown (10500): um menu de contexto pode ser aberto sobre ele. */
+  z-index: 10600;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  outline: none;
+  animation: arcana-context-menu-in 0.12s ease;
+}
+
+@keyframes arcana-context-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcana-context-menu__panel {
+    animation: none;
+  }
+}
+
+.arcana-context-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--arcana-text);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.10s, color 0.10s;
+}
+
+/* `:focus` (e não só `:focus-visible`) porque a navegação ↑/↓ move o foco
+   programaticamente entre os itens — o realce É o cursor do menu. */
+.arcana-context-menu-item:hover:not(.is-disabled),
+.arcana-context-menu-item:focus:not(.is-disabled) {
+  background: var(--arcana-ui-hover);
+  outline: none;
+}
+
+.arcana-context-menu-item.is-disabled {
+  color: var(--arcana-text-disabled);
+  cursor: not-allowed;
+}
+
+.arcana-context-menu-item__icon {
+  width: 14px;
+  flex-shrink: 0;
+  color: var(--arcana-text-muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+.arcana-context-menu-item__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Atalho de teclado (⌘C, Del…): mono e apagado, como no macOS/Radix. */
+.arcana-context-menu-item__suffix {
+  flex-shrink: 0;
+  color: var(--arcana-text-muted);
+  font-size: 11.5px;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+.arcana-context-menu-item.is-disabled .arcana-context-menu-item__icon,
+.arcana-context-menu-item.is-disabled .arcana-context-menu-item__suffix {
+  color: var(--arcana-text-disabled);
+}
+
+/* ── variants de estado (não seguem o acento) ──────────────────────────── */
+.arcana-context-menu-item--danger,
+.arcana-context-menu-item--danger .arcana-context-menu-item__icon {
+  color: var(--arcana-danger-text);
+}
+.arcana-context-menu-item--danger:hover:not(.is-disabled),
+.arcana-context-menu-item--danger:focus:not(.is-disabled) {
+  background: var(--arcana-danger-bg);
+}
+
+.arcana-context-menu-item--success,
+.arcana-context-menu-item--success .arcana-context-menu-item__icon {
+  color: var(--arcana-success-text);
+}
+.arcana-context-menu-item--success:hover:not(.is-disabled),
+.arcana-context-menu-item--success:focus:not(.is-disabled) {
+  background: var(--arcana-success-bg);
+}
+
+.arcana-context-menu-item--warning,
+.arcana-context-menu-item--warning .arcana-context-menu-item__icon {
+  color: var(--arcana-warning-text);
+}
+.arcana-context-menu-item--warning:hover:not(.is-disabled),
+.arcana-context-menu-item--warning:focus:not(.is-disabled) {
+  background: var(--arcana-warning-bg);
+}
+
+.arcana-context-menu-item__separator {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--arcana-border-subtle);
+}

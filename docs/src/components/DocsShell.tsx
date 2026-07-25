@@ -268,7 +268,7 @@ export function DocsShell({ groups }: { groups: DocsGroup[] }) {
 
       <main className="content">
         <div className="content-inner">
-          <div className="doc-kicker">{msg.shell.kicker}</div>
+          <div className="doc-kicker">{fmt(msg.shell.kicker, { version: __ARCANA_VERSION__ })}</div>
           <h1 className="doc-title">{msg.shell.docTitle}</h1>
           <p className="doc-lead">{msg.shell.lead}</p>
 
