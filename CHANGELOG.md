@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0 — 2026-07-25
+
+### Alterações que exigem atenção
+- **`ArcanaOnboardingPanel` renomeado para `ArcanaActionPanel`** (seletor Angular `arcanaActionPanel`; classes CSS `.arcana-onboarding*` → `.arcana-action-panel*`). Quem importa o nome antigo — ou estiliza as classes antigas — precisa atualizar.
+
+### Novos recursos
+- **`ArcanaSelect` cobre o padrão de filtro rápido por status**: `color` na opção desenha uma bolinha colorida, `triggerMode="dots"` faz o gatilho exibir apenas as bolinhas do que está selecionado (em vez das etiquetas), `icon`/`iconColor` colocam um ícone no gatilho e `showFooter` adiciona um rodapé com a contagem e o botão de limpar (`footerCountLabel`, `clearLabel`). Todas as props são opcionais e o visual atual permanece intacto.
+- **`ArcanaAccordion` com abertura animada**: nova prop `animated` (transição de altura + fade, ~200ms), também aceita no item — que tem precedência sobre o contêiner. Respeita `prefers-reduced-motion`.
+- **`ArcanaSegmentedOptions`**: a opção passa a aceitar `iconColor`, permitindo ícones com cor própria (ex.: verde/âmbar/vermelho para níveis de prioridade).
+
 ## 1.3.0 — 2026-07-25
 
 ### Novos recursos
