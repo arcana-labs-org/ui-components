@@ -247,19 +247,19 @@ const fruits: SelectOption[] = [
 ]
 
 // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
-// shows only the dots — the pattern used by the order status quick filter.
+// shows only the dots — the pattern used by the task status quick filter.
 const statusOptions: SelectOption[] = [
-  { label: 'Open', value: 'open', color: '#10b981' },
-  { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
-  { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
-  { label: 'Delivered', value: 'delivered', color: '#64748b' },
-  { label: 'Canceled', value: 'canceled', color: '#ef4444' },
+  { label: 'To do', value: 'todo', color: '#10b981' },
+  { label: 'In progress', value: 'in_progress', color: '#3b82f6' },
+  { label: 'In review', value: 'in_review', color: '#8b5cf6' },
+  { label: 'Done', value: 'done', color: '#64748b' },
+  { label: 'Blocked', value: 'blocked', color: '#ef4444' },
 ]
 
 export function FruitPicker() {
   const [single, setSingle] = useState<string | null>(null)
   const [many, setMany] = useState<string[]>([])
-  const [statuses, setStatuses] = useState<string[]>(['open', 'confirmed', 'shipped'])
+  const [statuses, setStatuses] = useState<string[]>(['todo', 'in_progress', 'in_review'])
   return (
     <>
       {/* Single + search */}
@@ -314,7 +314,7 @@ import { ArcanaSelectComponent, type SelectOption } from '@arcanalabs/ui-compone
 export class FruitPickerComponent {
   single: string | null = null
   many: string[] = []
-  statuses: string[] = ['open', 'confirmed', 'shipped']
+  statuses: string[] = ['todo', 'in_progress', 'in_review']
   fruits: SelectOption[] = [
     { label: 'Apple', value: 'apple' },
     { label: 'Banana', value: 'banana' },
@@ -323,13 +323,13 @@ export class FruitPickerComponent {
     { label: 'Elderberry', value: 'elderberry' },
   ]
   // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
-  // shows only the dots — the pattern used by the order status quick filter.
+  // shows only the dots — the pattern used by the task status quick filter.
   statusOptions: SelectOption[] = [
-    { label: 'Open', value: 'open', color: '#10b981' },
-    { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
-    { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
-    { label: 'Delivered', value: 'delivered', color: '#64748b' },
-    { label: 'Canceled', value: 'canceled', color: '#ef4444' },
+    { label: 'To do', value: 'todo', color: '#10b981' },
+    { label: 'In progress', value: 'in_progress', color: '#3b82f6' },
+    { label: 'In review', value: 'in_review', color: '#8b5cf6' },
+    { label: 'Done', value: 'done', color: '#64748b' },
+    { label: 'Blocked', value: 'blocked', color: '#ef4444' },
   ]
 }`,
     svelte: `<script lang="ts">
@@ -337,7 +337,7 @@ export class FruitPickerComponent {
 
   let single = $state<string | null>(null)
   let many = $state<string[]>([])
-  let statuses = $state<string[]>(['open', 'confirmed', 'shipped'])
+  let statuses = $state<string[]>(['todo', 'in_progress', 'in_review'])
 
   const fruits: SelectOption[] = [
     { label: 'Apple', value: 'apple' },
@@ -347,13 +347,13 @@ export class FruitPickerComponent {
     { label: 'Elderberry', value: 'elderberry' },
   ]
   // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
-  // shows only the dots — the pattern used by the order status quick filter.
+  // shows only the dots — the pattern used by the task status quick filter.
   const statusOptions: SelectOption[] = [
-    { label: 'Open', value: 'open', color: '#10b981' },
-    { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },
-    { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },
-    { label: 'Delivered', value: 'delivered', color: '#64748b' },
-    { label: 'Canceled', value: 'canceled', color: '#ef4444' },
+    { label: 'To do', value: 'todo', color: '#10b981' },
+    { label: 'In progress', value: 'in_progress', color: '#3b82f6' },
+    { label: 'In review', value: 'in_review', color: '#8b5cf6' },
+    { label: 'Done', value: 'done', color: '#64748b' },
+    { label: 'Blocked', value: 'blocked', color: '#ef4444' },
   ]
 </script>
 
@@ -383,27 +383,27 @@ export class FruitPickerComponent {
 import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/react'
 
 const tree: TreeSelectNode[] = [
-  { id: 1, name: 'Administrativo', children: [
-    { id: 11, name: 'RH' },
-    { id: 12, name: 'Financeiro' },
+  { id: 1, name: 'Engineering', children: [
+    { id: 11, name: 'Frontend' },
+    { id: 12, name: 'Backend' },
   ] },
-  { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+  { id: 2, name: 'Marketing', children: [{ id: 21, name: 'Content' }] },
 ]
 
-export function CostCentreField() {
-  const [costCentre, setCostCentre] = useState<string | number | null>(null)
+export function DepartmentField() {
+  const [department, setDepartment] = useState<string | number | null>(null)
   const [picked, setPicked] = useState<(string | number)[]>([])
   return (
     <>
       {/* Single: only leaves select; clicking a parent just expands it. */}
-      <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} placeholder="Centro de custo" />
+      <ArcanaTreeSelect value={department} onValueChange={setDepartment} options={tree} placeholder="Pick a department" />
 
       {/* Multiple: removable tags; allowParentSelection lets parents be picked too. */}
       <ArcanaTreeSelect value={picked} onValueChange={setPicked} options={tree} multiple allowParentSelection />
 
       {/* Theming: scope the CSS custom properties with panelClass (the panel lives in <body>).
           .my-tree { --arcana-tree-select-folder-color: #f59e0b; --arcana-tree-select-selected-bg: #fef3c7; … } */}
-      <ArcanaTreeSelect value={costCentre} onValueChange={setCostCentre} options={tree} panelClass="my-tree" />
+      <ArcanaTreeSelect value={department} onValueChange={setDepartment} options={tree} panelClass="my-tree" />
     </>
   )
 }`,
@@ -411,54 +411,54 @@ export function CostCentreField() {
 import { ArcanaTreeSelectComponent, type TreeSelectNode } from '@arcanalabs/ui-components/angular'
 
 @Component({
-  selector: 'app-cost-centre-field',
+  selector: 'app-department-field',
   standalone: true,
   imports: [ArcanaTreeSelectComponent],
   // Theming: scope the CSS custom properties with panelClass (the panel lives in <body>).
   // .my-tree { --arcana-tree-select-folder-color: #f59e0b; --arcana-tree-select-selected-bg: #fef3c7; … }
   template: \`
     <!-- Single: only leaves select; clicking a parent just expands it. -->
-    <div arcanaTreeSelect [(value)]="costCentre" [options]="tree" placeholder="Centro de custo"></div>
+    <div arcanaTreeSelect [(value)]="department" [options]="tree" placeholder="Pick a department"></div>
 
     <!-- Multiple: removable tags; [allowParentSelection]="true" lets parents be picked too. -->
     <div arcanaTreeSelect [(value)]="picked" [options]="tree" [multiple]="true" [allowParentSelection]="true"></div>
 
-    <div arcanaTreeSelect [(value)]="costCentre" [options]="tree" panelClass="my-tree"></div>
+    <div arcanaTreeSelect [(value)]="department" [options]="tree" panelClass="my-tree"></div>
   \`
 })
-export class CostCentreFieldComponent {
-  costCentre: string | number | null = null
+export class DepartmentFieldComponent {
+  department: string | number | null = null
   picked: (string | number)[] = []
   tree: TreeSelectNode[] = [
-    { id: 1, name: 'Administrativo', children: [
-      { id: 11, name: 'RH' },
-      { id: 12, name: 'Financeiro' },
+    { id: 1, name: 'Engineering', children: [
+      { id: 11, name: 'Frontend' },
+      { id: 12, name: 'Backend' },
     ] },
-    { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+    { id: 2, name: 'Marketing', children: [{ id: 21, name: 'Content' }] },
   ]
 }`,
     svelte: `<script lang="ts">
   import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/svelte'
 
-  let costCentre = $state<string | number | null>(null)
+  let department = $state<string | number | null>(null)
   let picked = $state<(string | number)[]>([])
   const tree: TreeSelectNode[] = [
-    { id: 1, name: 'Administrativo', children: [
-      { id: 11, name: 'RH' },
-      { id: 12, name: 'Financeiro' },
+    { id: 1, name: 'Engineering', children: [
+      { id: 11, name: 'Frontend' },
+      { id: 12, name: 'Backend' },
     ] },
-    { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },
+    { id: 2, name: 'Marketing', children: [{ id: 21, name: 'Content' }] },
   ]
 </script>
 
 <!-- Single: only leaves select; clicking a parent just expands it. -->
-<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} placeholder="Centro de custo" />
+<ArcanaTreeSelect value={department} onValueChange={(v) => (department = v)} options={tree} placeholder="Pick a department" />
 
 <!-- Multiple: removable tags; allowParentSelection lets parents be picked too. -->
 <ArcanaTreeSelect value={picked} onValueChange={(v) => (picked = v)} options={tree} multiple allowParentSelection />
 
 <!-- Theming: scope the tokens with panelClass (the panel lives in <body>). -->
-<ArcanaTreeSelect value={costCentre} onValueChange={(v) => (costCentre = v)} options={tree} panelClass="my-tree" />
+<ArcanaTreeSelect value={department} onValueChange={(v) => (department = v)} options={tree} panelClass="my-tree" />
 
 <style>
   /* Icon colours, selected item and search highlight are CSS custom properties. */
@@ -761,13 +761,13 @@ export class DeleteDialogComponent {}`,
 import { ArcanaInputMask } from '@arcanalabs/ui-components/react'
 // Masking is built into the component — no global directive needed.
 
-export function Document() {
-  const [cpf, setCpf] = useState('')
+export function MaskedFields() {
   const [phone, setPhone] = useState('')
+  const [card, setCard] = useState('')
   return (
     <>
-      <ArcanaInputMask value={cpf} onValueChange={setCpf} mask="###.###.###-##" placeholder="CPF" />
-      <ArcanaInputMask value={phone} onValueChange={setPhone} mask={['(##) ####-####', '(##) #####-####']} />
+      <ArcanaInputMask value={phone} onValueChange={setPhone} mask="(###) ###-####" placeholder="Phone" />
+      <ArcanaInputMask value={card} onValueChange={setCard} mask="#### #### #### ####" placeholder="Card number" />
     </>
   )
 }`,
@@ -776,27 +776,27 @@ import { ArcanaInputMaskComponent } from '@arcanalabs/ui-components/angular'
 
 // Masking is built into the component — no global directive needed.
 @Component({
-  selector: 'app-document',
+  selector: 'app-masked-fields',
   standalone: true,
   imports: [ArcanaInputMaskComponent],
   template: \`
-    <input arcanaInputMask [(value)]="cpf" mask="###.###.###-##" placeholder="CPF" />
-    <input arcanaInputMask [(value)]="phone" [mask]="['(##) ####-####', '(##) #####-####']" />
+    <input arcanaInputMask [(value)]="phone" mask="(###) ###-####" placeholder="Phone" />
+    <input arcanaInputMask [(value)]="card" mask="#### #### #### ####" placeholder="Card number" />
   \`
 })
-export class DocumentComponent {
-  cpf = ''
+export class MaskedFieldsComponent {
   phone = ''
+  card = ''
 }`,
     svelte: `<script lang="ts">
   import { ArcanaInputMask } from '@arcanalabs/ui-components/svelte'
   // Masking is built into the component — no global directive needed.
-  let cpf = $state('')
   let phone = $state('')
+  let card = $state('')
 </script>
 
-<ArcanaInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask="###.###.###-##" placeholder="CPF" />
-<ArcanaInputMask value={phone} onValueChange={(v) => (phone = v)} mask={['(##) ####-####', '(##) #####-####']} />`
+<ArcanaInputMask value={phone} onValueChange={(v) => (phone = v)} mask="(###) ###-####" placeholder="Phone" />
+<ArcanaInputMask value={card} onValueChange={(v) => (card = v)} mask="#### #### #### ####" placeholder="Card number" />`
   },
 
   inputBoolean: {
@@ -962,38 +962,38 @@ import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-compo
 
 const options: RadioCardOption[] = [
   { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
-  { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
-  { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+  { label: 'Bank transfer', value: 'bank_transfer', description: 'Instant, no fees.', badge: 'Recommended' },
+  { label: 'Invoice', value: 'invoice', description: 'Due in 3 business days.' },
   { label: 'Cash on delivery', value: 'cash', disabled: true },
 ]
 
 // Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
 const iconOptions: RadioCardOption[] = [
-  { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
-  { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+  { label: 'Personal account', value: 'personal', description: 'For individual use', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+  { label: 'Business account', value: 'business', description: 'For teams and companies', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
 ]
 
-const freightOptions: RadioCardOption[] = [
-  { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
-  { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
+const shippingOptions: RadioCardOption[] = [
+  { label: 'Standard shipping', value: 'standard', description: 'Arrives in 5–7 business days', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+  { label: 'Express shipping', value: 'express', description: 'Arrives next business day', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
 ]
 
 export function PaymentMethod() {
-  const [method, setMethod] = useState<string | number | boolean | null>('pix')
-  const [model, setModel] = useState<string | number | boolean | null>('nfe')
-  const [freight, setFreight] = useState<string | number | boolean | null>('sender')
+  const [method, setMethod] = useState<string | number | boolean | null>('bank_transfer')
+  const [accountType, setAccountType] = useState<string | number | boolean | null>('personal')
+  const [shipping, setShipping] = useState<string | number | boolean | null>('standard')
   return (
     <>
       <ArcanaRadioCardGroup value={method} onValueChange={setMethod} options={options} ariaLabel="Payment method" />
 
       {/* Icon at the start (default) */}
-      <ArcanaRadioCardGroup value={model} onValueChange={setModel} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
+      <ArcanaRadioCardGroup value={accountType} onValueChange={setAccountType} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
 
       {/* Icon at the end */}
-      <ArcanaRadioCardGroup value={model} onValueChange={setModel} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
+      <ArcanaRadioCardGroup value={accountType} onValueChange={setAccountType} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
 
       {/* Radio at the end */}
-      <ArcanaRadioCardGroup value={freight} onValueChange={setFreight} options={freightOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />
+      <ArcanaRadioCardGroup value={shipping} onValueChange={setShipping} options={shippingOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />
     </>
   )
 }`,
@@ -1008,74 +1008,74 @@ import { ArcanaRadioCardGroupComponent, type RadioCardOption } from '@arcanalabs
     <div arcanaRadioCardGroup [(value)]="method" [options]="options" ariaLabel="Payment method"></div>
 
     <!-- Icon at the start (default) -->
-    <div arcanaRadioCardGroup [(value)]="model" [options]="iconOptions" [columns]="2" ariaLabel="Icon at the start"></div>
+    <div arcanaRadioCardGroup [(value)]="accountType" [options]="iconOptions" [columns]="2" ariaLabel="Icon at the start"></div>
 
     <!-- Icon at the end -->
-    <div arcanaRadioCardGroup [(value)]="model" [options]="iconOptions" [columns]="2" [iconPosition]="'end'" ariaLabel="Icon at the end"></div>
+    <div arcanaRadioCardGroup [(value)]="accountType" [options]="iconOptions" [columns]="2" [iconPosition]="'end'" ariaLabel="Icon at the end"></div>
 
     <!-- Radio at the end -->
-    <div arcanaRadioCardGroup [(value)]="freight" [options]="freightOptions" [columns]="2" [radioPosition]="'end'" ariaLabel="Radio at the end"></div>
+    <div arcanaRadioCardGroup [(value)]="shipping" [options]="shippingOptions" [columns]="2" [radioPosition]="'end'" ariaLabel="Radio at the end"></div>
   \`
 })
 export class PaymentMethodComponent {
-  method: string | number | boolean | null = 'pix'
-  model: string | number | boolean | null = 'nfe'
-  freight: string | number | boolean | null = 'sender'
+  method: string | number | boolean | null = 'bank_transfer'
+  accountType: string | number | boolean | null = 'personal'
+  shipping: string | number | boolean | null = 'standard'
 
   options: RadioCardOption[] = [
     { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
-    { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
-    { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+    { label: 'Bank transfer', value: 'bank_transfer', description: 'Instant, no fees.', badge: 'Recommended' },
+    { label: 'Invoice', value: 'invoice', description: 'Due in 3 business days.' },
     { label: 'Cash on delivery', value: 'cash', disabled: true },
   ]
 
   // Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
   iconOptions: RadioCardOption[] = [
-    { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
-    { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+    { label: 'Personal account', value: 'personal', description: 'For individual use', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+    { label: 'Business account', value: 'business', description: 'For teams and companies', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
   ]
 
-  freightOptions: RadioCardOption[] = [
-    { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
-    { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
+  shippingOptions: RadioCardOption[] = [
+    { label: 'Standard shipping', value: 'standard', description: 'Arrives in 5–7 business days', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+    { label: 'Express shipping', value: 'express', description: 'Arrives next business day', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
   ]
 }`,
     svelte: `<script lang="ts">
   import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/svelte'
 
-  let method = $state<string | number | boolean | null>('pix')
-  let model = $state<string | number | boolean | null>('nfe')
-  let freight = $state<string | number | boolean | null>('sender')
+  let method = $state<string | number | boolean | null>('bank_transfer')
+  let accountType = $state<string | number | boolean | null>('personal')
+  let shipping = $state<string | number | boolean | null>('standard')
 
   const options: RadioCardOption[] = [
     { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },
-    { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },
-    { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },
+    { label: 'Bank transfer', value: 'bank_transfer', description: 'Instant, no fees.', badge: 'Recommended' },
+    { label: 'Invoice', value: 'invoice', description: 'Due in 3 business days.' },
     { label: 'Cash on delivery', value: 'cash', disabled: true },
   ]
 
   // Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.
   const iconOptions: RadioCardOption[] = [
-    { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
-    { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
+    { label: 'Personal account', value: 'personal', description: 'For individual use', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },
+    { label: 'Business account', value: 'business', description: 'For teams and companies', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },
   ]
 
-  const freightOptions: RadioCardOption[] = [
-    { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
-    { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
+  const shippingOptions: RadioCardOption[] = [
+    { label: 'Standard shipping', value: 'standard', description: 'Arrives in 5–7 business days', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },
+    { label: 'Express shipping', value: 'express', description: 'Arrives next business day', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },
   ]
 </script>
 
 <ArcanaRadioCardGroup value={method} onValueChange={(v) => (method = v)} {options} ariaLabel="Payment method" />
 
 <!-- Icon at the start (default) -->
-<ArcanaRadioCardGroup value={model} onValueChange={(v) => (model = v)} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
+<ArcanaRadioCardGroup value={accountType} onValueChange={(v) => (accountType = v)} options={iconOptions} columns={2} ariaLabel="Icon at the start" />
 
 <!-- Icon at the end -->
-<ArcanaRadioCardGroup value={model} onValueChange={(v) => (model = v)} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
+<ArcanaRadioCardGroup value={accountType} onValueChange={(v) => (accountType = v)} options={iconOptions} columns={2} iconPosition="end" ariaLabel="Icon at the end" />
 
 <!-- Radio at the end -->
-<ArcanaRadioCardGroup value={freight} onValueChange={(v) => (freight = v)} options={freightOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />`
+<ArcanaRadioCardGroup value={shipping} onValueChange={(v) => (shipping = v)} options={shippingOptions} columns={2} radioPosition="end" ariaLabel="Radio at the end" />`
   },
 
   segmentedOptions: {
@@ -1613,18 +1613,18 @@ const columns: ArcanaTableColumn[] = [
     </>
   ) },
   { key: 'qty', label: 'Qty', align: 'right' },
-  { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
+  { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => '$' + Number(v).toFixed(2) },
 ]
 const rows = [
-  { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
-  { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
-  { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+  { sku: 'WM-100', name: 'Wireless Mouse', qty: 2, total: 260, status: 'in' },
+  { sku: 'KB-200', name: 'Mechanical Keyboard', qty: 1, total: 480, status: 'low' },
+  { sku: 'HUB-300', name: 'USB-C Hub', qty: 5, total: 45, status: 'in' },
 ]
 
 export function ProductsTable() {
   return (
     <ArcanaTable columns={columns} rows={rows} footer={
-      <tr><td colSpan={3}>Total of items</td><td className="arcana-table__td--right">R$ 785,00</td></tr>
+      <tr><td colSpan={3}>Total of items</td><td className="arcana-table__td--right">$785.00</td></tr>
     } />
   )
 }`,
@@ -1645,7 +1645,7 @@ import { ArcanaTableComponent, ArcanaBadgeComponent, type ArcanaTableColumn } fr
         {{ row.status === 'low' ? 'Low stock' : 'In stock' }}
       </span>
     </ng-template>
-    <ng-template #foot><tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">R$ 785,00</td></tr></ng-template>
+    <ng-template #foot><tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">$785.00</td></tr></ng-template>
   \`
 })
 export class ProductsTableComponent {
@@ -1653,12 +1653,12 @@ export class ProductsTableComponent {
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product' },
     { key: 'qty', label: 'Qty', align: 'right' },
-    { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
+    { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => '$' + Number(v).toFixed(2) },
   ]
   rows = [
-    { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
-    { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
-    { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+    { sku: 'WM-100', name: 'Wireless Mouse', qty: 2, total: 260, status: 'in' },
+    { sku: 'KB-200', name: 'Mechanical Keyboard', qty: 1, total: 480, status: 'low' },
+    { sku: 'HUB-300', name: 'USB-C Hub', qty: 5, total: 45, status: 'in' },
   ]
 }`,
     svelte: `<script lang="ts">
@@ -1668,12 +1668,12 @@ export class ProductsTableComponent {
     { key: 'sku', label: 'SKU', width: '96px' },
     { key: 'name', label: 'Product', render: nameCell },
     { key: 'qty', label: 'Qty', align: 'right' },
-    { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => 'R$ ' + Number(v).toFixed(2) },
+    { key: 'total', label: 'Total', align: 'right', valueGetter: (v) => '$' + Number(v).toFixed(2) },
   ]
   const rows = [
-    { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },
-    { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },
-    { sku: 'AGUA-20', name: 'Galão 20L', qty: 5, total: 45, status: 'in' },
+    { sku: 'WM-100', name: 'Wireless Mouse', qty: 2, total: 260, status: 'in' },
+    { sku: 'KB-200', name: 'Mechanical Keyboard', qty: 1, total: 480, status: 'low' },
+    { sku: 'HUB-300', name: 'USB-C Hub', qty: 5, total: 45, status: 'in' },
   ]
 </script>
 
@@ -1686,7 +1686,7 @@ export class ProductsTableComponent {
 {/snippet}
 
 <ArcanaTable {columns} {rows}>
-  {#snippet footer()}<tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">R$ 785,00</td></tr>{/snippet}
+  {#snippet footer()}<tr><td colspan="3">Total of items</td><td class="arcana-table__td--right">$785.00</td></tr>{/snippet}
 </ArcanaTable>`
   },
 
@@ -1694,26 +1694,26 @@ export class ProductsTableComponent {
     react: `import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/react'
 
 const form = {
-  trading_name: 'Arcana Labs Tecnologia LTDA',
-  document_number: '12.345.678/0001-90',
-  state_registration: '',                 // empty → renders the "not provided" text
-  phone: '(11) 4002-8922',
-  email: 'contato@arcanalabs.com',
+  legal_name: 'Acme Corporation',
+  tax_id: '12-3456789',
+  registration_no: '',                    // empty → renders the "not provided" text
+  phone: '+1 (555) 010-4477',
+  email: 'hello@acme.com',
 }
 
 export function OrgSheet() {
   return (
     <ArcanaSpecSheet
       docNum="Record Nº 042"
-      title="Arcana Labs"
+      title="Acme Corporation"
       metaLabel="Status"
       meta={<span className="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>}
       footer={<ArcanaButton variant="outline">Change data</ArcanaButton>}
     >
-      <ArcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
-        <ArcanaSpecSheetField label="Legal name" value={form.trading_name} />
-        <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-        <ArcanaSpecSheetField label="State registration" value={form.state_registration} />
+      <ArcanaSpecSheetSection title="Company details" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+        <ArcanaSpecSheetField label="Legal name" value={form.legal_name} />
+        <ArcanaSpecSheetField label="Tax ID" value={form.tax_id} />
+        <ArcanaSpecSheetField label="Registration no." value={form.registration_no} />
       </ArcanaSpecSheetSection>
 
       {/* A second section — each one gets its own number, icon and accent colour */}
@@ -1732,11 +1732,11 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
   standalone: true,
   imports: [ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSheetFieldComponent, ArcanaButtonComponent],
   template: \`
-    <article arcanaSpecSheet docNum="Record Nº 042" title="Arcana Labs" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
-      <section arcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" [columns]="3">
-        <div arcanaSpecSheetField label="Legal name" [value]="form.trading_name"></div>
-        <div arcanaSpecSheetField label="CNPJ" [value]="form.document_number"></div>
-        <div arcanaSpecSheetField label="State registration" [value]="form.state_registration"></div>
+    <article arcanaSpecSheet docNum="Record Nº 042" title="Acme Corporation" metaLabel="Status" [metaTemplate]="meta" [footerTemplate]="foot">
+      <section arcanaSpecSheetSection title="Company details" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" [columns]="3">
+        <div arcanaSpecSheetField label="Legal name" [value]="form.legal_name"></div>
+        <div arcanaSpecSheetField label="Tax ID" [value]="form.tax_id"></div>
+        <div arcanaSpecSheetField label="Registration no." [value]="form.registration_no"></div>
       </section>
 
       <!-- A second section — each one gets its own number, icon and accent colour -->
@@ -1751,32 +1751,32 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
 })
 export class OrgSheetComponent {
   form = {
-    trading_name: 'Arcana Labs Tecnologia LTDA',
-    document_number: '12.345.678/0001-90',
-    state_registration: '',                 // empty → renders the "not provided" text
-    phone: '(11) 4002-8922',
-    email: 'contato@arcanalabs.com',
+    legal_name: 'Acme Corporation',
+    tax_id: '12-3456789',
+    registration_no: '',                    // empty → renders the "not provided" text
+    phone: '+1 (555) 010-4477',
+    email: 'hello@acme.com',
   }
 }`,
     svelte: `<script lang="ts">
   import { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton } from '@arcanalabs/ui-components/svelte'
 
   const form = {
-    trading_name: 'Arcana Labs Tecnologia LTDA',
-    document_number: '12.345.678/0001-90',
-    state_registration: '',                 // empty → renders the "not provided" text
-    phone: '(11) 4002-8922',
-    email: 'contato@arcanalabs.com',
+    legal_name: 'Acme Corporation',
+    tax_id: '12-3456789',
+    registration_no: '',                    // empty → renders the "not provided" text
+    phone: '+1 (555) 010-4477',
+    email: 'hello@acme.com',
   }
 </script>
 
-<ArcanaSpecSheet docNum="Record Nº 042" title="Arcana Labs" metaLabel="Status">
+<ArcanaSpecSheet docNum="Record Nº 042" title="Acme Corporation" metaLabel="Status">
   {#snippet meta()}<span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">Active</span>{/snippet}
 
-  <ArcanaSpecSheetSection title="Registration data" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
-    <ArcanaSpecSheetField label="Legal name" value={form.trading_name} />
-    <ArcanaSpecSheetField label="CNPJ" value={form.document_number} />
-    <ArcanaSpecSheetField label="State registration" value={form.state_registration} />
+  <ArcanaSpecSheetSection title="Company details" sectionNum="§ 01" icon="fa-solid fa-building" iconColor="blue" columns={3}>
+    <ArcanaSpecSheetField label="Legal name" value={form.legal_name} />
+    <ArcanaSpecSheetField label="Tax ID" value={form.tax_id} />
+    <ArcanaSpecSheetField label="Registration no." value={form.registration_no} />
   </ArcanaSpecSheetSection>
 
   <!-- A second section — each one gets its own number, icon and accent colour -->
@@ -1797,15 +1797,15 @@ export function Financials() {
     // \`flat\` drops the sheet chrome so the sections stand on their own.
     <ArcanaSpecSheet flat>
       <ArcanaSpecSheetSection
-        title="Financial"
+        title="Billing"
         sectionNum="§ 03"
         icon="fa-solid fa-dollar-sign"
         iconColor="amber"
         columns={3}
         actions={<ArcanaButton variant="ghost">Change</ArcanaButton>}
       >
-        <ArcanaSpecSheetField label="Credit limit" value="R$ 5.000,00" />
-        <ArcanaSpecSheetField label="Balance" value="R$ 1.240,00" />
+        <ArcanaSpecSheetField label="Credit limit" value="$5,000.00" />
+        <ArcanaSpecSheetField label="Balance" value="$1,240.00" />
         <ArcanaSpecSheetField label="Due date" value="Every 10th" />
       </ArcanaSpecSheetSection>
 
@@ -1826,9 +1826,9 @@ import { ArcanaSpecSheetComponent, ArcanaSpecSheetSectionComponent, ArcanaSpecSh
   template: \`
     <!-- [flat] drops the sheet chrome so the sections stand on their own. -->
     <article arcanaSpecSheet [flat]="true">
-      <section arcanaSpecSheetSection title="Financial" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
-        <div arcanaSpecSheetField label="Credit limit" value="R$ 5.000,00"></div>
-        <div arcanaSpecSheetField label="Balance" value="R$ 1.240,00"></div>
+      <section arcanaSpecSheetSection title="Billing" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" [columns]="3" [actionsTemplate]="acts">
+        <div arcanaSpecSheetField label="Credit limit" value="$5,000.00"></div>
+        <div arcanaSpecSheetField label="Balance" value="$1,240.00"></div>
         <div arcanaSpecSheetField label="Due date" value="Every 10th"></div>
       </section>
 
@@ -1847,10 +1847,10 @@ export class FinancialsComponent {}`,
 
 <!-- \`flat\` drops the sheet chrome so the sections stand on their own. -->
 <ArcanaSpecSheet flat>
-  <ArcanaSpecSheetSection title="Financial" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
+  <ArcanaSpecSheetSection title="Billing" sectionNum="§ 03" icon="fa-solid fa-dollar-sign" iconColor="amber" columns={3}>
     {#snippet actions()}<ArcanaButton variant="ghost">Change</ArcanaButton>{/snippet}
-    <ArcanaSpecSheetField label="Credit limit" value="R$ 5.000,00" />
-    <ArcanaSpecSheetField label="Balance" value="R$ 1.240,00" />
+    <ArcanaSpecSheetField label="Credit limit" value="$5,000.00" />
+    <ArcanaSpecSheetField label="Balance" value="$1,240.00" />
     <ArcanaSpecSheetField label="Due date" value="Every 10th" />
   </ArcanaSpecSheetSection>
 
@@ -1934,15 +1934,15 @@ export function Kpis() {
     <>
       {/* Grid layout — \`columns\` sets how many tiles fit per row */}
       <ArcanaSummaryTilesGroup columns={3}>
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
-        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods" />
+        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="$1,165.00" />
       </ArcanaSummaryTilesGroup>
 
       {/* format="rows" stacks the tiles — ideal for narrow sidebars */}
       <ArcanaSummaryTilesGroup format="rows">
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods" />
       </ArcanaSummaryTilesGroup>
     </>
   )
@@ -1957,15 +1957,15 @@ import { ArcanaSummaryTilesGroupComponent, ArcanaSummaryTileComponent } from '@a
   template: \`
     <!-- Grid layout — [columns] sets how many tiles fit per row -->
     <div arcanaSummaryTilesGroup [columns]="3">
-      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods"></div>
-      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods"></div>
-      <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00"></div>
+      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods"></div>
+      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods"></div>
+      <div arcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="$1,165.00"></div>
     </div>
 
     <!-- format="rows" stacks the tiles — ideal for narrow sidebars -->
     <div arcanaSummaryTilesGroup format="rows">
-      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods"></div>
-      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods"></div>
+      <div arcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods"></div>
+      <div arcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods"></div>
     </div>
   \`
 })
@@ -1976,15 +1976,15 @@ export class KpisComponent {}`,
 
 <!-- Grid layout — \`columns\` sets how many tiles fit per row -->
 <ArcanaSummaryTilesGroup columns={3}>
-  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
-  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
-  <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="R$ 1.165,00" />
+  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods" />
+  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods" />
+  <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" label="Total" value="$1,165.00" />
 </ArcanaSummaryTilesGroup>
 
 <!-- format="rows" stacks the tiles — ideal for narrow sidebars -->
 <ArcanaSummaryTilesGroup format="rows">
-  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="R$ 1.250,00" sub="4 methods" />
-  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="R$ 85,00" sub="2 methods" />
+  <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" label="Income" value="$1,250.00" sub="4 methods" />
+  <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" label="Expenses" value="$85.00" sub="2 methods" />
 </ArcanaSummaryTilesGroup>`
   },
 
@@ -2445,7 +2445,7 @@ export function Notices() {
         Your WhatsApp number is connected and verified.
       </ArcanaNotice>
       <ArcanaNotice variant="warning" title="Manual payment">
-        Pix and bank slip issue a new charge link every cycle.
+        Bank transfer and invoice issue a new charge link every cycle.
       </ArcanaNotice>
       <ArcanaNotice variant="pending" title="Awaiting confirmation">
         The bank has not cleared this payment yet.
@@ -2479,7 +2479,7 @@ import { ArcanaNoticeComponent } from '@arcanalabs/ui-components/angular'
       Your WhatsApp number is connected and verified.
     </div>
     <div arcanaNotice variant="warning" title="Manual payment">
-      Pix and bank slip issue a new charge link every cycle.
+      Bank transfer and invoice issue a new charge link every cycle.
     </div>
     <div arcanaNotice variant="pending" title="Awaiting confirmation">
       The bank has not cleared this payment yet.
@@ -2513,7 +2513,7 @@ export class NoticesComponent {
   Your WhatsApp number is connected and verified.
 </ArcanaNotice>
 <ArcanaNotice variant="warning" title="Manual payment">
-  Pix and bank slip issue a new charge link every cycle.
+  Bank transfer and invoice issue a new charge link every cycle.
 </ArcanaNotice>
 <ArcanaNotice variant="pending" title="Awaiting confirmation">
   The bank has not cleared this payment yet.

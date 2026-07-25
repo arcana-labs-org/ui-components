@@ -91,7 +91,7 @@ export const ru: Messages = {
       blurb: "Полностью самописный select (без Element Plus), телепортируемый в <c>&lt;body&gt;</c>, с одиночным/<c>multiple</c> выбором, <c>searchable</c>, <c>clearable</c> и навигацией с клавиатуры."
     },
     treeSelect: {
-      blurb: "Селект, панель которого — иерархия с поиском: выберите узел дерева (центры затрат, категории), одиночно или множественно; по умолчанию выбираются только листья."
+      blurb: "Селект, панель которого — иерархия с поиском: выберите узел дерева (отделы, категории), одиночно или множественно; по умолчанию выбираются только листья."
     },
     checkbox: {
       blurb: "Бинарный чекбокс, оборачивающий настоящий нативный <c>&lt;input type=\"checkbox\"&gt;</c> с состоянием <c>indeterminate</c>; для переключения настройки используйте <c>ArcanaSwitch</c>."
@@ -106,7 +106,7 @@ export const ru: Messages = {
       blurb: "Модальное окно shadcn с API на основе ref <c>show()</c>/<c>hide()</c> — телепортируется в <c>&lt;body&gt;</c>, удерживает фокус и закрывается по Escape."
     },
     inputMask: {
-      blurb: "Текстовое поле с маской на <c>v-maska</c>, чей <c>v-model</c> всегда хранит <b>сырое</b> значение (CPF, CNPJ, телефон…); требует глобально зарегистрированный <c>v-maska</c>."
+      blurb: "Текстовое поле с маской на <c>v-maska</c>, чей <c>v-model</c> всегда хранит <b>сырое</b> значение (телефон, номер карты, индекс…); требует глобально зарегистрированный <c>v-maska</c>."
     },
     inputBoolean: {
       blurb: "Селект «да/нет» для булевых полей, нормализующий <c>true</c>/<c>false</c>/<c>null</c>, с вариациями подписей status и SQL-подобными."
@@ -277,8 +277,9 @@ export const ru: Messages = {
 
     // ── input mask ──
     maskPhone: "Телефон",
-    cpfRaw: "cpf (без маски)",
+    maskCard: "Номер карты",
     phoneRaw: "телефон (без маски)",
+    cardRaw: "карта (без маски)",
 
     // ── input boolean ──
     boolYesNo: "Да / Нет",
@@ -303,11 +304,11 @@ export const ru: Messages = {
     // ── radio card group ──
     payCreditCard: "Кредитная карта",
     payCreditCardDesc: "Автоматическое регулярное списание.",
-    payPix: "Pix",
-    payPixDesc: "Мгновенно, без комиссии.",
-    payPixBadge: "Рекомендуется",
-    payBoleto: "Boleto",
-    payBoletoDesc: "Срок оплаты — 3 рабочих дня.",
+    payBankTransfer: "Банковский перевод",
+    payBankTransferDesc: "Мгновенно, без комиссии.",
+    payBankTransferBadge: "Рекомендуется",
+    payInvoice: "Счёт",
+    payInvoiceDesc: "Срок оплаты — 3 рабочих дня.",
     payCash: "Оплата при доставке",
     selectedLabel: "выбрано",
 
@@ -405,14 +406,14 @@ export const ru: Messages = {
     btnAdd: "Добавить",
 
     specSheetDocNum: "Запись № 042 · Обновлено 14.Mar.2026",
-    specSheetRegistrationData: "Регистрационные данные",
+    specSheetRegistrationData: "Данные компании",
     specSheetLegalName: "Юридическое наименование",
-    specSheetStateRegistration: "Гос. регистрация",
+    specSheetRegistrationNo: "Рег. номер",
     specSheetContact: "Контакт",
     specSheetPhone: "Телефон",
     specSheetEmail: "Эл. почта",
     specSheetChangeData: "Изменить данные",
-    specSheetFinancial: "Финансы",
+    specSheetBilling: "Оплата",
     specSheetLimit: "Лимит",
     specSheetBalance: "Баланс",
     specSheetDueDate: "Срок оплаты",
@@ -472,7 +473,7 @@ export const ru: Messages = {
     noticeActivatedTitle: "Активировано",
     noticeActivatedBody: "Интеграция успешно завершена.",
     noticeManualPaymentTitle: "Ручная оплата",
-    noticeManualPaymentBody: "Pix и Boleto создают новую ссылку для оплаты каждый цикл.",
+    noticeManualPaymentBody: "Банковский перевод и счёт создают новую ссылку для оплаты каждый цикл.",
     noticePendingTitle: "Ожидание активации в Stripe",
     noticePendingBody: "Нажмите «Sync», чтобы создать подписку в шлюзе.",
     noticeErrorTitle: "Не удалось загрузить",
@@ -485,10 +486,10 @@ export const ru: Messages = {
 
     requiredValidateForm: "Проверить форму",
     requiredDescription: "Поля ниже должны быть заполнены перед созданием клиента.",
-    requiredCnpjHint: "Шаг 1 · Регистрационные данные",
+    requiredTaxIdHint: "Шаг 1 · Данные компании",
     requiredPhoneHint: "Шаг 2 · Контакт",
     requiredDeliveryAddress: "Адрес доставки",
-    requiredDeliveryAddressHint: "Шаг 3 · Логистика",
+    requiredDeliveryAddressHint: "Шаг 3 · Доставка",
 
     onboardingTitle: "Пока нет проектов",
     onboardingDescription: "Создайте свой первый проект, чтобы начать организовывать работу.",
@@ -514,15 +515,15 @@ export const ru: Messages = {
     switchSegProduction: "Продакшн",
 
     // ── tree select ──
-    treeAdministrative: "Администрация",
-    treeHr: "Кадры",
-    treeFinance: "Финансы",
-    treeOperations: "Операции",
-    treeLogistics: "Логистика",
-    treeFleet: "Автопарк",
-    treeWarehouse: "Склад",
-    treeCommercial: "Коммерция",
-    treePickOne: "Выберите центр затрат",
+    treeEngineering: "Разработка",
+    treeFrontend: "Фронтенд",
+    treeBackend: "Бэкенд",
+    treeMarketing: "Маркетинг",
+    treeContent: "Контент",
+    treeGrowth: "Рост",
+    treeBrand: "Бренд",
+    treeSales: "Продажи",
+    treePickOne: "Выберите отдел",
     treePickSeveral: "Выберите несколько",
     treeSingleTitle: "Одиночный выбор",
     treeMultipleTitle: "Множественный выбор",
@@ -539,11 +540,11 @@ export const ru: Messages = {
     selectFooterCount: "Выбрано: {count}",
     selectClearLabel: "Очистить",
     selectStatusLabel: "статус",
-    statusOpen: "Открыт",
-    statusConfirmed: "Подтверждён",
-    statusShipped: "Отправлен",
-    statusDelivered: "Доставлен",
-    statusCanceled: "Отменён",
+    statusTodo: "К выполнению",
+    statusInProgress: "В работе",
+    statusInReview: "На проверке",
+    statusDone: "Готово",
+    statusBlocked: "Заблокировано",
     accAnimatedTitle: "С анимацией",
     accAnimatedHint: "Плавная анимация высоты; учитывает reduced-motion",
     segIconOnly: "Только значки",
@@ -557,14 +558,14 @@ export const ru: Messages = {
     rcIconStart: "Значок в начале",
     rcIconEnd: "Значок в конце",
     rcRadioEnd: "Радиокнопка в конце",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "Товарная накладная",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "Чек покупателю",
-    rcFreightSender: "Отправитель",
-    rcFreightSenderDesc: "Доставку оплачивает продавец",
-    rcFreightRecipient: "Получатель",
-    rcFreightRecipientDesc: "Доставка оплачивается при получении"
+    rcPersonalAccount: "Личный аккаунт",
+    rcPersonalAccountDesc: "Для индивидуального использования",
+    rcBusinessAccount: "Бизнес-аккаунт",
+    rcBusinessAccountDesc: "Для команд и компаний",
+    rcShippingStandard: "Обычная доставка",
+    rcShippingStandardDesc: "Прибудет через 5–7 рабочих дней",
+    rcShippingExpress: "Экспресс-доставка",
+    rcShippingExpressDesc: "Прибудет на следующий рабочий день"
 
   }
 };

@@ -149,22 +149,22 @@ const TreeSelectDemo: Component = {
       tree: [
         {
           id: 1,
-          name: $dt.treeAdministrative,
+          name: $dt.treeEngineering,
           children: [
-            { id: 11, name: $dt.treeHr },
-            { id: 12, name: $dt.treeFinance }
+            { id: 11, name: $dt.treeFrontend },
+            { id: 12, name: $dt.treeBackend }
           ]
         },
         {
           id: 2,
-          name: $dt.treeOperations,
+          name: $dt.treeMarketing,
           children: [
-            { id: 21, name: $dt.treeLogistics },
-            { id: 22, name: $dt.treeFleet },
-            { id: 23, name: $dt.treeWarehouse }
+            { id: 21, name: $dt.treeContent },
+            { id: 22, name: $dt.treeGrowth },
+            { id: 23, name: $dt.treeBrand }
           ]
         },
-        { id: 3, name: $dt.treeCommercial }
+        { id: 3, name: $dt.treeSales }
       ]
     };
   },
@@ -198,7 +198,7 @@ const SelectDemo: Component = {
     return {
       single: null as string | null,
       many: [] as string[],
-      statuses: ["open", "confirmed", "shipped"] as string[],
+      statuses: ["todo", "in_progress", "in_review"] as string[],
       fruits: [
         { label: $dt.fruitApple, value: "apple" },
         { label: $dt.fruitBanana, value: "banana" },
@@ -207,13 +207,13 @@ const SelectDemo: Component = {
         { label: $dt.fruitElderberry, value: "elderberry" }
       ],
       // `color` na opção vira uma bolinha; com trigger-mode="dots" o gatilho
-      // mostra só as bolinhas — o padrão do filtro de Situação em Pedidos.
+      // mostra só as bolinhas — o padrão de um filtro rápido de status.
       statusOptions: [
-        { label: $dt.statusOpen, value: "open", color: "#10b981" },
-        { label: $dt.statusConfirmed, value: "confirmed", color: "#3b82f6" },
-        { label: $dt.statusShipped, value: "shipped", color: "#8b5cf6" },
-        { label: $dt.statusDelivered, value: "delivered", color: "#64748b" },
-        { label: $dt.statusCanceled, value: "canceled", color: "#ef4444" }
+        { label: $dt.statusTodo, value: "todo", color: "#10b981" },
+        { label: $dt.statusInProgress, value: "in_progress", color: "#3b82f6" },
+        { label: $dt.statusInReview, value: "in_review", color: "#8b5cf6" },
+        { label: $dt.statusDone, value: "done", color: "#64748b" },
+        { label: $dt.statusBlocked, value: "blocked", color: "#ef4444" }
       ]
     };
   },
@@ -366,12 +366,14 @@ const DialogDemo: Component = {
 
 const InputMaskDemo: Component = {
   components: { ArcanaInputMask },
-  data: () => ({ cpf: "", phone: "" }),
+  data: () => ({ phone: "", card: "" }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
-      <ArcanaInputMask v-model="cpf" mask="###.###.###-##" placeholder="CPF" />
-      <ArcanaInputMask v-model="phone" :mask="['(##) ####-####', '(##) #####-####']" :placeholder="$dt.maskPhone" />
-      <p class="demo-note">{{ $dt.cpfRaw }}: <strong>{{ cpf || "—" }}</strong> · {{ $dt.phoneRaw }}: <strong>{{ phone || "—" }}</strong></p>
+      <!-- Máscara dinâmica: com um array, a máscara aplicada acompanha o
+           comprimento digitado (nacional → internacional). -->
+      <ArcanaInputMask v-model="phone" :mask="['(###) ###-####', '+## (###) ###-####']" :placeholder="$dt.maskPhone" />
+      <ArcanaInputMask v-model="card" mask="#### #### #### ####" :placeholder="$dt.maskCard" />
+      <p class="demo-note">{{ $dt.phoneRaw }}: <strong>{{ phone || "—" }}</strong> · {{ $dt.cardRaw }}: <strong>{{ card || "—" }}</strong></p>
     </div>
   `
 };
@@ -435,24 +437,24 @@ const RadioCardGroupDemo: Component = {
   data() {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
-      method: "pix",
-      model: "nfe",
-      freight: "sender",
+      method: "bank_transfer",
+      model: "personal",
+      freight: "standard",
       options: [
         { label: $dt.payCreditCard, value: "credit_card", description: $dt.payCreditCardDesc },
-        { label: $dt.payPix, value: "pix", description: $dt.payPixDesc, badge: $dt.payPixBadge },
-        { label: $dt.payBoleto, value: "boleto", description: $dt.payBoletoDesc },
+        { label: $dt.payBankTransfer, value: "bank_transfer", description: $dt.payBankTransferDesc, badge: $dt.payBankTransferBadge },
+        { label: $dt.payInvoice, value: "invoice", description: $dt.payInvoiceDesc },
         { label: $dt.payCash, value: "cash", disabled: true }
       ],
       // Ícone em "chip" colorido: o trio iconBg/iconColor/iconBorder desenha o
-      // quadrado atrás do ícone (mesmo padrão do wizard de emissão de NF-e).
+      // quadrado atrás do ícone.
       iconOptions: [
-        { label: $dt.rcNfeModel, value: "nfe", description: $dt.rcNfeModelDesc, icon: "fa-solid fa-file-invoice", iconBg: "#dbeafe", iconColor: "#2563eb", iconBorder: "#bfdbfe" },
-        { label: $dt.rcNfceModel, value: "nfce", description: $dt.rcNfceModelDesc, icon: "fa-solid fa-receipt", iconBg: "#d1fae5", iconColor: "#059669", iconBorder: "#a7f3d0" }
+        { label: $dt.rcPersonalAccount, value: "personal", description: $dt.rcPersonalAccountDesc, icon: "fa-solid fa-file-invoice", iconBg: "#dbeafe", iconColor: "#2563eb", iconBorder: "#bfdbfe" },
+        { label: $dt.rcBusinessAccount, value: "business", description: $dt.rcBusinessAccountDesc, icon: "fa-solid fa-receipt", iconBg: "#d1fae5", iconColor: "#059669", iconBorder: "#a7f3d0" }
       ],
       freightOptions: [
-        { label: $dt.rcFreightSender, value: "sender", description: $dt.rcFreightSenderDesc, icon: "fa-solid fa-truck", iconBg: "#e0e7ff", iconColor: "#4f46e5", iconBorder: "#c7d2fe" },
-        { label: $dt.rcFreightRecipient, value: "recipient", description: $dt.rcFreightRecipientDesc, icon: "fa-solid fa-user", iconBg: "#fef3c7", iconColor: "#b45309", iconBorder: "#fde68a" }
+        { label: $dt.rcShippingStandard, value: "standard", description: $dt.rcShippingStandardDesc, icon: "fa-solid fa-truck", iconBg: "#e0e7ff", iconColor: "#4f46e5", iconBorder: "#c7d2fe" },
+        { label: $dt.rcShippingExpress, value: "express", description: $dt.rcShippingExpressDesc, icon: "fa-solid fa-user", iconBg: "#fef3c7", iconColor: "#b45309", iconBorder: "#fde68a" }
       ]
     };
   },
@@ -691,12 +693,12 @@ const TableDemo: Component = {
       { key: "sku", label: $dt.colSku, width: "96px" },
       { key: "name", label: $dt.colProduct },
       { key: "qty", label: $dt.colQty, align: "right" },
-      { key: "total", label: $dt.colTotal, align: "right", valueGetter: (v: number) => "R$ " + v.toFixed(2) }
+      { key: "total", label: $dt.colTotal, align: "right", valueGetter: (v: number) => "$" + v.toFixed(2) }
     ],
     rows: [
-      { sku: "GLP-13", name: "Botijão P13", qty: 2, total: 260, status: "in" },
-      { sku: "GLP-45", name: "Botijão P45", qty: 1, total: 480, status: "low" },
-      { sku: "AGUA-20", name: "Galão 20L", qty: 5, total: 45, status: "in" }
+      { sku: "WM-100", name: "Wireless Mouse", qty: 2, total: 260, status: "in" },
+      { sku: "KB-200", name: "Mechanical Keyboard", qty: 1, total: 480, status: "low" },
+      { sku: "HUB-300", name: "USB-C Hub", qty: 5, total: 45, status: "in" }
     ]
     };
   },
@@ -707,7 +709,7 @@ const TableDemo: Component = {
         <ArcanaBadge :variant="row.status === 'low' ? 'amber' : 'green'" size="sm" style="margin-left: 6px">{{ row.status === 'low' ? $dt.tableLow : $dt.tableInStock }}</ArcanaBadge>
       </template>
       <template #footer>
-        <tr><td colspan="3">{{ $dt.tableTotalItems }}</td><td class="arcana-table__td--right">R$ 785,00</td></tr>
+        <tr><td colspan="3">{{ $dt.tableTotalItems }}</td><td class="arcana-table__td--right">$785.00</td></tr>
       </template>
     </ArcanaTable>
   `
@@ -718,18 +720,18 @@ const TableDemo: Component = {
 const SpecSheetDemo: Component = {
   components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
-    <ArcanaSpecSheet :doc-num="$dt.specSheetDocNum" title="Arcana Labs" :meta-label="$dt.statusLabel">
+    <ArcanaSpecSheet :doc-num="$dt.specSheetDocNum" title="Acme Corporation" :meta-label="$dt.statusLabel">
       <template #meta>
         <span class="arcana-spec-sheet-badge arcana-spec-sheet-badge--active">{{ $dt.statusActive }}</span>
       </template>
       <ArcanaSpecSheetSection :title="$dt.specSheetRegistrationData" section-num="§ 01" icon="fa-solid fa-building" icon-color="blue" :columns="3">
-        <ArcanaSpecSheetField :label="$dt.specSheetLegalName" value="Arcana Labs Tecnologia LTDA" />
-        <ArcanaSpecSheetField label="CNPJ" value="12.345.678/0001-90" />
-        <ArcanaSpecSheetField :label="$dt.specSheetStateRegistration" value="" />
+        <ArcanaSpecSheetField :label="$dt.specSheetLegalName" value="Acme Corporation" />
+        <ArcanaSpecSheetField label="Tax ID" value="12-3456789" />
+        <ArcanaSpecSheetField :label="$dt.specSheetRegistrationNo" value="" />
       </ArcanaSpecSheetSection>
       <ArcanaSpecSheetSection :title="$dt.specSheetContact" section-num="§ 02" icon="fa-solid fa-phone" icon-color="emerald">
-        <ArcanaSpecSheetField :label="$dt.specSheetPhone" value="(11) 4002-8922" />
-        <ArcanaSpecSheetField :label="$dt.specSheetEmail" value="contato@arcanalabs.com" />
+        <ArcanaSpecSheetField :label="$dt.specSheetPhone" value="+1 (555) 010-4477" />
+        <ArcanaSpecSheetField :label="$dt.specSheetEmail" value="hello@acme.com" />
       </ArcanaSpecSheetSection>
       <template #footer>
         <ArcanaButton variant="outline">{{ $dt.specSheetChangeData }}</ArcanaButton>
@@ -742,10 +744,10 @@ const SpecSheetSectionDemo: Component = {
   components: { ArcanaSpecSheet, ArcanaSpecSheetSection, ArcanaSpecSheetField, ArcanaButton },
   template: /* html */ `
     <ArcanaSpecSheet flat>
-      <ArcanaSpecSheetSection :title="$dt.specSheetFinancial" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
+      <ArcanaSpecSheetSection :title="$dt.specSheetBilling" section-num="§ 03" icon="fa-solid fa-dollar-sign" icon-color="amber" :columns="3">
         <template #actions><ArcanaButton variant="ghost">{{ $dt.actionChange }}</ArcanaButton></template>
-        <ArcanaSpecSheetField :label="$dt.specSheetLimit" value="R$ 5.000,00" />
-        <ArcanaSpecSheetField :label="$dt.specSheetBalance" value="R$ 1.240,00" />
+        <ArcanaSpecSheetField :label="$dt.specSheetLimit" value="$5,000.00" />
+        <ArcanaSpecSheetField :label="$dt.specSheetBalance" value="$1,240.00" />
         <ArcanaSpecSheetField :label="$dt.specSheetDueDate" :value="$dt.specSheetDueDateValue" />
       </ArcanaSpecSheetSection>
       <ArcanaSpecSheetSection :title="$dt.specSheetNotes" icon="fa-solid fa-note-sticky" icon-color="violet" no-row-dividers>
@@ -777,13 +779,13 @@ const SummaryTilesDemo: Component = {
   template: /* html */ `
     <div class="demo-stack">
       <ArcanaSummaryTilesGroup :columns="3">
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="R$ 1.250,00" :sub="$dt.tileIncomeSub" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="R$ 85,00" :sub="$dt.tileExpensesSub" />
-        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" :label="$dt.tileTotal" value="R$ 1.165,00" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="$1,250.00" :sub="$dt.tileIncomeSub" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="$85.00" :sub="$dt.tileExpensesSub" />
+        <ArcanaSummaryTile tone="indigo" icon="fa-solid fa-sack-dollar" :label="$dt.tileTotal" value="$1,165.00" />
       </ArcanaSummaryTilesGroup>
       <ArcanaSummaryTilesGroup format="rows">
-        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="R$ 1.250,00" :sub="$dt.tileIncomeSub" />
-        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="R$ 85,00" :sub="$dt.tileExpensesSub" />
+        <ArcanaSummaryTile tone="positive" icon="fa-solid fa-arrow-down" :label="$dt.tileIncome" value="$1,250.00" :sub="$dt.tileIncomeSub" />
+        <ArcanaSummaryTile tone="negative" icon="fa-solid fa-arrow-up" :label="$dt.tileExpenses" value="$85.00" :sub="$dt.tileExpensesSub" />
       </ArcanaSummaryTilesGroup>
     </div>
   `
@@ -870,7 +872,7 @@ const SettingsEditableFieldDemo: Component = {
   data() {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
-      name: "Arcana Labs Matriz",
+      name: "Arcana Labs HQ",
       discount: "1500.00",
       plan: "pro" as string,
       planOptions: [
@@ -914,7 +916,7 @@ const NoticeDemo: Component = {
 
 const EditFieldDialogDemo: Component = {
   components: { ArcanaEditFieldDialog, ArcanaButton, ArcanaInput },
-  data: () => ({ value: "Arcana Labs Matriz", saved: "Arcana Labs Matriz" }),
+  data: () => ({ value: "Arcana Labs HQ", saved: "Arcana Labs HQ" }),
   methods: {
     open() {
       (this.$refs.modal as unknown as { show: () => void }).show();
@@ -944,7 +946,7 @@ const RequiredFieldsDialogDemo: Component = {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
       fields: [
-        { key: "cnpj", label: "CNPJ", hint: $dt.requiredCnpjHint },
+        { key: "taxId", label: "Tax ID", hint: $dt.requiredTaxIdHint },
         { key: "phone", label: $dt.specSheetPhone, hint: $dt.requiredPhoneHint },
         { key: "address", label: $dt.requiredDeliveryAddress, hint: $dt.requiredDeliveryAddressHint }
       ]
@@ -1240,7 +1242,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "const fruit = ref<string | null>(null)",
       "const fruits = ref<string[]>([])",
-      "const statuses = ref(['open', 'confirmed', 'shipped'])",
+      "const statuses = ref(['todo', 'in_progress', 'in_review'])",
       "",
       "const options = [",
       "  { label: 'Apple', value: 'apple' },",
@@ -1252,11 +1254,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "// `color` on an option renders a dot before its label.",
       "const statusOptions = [",
-      "  { label: 'Open', value: 'open', color: '#10b981' },",
-      "  { label: 'Confirmed', value: 'confirmed', color: '#3b82f6' },",
-      "  { label: 'Shipped', value: 'shipped', color: '#8b5cf6' },",
-      "  { label: 'Delivered', value: 'delivered', color: '#64748b' },",
-      "  { label: 'Canceled', value: 'canceled', color: '#ef4444' },",
+      "  { label: 'To do', value: 'todo', color: '#10b981' },",
+      "  { label: 'In progress', value: 'in_progress', color: '#3b82f6' },",
+      "  { label: 'In review', value: 'in_review', color: '#8b5cf6' },",
+      "  { label: 'Done', value: 'done', color: '#64748b' },",
+      "  { label: 'Blocked', value: 'blocked', color: '#ef4444' },",
       "]",
       "</script>",
       "",
@@ -1304,26 +1306,26 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ref } from 'vue'",
       "import { ArcanaTreeSelect, type TreeSelectNode } from '@arcanalabs/ui-components/vue'",
       "",
-      "const costCenter = ref<number | null>(null)",
+      "const department = ref<number | null>(null)",
       "const picked = ref<number[]>([])",
       "const tree: TreeSelectNode[] = [",
-      "  { id: 1, name: 'Administrativo', children: [",
-      "    { id: 11, name: 'RH' },",
-      "    { id: 12, name: 'Financeiro' },",
+      "  { id: 1, name: 'Engineering', children: [",
+      "    { id: 11, name: 'Frontend' },",
+      "    { id: 12, name: 'Backend' },",
       "  ] },",
-      "  { id: 2, name: 'Operações', children: [{ id: 21, name: 'Logística' }] },",
+      "  { id: 2, name: 'Marketing', children: [{ id: 21, name: 'Content' }] },",
       "]",
       "</script>",
       "",
       "<template>",
       "  <!-- Single: only leaves select; clicking a parent just expands it. -->",
-      "  <ArcanaTreeSelect v-model=\"costCenter\" :options=\"tree\" placeholder=\"Centro de custo\" />",
+      "  <ArcanaTreeSelect v-model=\"department\" :options=\"tree\" placeholder=\"Pick a department\" />",
       "",
       "  <!-- Multiple: removable tags; allow-parent-selection lets parents be picked too. -->",
       "  <ArcanaTreeSelect v-model=\"picked\" :options=\"tree\" multiple allow-parent-selection />",
       "",
       "  <!-- Theming: scope the tokens with panel-class (the panel lives in <body>). -->",
-      "  <ArcanaTreeSelect v-model=\"costCenter\" :options=\"tree\" panel-class=\"my-tree\" />",
+      "  <ArcanaTreeSelect v-model=\"department\" :options=\"tree\" panel-class=\"my-tree\" />",
       "</template>",
       "",
       "<style>",
@@ -1516,13 +1518,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ArcanaInputMask } from '@arcanalabs/ui-components/vue'",
       "// Requires Maska registered globally — see \"Registering v-maska\".",
       "",
-      "const cpf = ref('')",
       "const phone = ref('')",
+      "const card = ref('')",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaInputMask v-model=\"cpf\" mask=\"###.###.###-##\" placeholder=\"CPF\" />",
-      "  <ArcanaInputMask v-model=\"phone\" :mask=\"['(##) ####-####', '(##) #####-####']\" />",
+      "  <ArcanaInputMask v-model=\"phone\" mask=\"(###) ###-####\" placeholder=\"Phone\" />",
+      "  <ArcanaInputMask v-model=\"card\" mask=\"#### #### #### ####\" placeholder=\"Card number\" />",
       "</template>"
     ].join("\n")
   },
@@ -1639,26 +1641,26 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "import { ref } from 'vue'",
       "import { ArcanaRadioCardGroup } from '@arcanalabs/ui-components/vue'",
       "",
-      "const method = ref('pix')",
-      "const model = ref('nfe')",
-      "const freight = ref('sender')",
+      "const method = ref('bank_transfer')",
+      "const model = ref('personal')",
+      "const freight = ref('standard')",
       "",
       "const options = [",
       "  { label: 'Credit card', value: 'credit_card', description: 'Automatic recurring charge.' },",
-      "  { label: 'Pix', value: 'pix', description: 'Instant, no fees.', badge: 'Recommended' },",
-      "  { label: 'Boleto', value: 'boleto', description: 'Due in 3 business days.' },",
+      "  { label: 'Bank transfer', value: 'bank_transfer', description: 'Instant, no fees.', badge: 'Recommended' },",
+      "  { label: 'Invoice', value: 'invoice', description: 'Due in 3 business days.' },",
       "  { label: 'Cash on delivery', value: 'cash', disabled: true },",
       "]",
       "",
       "// Coloured icon chip: iconBg/iconColor/iconBorder paint the square behind the icon.",
       "const iconOptions = [",
-      "  { label: 'NF-e', value: 'nfe', description: 'Goods invoice', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },",
-      "  { label: 'NFC-e', value: 'nfce', description: 'Consumer receipt', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },",
+      "  { label: 'Personal account', value: 'personal', description: 'For individual use', icon: 'fa-solid fa-file-invoice', iconBg: '#dbeafe', iconColor: '#2563eb', iconBorder: '#bfdbfe' },",
+      "  { label: 'Business account', value: 'business', description: 'For teams and companies', icon: 'fa-solid fa-receipt', iconBg: '#d1fae5', iconColor: '#059669', iconBorder: '#a7f3d0' },",
       "]",
       "",
       "const freightOptions = [",
-      "  { label: 'Sender', value: 'sender', description: 'Freight paid by the seller', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },",
-      "  { label: 'Recipient', value: 'recipient', description: 'Freight paid on delivery', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },",
+      "  { label: 'Standard shipping', value: 'standard', description: 'Arrives in 5–7 business days', icon: 'fa-solid fa-truck', iconBg: '#e0e7ff', iconColor: '#4f46e5', iconBorder: '#c7d2fe' },",
+      "  { label: 'Express shipping', value: 'express', description: 'Arrives next business day', icon: 'fa-solid fa-user', iconBg: '#fef3c7', iconColor: '#b45309', iconBorder: '#fde68a' },",
       "]",
       "</script>",
       "",
@@ -1984,11 +1986,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  { key: 'sku', label: 'SKU', width: '96px' },",
       "  { key: 'name', label: 'Product' },",
       "  { key: 'qty', label: 'Qty', align: 'right' },",
-      "  { key: 'total', label: 'Total', align: 'right', valueGetter: (v: number) => 'R$ ' + v.toFixed(2) },",
+      "  { key: 'total', label: 'Total', align: 'right', valueGetter: (v: number) => '$' + v.toFixed(2) },",
       "]",
       "const rows = [",
-      "  { sku: 'GLP-13', name: 'Botijão P13', qty: 2, total: 260, status: 'in' },",
-      "  { sku: 'GLP-45', name: 'Botijão P45', qty: 1, total: 480, status: 'low' },",
+      "  { sku: 'WM-100', name: 'Wireless Mouse', qty: 2, total: 260, status: 'in' },",
+      "  { sku: 'KB-200', name: 'Mechanical Keyboard', qty: 1, total: 480, status: 'low' },",
       "]",
       "</script>",
       "",
@@ -2001,7 +2003,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "        {{ row.status === 'low' ? 'Low stock' : 'In stock' }}",
       "      </ArcanaBadge>",
       "    </template>",
-      "    <template #footer><tr><td colspan=\"3\">Total</td><td class=\"arcana-table__td--right\">R$ 740,00</td></tr></template>",
+      "    <template #footer><tr><td colspan=\"3\">Total</td><td class=\"arcana-table__td--right\">$740.00</td></tr></template>",
       "  </ArcanaTable>",
       "</template>"
     ].join("\n")
@@ -2010,7 +2012,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   specSheet: {
     demo: SpecSheetDemo,
     props: [
-      { name: "docNum", type: "string", default: "''", description: "Mono uppercase eyebrow at the top (e.g. 'Cadastro Nº 042')." },
+      { name: "docNum", type: "string", default: "''", description: "Mono uppercase eyebrow at the top (e.g. 'Record No. 042')." },
       { name: "title", type: "string", default: "''", description: "Main heading (or use the #title slot for rich markup)." },
       { name: "metaLabel", type: "string", default: "''", description: "Small uppercase label above the meta block on the right." },
       { name: "flat", type: "boolean", default: "false", description: "Drops the card chrome (border/radius/bg/shadow) for embedding inside another card." }
@@ -2024,13 +2026,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "</script>",
       "",
       "<template>",
-      "  <ArcanaSpecSheet doc-num=\"Record No. 042\" title=\"Arcana Labs\" meta-label=\"Status\">",
+      "  <ArcanaSpecSheet doc-num=\"Record No. 042\" title=\"Acme Corporation\" meta-label=\"Status\">",
       "    <template #meta><span class=\"arcana-spec-sheet-badge arcana-spec-sheet-badge--active\">Active</span></template>",
       "",
-      "    <ArcanaSpecSheetSection title=\"Registration data\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\" :columns=\"3\">",
-      "      <ArcanaSpecSheetField label=\"Legal name\" :value=\"form.trading_name\" />",
-      "      <ArcanaSpecSheetField label=\"CNPJ\" :value=\"form.document_number\" />",
-      "      <ArcanaSpecSheetField label=\"State registration\" :value=\"form.state_registration\" />",
+      "    <ArcanaSpecSheetSection title=\"Company details\" section-num=\"§ 01\" icon=\"fa-solid fa-building\" icon-color=\"blue\" :columns=\"3\">",
+      "      <ArcanaSpecSheetField label=\"Legal name\" :value=\"form.legal_name\" />",
+      "      <ArcanaSpecSheetField label=\"Tax ID\" :value=\"form.tax_id\" />",
+      "      <ArcanaSpecSheetField label=\"Registration no.\" :value=\"form.registration_number\" />",
       "    </ArcanaSpecSheetSection>",
       "",
       "    <!-- Sections stack; each one gets its own icon colour and column count -->",
@@ -2065,10 +2067,10 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "<template>",
       "  <!-- Sections always live inside a <ArcanaSpecSheet>; `flat` drops the card chrome -->",
       "  <ArcanaSpecSheet flat>",
-      "    <ArcanaSpecSheetSection title=\"Financial\" section-num=\"§ 03\" icon=\"fa-solid fa-dollar-sign\" icon-color=\"amber\" :columns=\"3\">",
+      "    <ArcanaSpecSheetSection title=\"Billing\" section-num=\"§ 03\" icon=\"fa-solid fa-dollar-sign\" icon-color=\"amber\" :columns=\"3\">",
       "      <template #actions><ArcanaButton variant=\"ghost\">Change</ArcanaButton></template>",
-      "      <ArcanaSpecSheetField label=\"Limit\" value=\"R$ 5.000,00\" />",
-      "      <ArcanaSpecSheetField label=\"Balance\" value=\"R$ 1.240,00\" />",
+      "      <ArcanaSpecSheetField label=\"Limit\" value=\"$5,000.00\" />",
+      "      <ArcanaSpecSheetField label=\"Balance\" value=\"$1,240.00\" />",
       "      <ArcanaSpecSheetField label=\"Due date\" value=\"10th of every month\" />",
       "    </ArcanaSpecSheetSection>",
       "",
@@ -2084,7 +2086,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
   specSheetField: {
     demo: SpecSheetFieldDemo,
     props: [
-      { name: "label", type: "string", default: "— (required)", description: "Uppercase mono label (e.g. 'Razão Social')." },
+      { name: "label", type: "string", default: "— (required)", description: "Uppercase mono label (e.g. 'Legal name')." },
       { name: "value", type: "string | number | null", default: "''", description: "Text value. Empty (null/undefined/'') shows emptyText." },
       { name: "emptyText", type: "string", default: "'Não informado'", description: "Italic muted fallback shown when value is empty." },
       { name: "span", type: "number | string", default: "1", description: "How many grid columns the field spans." }
@@ -2127,15 +2129,15 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <ArcanaSummaryTilesGroup :columns=\"3\">",
-      "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Income\" value=\"R$ 1.250,00\" sub=\"4 payment methods\" />",
-      "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Expenses\" value=\"R$ 85,00\" sub=\"1 payment method\" />",
-      "    <ArcanaSummaryTile tone=\"indigo\" icon=\"fa-solid fa-sack-dollar\" label=\"Total\" value=\"R$ 1.165,00\" />",
+      "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Income\" value=\"$1,250.00\" sub=\"4 payment methods\" />",
+      "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Expenses\" value=\"$85.00\" sub=\"1 payment method\" />",
+      "    <ArcanaSummaryTile tone=\"indigo\" icon=\"fa-solid fa-sack-dollar\" label=\"Total\" value=\"$1,165.00\" />",
       "  </ArcanaSummaryTilesGroup>",
       "",
       "  <!-- format=\"rows\": one tile per full-width row -->",
       "  <ArcanaSummaryTilesGroup format=\"rows\">",
-      "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Income\" value=\"R$ 1.250,00\" sub=\"4 payment methods\" />",
-      "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Expenses\" value=\"R$ 85,00\" sub=\"1 payment method\" />",
+      "    <ArcanaSummaryTile tone=\"positive\" icon=\"fa-solid fa-arrow-down\" label=\"Income\" value=\"$1,250.00\" sub=\"4 payment methods\" />",
+      "    <ArcanaSummaryTile tone=\"negative\" icon=\"fa-solid fa-arrow-up\" label=\"Expenses\" value=\"$85.00\" sub=\"1 payment method\" />",
       "  </ArcanaSummaryTilesGroup>",
       "</template>"
     ].join("\n")
@@ -2377,7 +2379,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  <ArcanaNotice variant=\"blue\" title=\"New\">Bulk export is now available.</ArcanaNotice>",
       "  <ArcanaNotice variant=\"success\" title=\"Activated\">Your subscription is up to date.</ArcanaNotice>",
       "  <ArcanaNotice variant=\"warning\" title=\"Manual payment\">",
-      "    Pix and Boleto issue a fresh payment link every cycle.",
+      "    Bank transfer and invoice generate a new charge link each cycle.",
       "  </ArcanaNotice>",
       "  <ArcanaNotice variant=\"pending\" title=\"Waiting for confirmation\">The bank may take up to 2 business days.</ArcanaNotice>",
       "",
@@ -2481,11 +2483,16 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <ArcanaActionPanel",
-      "    icon=\"fa-solid fa-file-shield\"",
-      "    title=\"Configure seu certificado\"",
-      "    description=\"O certificado A1 é necessário para emitir NF-e.\"",
-      "    action-label=\"Configurar Certificado\"",
+      "    icon=\"fa-solid fa-folder-open\"",
+      "    title=\"No projects here yet\"",
+      "    description=\"Create your first project to start organizing your work.\"",
+      "    action-label=\"Create project\"",
+      "    secondary-action-label=\"See examples\"",
+      "    secondary-action-icon=\"fa-solid fa-circle-info\"",
+      "    sub-hint=\"You can invite your team later.\"",
+      "    sub-hint-icon=\"fa-solid fa-users\"",
       "    @action=\"openCreate\"",
+      "    @secondary-action=\"openExamples\"",
       "  />",
       "</template>"
     ].join("\n")

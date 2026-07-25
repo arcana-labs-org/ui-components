@@ -163,46 +163,46 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
     ].join("\n")
   },
   react: {
-    file: "CpfField.tsx",
+    file: "PhoneField.tsx",
     code: [
       "// No global setup in React — masking is built into ArcanaInputMask.",
       "import { useState } from 'react'",
       "import { ArcanaInputMask } from '@arcanalabs/ui-components/react'",
       "",
-      "export function CpfField() {",
-      "  const [cpf, setCpf] = useState('')",
-      "  return <ArcanaInputMask value={cpf} onValueChange={setCpf} mask=\"###.###.###-##\" />",
+      "export function PhoneField() {",
+      "  const [phone, setPhone] = useState('')",
+      "  return <ArcanaInputMask value={phone} onValueChange={setPhone} mask=\"(###) ###-####\" />",
       "}"
     ].join("\n")
   },
   angular: {
-    file: "cpf-field.component.ts",
+    file: "phone-field.component.ts",
     code: [
       "// No global setup in Angular — masking is built into ArcanaInputMask.",
       "import { Component } from '@angular/core'",
       "import { ArcanaInputMaskComponent } from '@arcanalabs/ui-components/angular'",
       "",
       "@Component({",
-      "  selector: 'app-cpf-field',",
+      "  selector: 'app-phone-field',",
       "  standalone: true,",
       "  imports: [ArcanaInputMaskComponent],",
-      "  template: `<input arcanaInputMask [(value)]=\"cpf\" mask=\"###.###.###-##\" />`",
+      "  template: `<input arcanaInputMask [(value)]=\"phone\" mask=\"(###) ###-####\" />`",
       "})",
-      "export class CpfFieldComponent {",
-      "  cpf = ''",
+      "export class PhoneFieldComponent {",
+      "  phone = ''",
       "}"
     ].join("\n")
   },
   svelte: {
-    file: "CpfField.svelte",
+    file: "PhoneField.svelte",
     code: [
       "<script lang=\"ts\">",
       "  // No global setup in Svelte — masking is built into ArcanaInputMask.",
       "  import { ArcanaInputMask } from '@arcanalabs/ui-components/svelte'",
-      "  let cpf = $state('')",
+      "  let phone = $state('')",
       "</script>",
       "",
-      "<ArcanaInputMask value={cpf} onValueChange={(v) => (cpf = v)} mask=\"###.###.###-##\" />"
+      "<ArcanaInputMask value={phone} onValueChange={(v) => (phone = v)} mask=\"(###) ###-####\" />"
     ].join("\n")
   }
 };

@@ -91,7 +91,7 @@ export const zh: Messages = {
       blurb: "完全自定义的选择框（无 Element Plus），传送到 <c>&lt;body&gt;</c>，支持单选/<c>multiple</c>、<c>searchable</c>、<c>clearable</c> 和键盘导航。"
     },
     treeSelect: {
-      blurb: "面板为可搜索层级结构的选择器 —— 从树中选择节点（成本中心、分类），支持单选或多选，默认仅可选叶子节点。"
+      blurb: "面板为可搜索层级结构的选择器 —— 从树中选择节点（部门、分类），支持单选或多选，默认仅可选叶子节点。"
     },
     checkbox: {
       blurb: "包裹真实原生 <c>&lt;input type=\"checkbox\"&gt;</c> 的二元复选框，带 <c>indeterminate</c> 状态；如需切换设置项请用 <c>ArcanaSwitch</c>。"
@@ -106,7 +106,7 @@ export const zh: Messages = {
       blurb: "基于 ref 的 shadcn 模态框，提供 <c>show()</c>/<c>hide()</c> API——传送到 <c>&lt;body&gt;</c>、锁定焦点并在按 Escape 时关闭。"
     },
     inputMask: {
-      blurb: "基于 <c>v-maska</c> 的带掩码文本输入框，其 <c>v-model</c> 始终保存<b>原始</b>值（CPF、CNPJ、电话……）；需全局注册 <c>v-maska</c>。"
+      blurb: "基于 <c>v-maska</c> 的带掩码文本输入框，其 <c>v-model</c> 始终保存<b>原始</b>值（电话、卡号、邮编……）；需全局注册 <c>v-maska</c>。"
     },
     inputBoolean: {
       blurb: "用于布尔字段的是/否选择框，可归一化 <c>true</c>/<c>false</c>/<c>null</c>，并带状态和类 SQL 的标签变体。"
@@ -277,8 +277,9 @@ export const zh: Messages = {
 
     // ── input mask ──
     maskPhone: "电话",
-    cpfRaw: "CPF（原始值）",
+    maskCard: "卡号",
     phoneRaw: "电话（原始值）",
+    cardRaw: "卡号（原始值）",
 
     // ── input boolean ──
     boolYesNo: "是 / 否",
@@ -303,11 +304,11 @@ export const zh: Messages = {
     // ── radio card group ──
     payCreditCard: "信用卡",
     payCreditCardDesc: "自动定期扣款。",
-    payPix: "Pix",
-    payPixDesc: "即时到账，免手续费。",
-    payPixBadge: "推荐",
-    payBoleto: "Boleto",
-    payBoletoDesc: "3 个工作日内到期。",
+    payBankTransfer: "银行转账",
+    payBankTransferDesc: "即时到账，免手续费。",
+    payBankTransferBadge: "推荐",
+    payInvoice: "账单",
+    payInvoiceDesc: "3 个工作日内到期。",
     payCash: "货到付款",
     selectedLabel: "已选择",
 
@@ -405,14 +406,14 @@ export const zh: Messages = {
     btnAdd: "添加",
 
     specSheetDocNum: "记录编号 042 · 更新于 14.Mar.2026",
-    specSheetRegistrationData: "注册资料",
+    specSheetRegistrationData: "公司资料",
     specSheetLegalName: "法定名称",
-    specSheetStateRegistration: "州注册号",
+    specSheetRegistrationNo: "注册编号",
     specSheetContact: "联系方式",
     specSheetPhone: "电话",
     specSheetEmail: "邮箱",
     specSheetChangeData: "修改资料",
-    specSheetFinancial: "财务",
+    specSheetBilling: "账单",
     specSheetLimit: "额度",
     specSheetBalance: "余额",
     specSheetDueDate: "到期日",
@@ -472,7 +473,7 @@ export const zh: Messages = {
     noticeActivatedTitle: "已激活",
     noticeActivatedBody: "集成已成功完成。",
     noticeManualPaymentTitle: "手动付款",
-    noticeManualPaymentBody: "Pix 和 Boleto 每个周期都会生成新的付款链接。",
+    noticeManualPaymentBody: "银行转账和账单每个周期都会生成新的付款链接。",
     noticePendingTitle: "等待在 Stripe 上激活",
     noticePendingBody: "点击 \"Sync\" 在网关上创建订阅。",
     noticeErrorTitle: "加载失败",
@@ -485,10 +486,10 @@ export const zh: Messages = {
 
     requiredValidateForm: "验证表单",
     requiredDescription: "创建客户前必须填写以下字段。",
-    requiredCnpjHint: "步骤 1 · 注册资料",
+    requiredTaxIdHint: "步骤 1 · 公司资料",
     requiredPhoneHint: "步骤 2 · 联系方式",
     requiredDeliveryAddress: "配送地址",
-    requiredDeliveryAddressHint: "步骤 3 · 物流",
+    requiredDeliveryAddressHint: "步骤 3 · 配送",
 
     onboardingTitle: "暂无项目",
     onboardingDescription: "创建您的第一个项目，开始组织您的工作。",
@@ -514,15 +515,15 @@ export const zh: Messages = {
     switchSegProduction: "生产环境",
 
     // ── tree select ──
-    treeAdministrative: "行政",
-    treeHr: "人力资源",
-    treeFinance: "财务",
-    treeOperations: "运营",
-    treeLogistics: "物流",
-    treeFleet: "车队",
-    treeWarehouse: "仓库",
-    treeCommercial: "商务",
-    treePickOne: "选择成本中心",
+    treeEngineering: "研发",
+    treeFrontend: "前端",
+    treeBackend: "后端",
+    treeMarketing: "市场",
+    treeContent: "内容",
+    treeGrowth: "增长",
+    treeBrand: "品牌",
+    treeSales: "销售",
+    treePickOne: "选择部门",
     treePickSeveral: "选择多个",
     treeSingleTitle: "单选",
     treeMultipleTitle: "多选",
@@ -539,11 +540,11 @@ export const zh: Messages = {
     selectFooterCount: "已选 {count} 项",
     selectClearLabel: "清除",
     selectStatusLabel: "状态",
-    statusOpen: "待处理",
-    statusConfirmed: "已确认",
-    statusShipped: "已发货",
-    statusDelivered: "已送达",
-    statusCanceled: "已取消",
+    statusTodo: "待办",
+    statusInProgress: "进行中",
+    statusInReview: "待审核",
+    statusDone: "已完成",
+    statusBlocked: "已阻塞",
     accAnimatedTitle: "带动画",
     accAnimatedHint: "平滑的高度过渡；遵循 reduced-motion",
     segIconOnly: "仅图标",
@@ -557,14 +558,14 @@ export const zh: Messages = {
     rcIconStart: "图标在前",
     rcIconEnd: "图标在后",
     rcRadioEnd: "单选按钮在后",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "货物发票",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "消费者小票",
-    rcFreightSender: "寄件方",
-    rcFreightSenderDesc: "运费由卖方支付",
-    rcFreightRecipient: "收件方",
-    rcFreightRecipientDesc: "运费到付"
+    rcPersonalAccount: "个人账户",
+    rcPersonalAccountDesc: "适合个人使用",
+    rcBusinessAccount: "企业账户",
+    rcBusinessAccountDesc: "适合团队与企业",
+    rcShippingStandard: "标准配送",
+    rcShippingStandardDesc: "5–7 个工作日送达",
+    rcShippingExpress: "快速配送",
+    rcShippingExpressDesc: "次个工作日送达"
 
   }
 };

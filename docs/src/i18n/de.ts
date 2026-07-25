@@ -91,7 +91,7 @@ export const de: Messages = {
       blurb: "Ein vollständig eigenes Select (ohne Element Plus), ins <c>&lt;body&gt;</c> teleportiert, mit Einfach-/<c>multiple</c>-Auswahl, <c>searchable</c>, <c>clearable</c> und Tastaturnavigation."
     },
     treeSelect: {
-      blurb: "Ein Select, dessen Panel eine durchsuchbare Hierarchie ist — wähle einen Knoten aus dem Baum (Kostenstellen, Kategorien), einzeln oder mehrfach, standardmäßig nur Blätter."
+      blurb: "Ein Select, dessen Panel eine durchsuchbare Hierarchie ist — wähle einen Knoten aus dem Baum (Abteilungen, Kategorien), einzeln oder mehrfach, standardmäßig nur Blätter."
     },
     checkbox: {
       blurb: "Eine binäre Checkbox, die ein echtes natives <c>&lt;input type=\"checkbox\"&gt;</c> mit <c>indeterminate</c>-Zustand umschließt; für Einstellungen nimm <c>ArcanaSwitch</c>."
@@ -106,7 +106,7 @@ export const de: Messages = {
       blurb: "Ein Modal im arcana-Stil mit ref-basierter <c>show()</c>/<c>hide()</c>-API — teleportiert ins <c>&lt;body&gt;</c>, fängt den Fokus und schließt bei Escape."
     },
     inputMask: {
-      blurb: "Ein maskiertes Texteingabefeld auf <c>v-maska</c>, dessen <c>v-model</c> stets den <b>rohen</b> Wert hält (CPF, CNPJ, Telefon…); erfordert global registriertes <c>v-maska</c>."
+      blurb: "Ein maskiertes Texteingabefeld auf <c>v-maska</c>, dessen <c>v-model</c> stets den <b>rohen</b> Wert hält (Telefon, Kartennummer, PLZ…); erfordert global registriertes <c>v-maska</c>."
     },
     inputBoolean: {
       blurb: "Ein Ja/Nein-Select für boolesche Felder, das <c>true</c>/<c>false</c>/<c>null</c> normalisiert, mit Status- und SQL-artigen Label-Varianten."
@@ -277,8 +277,9 @@ export const de: Messages = {
 
     // ── input mask ──
     maskPhone: "Telefon",
-    cpfRaw: "CPF (roh)",
+    maskCard: "Kartennummer",
     phoneRaw: "Telefon (roh)",
+    cardRaw: "Karte (roh)",
 
     // ── input boolean ──
     boolYesNo: "Ja / Nein",
@@ -303,11 +304,11 @@ export const de: Messages = {
     // ── radio card group ──
     payCreditCard: "Kreditkarte",
     payCreditCardDesc: "Automatische wiederkehrende Abbuchung.",
-    payPix: "Pix",
-    payPixDesc: "Sofort, keine Gebühren.",
-    payPixBadge: "Empfohlen",
-    payBoleto: "Boleto",
-    payBoletoDesc: "Fällig in 3 Werktagen.",
+    payBankTransfer: "Banküberweisung",
+    payBankTransferDesc: "Sofort, keine Gebühren.",
+    payBankTransferBadge: "Empfohlen",
+    payInvoice: "Rechnung",
+    payInvoiceDesc: "Fällig in 3 Werktagen.",
     payCash: "Barzahlung bei Lieferung",
     selectedLabel: "ausgewählt",
 
@@ -405,14 +406,14 @@ export const de: Messages = {
     btnAdd: "Hinzufügen",
 
     specSheetDocNum: "Datensatz Nr. 042 · Aktualisiert 14.Mar.2026",
-    specSheetRegistrationData: "Registrierungsdaten",
+    specSheetRegistrationData: "Unternehmensdaten",
     specSheetLegalName: "Firmenname",
-    specSheetStateRegistration: "Staatliche Registrierung",
+    specSheetRegistrationNo: "Registernummer",
     specSheetContact: "Kontakt",
     specSheetPhone: "Telefon",
     specSheetEmail: "E-Mail",
     specSheetChangeData: "Daten ändern",
-    specSheetFinancial: "Finanzen",
+    specSheetBilling: "Abrechnung",
     specSheetLimit: "Limit",
     specSheetBalance: "Saldo",
     specSheetDueDate: "Fälligkeitsdatum",
@@ -472,7 +473,7 @@ export const de: Messages = {
     noticeActivatedTitle: "Aktiviert",
     noticeActivatedBody: "Integration erfolgreich abgeschlossen.",
     noticeManualPaymentTitle: "Manuelle Zahlung",
-    noticeManualPaymentBody: "Pix und Boleto erzeugen in jedem Zyklus einen neuen Zahlungslink.",
+    noticeManualPaymentBody: "Banküberweisung und Rechnung erzeugen in jedem Zyklus einen neuen Zahlungslink.",
     noticePendingTitle: "Warten auf Aktivierung bei Stripe",
     noticePendingBody: "Klicken Sie auf \"Sync\", um das Abonnement im Gateway zu erstellen.",
     noticeErrorTitle: "Laden fehlgeschlagen",
@@ -485,10 +486,10 @@ export const de: Messages = {
 
     requiredValidateForm: "Formular validieren",
     requiredDescription: "Die folgenden Felder müssen vor dem Anlegen des Kunden ausgefüllt werden.",
-    requiredCnpjHint: "Schritt 1 · Registrierungsdaten",
+    requiredTaxIdHint: "Schritt 1 · Unternehmensdaten",
     requiredPhoneHint: "Schritt 2 · Kontakt",
     requiredDeliveryAddress: "Lieferadresse",
-    requiredDeliveryAddressHint: "Schritt 3 · Logistik",
+    requiredDeliveryAddressHint: "Schritt 3 · Versand",
 
     onboardingTitle: "Noch keine Projekte hier",
     onboardingDescription: "Erstellen Sie Ihr erstes Projekt, um Ihre Arbeit zu organisieren.",
@@ -514,15 +515,15 @@ export const de: Messages = {
     switchSegProduction: "Produktion",
 
     // ── tree select ──
-    treeAdministrative: "Verwaltung",
-    treeHr: "Personal",
-    treeFinance: "Finanzen",
-    treeOperations: "Betrieb",
-    treeLogistics: "Logistik",
-    treeFleet: "Fuhrpark",
-    treeWarehouse: "Lager",
-    treeCommercial: "Vertrieb",
-    treePickOne: "Kostenstelle wählen",
+    treeEngineering: "Engineering",
+    treeFrontend: "Frontend",
+    treeBackend: "Backend",
+    treeMarketing: "Marketing",
+    treeContent: "Content",
+    treeGrowth: "Growth",
+    treeBrand: "Brand",
+    treeSales: "Vertrieb",
+    treePickOne: "Abteilung wählen",
     treePickSeveral: "Mehrere wählen",
     treeSingleTitle: "Einfachauswahl",
     treeMultipleTitle: "Mehrfachauswahl",
@@ -539,11 +540,11 @@ export const de: Messages = {
     selectFooterCount: "{count} ausgewählt",
     selectClearLabel: "Zurücksetzen",
     selectStatusLabel: "Status",
-    statusOpen: "Offen",
-    statusConfirmed: "Bestätigt",
-    statusShipped: "Versandt",
-    statusDelivered: "Zugestellt",
-    statusCanceled: "Storniert",
+    statusTodo: "Zu erledigen",
+    statusInProgress: "In Arbeit",
+    statusInReview: "In Prüfung",
+    statusDone: "Erledigt",
+    statusBlocked: "Blockiert",
     accAnimatedTitle: "Animiert",
     accAnimatedHint: "Weiche Höhenanimation; beachtet Reduced Motion",
     segIconOnly: "Nur Symbole",
@@ -557,14 +558,14 @@ export const de: Messages = {
     rcIconStart: "Symbol am Anfang",
     rcIconEnd: "Symbol am Ende",
     rcRadioEnd: "Radio am Ende",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "Warenrechnung",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "Verbraucherbeleg",
-    rcFreightSender: "Absender",
-    rcFreightSenderDesc: "Fracht vom Verkäufer bezahlt",
-    rcFreightRecipient: "Empfänger",
-    rcFreightRecipientDesc: "Fracht bei Lieferung bezahlt"
+    rcPersonalAccount: "Privatkonto",
+    rcPersonalAccountDesc: "Für die private Nutzung",
+    rcBusinessAccount: "Geschäftskonto",
+    rcBusinessAccountDesc: "Für Teams und Unternehmen",
+    rcShippingStandard: "Standardversand",
+    rcShippingStandardDesc: "Ankunft in 5–7 Werktagen",
+    rcShippingExpress: "Expressversand",
+    rcShippingExpressDesc: "Ankunft am nächsten Werktag"
 
   }
 };

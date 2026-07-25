@@ -91,7 +91,7 @@ export const ja: Messages = {
       blurb: "<c>&lt;body&gt;</c> にテレポートする完全カスタムなセレクト（Element Plus 不使用）で、単一/<c>multiple</c>、<c>searchable</c>、<c>clearable</c>、キーボード操作をサポートします。"
     },
     treeSelect: {
-      blurb: "パネルが検索可能な階層になっているセレクトです。ツリーからノード（原価センター、カテゴリ）を単一または複数選択でき、既定では葉のみ選択できます。"
+      blurb: "パネルが検索可能な階層になっているセレクトです。ツリーからノード（部署、カテゴリ）を単一または複数選択でき、既定では葉のみ選択できます。"
     },
     checkbox: {
       blurb: "本物のネイティブ <c>&lt;input type=\"checkbox\"&gt;</c> をラップし <c>indeterminate</c> 状態を持つ二値チェックボックスで、設定のオン/オフには <c>ArcanaSwitch</c> を使います。"
@@ -106,7 +106,7 @@ export const ja: Messages = {
       blurb: "ref ベースの <c>show()</c>/<c>hide()</c> API を持つ shadcn モーダルで、<c>&lt;body&gt;</c> にテレポートし、フォーカスをトラップし、Escape で閉じます。"
     },
     inputMask: {
-      blurb: "<c>v-maska</c> 上に構築され、<c>v-model</c> が常に <b>raw</b> の値（CPF・CNPJ・電話番号…）を保持するマスク付きテキスト入力で、<c>v-maska</c> のグローバル登録が必要です。"
+      blurb: "<c>v-maska</c> 上に構築され、<c>v-model</c> が常に <b>raw</b> の値（電話番号・カード番号・郵便番号…）を保持するマスク付きテキスト入力で、<c>v-maska</c> のグローバル登録が必要です。"
     },
     inputBoolean: {
       blurb: "<c>true</c>/<c>false</c>/<c>null</c> を正規化するブール値フィールド向けの「はい/いいえ」セレクトで、status や SQL ライクなラベルのバリエーションを備えます。"
@@ -277,8 +277,9 @@ export const ja: Messages = {
 
     // ── input mask ──
     maskPhone: "電話番号",
-    cpfRaw: "cpf（生値）",
+    maskCard: "カード番号",
     phoneRaw: "電話番号（生値）",
+    cardRaw: "カード番号（生値）",
 
     // ── input boolean ──
     boolYesNo: "はい / いいえ",
@@ -303,11 +304,11 @@ export const ja: Messages = {
     // ── radio card group ──
     payCreditCard: "クレジットカード",
     payCreditCardDesc: "自動継続課金。",
-    payPix: "Pix",
-    payPixDesc: "即時、手数料無料。",
-    payPixBadge: "おすすめ",
-    payBoleto: "Boleto",
-    payBoletoDesc: "3営業日以内に支払い。",
+    payBankTransfer: "銀行振込",
+    payBankTransferDesc: "即時、手数料無料。",
+    payBankTransferBadge: "おすすめ",
+    payInvoice: "請求書",
+    payInvoiceDesc: "3営業日以内に支払い。",
     payCash: "代金引換",
     selectedLabel: "選択済み",
 
@@ -405,14 +406,14 @@ export const ja: Messages = {
     btnAdd: "追加",
 
     specSheetDocNum: "レコード No. 042 · 更新 14.Mar.2026",
-    specSheetRegistrationData: "登録情報",
+    specSheetRegistrationData: "会社情報",
     specSheetLegalName: "正式名称",
-    specSheetStateRegistration: "州登録番号",
+    specSheetRegistrationNo: "登録番号",
     specSheetContact: "連絡先",
     specSheetPhone: "電話番号",
     specSheetEmail: "メール",
     specSheetChangeData: "情報を変更",
-    specSheetFinancial: "財務",
+    specSheetBilling: "請求",
     specSheetLimit: "限度額",
     specSheetBalance: "残高",
     specSheetDueDate: "支払期日",
@@ -472,7 +473,7 @@ export const ja: Messages = {
     noticeActivatedTitle: "有効化されました",
     noticeActivatedBody: "連携が正常に完了しました。",
     noticeManualPaymentTitle: "手動支払い",
-    noticeManualPaymentBody: "PixとBoletoは、サイクルごとに新しい請求リンクを生成します。",
+    noticeManualPaymentBody: "銀行振込と請求書は、サイクルごとに新しい請求リンクを生成します。",
     noticePendingTitle: "Stripeでの有効化を待機中",
     noticePendingBody: "「同期」をクリックして、ゲートウェイでサブスクリプションを作成します。",
     noticeErrorTitle: "読み込みに失敗しました",
@@ -485,10 +486,10 @@ export const ja: Messages = {
 
     requiredValidateForm: "フォームを検証",
     requiredDescription: "顧客を作成する前に、以下の項目を入力する必要があります。",
-    requiredCnpjHint: "ステップ1 · 登録情報",
+    requiredTaxIdHint: "ステップ1 · 会社情報",
     requiredPhoneHint: "ステップ2 · 連絡先",
     requiredDeliveryAddress: "配送先住所",
-    requiredDeliveryAddressHint: "ステップ3 · 物流",
+    requiredDeliveryAddressHint: "ステップ3 · 配送",
 
     onboardingTitle: "プロジェクトがまだありません",
     onboardingDescription: "最初のプロジェクトを作成して、作業の整理を始めましょう。",
@@ -514,15 +515,15 @@ export const ja: Messages = {
     switchSegProduction: "本番",
 
     // ── tree select ──
-    treeAdministrative: "管理",
-    treeHr: "人事",
-    treeFinance: "財務",
-    treeOperations: "オペレーション",
-    treeLogistics: "物流",
-    treeFleet: "車両",
-    treeWarehouse: "倉庫",
-    treeCommercial: "営業",
-    treePickOne: "原価センターを選択",
+    treeEngineering: "エンジニアリング",
+    treeFrontend: "フロントエンド",
+    treeBackend: "バックエンド",
+    treeMarketing: "マーケティング",
+    treeContent: "コンテンツ",
+    treeGrowth: "グロース",
+    treeBrand: "ブランド",
+    treeSales: "セールス",
+    treePickOne: "部署を選択",
     treePickSeveral: "複数選択",
     treeSingleTitle: "単一選択",
     treeMultipleTitle: "複数選択",
@@ -539,11 +540,11 @@ export const ja: Messages = {
     selectFooterCount: "{count} 件選択中",
     selectClearLabel: "クリア",
     selectStatusLabel: "ステータス",
-    statusOpen: "受付",
-    statusConfirmed: "確定",
-    statusShipped: "発送済",
-    statusDelivered: "配達済",
-    statusCanceled: "キャンセル",
+    statusTodo: "未着手",
+    statusInProgress: "進行中",
+    statusInReview: "レビュー中",
+    statusDone: "完了",
+    statusBlocked: "ブロック中",
     accAnimatedTitle: "アニメーション",
     accAnimatedHint: "滑らかな高さアニメーション。reduced-motion に対応",
     segIconOnly: "アイコンのみ",
@@ -557,14 +558,14 @@ export const ja: Messages = {
     rcIconStart: "アイコンを先頭に",
     rcIconEnd: "アイコンを末尾に",
     rcRadioEnd: "ラジオを末尾に",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "商品の請求書",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "消費者向けレシート",
-    rcFreightSender: "発送者",
-    rcFreightSenderDesc: "送料は販売者負担",
-    rcFreightRecipient: "受取人",
-    rcFreightRecipientDesc: "送料は着払い"
+    rcPersonalAccount: "個人アカウント",
+    rcPersonalAccountDesc: "個人利用向け",
+    rcBusinessAccount: "法人アカウント",
+    rcBusinessAccountDesc: "チーム・企業向け",
+    rcShippingStandard: "通常配送",
+    rcShippingStandardDesc: "5〜7営業日で到着",
+    rcShippingExpress: "速達配送",
+    rcShippingExpressDesc: "翌営業日に到着"
 
   }
 };

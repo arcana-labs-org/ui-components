@@ -91,7 +91,7 @@ export const en: Messages = {
       blurb: "A fully custom select (no Element Plus) teleported to <c>&lt;body&gt;</c>, with single/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> and keyboard navigation."
     },
     treeSelect: {
-      blurb: "A select whose panel is a searchable hierarchy — pick a node from a tree (cost centres, categories), single or multiple, with leaf-only selection by default."
+      blurb: "A select whose panel is a searchable hierarchy — pick a node from a tree (departments, categories), single or multiple, with leaf-only selection by default."
     },
     checkbox: {
       blurb: "A binary checkbox wrapping a real native <c>&lt;input type=\"checkbox\"&gt;</c> with an <c>indeterminate</c> state; use <c>ArcanaSwitch</c> to toggle a setting."
@@ -106,7 +106,7 @@ export const en: Messages = {
       blurb: "A shadcn modal with a ref-based <c>show()</c>/<c>hide()</c> API — teleports to <c>&lt;body&gt;</c>, traps focus and closes on Escape."
     },
     inputMask: {
-      blurb: "A masked text input on <c>v-maska</c> whose <c>v-model</c> always holds the <b>raw</b> value (CPF, CNPJ, phone…); requires <c>v-maska</c> registered globally."
+      blurb: "A masked text input on <c>v-maska</c> whose <c>v-model</c> always holds the <b>raw</b> value (phone, card number, postcode…); requires <c>v-maska</c> registered globally."
     },
     inputBoolean: {
       blurb: "A yes/no select for boolean fields that normalises <c>true</c>/<c>false</c>/<c>null</c>, with status and SQL-like label variations."
@@ -277,8 +277,9 @@ export const en: Messages = {
 
     // ── input mask ──
     maskPhone: "Phone",
-    cpfRaw: "cpf (raw)",
+    maskCard: "Card number",
     phoneRaw: "phone (raw)",
+    cardRaw: "card (raw)",
 
     // ── input boolean ──
     boolYesNo: "Yes / No",
@@ -303,11 +304,11 @@ export const en: Messages = {
     // ── radio card group ──
     payCreditCard: "Credit card",
     payCreditCardDesc: "Automatic recurring charge.",
-    payPix: "Pix",
-    payPixDesc: "Instant, no fees.",
-    payPixBadge: "Recommended",
-    payBoleto: "Boleto",
-    payBoletoDesc: "Due in 3 business days.",
+    payBankTransfer: "Bank transfer",
+    payBankTransferDesc: "Instant, no fees.",
+    payBankTransferBadge: "Recommended",
+    payInvoice: "Invoice",
+    payInvoiceDesc: "Due in 3 business days.",
     payCash: "Cash on delivery",
     selectedLabel: "selected",
 
@@ -405,14 +406,14 @@ export const en: Messages = {
     btnAdd: "Add",
 
     specSheetDocNum: "Record No. 042 · Updated 14.Mar.2026",
-    specSheetRegistrationData: "Registration data",
+    specSheetRegistrationData: "Company details",
     specSheetLegalName: "Legal name",
-    specSheetStateRegistration: "State registration",
+    specSheetRegistrationNo: "Registration no.",
     specSheetContact: "Contact",
     specSheetPhone: "Phone",
     specSheetEmail: "Email",
     specSheetChangeData: "Change data",
-    specSheetFinancial: "Financial",
+    specSheetBilling: "Billing",
     specSheetLimit: "Limit",
     specSheetBalance: "Balance",
     specSheetDueDate: "Due date",
@@ -472,7 +473,7 @@ export const en: Messages = {
     noticeActivatedTitle: "Activated",
     noticeActivatedBody: "Integration completed successfully.",
     noticeManualPaymentTitle: "Manual payment",
-    noticeManualPaymentBody: "Pix and Boleto generate a new charge link each cycle.",
+    noticeManualPaymentBody: "Bank transfer and invoice generate a new charge link each cycle.",
     noticePendingTitle: "Waiting for activation on Stripe",
     noticePendingBody: "Click \"Sync\" to create the subscription on the gateway.",
     noticeErrorTitle: "Failed to load",
@@ -485,10 +486,10 @@ export const en: Messages = {
 
     requiredValidateForm: "Validate form",
     requiredDescription: "The fields below must be filled in before creating the customer.",
-    requiredCnpjHint: "Step 1 · Registration data",
+    requiredTaxIdHint: "Step 1 · Company details",
     requiredPhoneHint: "Step 2 · Contact",
-    requiredDeliveryAddress: "Delivery address",
-    requiredDeliveryAddressHint: "Step 3 · Logistics",
+    requiredDeliveryAddress: "Shipping address",
+    requiredDeliveryAddressHint: "Step 3 · Shipping",
 
     onboardingTitle: "No projects here yet",
     onboardingDescription: "Create your first project to start organizing your work.",
@@ -514,15 +515,15 @@ export const en: Messages = {
     switchSegProduction: "Production",
 
     // ── tree select ──
-    treeAdministrative: "Administrative",
-    treeHr: "HR",
-    treeFinance: "Finance",
-    treeOperations: "Operations",
-    treeLogistics: "Logistics",
-    treeFleet: "Fleet",
-    treeWarehouse: "Warehouse",
-    treeCommercial: "Commercial",
-    treePickOne: "Pick a cost centre",
+    treeEngineering: "Engineering",
+    treeFrontend: "Frontend",
+    treeBackend: "Backend",
+    treeMarketing: "Marketing",
+    treeContent: "Content",
+    treeGrowth: "Growth",
+    treeBrand: "Brand",
+    treeSales: "Sales",
+    treePickOne: "Pick a department",
     treePickSeveral: "Pick several",
     treeSingleTitle: "Single selection",
     treeMultipleTitle: "Multiple selection",
@@ -539,11 +540,11 @@ export const en: Messages = {
     selectFooterCount: "{count} selected",
     selectClearLabel: "Clear",
     selectStatusLabel: "status",
-    statusOpen: "Open",
-    statusConfirmed: "Confirmed",
-    statusShipped: "Shipped",
-    statusDelivered: "Delivered",
-    statusCanceled: "Canceled",
+    statusTodo: "To do",
+    statusInProgress: "In progress",
+    statusInReview: "In review",
+    statusDone: "Done",
+    statusBlocked: "Blocked",
     accAnimatedTitle: "Animated",
     accAnimatedHint: "Smooth height transition; respects reduced-motion",
     segIconOnly: "Icons only",
@@ -557,14 +558,14 @@ export const en: Messages = {
     rcIconStart: "Icon at the start",
     rcIconEnd: "Icon at the end",
     rcRadioEnd: "Radio at the end",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "Goods invoice",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "Consumer receipt",
-    rcFreightSender: "Sender",
-    rcFreightSenderDesc: "Freight paid by the seller",
-    rcFreightRecipient: "Recipient",
-    rcFreightRecipientDesc: "Freight paid on delivery"
+    rcPersonalAccount: "Personal account",
+    rcPersonalAccountDesc: "For individual use",
+    rcBusinessAccount: "Business account",
+    rcBusinessAccountDesc: "For teams and companies",
+    rcShippingStandard: "Standard shipping",
+    rcShippingStandardDesc: "Arrives in 5–7 business days",
+    rcShippingExpress: "Express shipping",
+    rcShippingExpressDesc: "Arrives next business day"
 
   }
 };

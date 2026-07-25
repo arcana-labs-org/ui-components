@@ -91,7 +91,7 @@ export const es: Messages = {
       blurb: "Un select totalmente personalizado (sin Element Plus) teletransportado a <c>&lt;body&gt;</c>, con selección única/<c>multiple</c>, <c>searchable</c>, <c>clearable</c> y navegación por teclado."
     },
     treeSelect: {
-      blurb: "Un select cuyo panel es una jerarquía con búsqueda — elige un nodo del árbol (centros de coste, categorías), único o múltiple, seleccionando solo hojas por defecto."
+      blurb: "Un select cuyo panel es una jerarquía con búsqueda — elige un nodo del árbol (departamentos, categorías), único o múltiple, seleccionando solo hojas por defecto."
     },
     checkbox: {
       blurb: "Un checkbox binario que envuelve un <c>&lt;input type=\"checkbox\"&gt;</c> nativo real con estado <c>indeterminate</c>; usa <c>ArcanaSwitch</c> para activar un ajuste."
@@ -106,7 +106,7 @@ export const es: Messages = {
       blurb: "Un modal shadcn con API <c>show()</c>/<c>hide()</c> basada en ref — se teletransporta a <c>&lt;body&gt;</c>, atrapa el foco y cierra con Escape."
     },
     inputMask: {
-      blurb: "Un input de texto con máscara sobre <c>v-maska</c> cuyo <c>v-model</c> siempre guarda el valor <b>crudo</b> (CPF, CNPJ, teléfono…); requiere <c>v-maska</c> registrado globalmente."
+      blurb: "Un input de texto con máscara sobre <c>v-maska</c> cuyo <c>v-model</c> siempre guarda el valor <b>crudo</b> (teléfono, número de tarjeta, código postal…); requiere <c>v-maska</c> registrado globalmente."
     },
     inputBoolean: {
       blurb: "Un select sí/no para campos booleanos que normaliza <c>true</c>/<c>false</c>/<c>null</c>, con variaciones de etiqueta de estado y tipo SQL."
@@ -277,8 +277,9 @@ export const es: Messages = {
 
     // ── input mask ──
     maskPhone: "Teléfono",
-    cpfRaw: "cpf (crudo)",
+    maskCard: "Número de tarjeta",
     phoneRaw: "teléfono (crudo)",
+    cardRaw: "tarjeta (crudo)",
 
     // ── input boolean ──
     boolYesNo: "Sí / No",
@@ -303,11 +304,11 @@ export const es: Messages = {
     // ── radio card group ──
     payCreditCard: "Tarjeta de crédito",
     payCreditCardDesc: "Cargo recurrente automático.",
-    payPix: "Pix",
-    payPixDesc: "Instantáneo, sin comisiones.",
-    payPixBadge: "Recomendado",
-    payBoleto: "Boleto",
-    payBoletoDesc: "Vence en 3 días hábiles.",
+    payBankTransfer: "Transferencia bancaria",
+    payBankTransferDesc: "Instantáneo, sin comisiones.",
+    payBankTransferBadge: "Recomendado",
+    payInvoice: "Factura",
+    payInvoiceDesc: "Vence en 3 días hábiles.",
     payCash: "Pago contra entrega",
     selectedLabel: "seleccionado",
 
@@ -405,14 +406,14 @@ export const es: Messages = {
     btnAdd: "Añadir",
 
     specSheetDocNum: "Registro N.º 042 · Actualizado 14.Mar.2026",
-    specSheetRegistrationData: "Datos de registro",
+    specSheetRegistrationData: "Datos de la empresa",
     specSheetLegalName: "Razón social",
-    specSheetStateRegistration: "Inscripción estatal",
+    specSheetRegistrationNo: "N.º de registro",
     specSheetContact: "Contacto",
     specSheetPhone: "Teléfono",
     specSheetEmail: "Correo electrónico",
     specSheetChangeData: "Cambiar datos",
-    specSheetFinancial: "Financiero",
+    specSheetBilling: "Facturación",
     specSheetLimit: "Límite",
     specSheetBalance: "Saldo",
     specSheetDueDate: "Fecha de vencimiento",
@@ -472,7 +473,7 @@ export const es: Messages = {
     noticeActivatedTitle: "Activado",
     noticeActivatedBody: "Integración completada con éxito.",
     noticeManualPaymentTitle: "Pago manual",
-    noticeManualPaymentBody: "Pix y Boleto generan un nuevo enlace de cobro en cada ciclo.",
+    noticeManualPaymentBody: "La transferencia bancaria y la factura generan un nuevo enlace de cobro en cada ciclo.",
     noticePendingTitle: "Esperando activación en Stripe",
     noticePendingBody: "Haz clic en \"Sincronizar\" para crear la suscripción en la pasarela.",
     noticeErrorTitle: "Error al cargar",
@@ -485,10 +486,10 @@ export const es: Messages = {
 
     requiredValidateForm: "Validar formulario",
     requiredDescription: "Los campos de abajo deben completarse antes de crear el cliente.",
-    requiredCnpjHint: "Paso 1 · Datos de registro",
+    requiredTaxIdHint: "Paso 1 · Datos de la empresa",
     requiredPhoneHint: "Paso 2 · Contacto",
-    requiredDeliveryAddress: "Dirección de entrega",
-    requiredDeliveryAddressHint: "Paso 3 · Logística",
+    requiredDeliveryAddress: "Dirección de envío",
+    requiredDeliveryAddressHint: "Paso 3 · Envío",
 
     onboardingTitle: "Aún no hay proyectos aquí",
     onboardingDescription: "Crea tu primer proyecto para empezar a organizar tu trabajo.",
@@ -514,15 +515,15 @@ export const es: Messages = {
     switchSegProduction: "Producción",
 
     // ── tree select ──
-    treeAdministrative: "Administrativo",
-    treeHr: "RR. HH.",
-    treeFinance: "Finanzas",
-    treeOperations: "Operaciones",
-    treeLogistics: "Logística",
-    treeFleet: "Flota",
-    treeWarehouse: "Almacén",
-    treeCommercial: "Comercial",
-    treePickOne: "Elige un centro de coste",
+    treeEngineering: "Ingeniería",
+    treeFrontend: "Frontend",
+    treeBackend: "Backend",
+    treeMarketing: "Marketing",
+    treeContent: "Contenido",
+    treeGrowth: "Growth",
+    treeBrand: "Marca",
+    treeSales: "Ventas",
+    treePickOne: "Elige un departamento",
     treePickSeveral: "Elige varios",
     treeSingleTitle: "Selección única",
     treeMultipleTitle: "Selección múltiple",
@@ -539,11 +540,11 @@ export const es: Messages = {
     selectFooterCount: "{count} seleccionado(s)",
     selectClearLabel: "Limpiar",
     selectStatusLabel: "estado",
-    statusOpen: "Abierto",
-    statusConfirmed: "Confirmado",
-    statusShipped: "Enviado",
-    statusDelivered: "Entregado",
-    statusCanceled: "Cancelado",
+    statusTodo: "Por hacer",
+    statusInProgress: "En curso",
+    statusInReview: "En revisión",
+    statusDone: "Hecho",
+    statusBlocked: "Bloqueado",
     accAnimatedTitle: "Animado",
     accAnimatedHint: "Transición suave de altura; respeta reduced-motion",
     segIconOnly: "Solo iconos",
@@ -557,14 +558,14 @@ export const es: Messages = {
     rcIconStart: "Icono al inicio",
     rcIconEnd: "Icono al final",
     rcRadioEnd: "Radio al final",
-    rcNfeModel: "NF-e",
-    rcNfeModelDesc: "Factura de mercancía",
-    rcNfceModel: "NFC-e",
-    rcNfceModelDesc: "Recibo al consumidor",
-    rcFreightSender: "Remitente",
-    rcFreightSenderDesc: "Flete pagado por el vendedor",
-    rcFreightRecipient: "Destinatario",
-    rcFreightRecipientDesc: "Flete pagado en la entrega"
+    rcPersonalAccount: "Cuenta personal",
+    rcPersonalAccountDesc: "Para uso individual",
+    rcBusinessAccount: "Cuenta de empresa",
+    rcBusinessAccountDesc: "Para equipos y empresas",
+    rcShippingStandard: "Envío estándar",
+    rcShippingStandardDesc: "Llega en 5–7 días hábiles",
+    rcShippingExpress: "Envío exprés",
+    rcShippingExpressDesc: "Llega al siguiente día hábil"
 
   }
 };

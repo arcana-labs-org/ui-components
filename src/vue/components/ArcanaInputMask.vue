@@ -26,7 +26,7 @@ import { mask, tokens } from 'maska'
  * sem duplicar CSS, herda o look do input shadcn base e preserva a UX de digitação
  * com placeholder de máscara.
  *
- * Use-cases típicos: CNPJ, CPF, telefone, CEP, RG, datas formatadas (DD/MM/YYYY).
+ * Use-cases típicos: telefone, cartão, CEP/código postal, documentos, datas formatadas (DD/MM/YYYY).
  *
  * API:
  * - `modelValue` (v-model) — string sem máscara (raw value); a máscara é aplicada apenas
@@ -129,7 +129,7 @@ export default {
         onMaska(event: any) {
             // `event.target.dataset.maskRawValue` é o raw value (sem caracteres da máscara) —
             // injetado pela diretiva `v-maska` no DOM. Emitir o raw mantém compat com o backend
-            // (que espera CNPJ sem pontos, CEP sem traço, etc).
+            // (que espera o documento sem pontuação, o código postal sem traço, etc).
             this.$emit('update:modelValue', event.target.dataset.maskRawValue)
         },
     },
