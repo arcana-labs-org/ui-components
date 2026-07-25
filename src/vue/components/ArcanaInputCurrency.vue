@@ -5,21 +5,19 @@
             <span class="icur-arcana-field__icon" v-if="showIcon && shadcn"><i :class="icon"></i></span>
         </slot>
 
-        <VueMoney
+        <input
             v-show="!disabled"
-            :class="[shadcn ? 'icur-arcana-input' : 'form-control', { 'has-icon': shadcn && showIcon }, $attrs.class]"
-            v-bind="formatting"
             ref="input"
-            :precision="fraction"
-            @update:modelValue="change"
+            type="text"
+            inputmode="decimal"
+            :class="[shadcn ? 'icur-arcana-input' : 'form-control', { 'has-icon': shadcn && showIcon }, $attrs.class]"
+            :name="name"
+            :value="display"
+            @input="onInput"
             @keyup.enter="$emit('enter', $event)"
             @keyup="keyUp"
             @change="$emit('change', $event)"
             @blur="$emit('blur', $event)"
-            :max="max"
-            :min="min"
-            :allow-blank="allowBlank && displayBlankValue"
-            :model-value="input()"
         />
 
         <input disabled :class="[shadcn ? 'icur-arcana-input' : 'form-control', { 'has-icon': shadcn && showIcon }, 'full-width']" v-show="disabled" type="text" :value="formattedCurrency">
@@ -29,15 +27,16 @@
 </template>
 
 <script lang="ts">
-import {Money3Component} from 'v-money3'
-import {CurrencyFormatter} from "../../core/currency"
+import {
+    CurrencyFormatter,
+    currencyDigitsFromValue,
+    formatCurrencyDigits,
+} from "../../core/currency"
 import type {Component} from "@vue/runtime-core"
 
 export default {
     emits: ['change', 'enter', 'blur', 'update:modelValue'],
     inheritAttrs: false,
-
-    components: {VueMoney: Money3Component},
 
     props: {
         disabled: {
@@ -88,6 +87,16 @@ export default {
     },
 
     computed: {
+        /**
+         * Texto exibido no input. Vem do mesmo core que React, Angular e Svelte
+         * usam — antes este port delegava à `v-money3`, o que custava uma
+         * dependência de runtime e fazia do Vue a única implementação diferente.
+         */
+        display(): string {
+            const digits = currencyDigitsFromValue(this.modelValue, this.fraction)
+            return formatCurrencyDigits(digits, this.fraction, this.prefix)
+        },
+
         formattedCurrency() {
             if (!this.formatCurrency) {
                 return this.modelValue
@@ -100,19 +109,29 @@ export default {
     data() {
         return {
             displayBlankValue: false,
-
-            formatting: {
-                decimal: ",",
-                thousands: ".",
-                prefix: this.prefix,
-                precision: this.fraction
-            }
         }
     },
 
     methods: {
-        input() {
-            return this.modelValue || "0," + ("0".repeat(this.fraction))
+        /**
+         * Reformata a cada tecla e reposiciona o cursor no fim: o preenchimento é
+         * da direita para a esquerda (digitar "1" mostra "0,01"), então editar no
+         * meio não faz sentido neste campo — é o mesmo comportamento dos demais
+         * ports e do v-money3 que este código substitui.
+         */
+        onInput(event: Event) {
+            const el = event.target as HTMLInputElement
+            const digits = el.value.replace(/\D/g, "")
+            const formatted = formatCurrencyDigits(digits, this.fraction, this.prefix)
+
+            // O DOM precisa ser corrigido na mão: quando o formatado é igual ao
+            // anterior (tecla rejeitada), o Vue não re-renderiza e o caractere
+            // inválido ficaria visível.
+            if (el.value !== formatted) el.value = formatted
+            const fim = formatted.length
+            el.setSelectionRange(fim, fim)
+
+            this.$emit("update:modelValue", formatted)
         },
 
         keyUp(e: any) {
@@ -135,7 +154,8 @@ export default {
 </script>
 
 <!--
-  Estilo NÃO-scoped (classe única `icur-arcana-input`) porque o `<VueMoney>` (v-money3)
-  renderiza um <input> filho — um `<style scoped>` do wrapper não atingiria de forma
-  confiável o elemento interno. Espelha `.arcana-input` do `<ArcanaInput>`.
+  Estilo NÃO-scoped (classe única `icur-arcana-input`) — mantido assim por
+  compatibilidade: era necessário quando o campo era renderizado pelo `v-money3`,
+  e continua sendo o seletor que os consumidores estilizam.
+  Espelha `.arcana-input` do `<ArcanaInput>`.
 -->

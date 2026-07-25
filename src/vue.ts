@@ -79,6 +79,7 @@ export type {
 } from "./core/context-menu";
 export type { HoverCardAlign, HoverCardPlacement, HoverCardSide } from "./core/hover-card";
 export { CurrencyFormatter } from "./core/currency";
+export { maskCurrency, formatCurrencyDigits, currencyDigitsFromValue } from "./core/currency";
 export { DateFormatter } from "./core/date";
 export { acquireZIndex, releaseZIndex } from "./vue/services/dialog-stack";
 export {

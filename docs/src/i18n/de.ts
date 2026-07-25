@@ -69,8 +69,8 @@ export const de: Messages = {
       p2: "Jede Peer hier ist <b>optional</b>: Installieren Sie nur das Framework, das Sie verwenden, plus die Extras für die Funktionen, die Sie rendern. Bei der Installation bricht nichts, wenn Sie eine auslassen — verlangt wird sie von der Komponente, die sie braucht."
     },
     maska: {
-      title: "v-maska installieren",
-      p1: "Die Komponente <c>ArcanaInputMask</c> nutzt die Direktive <c>v-maska</c> aus dem Paket <c>maska</c>. Es ist eine <b>optionale Peer-Dependency</b>: Installieren Sie es zusammen mit der Bibliothek und registrieren Sie es einmalig global beim Erstellen der App.",
+      title: "Maskierung",
+      p1: "Eingabemaskierung steht in <b>allen vier Frameworks</b> über das Paket <c>maska</c> zur Verfügung, eine <b>optionale Peer-Dependency</b> — installieren Sie es, wenn Sie ein <c>ArcanaInputMask</c> rendern. Nur Vue hat einen zusätzlichen Schritt: die Direktive <c>v-maska</c> einmalig global registrieren.",
       p2: "Komponenten ohne Maskierung brauchen keine zusätzliche Einrichtung — dieser Schritt ist nur nötig, wenn Sie ein maskiertes Eingabefeld rendern."
     }
   },
@@ -267,8 +267,7 @@ export const de: Messages = {
 
   demos: {
     depMoment: "Datums-Parsing und -Formatierung hinter ArcanaDatePicker.",
-    depVMoney: "Währungsmaske in ArcanaInputCurrency (Vue).",
-    depMaska: "Eingabemaske in ArcanaInputMask; in Vue die Direktive mit app.use(Maska) registrieren.",
+    depMaska: "Eingabemaske in ArcanaInputMask — von allen vier Frameworks genutzt. Vue registriert zusätzlich die v-maska-Direktive.",
     depVue: "Nur für den /vue-Einstiegspunkt nötig.",
     depReact: "Nur für den /react-Einstiegspunkt nötig.",
     depReactDom: "Nur für den /react-Einstiegspunkt nötig.",

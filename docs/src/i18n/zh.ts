@@ -69,8 +69,8 @@ export const zh: Messages = {
       p2: "这里的 peer 依赖全部是<b>可选的</b>：只装你实际使用的框架，以及你要渲染的功能所需的额外包。漏装不会导致安装失败 —— 真正要求它的是用到它的那个组件。"
     },
     maska: {
-      title: "安装 v-maska",
-      p1: "<c>ArcanaInputMask</c> 组件依赖 <c>maska</c> 包提供的 <c>v-maska</c> 指令。它是<b>可选的 peer dependency</b>：请与本库一同安装，并在创建应用时全局注册一次。",
+      title: "输入掩码",
+      p1: "输入掩码在<b>四个框架</b>中均可用，由 <c>maska</c> 包提供，它是<b>可选的 peer dependency</b> —— 渲染 <c>ArcanaInputMask</c> 时安装即可。只有 Vue 多一步：在创建应用时全局注册一次 <c>v-maska</c> 指令。",
       p2: "不使用掩码的组件无需任何额外配置 — 只有渲染掩码输入框时才需要这一步。"
     }
   },
@@ -267,8 +267,7 @@ export const zh: Messages = {
 
   demos: {
     depMoment: "ArcanaDatePicker 背后的日期解析与格式化。",
-    depVMoney: "ArcanaInputCurrency 的货币掩码（Vue）。",
-    depMaska: "ArcanaInputMask 的输入掩码；在 Vue 中用 app.use(Maska) 注册指令。",
+    depMaska: "ArcanaInputMask 的输入掩码 —— 四个框架都在用。Vue 额外注册 v-maska 指令。",
     depVue: "仅 /vue 入口需要。",
     depReact: "仅 /react 入口需要。",
     depReactDom: "仅 /react 入口需要。",

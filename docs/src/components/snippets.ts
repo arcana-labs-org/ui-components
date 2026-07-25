@@ -145,16 +145,18 @@ export const stylesSnippets: Record<Framework, SectionCode> = {
   }
 };
 
-/* ───────────────── Masking — Vue registers v-maska; others built-in ──────────── */
+/* ── Masking — o pacote `maska` serve os QUATRO frameworks; só o Vue registra
+      a diretiva. Antes esta seção dizia "built-in" nos outros três, o que dava a
+      entender que a dependência era exclusiva do Vue. ────────────────────────── */
 
 export const maskaSnippets: Record<Framework, SectionCode> = {
   vue: {
     file: "main.ts",
     code: [
-      "// maska is an optional peer dependency — install it if you use ArcanaInputMask:",
-      "//   npm i maska",
+      "// maska is an optional peer dependency, used by ALL FOUR frameworks.",
+      "// Install it whenever you render an ArcanaInputMask:  npm i maska",
       "",
-      "// main.ts — Vue needs the global v-maska directive registered once.",
+      "// Vue is the only one with an extra step: register the directive once.",
       "import { createApp } from 'vue'",
       "import Maska from 'maska'",
       "import App from './App.vue'",
@@ -168,7 +170,7 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
   react: {
     file: "PhoneField.tsx",
     code: [
-      "// No global setup in React — masking is built into ArcanaInputMask.",
+      "// npm i maska — then no global setup: React reads maska's pure functions.",
       "import { useState } from 'react'",
       "import { ArcanaInputMask } from '@arcanalabs/ui-components/react'",
       "",
@@ -181,7 +183,7 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
   angular: {
     file: "phone-field.component.ts",
     code: [
-      "// No global setup in Angular — masking is built into ArcanaInputMask.",
+      "// npm i maska — no global setup here: Angular reads maska's pure functions.",
       "import { Component } from '@angular/core'",
       "import { ArcanaInputMaskComponent } from '@arcanalabs/ui-components/angular'",
       "",
@@ -200,7 +202,7 @@ export const maskaSnippets: Record<Framework, SectionCode> = {
     file: "PhoneField.svelte",
     code: [
       "<script lang=\"ts\">",
-      "  // No global setup in Svelte — masking is built into ArcanaInputMask.",
+      "  // npm i maska — no global setup here: Svelte reads maska's pure functions.",
       "  import { ArcanaInputMask } from '@arcanalabs/ui-components/svelte'",
       "  let phone = $state('')",
       "</script>",

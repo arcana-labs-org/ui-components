@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.9.0 — 2026-07-25
+
+### Alterações que exigem atenção
+- **`v-money3` deixou de ser dependência.** Ela era a única dependência de runtime específica de um framework: só o SFC Vue a importava, enquanto React, Angular e Svelte já tinham a própria máscara de moeda. Quem usava a lib nesses três baixava um pacote Vue que nunca executava. O port Vue passou a usar a mesma lógica dos demais e a dependência foi removida — **nada a fazer de sua parte**, o comportamento do `ArcanaInputCurrency` é idêntico (conferido caso a caso contra a saída da `v-money3` antes da troca).
+
+### Novos recursos
+- **A máscara de moeda virou API pública do core**: `maskCurrency`, `formatCurrencyDigits` e `currencyDigitsFromValue`, exportadas nos quatro subpaths. Antes a lógica estava reimplementada em cada port.
+
+### Correções
+- **`ArcanaInputCurrency` no Svelte**: digitar `0` num campo vazio deixava `0` no lugar de `0,00`. O formatado era igual ao estado anterior, então o Svelte não re-renderizava e o texto cru permanecia no DOM. Achado pelo novo teste de paridade entre frameworks.
+
+### Documentação
+- A seção **"Installing v-maska" virou "Masking"**. O título anterior fazia uma dependência usada pelos **quatro** frameworks parecer exclusiva do Vue — só a diretiva é. Os exemplos de Angular e Svelte diziam "masking is built into", o que também induzia ao erro.
+
+
 ## 1.8.1 — 2026-07-25
 
 ### Correções

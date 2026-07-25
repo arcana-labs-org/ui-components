@@ -106,10 +106,16 @@
   const formattedCurrency = $derived(formatCurrency ? CurrencyFormatter.format(value || 0) : value);
 
   function onInput(e: Event) {
-    const raw = (e.target as HTMLInputElement).value;
-    const digits = raw.replace(/\D/g, "");
+    const el = e.target as HTMLInputElement;
+    const digits = el.value.replace(/\D/g, "");
     const formatted = formatDigits(digits, fraction, prefix);
+
     display = formatted;
+    // O DOM precisa ser corrigido na mão: quando o formatado é IGUAL ao estado
+    // anterior, o Svelte não re-renderiza e o texto cru continua visível. Ocorre,
+    // por exemplo, ao digitar "0" num campo vazio, que já exibia "0,00".
+    if (el.value !== formatted) el.value = formatted;
+
     onValueChange?.(formatted);
   }
 

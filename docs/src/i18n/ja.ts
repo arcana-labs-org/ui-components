@@ -69,8 +69,8 @@ export const ja: Messages = {
       p2: "ここにある peer はすべて<b>オプション</b>です。実際に使うフレームワークと、描画する機能に必要な追加パッケージだけを入れてください。入れ忘れてもインストールは失敗しません — 必要とするのは、それを使うコンポーネントです。"
     },
     maska: {
-      title: "v-maska のインストール",
-      p1: "<c>ArcanaInputMask</c> コンポーネントは <c>maska</c> パッケージの <c>v-maska</c> ディレクティブを使います。これは<b>オプションの peer dependency</b> です。ライブラリと一緒にインストールし、アプリ作成時に一度だけグローバル登録してください。",
+      title: "マスク",
+      p1: "入力マスクは <c>maska</c> パッケージにより<b>4 つのフレームワークすべて</b>で利用できます。これは<b>オプションの peer dependency</b> で、<c>ArcanaInputMask</c> を描画するときにインストールしてください。Vue だけ手順がもう 1 つあります: アプリ作成時に <c>v-maska</c> ディレクティブを一度グローバル登録します。",
       p2: "マスクを使わないコンポーネントに追加設定は不要です — この手順はマスク付き入力を描画する場合にのみ必要です。"
     }
   },
@@ -267,8 +267,7 @@ export const ja: Messages = {
 
   demos: {
     depMoment: "ArcanaDatePicker の日付の解析と整形。",
-    depVMoney: "ArcanaInputCurrency の通貨マスク（Vue）。",
-    depMaska: "ArcanaInputMask の入力マスク。Vue では app.use(Maska) でディレクティブを登録します。",
+    depMaska: "ArcanaInputMask の入力マスク — 4 つのフレームワークすべてで使用。Vue はさらに v-maska ディレクティブを登録します。",
     depVue: "/vue エントリポイントのみで必要。",
     depReact: "/react エントリポイントのみで必要。",
     depReactDom: "/react エントリポイントのみで必要。",

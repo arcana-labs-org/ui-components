@@ -10,6 +10,7 @@ export * from "./angular/index";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
+export { maskCurrency, formatCurrencyDigits, currencyDigitsFromValue } from "./core/currency";
 export { DateFormatter } from "./core/date";
 export {
   DEFAULT_COUNTDOWN_FORMAT,
