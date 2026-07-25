@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1 — 2026-07-25
+
+### Documentação
+- **Todo exemplo do preview passou a ter equivalente na aba "Código"**. Vários componentes exibiam várias variações na demonstração ao vivo, mas o código mostrava apenas um caso mínimo (o Button tinha 17 exemplos no preview e 6 no código; Notice, 6 contra 2), e alguns previews usavam componentes que sequer apareciam no snippet. Os quatro frameworks foram sincronizados.
+
 ## 1.4.0 — 2026-07-25
 
 ### Alterações que exigem atenção
