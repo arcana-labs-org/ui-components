@@ -15,6 +15,8 @@
    * `.arcana-segmented-control__option--icon-only` (gap zerado + padding simétrico pelos tokens
    * do `size`). Como o `<i>` é `aria-hidden`, quem nomeia o botão é o `ariaLabel` da opção.
    */
+  import ArcanaRadioIndicator from "./ArcanaRadioIndicator.svelte";
+
   export interface SegmentedOption {
     /**
      * Rótulo visível do segmento. Vazio (`""`) ou ausente ativa o modo **só-ícone**:
@@ -87,6 +89,14 @@
   // `size` explícito vence; sem ele, o `compact` legado mapeia pra `sm`.
   const effectiveSize = $derived(size ?? (compact ? "sm" : "md"));
 
+  /**
+   * Tamanho do círculo de radio conforme o tamanho do controle: os antigos 14/16/18px
+   * viram sm/md/lg do `<ArcanaRadioIndicator>` (base sm/md → sm, lg → md, xl → lg).
+   */
+  const indicatorSize = $derived<"sm" | "md" | "lg">(
+    effectiveSize === "xl" ? "lg" : effectiveSize === "lg" ? "md" : "sm"
+  );
+
   /** `false` quando o `label` é vazio/ausente → modo só-ícone (span de texto nem sai). */
   function hasLabel(opt: SegmentedOption): boolean {
     return (opt.label ?? "") !== "";
@@ -154,7 +164,7 @@
       disabled={disabled || opt.disabled}
       onclick={() => select(opt)}
     >
-      {#if radio}<span class="arcana-segmented-control__radio" aria-hidden="true"></span>{/if}
+      {#if radio}<ArcanaRadioIndicator tone="on-solid" size={indicatorSize} checked={opt.value === value} />{/if}
       {#if opt.icon}<i
           class={`arcana-segmented-control__icon ${opt.icon}`}
           style={opt.iconColor ? `color: ${opt.iconColor};` : undefined}

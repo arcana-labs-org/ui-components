@@ -32,6 +32,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "multi-select-popover", name: "ArcanaMultiSelectPopover", label: "Multi-Select Popover", category: "forms", docKey: "multiSelectPopover" },
   { id: "arcana-checkbox", name: "ArcanaCheckbox", label: "Checkbox", category: "forms", docKey: "checkbox" },
   { id: "arcana-switch", name: "ArcanaSwitch", label: "Switch", category: "forms", docKey: "switch" },
+  { id: "arcana-radio", name: "ArcanaRadio", label: "Radio", category: "forms", docKey: "radio" },
   { id: "arcana-radio-card-group", name: "ArcanaRadioCardGroup", label: "Radio Card Group", category: "forms", docKey: "radioCardGroup" },
   { id: "arcana-segmented-control", name: "ArcanaSegmentedControl", label: "Segmented Control", category: "forms", docKey: "segmentedOptions" },
   { id: "arcana-date-picker", name: "ArcanaDatePicker", label: "Date Picker", category: "forms", docKey: "datePicker" },

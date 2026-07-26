@@ -31,10 +31,8 @@
                 @change="onChange(opt)"
             />
 
-            <!-- Radio circle custom (visual) -->
-            <span class="arcana-radio-card__radio" aria-hidden="true">
-                <span class="arcana-radio-card__dot"></span>
-            </span>
+            <!-- Radio circle custom (visual) — building block compartilhado -->
+            <ArcanaRadioIndicator :checked="isSelected(opt)" size="lg" tone="solid" />
 
             <!-- Ícone opcional (FontAwesome class). `iconBg` e `iconColor` aplicam cor
                  custom no badge do ícone (inline style sobrescreve a regra `.is-selected`
@@ -73,6 +71,7 @@
 
 <script lang="ts">
 import type { Component, PropType } from "vue"
+import ArcanaRadioIndicator from "./ArcanaRadioIndicator.vue"
 
 /**
  * `<ArcanaRadioCardGroup>` — lista de painéis com radio button, padrão visual shadcn.
@@ -151,6 +150,8 @@ let uidCounter = 0
 
 export default {
     name: 'ArcanaRadioCardGroup',
+
+    components: { ArcanaRadioIndicator },
 
     emits: ['update:modelValue', 'change'],
 

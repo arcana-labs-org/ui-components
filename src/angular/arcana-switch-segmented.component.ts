@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, Output
 } from "@angular/core";
+import { ArcanaRadioIndicatorComponent } from "./arcana-radio-indicator.component";
 
 /**
  * `ArcanaSwitchSegmentedComponent` — Angular port do SFC Vue `ArcanaSwitchSegmented`.
@@ -23,6 +24,7 @@ import {
   selector: "div[arcanaSwitchSegmented]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ArcanaRadioIndicatorComponent],
   host: {
     "[class]": "rootClass",
     "[style.--seg-active]": "activeColor || null",
@@ -39,7 +41,7 @@ import {
 
     <div class="arcana-switch-segmented__option arcana-switch-segmented__option--off">
       @if (radio) {
-        <span class="arcana-switch-segmented__radio" aria-hidden="true"></span>
+        <arcana-radio-indicator tone="on-solid" size="sm" [checked]="!value"></arcana-radio-indicator>
       }
       @if (offIcon) {
         <i
@@ -52,7 +54,7 @@ import {
     </div>
     <div class="arcana-switch-segmented__option arcana-switch-segmented__option--on">
       @if (radio) {
-        <span class="arcana-switch-segmented__radio" aria-hidden="true"></span>
+        <arcana-radio-indicator tone="on-solid" size="sm" [checked]="!!value"></arcana-radio-indicator>
       }
       @if (onIcon) {
         <i

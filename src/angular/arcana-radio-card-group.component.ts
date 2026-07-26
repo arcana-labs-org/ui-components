@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, Output
 } from "@angular/core";
+import { ArcanaRadioIndicatorComponent } from "./arcana-radio-indicator.component";
 
 /**
  * `ArcanaRadioCardGroupComponent` — Angular port do SFC Vue `ArcanaRadioCardGroup`.
@@ -37,6 +38,7 @@ let uidCounter = 0;
   selector: "div[arcanaRadioCardGroup]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ArcanaRadioIndicatorComponent],
   host: {
     "[class]": "rootClass",
     "[style.gridTemplateColumns]": "gridTemplateColumns",
@@ -60,9 +62,7 @@ let uidCounter = 0;
           (change)="handleChange(opt)"
         />
 
-        <span class="arcana-radio-card__radio" aria-hidden="true">
-          <span class="arcana-radio-card__dot"></span>
-        </span>
+        <arcana-radio-indicator [checked]="isSelected(opt)" size="lg" tone="solid"></arcana-radio-indicator>
 
         @if (opt.icon) {
           <span

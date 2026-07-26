@@ -13,6 +13,7 @@
    * icon-only, com o ícone centralizado — nenhum texto é forçado.
    */
   import type { Snippet } from "svelte";
+  import ArcanaRadioIndicator from "./ArcanaRadioIndicator.svelte";
 
   let {
     value = false,
@@ -115,7 +116,7 @@
   <div class="arcana-switch-segmented__indicator" aria-hidden="true"></div>
 
   <div class="arcana-switch-segmented__option arcana-switch-segmented__option--off">
-    {#if radio}<span class="arcana-switch-segmented__radio" aria-hidden="true"></span>{/if}
+    {#if radio}<ArcanaRadioIndicator tone="on-solid" size="sm" checked={!value} />{/if}
     {#if offIcon}<i
         class={`arcana-switch-segmented__icon ${offIcon}`}
         style={offIconColor ? `color: ${offIconColor};` : undefined}
@@ -124,7 +125,7 @@
     {#if offSlot}{@render offSlot()}{:else if offLabel}{offLabel}{/if}
   </div>
   <div class="arcana-switch-segmented__option arcana-switch-segmented__option--on">
-    {#if radio}<span class="arcana-switch-segmented__radio" aria-hidden="true"></span>{/if}
+    {#if radio}<ArcanaRadioIndicator tone="on-solid" size="sm" checked={Boolean(value)} />{/if}
     {#if onIcon}<i
         class={`arcana-switch-segmented__icon ${onIcon}`}
         style={onIconColor ? `color: ${onIconColor};` : undefined}

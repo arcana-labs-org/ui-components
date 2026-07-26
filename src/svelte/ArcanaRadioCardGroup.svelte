@@ -30,6 +30,8 @@
    * Equivalências (parity com React): `modelValue` → `value` + `onValueChange`;
    * `emit('change')` → `onChange`.
    */
+  import ArcanaRadioIndicator from "./ArcanaRadioIndicator.svelte";
+
   let {
     value = null,
     options,
@@ -110,9 +112,7 @@
         onchange={() => handleChange(opt)}
       />
 
-      <span class="arcana-radio-card__radio" aria-hidden="true">
-        <span class="arcana-radio-card__dot"></span>
-      </span>
+      <ArcanaRadioIndicator checked={isSelected(opt)} size="lg" tone="solid" />
 
       {#if opt.icon}
         <span

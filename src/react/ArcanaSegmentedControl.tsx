@@ -1,4 +1,5 @@
 import { useEffect, useRef, type CSSProperties } from "react";
+import { ArcanaRadioIndicator } from "./ArcanaRadioIndicator";
 
 /**
  * `<ArcanaSegmentedControl>` — React port. Segmented control de N opções. Reproduz
@@ -96,6 +97,14 @@ export function ArcanaSegmentedControl({
     // `size` explícito vence; sem ele, o `compact` legado mapeia pra `sm`.
     const effectiveSize: SegmentedControlSize = size ?? (compact ? "sm" : "md");
 
+    /**
+     * Tamanho do círculo de radio conforme o tamanho do controle: os antigos
+     * 14/16/18px viram sm/md/lg do `<ArcanaRadioIndicator>` (base sm/md → 14,
+     * lg → 16, xl → 18).
+     */
+    const indicatorSize: "sm" | "md" | "lg" =
+        effectiveSize === "xl" ? "lg" : effectiveSize === "lg" ? "md" : "sm";
+
     const select = (opt: SegmentedOption) => {
         if (disabled || opt.disabled || opt.value === value) return;
         onValueChange?.(opt.value);
@@ -168,9 +177,10 @@ export function ArcanaSegmentedControl({
                     onClick={() => select(opt)}
                 >
                     {radio ? (
-                        <span
-                            className="arcana-segmented-control__radio"
-                            aria-hidden="true"
+                        <ArcanaRadioIndicator
+                            tone="on-solid"
+                            size={indicatorSize}
+                            checked={opt.value === value}
                         />
                     ) : null}
                     {opt.icon ? (

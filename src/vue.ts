@@ -39,6 +39,8 @@ export { default as ArcanaLoadingOverlay } from "./vue/components/ArcanaLoadingO
 export { default as ArcanaNotice } from "./vue/components/ArcanaNotice.vue";
 export { default as ArcanaNumberStepper } from "./vue/components/ArcanaNumberStepper.vue";
 export { default as ArcanaActionPanel } from "./vue/components/ArcanaActionPanel.vue";
+export { default as ArcanaRadio } from "./vue/components/ArcanaRadio.vue";
+export { default as ArcanaRadioIndicator } from "./vue/components/ArcanaRadioIndicator.vue";
 export { default as ArcanaRadioCardGroup } from "./vue/components/ArcanaRadioCardGroup.vue";
 export { default as ArcanaRate } from "./vue/components/ArcanaRate.vue";
 export { default as ArcanaRequiredFieldsDialog } from "./vue/components/ArcanaRequiredFieldsDialog.vue";

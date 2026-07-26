@@ -148,6 +148,9 @@ export const zh: Messages = {
     multiSelectPopover: {
       blurb: "传送到 body 的弹出层，支持分标签的复选框多选；<c>v-model</c> 为 <c>{ [tabKey]: number[] }</c> 映射，每个标签由异步 <c>fetch()</c> 提供数据。"
     },
+    radio: {
+      blurb: "单个单选按钮：原生 <c>&lt;input type=\"radio\"&gt;</c> 搭配设计系统的圆点与可选标签。用相同的 <c>name</c> 和共享的 <c>v-model</c> 分组多个。"
+    },
     radioCardGroup: {
       blurb: "由真实 <c>&lt;input type=\"radio\"&gt;</c> 支撑的可选卡片，每张带描述、图标或徽章；可堆叠、<c>inline</c> 或按 <c>columns</c> 布局。"
     },

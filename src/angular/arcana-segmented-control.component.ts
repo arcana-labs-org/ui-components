@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit,
   Output, SimpleChanges
 } from "@angular/core";
+import { ArcanaRadioIndicatorComponent } from "./arcana-radio-indicator.component";
 
 /**
  * `ArcanaSegmentedControlComponent` — Angular port do SFC Vue `ArcanaSegmentedControl`.
@@ -54,6 +55,7 @@ export type SegmentedControlSize = "sm" | "md" | "lg" | "xl";
   selector: "div[arcanaSegmentedControl]",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ArcanaRadioIndicatorComponent],
   host: {
     "[class]": "rootClass",
     "[style.--seg-active]": "activeColor || null",
@@ -75,7 +77,11 @@ export type SegmentedControlSize = "sm" | "md" | "lg" | "xl";
         (click)="select(opt)"
       >
         @if (radio) {
-          <span class="arcana-segmented-control__radio" aria-hidden="true"></span>
+          <arcana-radio-indicator
+            tone="on-solid"
+            [size]="indicatorSize"
+            [checked]="opt.value === value"
+          ></arcana-radio-indicator>
         }
         @if (opt.icon) {
           <i
@@ -146,6 +152,17 @@ export class ArcanaSegmentedControlComponent implements OnInit, OnChanges {
   /** `size` explícito vence; sem ele, o `compact` legado mapeia pra `sm`. */
   get effectiveSize(): SegmentedControlSize {
     return this.size ?? (this.compact ? "sm" : "md");
+  }
+
+  /**
+   * Tamanho do círculo de radio conforme o tamanho do controle: os antigos
+   * 14/16/18px viram sm/md/lg do `<arcana-radio-indicator>` (base sm/md → sm,
+   * lg → md, xl → lg).
+   */
+  get indicatorSize(): "sm" | "md" | "lg" {
+    if (this.effectiveSize === "xl") return "lg";
+    if (this.effectiveSize === "lg") return "md";
+    return "sm";
   }
 
   get rootClass(): string {

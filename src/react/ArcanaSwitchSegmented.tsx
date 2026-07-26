@@ -1,4 +1,5 @@
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
+import { ArcanaRadioIndicator } from "./ArcanaRadioIndicator";
 
 /**
  * `<ArcanaSwitchSegmented>` — React port. Reproduz `<div class="arcana-switch-segmented">`
@@ -117,9 +118,10 @@ export function ArcanaSwitchSegmented({
 
             <div className="arcana-switch-segmented__option arcana-switch-segmented__option--off">
                 {radio ? (
-                    <span
-                        className="arcana-switch-segmented__radio"
-                        aria-hidden="true"
+                    <ArcanaRadioIndicator
+                        tone="on-solid"
+                        size="sm"
+                        checked={!value}
                     />
                 ) : null}
                 {offIcon ? (
@@ -133,9 +135,10 @@ export function ArcanaSwitchSegmented({
             </div>
             <div className="arcana-switch-segmented__option arcana-switch-segmented__option--on">
                 {radio ? (
-                    <span
-                        className="arcana-switch-segmented__radio"
-                        aria-hidden="true"
+                    <ArcanaRadioIndicator
+                        tone="on-solid"
+                        size="sm"
+                        checked={Boolean(value)}
                     />
                 ) : null}
                 {onIcon ? (

@@ -15,6 +15,7 @@ import ArcanaInputMask from "../../../src/vue/components/ArcanaInputMask.vue";
 import ArcanaInputBoolean from "../../../src/vue/components/ArcanaInputBoolean.vue";
 import ArcanaNumberStepper from "../../../src/vue/components/ArcanaNumberStepper.vue";
 import ArcanaMultiSelectPopover from "../../../src/vue/components/ArcanaMultiSelectPopover.vue";
+import ArcanaRadio from "../../../src/vue/components/ArcanaRadio.vue";
 import ArcanaRadioCardGroup from "../../../src/vue/components/ArcanaRadioCardGroup.vue";
 import ArcanaSegmentedControl from "../../../src/vue/components/ArcanaSegmentedControl.vue";
 import ArcanaDatePicker from "../../../src/vue/components/ArcanaDatePicker.vue";
@@ -454,6 +455,19 @@ const ArcanaMultiSelectPopoverDemo: Component = {
 };
 
 /* ────────────────────── ArcanaRadioCardGroup ───────────────────────── */
+
+const RadioDemo: Component = {
+  components: { ArcanaRadio },
+  data: () => ({ plan: "pro" }),
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 340px">
+      <ArcanaRadio v-model="plan" value="free" name="plan" label="Grátis" />
+      <ArcanaRadio v-model="plan" value="pro" name="plan" label="Pro" />
+      <ArcanaRadio v-model="plan" value="enterprise" name="plan" label="Enterprise" :disabled="true" />
+      <p class="demo-note">{{ $dt.selectedLabel }}: <strong>{{ plan }}</strong></p>
+    </div>
+  `
+};
 
 const RadioCardGroupDemo: Component = {
   components: { ArcanaRadioCardGroup },
@@ -2311,6 +2325,35 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <ArcanaMultiSelectPopover v-model=\"selections\" :tabs=\"tabs\" empty-label=\"Select people\" />",
+      "</template>"
+    ].join("\n")
+  },
+
+  radio: {
+    demo: RadioDemo,
+    props: [
+      { name: "modelValue", type: "string | number | boolean | null", default: "undefined", description: "Selected value of the group (v-model); checked when it equals value." },
+      { name: "value", type: "string | number | boolean | null", default: "undefined", description: "This option's value, emitted on selection." },
+      { name: "checked", type: "boolean", default: "undefined", description: "Forces the checked state (alternative to modelValue/value)." },
+      { name: "name", type: "string", default: "undefined", description: "HTML name shared by radios in the same group." },
+      { name: "disabled", type: "boolean", default: "false", description: "Disables this radio." },
+      { name: "label", type: "string", default: "''", description: "Label text; or use the default slot for custom content." },
+      { name: "size", type: "sm | md | lg", default: "md", description: "Radio circle size, forwarded to ArcanaRadioIndicator." },
+      { name: "tone", type: "solid | on-solid", default: "solid", description: "Indicator tone: solid (brand) or on-solid (white, for coloured backgrounds)." }
+    ],
+    events: ["update:modelValue(value) — v-model update", "change(value) — on selection"],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaRadio } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const plan = ref('pro')",
+      "</script>",
+      "",
+      "<template>",
+      "  <ArcanaRadio v-model=\"plan\" value=\"free\" name=\"plan\" label=\"Grátis\" />",
+      "  <ArcanaRadio v-model=\"plan\" value=\"pro\" name=\"plan\" label=\"Pro\" />",
+      "  <ArcanaRadio v-model=\"plan\" value=\"enterprise\" name=\"plan\" label=\"Enterprise\" :disabled=\"true\" />",
       "</template>"
     ].join("\n")
   },

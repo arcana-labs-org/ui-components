@@ -1,4 +1,5 @@
 import { useMemo, useRef, type CSSProperties } from "react";
+import { ArcanaRadioIndicator } from "./ArcanaRadioIndicator";
 
 /**
  * `<ArcanaRadioCardGroup>` — React port. Reproduz `<div class="arcana-radio-card-group">`
@@ -116,9 +117,11 @@ export function ArcanaRadioCardGroup({
                         onChange={() => handleChange(opt)}
                     />
 
-                    <span className="arcana-radio-card__radio" aria-hidden="true">
-                        <span className="arcana-radio-card__dot" />
-                    </span>
+                    <ArcanaRadioIndicator
+                        checked={isSelected(opt)}
+                        size="lg"
+                        tone="solid"
+                    />
 
                     {opt.icon ? (
                         <span

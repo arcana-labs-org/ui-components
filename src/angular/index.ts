@@ -83,6 +83,10 @@ export { ArcanaInputBooleanComponent } from "./arcana-input-boolean.component";
 
 export { ArcanaNumberStepperComponent } from "./arcana-number-stepper.component";
 
+export { ArcanaRadioIndicatorComponent } from "./arcana-radio-indicator.component";
+
+export { ArcanaRadioComponent } from "./arcana-radio.component";
+
 export { ArcanaRadioCardGroupComponent } from "./arcana-radio-card-group.component";
 export type { RadioCardOption } from "./arcana-radio-card-group.component";
 

@@ -25,7 +25,12 @@
             :disabled="disabled || opt.disabled"
             @click="select(opt)"
         >
-            <span v-if="radio" class="arcana-segmented-control__radio" aria-hidden="true"></span>
+            <ArcanaRadioIndicator
+                v-if="radio"
+                tone="on-solid"
+                :size="indicatorSize"
+                :checked="opt.value === modelValue"
+            />
             <i
                 v-if="opt.icon"
                 :class="['arcana-segmented-control__icon', opt.icon]"
@@ -43,6 +48,7 @@
 
 <script lang="ts">
 import type { Component, PropType } from "vue"
+import ArcanaRadioIndicator from "./ArcanaRadioIndicator.vue"
 
 interface SegmentedOption {
     /**
@@ -117,6 +123,8 @@ type SegmentedControlSize = 'sm' | 'md' | 'lg' | 'xl'
  */
 export default {
     name: 'ArcanaSegmentedControl',
+
+    components: { ArcanaRadioIndicator },
 
     emits: ['update:modelValue', 'change'],
 
@@ -200,6 +208,17 @@ export default {
         /** `size` explícito vence; sem ele, `compact` legado mapeia pra `sm`. */
         effectiveSize(): SegmentedControlSize {
             return this.size ?? (this.compact ? 'sm' : 'md')
+        },
+
+        /**
+         * Tamanho do círculo de radio conforme o tamanho do controle: os antigos
+         * 14/16/18px viram sm/md/lg do `<ArcanaRadioIndicator>` (base sm/md → 14,
+         * lg → 16, xl → 18).
+         */
+        indicatorSize(): 'sm' | 'md' | 'lg' {
+            if (this.effectiveSize === 'xl') return 'lg'
+            if (this.effectiveSize === 'lg') return 'md'
+            return 'sm'
         },
     },
 

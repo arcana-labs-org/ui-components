@@ -148,6 +148,9 @@ export const ja: Messages = {
     multiSelectPopover: {
       blurb: "body にテレポートし、タブ付きチェックボックスで複数選択するポップオーバーで、<c>v-model</c> は <c>{ [tabKey]: number[] }</c> のマップ、各タブは非同期 <c>fetch()</c> で供給されます。"
     },
+    radio: {
+      blurb: "単一のラジオボタン：ネイティブの <c>&lt;input type=\"radio\"&gt;</c> にデザインシステムの円と任意のラベルを備えます。同じ <c>name</c> と共有 <c>v-model</c> で複数をグループ化します。"
+    },
     radioCardGroup: {
       blurb: "本物の <c>&lt;input type=\"radio\"&gt;</c> に支えられた選択可能なカード群で、各カードに説明・アイコン・バッジを持ち、積み重ね・<c>inline</c>・<c>columns</c> で配置できます。"
     },

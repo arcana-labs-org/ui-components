@@ -37,6 +37,7 @@ export type DocumentedKey =
   | "inputBoolean"
   | "numberStepper"
   | "multiSelectPopover"
+  | "radio"
   | "radioCardGroup"
   | "segmentedOptions"
   | "datePicker"

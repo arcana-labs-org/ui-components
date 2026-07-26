@@ -148,6 +148,9 @@ export const de: Messages = {
     multiSelectPopover: {
       blurb: "Ein ins Body teleportiertes Popover mit getabbter Checkbox-Mehrfachauswahl; das <c>v-model</c> ist eine <c>{ [tabKey]: number[] }</c>-Map, jeder Tab per asynchronem <c>fetch()</c> gespeist."
     },
+    radio: {
+      blurb: "Einzelner Radio-Button: natives <c>&lt;input type=\"radio\"&gt;</c> mit dem Design-System-Kreis und optionalem Label. Gruppiere mehrere über gemeinsames <c>name</c> und <c>v-model</c>."
+    },
     radioCardGroup: {
       blurb: "Auswählbare Karten auf Basis echter <c>&lt;input type=\"radio\"&gt;</c>, jede mit Beschreibung, Icon oder Badge; angeordnet gestapelt, <c>inline</c> oder in <c>columns</c>."
     },

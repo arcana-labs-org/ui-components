@@ -2039,35 +2039,96 @@
 /* ─────────────────────────────────────────────────────────
    Radio circle custom (substitui o visual nativo)
    ───────────────────────────────────────────────────────── */
-.arcana-radio-card__radio {
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaRadioIndicator — círculo + dot reutilizável (RadioCard, Segmented,
+   SwitchSegmented, e o controle ArcanaRadio). O estado marcado vem do prop
+   `checked` (classe `.is-checked`), não mais do CSS do ancestral.
+   ───────────────────────────────────────────────────────────────────────── */
+.arcana-radio-indicator {
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid var(--arcana-border);
-    border-radius: 9999px;
-    background: var(--arcana-surface);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border: 1.5px solid transparent;
+    border-radius: 9999px;
     transition: border-color 150ms ease;
 }
 
-.arcana-radio-card.is-selected .arcana-radio-card__radio {
-    border-color: var(--arcana-solid);
-}
-
-/* Dot interno (animado com scale 0→1) */
-.arcana-radio-card__dot {
-    width: 8px;
-    height: 8px;
+.arcana-radio-indicator__dot {
     border-radius: 9999px;
-    background: var(--arcana-solid);
     transform: scale(0);
     transition: transform 150ms ease;
 }
 
-.arcana-radio-card.is-selected .arcana-radio-card__dot {
+.arcana-radio-indicator.is-checked .arcana-radio-indicator__dot {
     transform: scale(1);
+}
+
+.arcana-radio-indicator.is-disabled {
+    opacity: 0.6;
+}
+
+/* Tamanhos: círculo + dot */
+.arcana-radio-indicator--sm { width: 14px; height: 14px; }
+.arcana-radio-indicator--sm .arcana-radio-indicator__dot { width: 7px; height: 7px; }
+.arcana-radio-indicator--md { width: 16px; height: 16px; }
+.arcana-radio-indicator--md .arcana-radio-indicator__dot { width: 8px; height: 8px; }
+.arcana-radio-indicator--lg { width: 18px; height: 18px; }
+.arcana-radio-indicator--lg .arcana-radio-indicator__dot { width: 8px; height: 8px; }
+
+/* Tone `solid` (default): borda neutra, marcado na cor de marca. */
+.arcana-radio-indicator--solid {
+    border-color: var(--arcana-border);
+    background: var(--arcana-surface);
+}
+.arcana-radio-indicator--solid.is-checked { border-color: var(--arcana-solid); }
+.arcana-radio-indicator--solid .arcana-radio-indicator__dot { background: var(--arcana-solid); }
+
+/* Tone `on-solid`: pra círculo sobre pill colorido ativo (branco preenchido). */
+.arcana-radio-indicator--on-solid { border-color: var(--arcana-border-hover); }
+.arcana-radio-indicator--on-solid.is-checked { border-color: var(--arcana-on-solid); }
+.arcana-radio-indicator--on-solid .arcana-radio-indicator__dot { background: var(--arcana-on-solid); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ArcanaRadio — controle de radio único (input nativo escondido + indicador
+   + label opcional). O card do RadioCardGroup NÃO usa este controle (usa só o
+   indicador), pra não aninhar <label>.
+   ───────────────────────────────────────────────────────────────────────── */
+.arcana-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--arcana-text);
+}
+
+.arcana-radio.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Input nativo escondido VISUALMENTE mas focável (Tab/Setas/Space funcionam). */
+.arcana-radio__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+}
+
+/* Foco no input propaga ring pro indicador. */
+.arcana-radio__input:focus-visible + .arcana-radio-indicator {
+    outline: 2px solid var(--arcana-focus-ring);
+    outline-offset: 2px;
+}
+
+.arcana-radio__label {
+    line-height: 1.4;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -2150,7 +2211,7 @@
    sem alterar o DOM. CSS `order` reordena visualmente os
    filhos do .arcana-radio-card (que é flex).
    ───────────────────────────────────────────────────────── */
-.arcana-radio-card-group--radio-end .arcana-radio-card__radio {
+.arcana-radio-card-group--radio-end .arcana-radio-indicator {
     order: 1;
 }
 
@@ -2175,7 +2236,7 @@
  * Aqui o `margin-left: auto` do ícone é o que mantém o par
  * ícone+radio colado à direita.
  */
-.arcana-radio-card-group--radio-end.arcana-radio-card-group--icon-end .arcana-radio-card__radio {
+.arcana-radio-card-group--radio-end.arcana-radio-card-group--icon-end .arcana-radio-indicator {
     order: 2;
 }
 
@@ -2430,7 +2491,7 @@
  * Combo só-ícone + `radio`: o gap zerado colaria o círculo no ícone, então a
  * respiração volta como margem no próprio ícone.
  */
-.arcana-segmented-control__option--icon-only .arcana-segmented-control__radio + .arcana-segmented-control__icon {
+.arcana-segmented-control__option--icon-only .arcana-radio-indicator + .arcana-segmented-control__icon {
     margin-left: 6px;
 }
 
@@ -2482,37 +2543,8 @@
 }
 
 /* Radio indicator (opt-in via prop `radio`) */
-.arcana-segmented-control__radio {
-    position: relative;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1.5px solid var(--arcana-border-hover);
-    flex-shrink: 0;
-    transition: border-color .2s ease;
-}
-.arcana-segmented-control__radio::after {
-    content: '';
-    position: absolute;
-    inset: 3px;
-    border-radius: 50%;
-    background: transparent;
-    transition: background .2s ease;
-}
-.arcana-segmented-control--lg .arcana-segmented-control__radio {
-    width: 16px;
-    height: 16px;
-}
-.arcana-segmented-control--xl .arcana-segmented-control__radio {
-    width: 18px;
-    height: 18px;
-}
-.arcana-segmented-control__option.is-active .arcana-segmented-control__radio {
-    border-color: var(--arcana-on-solid);
-}
-.arcana-segmented-control__option.is-active .arcana-segmented-control__radio::after {
-    background: var(--arcana-on-solid);
-}
+/* O círculo de radio do segmented agora é `<ArcanaRadioIndicator tone="on-solid">`
+   (o size vem do tamanho do controle: base→sm, lg→md, xl→lg). */
 
 .arcana-segmented-control__empty {
     flex: 1;
@@ -4372,32 +4404,8 @@
 }
 
 /* Radio indicator (opt-in via prop `radio`) */
-.arcana-switch-segmented__radio {
-    position: relative;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1.5px solid var(--arcana-border-hover);
-    flex-shrink: 0;
-    transition: border-color .2s ease;
-}
-.arcana-switch-segmented__radio::after {
-    content: '';
-    position: absolute;
-    inset: 3px;
-    border-radius: 50%;
-    background: transparent;
-    transition: background .2s ease;
-}
-/* Lado ativo (texto branco sobre o indicador) → radio branco preenchido */
-.arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off .arcana-switch-segmented__radio,
-.arcana-switch-segmented.is-on .arcana-switch-segmented__option--on .arcana-switch-segmented__radio {
-    border-color: var(--arcana-on-solid);
-}
-.arcana-switch-segmented:not(.is-on) .arcana-switch-segmented__option--off .arcana-switch-segmented__radio::after,
-.arcana-switch-segmented.is-on .arcana-switch-segmented__option--on .arcana-switch-segmented__radio::after {
-    background: var(--arcana-on-solid);
-}
+/* O círculo de radio do switch-segmented agora é `<ArcanaRadioIndicator
+   tone="on-solid" size="sm">`, com `:checked` no lado ativo. */
 
 /* ─────────────────────────────────────────────────────────────────────────
    ArcanaTable.vue

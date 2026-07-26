@@ -148,6 +148,9 @@ export const pt: Messages = {
     multiSelectPopover: {
       blurb: "Um popover teleportado ao body com multisseleção por checkbox em abas; o <c>v-model</c> é um mapa <c>{ [tabKey]: number[] }</c>, cada aba alimentada por um <c>fetch()</c> assíncrono."
     },
+    radio: {
+      blurb: "Radio button único: <c>&lt;input type=\"radio\"&gt;</c> nativo com o círculo do design system e label opcional. Agrupe vários com o mesmo <c>name</c> e um <c>v-model</c> compartilhado."
+    },
     radioCardGroup: {
       blurb: "Cards selecionáveis apoiados em <c>&lt;input type=\"radio\"&gt;</c> real, cada um com descrição, ícone ou badge; dispostos empilhados, <c>inline</c> ou em <c>columns</c>."
     },

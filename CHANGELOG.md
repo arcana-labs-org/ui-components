@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.2.0 — 2026-07-26
+
+### Novos recursos
+- **`ArcanaRadio` e `ArcanaRadioIndicator` viraram componentes próprios**, nos 4 ports.
+  - `ArcanaRadio` — radio button único usável sozinho: `<input type="radio">` nativo (escondido, mas focável) + o círculo do design system + label opcional. Agrupa-se com `name` compartilhado e `v-model` (Vue) / `groupValue` (React, Svelte, Angular).
+  - `ArcanaRadioIndicator` — o círculo+dot visual (`aria-hidden`), o building block compartilhado. Props `checked`, `disabled`, `size` (`sm`/`md`/`lg`) e `tone` (`solid` para a cor de marca, `on-solid` branco para uso sobre fundo colorido).
+
+### Refactor interno
+- **O círculo de radio, antes duplicado em 3 componentes** (`RadioCardGroup`, `SegmentedControl`, `SwitchSegmented`) com CSS e markup próprios, passou a ser um único `ArcanaRadioIndicator`. O `RadioCardGroup` mantém seu `<input type="radio">` nativo (o card inteiro é `<label>`) e delega só o visual; `SegmentedControl` e `SwitchSegmented` usam o indicador `tone="on-solid"` nos círculos decorativos. Removido o CSS `__radio`/`__dot` triplicado.
+
+### Nota visual
+- O ponto (dot) dos círculos **decorativos** do segmented foi normalizado (~1–4px) para uma escala consistente. O radio de verdade (RadioCardGroup, 18px/8px) ficou idêntico. Sem mudança funcional.
+
+### Documentação
+- Nova página **Radio** (demo ao vivo, tabela de props, exemplos nos 4 frameworks e blurb nas 8 traduções).
+
+
 ## 2.1.0 — 2026-07-26
 
 ### Novos recursos

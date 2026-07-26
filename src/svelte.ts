@@ -40,6 +40,8 @@ import ArcanaAccordionItemComponent from "./svelte/ArcanaAccordionItem.svelte";
 import ArcanaSelectComponent from "./svelte/ArcanaSelect.svelte";
 import ArcanaInputBooleanComponent from "./svelte/ArcanaInputBoolean.svelte";
 import ArcanaNumberStepperComponent from "./svelte/ArcanaNumberStepper.svelte";
+import ArcanaRadioIndicatorComponent from "./svelte/ArcanaRadioIndicator.svelte";
+import ArcanaRadioComponent from "./svelte/ArcanaRadio.svelte";
 import ArcanaRadioCardGroupComponent from "./svelte/ArcanaRadioCardGroup.svelte";
 import ArcanaSwitchSegmentedComponent from "./svelte/ArcanaSwitchSegmented.svelte";
 import ArcanaMultiSelectPopoverComponent from "./svelte/ArcanaMultiSelectPopover.svelte";
@@ -596,6 +598,34 @@ export interface ArcanaNumberStepperProps {
   class?: string;
 }
 export const ArcanaNumberStepper = ArcanaNumberStepperComponent as unknown as Component<ArcanaNumberStepperProps>;
+
+/* ── ArcanaRadioIndicator ─────────────────────────────────────────────────── */
+export interface ArcanaRadioIndicatorProps {
+  checked?: boolean;
+  disabled?: boolean;
+  size?: "sm" | "md" | "lg";
+  tone?: "solid" | "on-solid";
+  class?: string;
+}
+export const ArcanaRadioIndicator = ArcanaRadioIndicatorComponent as unknown as Component<ArcanaRadioIndicatorProps>;
+
+/* ── ArcanaRadio ──────────────────────────────────────────────────────────── */
+export interface ArcanaRadioProps {
+  value?: string | number | boolean | null;
+  /** Valor selecionado do grupo — marcado quando `groupValue === value`. */
+  groupValue?: string | number | boolean | null;
+  /** Força o estado marcado (alternativa a `groupValue`/`value`; vence). */
+  checked?: boolean;
+  name?: string;
+  disabled?: boolean;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+  tone?: "solid" | "on-solid";
+  onChange?: (value: string | number | boolean | null | undefined) => void;
+  children?: Snippet;
+  class?: string;
+}
+export const ArcanaRadio = ArcanaRadioComponent as unknown as Component<ArcanaRadioProps>;
 
 /* ── ArcanaRadioCardGroup ─────────────────────────────────────────────────── */
 export interface RadioCardOption {

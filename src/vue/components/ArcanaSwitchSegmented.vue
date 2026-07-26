@@ -19,7 +19,7 @@
         <div class="arcana-switch-segmented__indicator" aria-hidden="true"></div>
 
         <div class="arcana-switch-segmented__option arcana-switch-segmented__option--off">
-            <span v-if="radio" class="arcana-switch-segmented__radio" aria-hidden="true"></span>
+            <ArcanaRadioIndicator v-if="radio" tone="on-solid" size="sm" :checked="!modelValue" />
             <!--
                 Ícone decorativo (aria-hidden): quem descreve o lado é o label/aria-label.
                 Sem label, o `justify-content: center` do `__option` deixa o ícone sozinho
@@ -34,7 +34,7 @@
             <slot name="off-label"><template v-if="offLabel">{{ offLabel }}</template></slot>
         </div>
         <div class="arcana-switch-segmented__option arcana-switch-segmented__option--on">
-            <span v-if="radio" class="arcana-switch-segmented__radio" aria-hidden="true"></span>
+            <ArcanaRadioIndicator v-if="radio" tone="on-solid" size="sm" :checked="Boolean(modelValue)" />
             <i
                 v-if="onIcon"
                 :class="['arcana-switch-segmented__icon', onIcon]"
@@ -48,6 +48,7 @@
 
 <script lang="ts">
 import type { Component } from "vue"
+import ArcanaRadioIndicator from "./ArcanaRadioIndicator.vue"
 
 /**
  * `<ArcanaSwitchSegmented>` — toggle binário em formato de cápsula segmentada full-width.
@@ -96,6 +97,8 @@ import type { Component } from "vue"
  */
 export default {
     name: 'ArcanaSwitchSegmented',
+
+    components: { ArcanaRadioIndicator },
 
     emits: ['update:modelValue', 'change'],
 

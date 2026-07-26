@@ -978,6 +978,47 @@ export class AssigneePickerComponent {
 <ArcanaMultiSelectPopover value={selections} onValueChange={(v) => (selections = v)} {tabs} emptyLabel="Select people" />`
   },
 
+  radio: {
+    react: `import { useState } from 'react'
+import { ArcanaRadio } from '@arcanalabs/ui-components/react'
+
+export function Plan() {
+  const [plan, setPlan] = useState('pro')
+  return (
+    <>
+      <ArcanaRadio name="plan" value="free" groupValue={plan} onChange={(v) => setPlan(v as string)} label="Grátis" />
+      <ArcanaRadio name="plan" value="pro" groupValue={plan} onChange={(v) => setPlan(v as string)} label="Pro" />
+      <ArcanaRadio name="plan" value="enterprise" groupValue={plan} onChange={(v) => setPlan(v as string)} label="Enterprise" disabled />
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaRadioComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-plan',
+  standalone: true,
+  imports: [ArcanaRadioComponent],
+  template: \`
+    <arcana-radio name="plan" value="free" [groupValue]="plan" (valueChange)="plan = $any($event)" label="Grátis"></arcana-radio>
+    <arcana-radio name="plan" value="pro" [groupValue]="plan" (valueChange)="plan = $any($event)" label="Pro"></arcana-radio>
+    <arcana-radio name="plan" value="enterprise" [groupValue]="plan" (valueChange)="plan = $any($event)" label="Enterprise" [disabled]="true"></arcana-radio>
+  \`
+})
+export class PlanComponent {
+  plan: string | number | boolean | null = 'pro'
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaRadio } from '@arcanalabs/ui-components/svelte'
+
+  let plan = $state('pro')
+</script>
+
+<ArcanaRadio name="plan" value="free" groupValue={plan} onChange={(v) => (plan = v as string)} label="Grátis" />
+<ArcanaRadio name="plan" value="pro" groupValue={plan} onChange={(v) => (plan = v as string)} label="Pro" />
+<ArcanaRadio name="plan" value="enterprise" groupValue={plan} onChange={(v) => (plan = v as string)} label="Enterprise" disabled />`
+  },
+
   radioCardGroup: {
     react: `import { useState } from 'react'
 import { ArcanaRadioCardGroup, type RadioCardOption } from '@arcanalabs/ui-components/react'
