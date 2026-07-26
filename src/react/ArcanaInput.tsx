@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FocusEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from "react";
 
 /**
  * `<ArcanaInput>` — React port. `<input class="arcana-input arcana-input--${size}">`
@@ -13,6 +13,10 @@ import { useEffect, useRef, type FocusEvent, type KeyboardEvent } from "react";
  *
  * Pra `type="number"`, converte string vazia → null e valor válido → number (mesmo
  * `parseValue` do Vue).
+ *
+ * Ícones (opcionais): props `iconStart`/`iconEnd` (ReactNode) — slots `#icon-start`/
+ * `#icon-end` do Vue. Aceitam qualquer conteúdo (SVG, `<i className="...">`, texto).
+ * Quando presentes, o input é envolvido num `.arcana-input-wrap`; sem eles, `<input>` puro.
  */
 export interface ArcanaInputProps {
     value?: string | number | null;
@@ -27,6 +31,8 @@ export interface ArcanaInputProps {
     autocomplete?: string;
     name?: string;
     size?: "sm" | "md" | "lg";
+    iconStart?: ReactNode;
+    iconEnd?: ReactNode;
     onValueChange?: (value: string | number | null) => void;
     onChange?: (value: string | number | null) => void;
     onBlur?: (ev: FocusEvent<HTMLInputElement>) => void;
@@ -49,6 +55,8 @@ export function ArcanaInput({
     autocomplete,
     name,
     size = "md",
+    iconStart,
+    iconEnd,
     onValueChange,
     onChange,
     onBlur,
@@ -58,6 +66,9 @@ export function ArcanaInput({
     className,
 }: ArcanaInputProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const hasIconStart = iconStart != null && iconStart !== false;
+    const hasIconEnd = iconEnd != null && iconEnd !== false;
+    const hasIcon = hasIconStart || hasIconEnd;
 
     const parseValue = (raw: string): string | number | null => {
         if (type !== "number") return raw;
@@ -85,12 +96,14 @@ export function ArcanaInput({
         "arcana-input",
         `arcana-input--${size}`,
         disabled ? "arcana-input--disabled" : "",
+        hasIconStart ? "arcana-input--icon-start" : "",
+        hasIconEnd ? "arcana-input--icon-end" : "",
         className ?? "",
     ]
         .filter(Boolean)
         .join(" ");
 
-    return (
+    const input = (
         <input
             ref={inputRef}
             type={type}
@@ -111,5 +124,20 @@ export function ArcanaInput({
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}
         />
+    );
+
+    // Sem ícone: `<input>` puro (mesmo DOM de sempre). Com ícone: envolve no wrapper.
+    if (!hasIcon) return input;
+
+    return (
+        <div className={`arcana-input-wrap arcana-input-wrap--${size}`}>
+            {hasIconStart && (
+                <span className="arcana-input__icon arcana-input__icon--start">{iconStart}</span>
+            )}
+            {input}
+            {hasIconEnd && (
+                <span className="arcana-input__icon arcana-input__icon--end">{iconEnd}</span>
+            )}
+        </div>
     );
 }

@@ -137,12 +137,23 @@ const BadgeDemo: Component = {
 
 const InputDemo: Component = {
   components: { ArcanaInput },
-  data: () => ({ email: "", qty: null as number | null }),
+  data: () => ({ email: "", qty: null as number | null, search: "", weight: null as number | null }),
   template: /* html */ `
     <div class="demo-stack" style="max-width: 340px">
       <ArcanaInput v-model="email" type="email" placeholder="email@company.com" />
       <ArcanaInput v-model="qty" type="number" :placeholder="$dt.quantity" :min="0" :max="99" />
       <ArcanaInput :placeholder="$dt.inputReadonly" :model-value="$dt.inputLockedValue" :readonly="true" />
+
+      <!-- Ícone no início (SVG) e no fim (texto de unidade) -->
+      <ArcanaInput v-model="search" placeholder="Buscar…">
+        <template #icon-start>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+        </template>
+      </ArcanaInput>
+      <ArcanaInput v-model="weight" type="number" placeholder="0" :min="0">
+        <template #icon-end><span style="font-size: 12px">kg</span></template>
+      </ArcanaInput>
+
       <p class="demo-note">{{ $dt.inputEmailLabel }}: <strong>{{ email || "—" }}</strong> · {{ $dt.inputQtyLabel }}: <strong>{{ qty === null ? "null" : qty }}</strong> ({{ qty === null ? "empty" : typeof qty }})</p>
     </div>
   `
@@ -1856,7 +1867,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "step", type: "string | number", default: "—", description: "Increment of the native number input." },
       { name: "maxlength", type: "string | number", default: "—", description: "Maximum character count, enforced by the browser." },
       { name: "autocomplete", type: "string", default: "—", description: "Native autocomplete hint (e.g. \"email\", \"off\")." },
-      { name: "name", type: "string", default: "—", description: "Field name, for native form submission." }
+      { name: "name", type: "string", default: "—", description: "Field name, for native form submission." },
+      { name: "#icon-start / #icon-end", type: "slot", default: "—", description: "Optional content (icon, SVG, unit text) rendered at the start/end of the field. When present, the input is wrapped in .arcana-input-wrap; without them it stays a bare <input>. React: iconStart/iconEnd (ReactNode) · Svelte: iconStart/iconEnd snippets · Angular: iconStart/iconEnd (TemplateRef)." }
     ],
     events: [
       "update:modelValue(value) — v-model update",
@@ -1869,11 +1881,20 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "const email = ref('')",
       "const qty = ref<number | null>(null)",
+      "const search = ref('')",
       "</script>",
       "",
       "<template>",
       "  <ArcanaInput v-model=\"email\" type=\"email\" placeholder=\"email@company.com\" />",
       "  <ArcanaInput v-model=\"qty\" type=\"number\" :min=\"0\" :max=\"99\" />",
+      "",
+      "  <!-- Ícones no início e/ou no fim (qualquer conteúdo) -->",
+      "  <ArcanaInput v-model=\"search\" placeholder=\"Buscar…\">",
+      "    <template #icon-start><i class=\"icon-search\" /></template>",
+      "  </ArcanaInput>",
+      "  <ArcanaInput v-model=\"qty\" type=\"number\">",
+      "    <template #icon-end><span>kg</span></template>",
+      "  </ArcanaInput>",
       "</template>"
     ].join("\n")
   },

@@ -1,25 +1,16 @@
 <template>
-    <input
-        :type="type"
-        :value="modelValue"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :min="min"
-        :max="max"
-        :step="step"
-        :maxlength="maxlength"
-        :autocomplete="autocomplete"
-        :name="name"
-        class="arcana-input"
-        :class="rootClasses"
-        @input="onInput"
-        @change="onChange"
-        @blur="$emit('blur', $event)"
-        @focus="$emit('focus', $event)"
-        @keydown="$emit('keydown', $event)"
-        @keyup="$emit('keyup', $event)"
-    />
+    <!-- Com ícone: envolve o input num wrapper posicionado. Sem ícone: `<input>` puro
+         (mesmo DOM de sempre — nenhum consumidor existente é afetado). -->
+    <div v-if="hasIcon" class="arcana-input-wrap" :class="`arcana-input-wrap--${size}`">
+        <span v-if="hasIconStart" class="arcana-input__icon arcana-input__icon--start">
+            <slot name="icon-start" />
+        </span>
+        <input v-bind="inputAttrs" class="arcana-input" :class="rootClasses" v-on="inputListeners" />
+        <span v-if="hasIconEnd" class="arcana-input__icon arcana-input__icon--end">
+            <slot name="icon-end" />
+        </span>
+    </div>
+    <input v-else v-bind="inputAttrs" class="arcana-input" :class="rootClasses" v-on="inputListeners" />
 </template>
 
 <script lang="ts">
@@ -35,6 +26,10 @@ import type { Component, PropType } from "vue"
  *   `autocomplete`, `name` — passam direto pro `<input>`
  * - `size` — `'sm' | 'md' | 'lg'` (default `'md'`)
  *
+ * Ícones (opcionais): slots `#icon-start` e `#icon-end` renderizam conteúdo no início
+ * e/ou no fim do campo. Aceitam qualquer conteúdo (SVG, `<i class="...">`, texto). Quando
+ * presentes, o input é envolvido num `.arcana-input-wrap`; sem eles, segue `<input>` puro.
+ *
  * Por que componente próprio em vez de wrapping `<input>` direto?
  * ──────────────────────────────────────────────────────────────
  * - Centraliza estilos shadcn (border zinc, focus zinc, palette consistente)
@@ -45,6 +40,10 @@ import type { Component, PropType } from "vue"
  *
  *     <ArcanaInput v-model="form.email" type="email" placeholder="email@empresa.com" />
  *     <ArcanaInput v-model="form.qty" type="number" min="0" max="100" :disabled="locked" />
+ *
+ *     <ArcanaInput v-model="form.q" placeholder="Buscar…">
+ *         <template #icon-start><i class="icon-search" /></template>
+ *     </ArcanaInput>
  */
 export default {
     name: 'ArcanaInput',
@@ -104,10 +103,48 @@ export default {
     },
 
     computed: {
+        hasIconStart(): boolean {
+            return !!this.$slots['icon-start']
+        },
+        hasIconEnd(): boolean {
+            return !!this.$slots['icon-end']
+        },
+        hasIcon(): boolean {
+            return this.hasIconStart || this.hasIconEnd
+        },
         rootClasses(): string {
             const cls = [`arcana-input--${this.size}`]
             if (this.disabled) cls.push('arcana-input--disabled')
+            if (this.hasIconStart) cls.push('arcana-input--icon-start')
+            if (this.hasIconEnd) cls.push('arcana-input--icon-end')
             return cls.join(' ')
+        },
+        // Atributos e listeners do `<input>` centralizados pra reaproveitar nos dois
+        // ramos do template (com e sem wrapper de ícone) sem duplicar a marcação.
+        inputAttrs(): Record<string, unknown> {
+            return {
+                type: this.type,
+                value: this.modelValue,
+                placeholder: this.placeholder,
+                disabled: this.disabled,
+                readonly: this.readonly,
+                min: this.min,
+                max: this.max,
+                step: this.step,
+                maxlength: this.maxlength,
+                autocomplete: this.autocomplete,
+                name: this.name,
+            }
+        },
+        inputListeners(): Record<string, (e: Event) => void> {
+            return {
+                input: this.onInput,
+                change: this.onChange,
+                blur: (e: Event) => this.$emit('blur', e),
+                focus: (e: Event) => this.$emit('focus', e),
+                keydown: (e: Event) => this.$emit('keydown', e),
+                keyup: (e: Event) => this.$emit('keyup', e),
+            }
         },
     },
 

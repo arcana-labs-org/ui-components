@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.0 — 2026-07-26
+
+### Novos recursos
+- **`ArcanaInput` ganhou ícones no início e no fim.** Slots `#icon-start` e `#icon-end` no Vue — com os equivalentes nos outros ports: props `iconStart`/`iconEnd` (`ReactNode`) no React, snippets de mesmo nome no Svelte e `@Input() iconStart`/`iconEnd` (`TemplateRef`) no Angular. Aceitam qualquer conteúdo (ícone de fonte, SVG inline, texto de unidade como `kg`). Quando presentes, o input passa a ser envolvido num `.arcana-input-wrap`; **sem eles, continua sendo um `<input>` puro** — nenhum consumidor existente tem o DOM alterado. Puramente aditivo.
+
+  No Angular o `selector` segue `input[arcanaInput]` (nada muda pra quem já usa): quando um ícone é passado, o directive se auto-envolve no wrapper e projeta o `TemplateRef`, já que um directive sobre `<input>` não pode ter filhos.
+
+### Documentação
+- Página do **Input** ganhou o slot documentado na tabela, exemplos nos quatro frameworks e uma demo ao vivo com ícone de busca no início e unidade no fim.
+
+
 ## 2.0.0 — 2026-07-25
 
 ### Alterações que exigem atenção

@@ -11,7 +11,13 @@
    * - `blur`/`focus`/`keydown`/`keyup` → `onBlur`/`onFocus`/`onKeydown`/`onKeyup`
    *
    * Pra `type="number"`, converte string vazia → null e valor válido → number.
+   *
+   * Ícones (opcionais): snippets `iconStart`/`iconEnd` — slots `#icon-start`/`#icon-end`
+   * do Vue. Aceitam qualquer conteúdo. Quando presentes, o input é envolvido num
+   * `.arcana-input-wrap`; sem eles, `<input>` puro.
    */
+  import type { Snippet } from "svelte";
+
   let {
     value = "",
     type = "text",
@@ -25,6 +31,8 @@
     autocomplete,
     name,
     size = "md",
+    iconStart,
+    iconEnd,
     onValueChange,
     onChange,
     onBlur,
@@ -45,6 +53,8 @@
     autocomplete?: string;
     name?: string;
     size?: "sm" | "md" | "lg";
+    iconStart?: Snippet;
+    iconEnd?: Snippet;
     onValueChange?: (value: string | number | null) => void;
     onChange?: (value: string | number | null) => void;
     onBlur?: (ev: FocusEvent) => void;
@@ -61,30 +71,56 @@
     return Number.isNaN(n) ? raw : n;
   }
 
+  const hasIcon = $derived(!!iconStart || !!iconEnd);
+
   const rootClasses = $derived(
-    ["arcana-input", `arcana-input--${size}`, disabled ? "arcana-input--disabled" : "", className]
+    [
+      "arcana-input",
+      `arcana-input--${size}`,
+      disabled ? "arcana-input--disabled" : "",
+      iconStart ? "arcana-input--icon-start" : "",
+      iconEnd ? "arcana-input--icon-end" : "",
+      className,
+    ]
       .filter(Boolean)
       .join(" ")
   );
 </script>
 
-<input
-  {type}
-  value={value ?? ""}
-  {placeholder}
-  {disabled}
-  {readonly}
-  {min}
-  {max}
-  {step}
-  {maxlength}
-  {autocomplete}
-  {name}
-  class={rootClasses}
-  oninput={(e) => onValueChange?.(parseValue((e.target as HTMLInputElement).value))}
-  onchange={(e) => onChange?.(parseValue((e.target as HTMLInputElement).value))}
-  onblur={(e) => onBlur?.(e)}
-  onfocus={(e) => onFocus?.(e)}
-  onkeydown={(e) => onKeydown?.(e)}
-  onkeyup={(e) => onKeyup?.(e)}
-/>
+<!-- `#snippet` reutilizável pra não duplicar o `<input>` nos dois ramos (com/sem ícone). -->
+{#snippet field()}
+  <input
+    {type}
+    value={value ?? ""}
+    {placeholder}
+    {disabled}
+    {readonly}
+    {min}
+    {max}
+    {step}
+    {maxlength}
+    {autocomplete}
+    {name}
+    class={rootClasses}
+    oninput={(e) => onValueChange?.(parseValue((e.target as HTMLInputElement).value))}
+    onchange={(e) => onChange?.(parseValue((e.target as HTMLInputElement).value))}
+    onblur={(e) => onBlur?.(e)}
+    onfocus={(e) => onFocus?.(e)}
+    onkeydown={(e) => onKeydown?.(e)}
+    onkeyup={(e) => onKeyup?.(e)}
+  />
+{/snippet}
+
+{#if hasIcon}
+  <div class="arcana-input-wrap arcana-input-wrap--{size}">
+    {#if iconStart}
+      <span class="arcana-input__icon arcana-input__icon--start">{@render iconStart()}</span>
+    {/if}
+    {@render field()}
+    {#if iconEnd}
+      <span class="arcana-input__icon arcana-input__icon--end">{@render iconEnd()}</span>
+    {/if}
+  </div>
+{:else}
+  {@render field()}
+{/if}

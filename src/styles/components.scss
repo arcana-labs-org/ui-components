@@ -1368,6 +1368,51 @@
     appearance: textfield;
 }
 
+/* Ícones (início/fim) — só existe quando um slot de ícone é fornecido; sem ícone o
+   componente segue sendo um `<input class="arcana-input">` puro (zero mudança de DOM).
+   O wrapper carrega o posicionamento; a borda continua no próprio `.arcana-input`. */
+.arcana-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* O input dentro do wrapper ocupa toda a largura; o wrapper não tem borda própria. */
+.arcana-input-wrap .arcana-input {
+    width: 100%;
+}
+
+.arcana-input__icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    color: var(--arcana-text-placeholder);
+    font-size: 15px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.arcana-input__icon--start { left: 12px; }
+.arcana-input__icon--end { right: 12px; }
+
+/* Padding extra no lado do ícone pra o texto não colidir. */
+.arcana-input--icon-start { padding-left: 34px; }
+.arcana-input--icon-end { padding-right: 34px; }
+
+/* Ajuste por tamanho: offset do ícone acompanha o padding horizontal do input. */
+.arcana-input-wrap--sm .arcana-input__icon--start { left: 10px; }
+.arcana-input-wrap--sm .arcana-input__icon--end { right: 10px; }
+.arcana-input--sm.arcana-input--icon-start { padding-left: 30px; }
+.arcana-input--sm.arcana-input--icon-end { padding-right: 30px; }
+
+.arcana-input-wrap--lg .arcana-input__icon--start { left: 14px; }
+.arcana-input-wrap--lg .arcana-input__icon--end { right: 14px; }
+.arcana-input--lg.arcana-input--icon-start { padding-left: 38px; }
+.arcana-input--lg.arcana-input--icon-end { padding-right: 38px; }
+
 /* ── ArcanaInputMask.vue: uses the canonical .arcana-input rules from
    ArcanaInput.vue (its documented in-file duplicate block is folded here). ── */
 

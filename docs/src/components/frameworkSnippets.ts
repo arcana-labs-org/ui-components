@@ -200,10 +200,15 @@ import { ArcanaInput } from '@arcanalabs/ui-components/react'
 export function Fields() {
   const [email, setEmail] = useState('')
   const [qty, setQty] = useState<number | null>(null)
+  const [search, setSearch] = useState('')
   return (
     <>
       <ArcanaInput value={email} onValueChange={(v) => setEmail(v as string)} type="email" placeholder="email@company.com" />
       <ArcanaInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" min={0} max={99} />
+
+      {/* Ícones no início e/ou no fim (qualquer ReactNode) */}
+      <ArcanaInput value={search} onValueChange={(v) => setSearch(v as string)} placeholder="Buscar…" iconStart={<i className="icon-search" />} />
+      <ArcanaInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" iconEnd={<span>kg</span>} />
     </>
   )
 }`,
@@ -217,21 +222,38 @@ import { ArcanaInputComponent } from '@arcanalabs/ui-components/angular'
   template: \`
     <input arcanaInput [(value)]="email" type="email" placeholder="email@company.com" />
     <input arcanaInput [(value)]="qty" type="number" [min]="0" [max]="99" />
+
+    <!-- Ícones no início e/ou no fim (via TemplateRef) -->
+    <input arcanaInput [(value)]="search" placeholder="Buscar…" [iconStart]="searchIcon" />
+    <ng-template #searchIcon><i class="icon-search"></i></ng-template>
+
+    <input arcanaInput [(value)]="qty" type="number" [iconEnd]="unit" />
+    <ng-template #unit><span>kg</span></ng-template>
   \`
 })
 export class FieldsComponent {
   email: string | number | null = ''
   qty: string | number | null = null
+  search: string | number | null = ''
 }`,
     svelte: `<script lang="ts">
   import { ArcanaInput } from '@arcanalabs/ui-components/svelte'
 
   let email = $state('')
   let qty = $state<number | null>(null)
+  let search = $state('')
 </script>
 
 <ArcanaInput value={email} onValueChange={(v) => (email = v as string)} type="email" placeholder="email@company.com" />
-<ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number" min={0} max={99} />`
+<ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number" min={0} max={99} />
+
+<!-- Ícones no início e/ou no fim (via snippets) -->
+<ArcanaInput value={search} onValueChange={(v) => (search = v as string)} placeholder="Buscar…">
+  {#snippet iconStart()}<i class="icon-search"></i>{/snippet}
+</ArcanaInput>
+<ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number">
+  {#snippet iconEnd()}<span>kg</span>{/snippet}
+</ArcanaInput>`
   },
 
   select: {
