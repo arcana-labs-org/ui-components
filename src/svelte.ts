@@ -514,6 +514,7 @@ export interface SelectOption {
   description?: string;
   /** Cor CSS da bolinha do item (e do trigger em `triggerMode="dots"`). */
   color?: string;
+  group?: string;
 }
 export interface ArcanaSelectProps {
   value?: unknown;
@@ -531,6 +532,11 @@ export interface ArcanaSelectProps {
   icon?: string;
   /** Cor CSS inline aplicada no `icon`. */
   iconColor?: string;
+  prefix?: Snippet<[{ selectedOptions: SelectOption[]; open: boolean }]>;
+  suffix?: Snippet<[{ selectedOptions: SelectOption[]; open: boolean }]>;
+  optionPrefix?: Snippet<[{ option: SelectOption; selected: boolean }]>;
+  optionSuffix?: Snippet<[{ option: SelectOption; selected: boolean }]>;
+  groupLabel?: Snippet<[{ group: string }]>;
   /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
   showFooter?: boolean;
   /** Texto da contagem; `{count}` vira o total selecionado. */

@@ -261,11 +261,11 @@ export class FieldsComponent {
 import { ArcanaSelect, type SelectOption } from '@arcanalabs/ui-components/react'
 
 const fruits: SelectOption[] = [
-  { label: 'Apple', value: 'apple' },
-  { label: 'Banana', value: 'banana' },
-  { label: 'Cherry', value: 'cherry', description: 'seasonal' },
-  { label: 'Durian', value: 'durian', disabled: true },
-  { label: 'Elderberry', value: 'elderberry' },
+  { label: 'Apple', value: 'apple', group: 'Common' },
+  { label: 'Banana', value: 'banana', group: 'Common' },
+  { label: 'Cherry', value: 'cherry', description: 'seasonal', group: 'Seasonal' },
+  { label: 'Durian', value: 'durian', disabled: true, group: 'Seasonal' },
+  { label: 'Elderberry', value: 'elderberry', group: 'Seasonal' },
 ]
 
 // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
@@ -286,6 +286,18 @@ export function FruitPicker() {
     <>
       {/* Single + search */}
       <ArcanaSelect value={single} onValueChange={(v) => setSingle(v as string | null)} options={fruits} searchable placeholder="Pick a fruit" />
+
+      {/* Closed-field and popover adornments; groups get headings + separators */}
+      <ArcanaSelect
+        value={single}
+        onValueChange={(v) => setSingle(v as string | null)}
+        options={fruits}
+        prefix={<span>From</span>}
+        suffix={<span>BR</span>}
+        renderOptionPrefix={(option) => <span>#{option.value}</span>}
+        renderOptionSuffix={(_option) => <span aria-hidden="true">›</span>}
+        renderGroupLabel={(group) => <strong>{group}</strong>}
+      />
 
       {/* Multiple — value is an array */}
       <ArcanaSelect value={many} onValueChange={(v) => setMany(v as string[])} options={fruits} multiple placeholder="Pick several" />
@@ -314,8 +326,24 @@ import { ArcanaSelectComponent, type SelectOption } from '@arcanalabs/ui-compone
   standalone: true,
   imports: [ArcanaSelectComponent],
   template: \`
+    <ng-template #fieldPrefix>From</ng-template>
+    <ng-template #fieldSuffix>BR</ng-template>
+    <ng-template #optionPrefix let-option>#{{ option.value }}</ng-template>
+    <ng-template #optionSuffix><span aria-hidden="true">›</span></ng-template>
+    <ng-template #groupLabel let-group><strong>{{ group }}</strong></ng-template>
+
     <!-- Single + search -->
     <div arcanaSelect [(value)]="single" [options]="fruits" [searchable]="true" placeholder="Pick a fruit"></div>
+
+    <!-- Closed-field and popover adornments; groups get headings + separators -->
+    <div arcanaSelect
+      [(value)]="single"
+      [options]="fruits"
+      [prefixTemplate]="fieldPrefix"
+      [suffixTemplate]="fieldSuffix"
+      [optionPrefixTemplate]="optionPrefix"
+      [optionSuffixTemplate]="optionSuffix"
+      [groupLabelTemplate]="groupLabel"></div>
 
     <!-- Multiple — value is an array -->
     <div arcanaSelect [(value)]="many" [options]="fruits" [multiple]="true" placeholder="Pick several"></div>
@@ -338,11 +366,11 @@ export class FruitPickerComponent {
   many: string[] = []
   statuses: string[] = ['todo', 'in_progress', 'in_review']
   fruits: SelectOption[] = [
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' },
-    { label: 'Cherry', value: 'cherry', description: 'seasonal' },
-    { label: 'Durian', value: 'durian', disabled: true },
-    { label: 'Elderberry', value: 'elderberry' },
+    { label: 'Apple', value: 'apple', group: 'Common' },
+    { label: 'Banana', value: 'banana', group: 'Common' },
+    { label: 'Cherry', value: 'cherry', description: 'seasonal', group: 'Seasonal' },
+    { label: 'Durian', value: 'durian', disabled: true, group: 'Seasonal' },
+    { label: 'Elderberry', value: 'elderberry', group: 'Seasonal' },
   ]
   // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
   // shows only the dots — the pattern used by the task status quick filter.
@@ -362,11 +390,11 @@ export class FruitPickerComponent {
   let statuses = $state<string[]>(['todo', 'in_progress', 'in_review'])
 
   const fruits: SelectOption[] = [
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' },
-    { label: 'Cherry', value: 'cherry', description: 'seasonal' },
-    { label: 'Durian', value: 'durian', disabled: true },
-    { label: 'Elderberry', value: 'elderberry' },
+    { label: 'Apple', value: 'apple', group: 'Common' },
+    { label: 'Banana', value: 'banana', group: 'Common' },
+    { label: 'Cherry', value: 'cherry', description: 'seasonal', group: 'Seasonal' },
+    { label: 'Durian', value: 'durian', disabled: true, group: 'Seasonal' },
+    { label: 'Elderberry', value: 'elderberry', group: 'Seasonal' },
   ]
   // \`color\` on an option renders a dot; with triggerMode="dots" the trigger
   // shows only the dots — the pattern used by the task status quick filter.
@@ -381,6 +409,15 @@ export class FruitPickerComponent {
 
 <!-- Single + search -->
 <ArcanaSelect value={single} onValueChange={(v) => (single = v as string | null)} options={fruits} searchable placeholder="Pick a fruit" />
+
+<!-- Closed-field and popover adornments; groups get headings + separators -->
+<ArcanaSelect value={single} onValueChange={(v) => (single = v as string | null)} options={fruits}>
+  {#snippet prefix()}<span>From</span>{/snippet}
+  {#snippet suffix()}<span>BR</span>{/snippet}
+  {#snippet optionPrefix({ option })}<span>#{option.value}</span>{/snippet}
+  {#snippet optionSuffix()}<span aria-hidden="true">›</span>{/snippet}
+  {#snippet groupLabel({ group })}<strong>{group}</strong>{/snippet}
+</ArcanaSelect>
 
 <!-- Multiple — value is an array -->
 <ArcanaSelect value={many} onValueChange={(v) => (many = v as string[])} options={fruits} multiple placeholder="Pick several" />

@@ -1,11 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { nextTick } from "vue";
+import { h, nextTick } from "vue";
 import { mount } from "@vue/test-utils";
 import {
   ArcanaContextMenu,
   ArcanaButton,
   ArcanaBadge,
   ArcanaInput,
+  ArcanaSelect,
   ArcanaTabs,
   ArcanaSwitch,
   ArcanaSwitchSegmented,
@@ -41,6 +42,35 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     const input = wrapper.find("input");
     expect(input.exists()).toBe(true);
     expect((input.element as HTMLInputElement).value).toBe("olá");
+  });
+
+  it("ArcanaSelect expõe slots de campo/opção e separa grupos", async () => {
+    const wrapper = mount(ArcanaSelect, {
+      attachTo: document.body,
+      props: {
+        options: [
+          { label: "Pix", value: "pix", group: "À vista" },
+          { label: "Cartão", value: "card", group: "A prazo" }
+        ]
+      },
+      slots: {
+        prefix: () => h("span", "Forma"),
+        suffix: () => h("span", "BR"),
+        "option-prefix": ({ option }: any) => h("span", `P:${option.value}`),
+        "option-suffix": ({ option }: any) => h("span", `S:${option.label}`),
+        "group-label": ({ group }: any) => h("strong", group)
+      }
+    });
+    expect(wrapper.find(".arcana-select__prefix").text()).toBe("Forma");
+    expect(wrapper.find(".arcana-select__suffix").text()).toBe("BR");
+    await wrapper.find(".arcana-select__trigger").trigger("click");
+    await nextTick();
+    const panel = document.body.querySelector(".arcana-select__panel")!;
+    expect(panel.querySelectorAll(".arcana-select__group")).toHaveLength(2);
+    expect(panel.querySelectorAll(".arcana-select__group-separator")).toHaveLength(1);
+    expect(panel.querySelectorAll(".arcana-select__option-prefix")).toHaveLength(2);
+    expect(panel.querySelectorAll(".arcana-select__option-suffix")).toHaveLength(2);
+    wrapper.unmount();
   });
 
   it("ArcanaTabs renderiza os triggers das abas", () => {

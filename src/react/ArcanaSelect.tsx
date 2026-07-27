@@ -6,6 +6,8 @@ import {
     useState,
     type CSSProperties,
     type KeyboardEvent as ReactKeyboardEvent,
+    type ReactNode,
+    Fragment,
 } from "react";
 import { createPortal } from "react-dom";
 
@@ -42,6 +44,8 @@ export interface SelectOption {
      * trigger quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
      */
     color?: string;
+    /** Grupo visual da opção. Grupos consecutivos recebem cabeçalho e separador. */
+    group?: string;
 }
 
 export interface ArcanaSelectProps {
@@ -63,6 +67,16 @@ export interface ArcanaSelectProps {
     icon?: string;
     /** Cor CSS inline aplicada no `icon`. */
     iconColor?: string;
+    /** Conteúdo antes do valor/placeholder no campo fechado. */
+    prefix?: ReactNode;
+    /** Conteúdo depois do valor/placeholder e antes dos controles do campo. */
+    suffix?: ReactNode;
+    /** Renderiza conteúdo antes de cada opção no popover. */
+    renderOptionPrefix?: (option: SelectOption) => ReactNode;
+    /** Renderiza conteúdo depois de cada opção no popover. */
+    renderOptionSuffix?: (option: SelectOption) => ReactNode;
+    /** Customiza o cabeçalho de um grupo. */
+    renderGroupLabel?: (group: string) => ReactNode;
     /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
     showFooter?: boolean;
     /** Texto da contagem; `{count}` vira o total selecionado. */
@@ -87,6 +101,11 @@ export function ArcanaSelect({
     triggerMode = "labels",
     icon = "",
     iconColor = "",
+    prefix,
+    suffix,
+    renderOptionPrefix,
+    renderOptionSuffix,
+    renderGroupLabel,
     showFooter = false,
     footerCountLabel = "{count} selecionada(s)",
     clearLabel = "Limpar",
@@ -389,6 +408,9 @@ export function ArcanaSelect({
                 onClick={toggle}
                 onKeyDown={onTriggerKeydown}
             >
+                {prefix != null ? (
+                    <span className="arcana-select__prefix">{prefix}</span>
+                ) : null}
                 {icon ? (
                     <i
                         className={`arcana-select__icon ${icon}`}
@@ -421,6 +443,9 @@ export function ArcanaSelect({
                         {displayLabel}
                     </span>
                 )}
+                {suffix != null ? (
+                    <span className="arcana-select__suffix">{suffix}</span>
+                ) : null}
 
                 {canClear ? (
                     <span
@@ -515,9 +540,26 @@ export function ArcanaSelect({
                           ) : null}
 
                           <ul className="arcana-select__list">
-                              {filteredOptions.map((opt, idx) => (
+                              {filteredOptions.map((opt, idx) => {
+                                  const previousGroup =
+                                      idx > 0 ? filteredOptions[idx - 1]?.group : undefined;
+                                  const startsGroup =
+                                      Boolean(opt.group) && opt.group !== previousGroup;
+                                  return (
+                                  <Fragment key={`${opt.group ?? ""}:${String(opt.value)}:${idx}`}>
+                                      {startsGroup ? (
+                                          <li className="arcana-select__group" role="presentation">
+                                              {idx > 0 ? (
+                                                  <span className="arcana-select__group-separator" />
+                                              ) : null}
+                                              <span className="arcana-select__group-label">
+                                                  {renderGroupLabel
+                                                      ? renderGroupLabel(opt.group!)
+                                                      : opt.group}
+                                              </span>
+                                          </li>
+                                      ) : null}
                                   <li
-                                      key={String(opt.value)}
                                       className={[
                                           "arcana-select__item",
                                           isSelected(opt) ? "is-selected" : "",
@@ -534,6 +576,11 @@ export function ArcanaSelect({
                                       }
                                       onClick={() => onItemClick(opt)}
                                   >
+                                      {renderOptionPrefix ? (
+                                          <span className="arcana-select__option-prefix">
+                                              {renderOptionPrefix(opt)}
+                                          </span>
+                                      ) : null}
                                       {opt.color ? (
                                           <span
                                               className="arcana-select__dot"
@@ -551,6 +598,11 @@ export function ArcanaSelect({
                                               </span>
                                           ) : null}
                                       </span>
+                                      {renderOptionSuffix ? (
+                                          <span className="arcana-select__option-suffix">
+                                              {renderOptionSuffix(opt)}
+                                          </span>
+                                      ) : null}
                                       {isSelected(opt) ? (
                                           <svg
                                               className="arcana-select__item-check"
@@ -568,7 +620,9 @@ export function ArcanaSelect({
                                           </svg>
                                       ) : null}
                                   </li>
-                              ))}
+                                  </Fragment>
+                                  );
+                              })}
 
                               {!filteredOptions.length ? (
                                   <li className="arcana-select__empty">

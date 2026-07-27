@@ -72,6 +72,8 @@ export interface ComponentDoc {
   props: PropRow[];
   /** Emitted events, shown as a small list under the props table. */
   events?: string[];
+  /** Named slots and their scoped values. */
+  slots?: string[];
   /** The Vue `<script setup>` + template snippet shown in the Code tab. */
   vueSnippet: string;
 }
@@ -2014,7 +2016,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     demo: SelectDemo,
     props: [
       { name: "modelValue", type: "any", default: "null", description: "Selected value (single) or array of values (multiple)." },
-      { name: "options", type: "Array<{ label, value, disabled?, description? }> | string[] | number[]", default: "[]", description: "The choices; plain strings/numbers are normalised." },
+      { name: "options", type: "Array<{ label, value, disabled?, description?, color?, group? }> | string[] | number[]", default: "[]", description: "The choices; group adds ordered group headings and separators. Plain strings/numbers are normalised." },
       { name: "placeholder", type: "string", default: "'Selecione…'", description: "Shown when nothing is selected." },
       { name: "multiple", type: "boolean", default: "false", description: "Enables multi-select (value becomes an array; panel stays open)." },
       { name: "searchable", type: "boolean", default: "false", description: "Adds a filter input at the top of the dropdown." },
@@ -2031,6 +2033,13 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       { name: "icon", type: "string", default: "''", description: "Font Awesome class of an icon rendered at the start of the trigger." },
       { name: "iconColor", type: "string", default: "''", description: "Colour of that icon; any valid CSS colour string." }
     ],
+    slots: [
+      "prefix({ selectedOptions, open }) — content before the field value",
+      "suffix({ selectedOptions, open }) — content after the field value",
+      "option-prefix({ option, selected }) — content before each popover option",
+      "option-suffix({ option, selected }) — content after each popover option",
+      "group-label({ group }) — custom group heading"
+    ],
     events: ["update:modelValue(value) — v-model update", "change(value) — same payload, on selection"],
     vueSnippet: [
       "<script setup lang=\"ts\">",
@@ -2042,11 +2051,11 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "const statuses = ref(['todo', 'in_progress', 'in_review'])",
       "",
       "const options = [",
-      "  { label: 'Apple', value: 'apple' },",
-      "  { label: 'Banana', value: 'banana' },",
-      "  { label: 'Cherry', value: 'cherry', description: 'seasonal' },",
-      "  { label: 'Durian', value: 'durian', disabled: true },",
-      "  { label: 'Elderberry', value: 'elderberry' },",
+      "  { label: 'Apple', value: 'apple', group: 'Common' },",
+      "  { label: 'Banana', value: 'banana', group: 'Common' },",
+      "  { label: 'Cherry', value: 'cherry', description: 'seasonal', group: 'Seasonal' },",
+      "  { label: 'Durian', value: 'durian', disabled: true, group: 'Seasonal' },",
+      "  { label: 'Elderberry', value: 'elderberry', group: 'Seasonal' },",
       "]",
       "",
       "// `color` on an option renders a dot before its label.",
@@ -2062,6 +2071,14 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "<template>",
       "  <!-- Single, with the search field -->",
       "  <ArcanaSelect v-model=\"fruit\" :options=\"options\" searchable placeholder=\"Pick a fruit\" />",
+      "",
+      "  <!-- Field and popover adornments -->",
+      "  <ArcanaSelect v-model=\"fruit\" :options=\"options\">",
+      "    <template #prefix>From</template>",
+      "    <template #suffix>BR</template>",
+      "    <template #option-prefix=\"{ option }\">#{{ option.value }}</template>",
+      "    <template #option-suffix=\"{ selected }\">{{ selected ? 'Selected' : '' }}</template>",
+      "  </ArcanaSelect>",
       "",
       "  <!-- Multiple: the value becomes an array and the panel stays open -->",
       "  <ArcanaSelect v-model=\"fruits\" :options=\"options\" multiple placeholder=\"Pick several\" />",

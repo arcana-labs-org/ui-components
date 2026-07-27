@@ -187,6 +187,33 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         ).toContain("Dois");
     });
 
+    it("ArcanaSelect renderiza prefix/suffix no campo e nas opções agrupadas", () => {
+        const { container } = render(
+            <ArcanaSelect
+                prefix={<span data-testid="field-prefix">De</span>}
+                suffix={<span data-testid="field-suffix">BRL</span>}
+                renderOptionPrefix={(option) => <span>#{option.value}</span>}
+                renderOptionSuffix={(option) => <span>{option.description}</span>}
+                renderGroupLabel={(group) => <strong>{group}</strong>}
+                options={[
+                    { label: "Dinheiro", value: "cash", description: "imediato", group: "À vista" },
+                    { label: "Pix", value: "pix", description: "instantâneo", group: "À vista" },
+                    { label: "Cartão", value: "card", description: "30 dias", group: "A prazo" },
+                ]}
+            />
+        );
+        expect(container.querySelector(".arcana-select__prefix")?.textContent).toBe("De");
+        expect(container.querySelector(".arcana-select__suffix")?.textContent).toBe("BRL");
+
+        fireEvent.click(container.querySelector(".arcana-select__trigger")!);
+        const panel = document.body.querySelector(".arcana-select__panel")!;
+        expect(Array.from(panel.querySelectorAll(".arcana-select__group-label")).map((el) => el.textContent))
+            .toEqual(["À vista", "A prazo"]);
+        expect(panel.querySelectorAll(".arcana-select__group-separator")).toHaveLength(1);
+        expect(panel.querySelectorAll(".arcana-select__option-prefix")).toHaveLength(3);
+        expect(panel.querySelectorAll(".arcana-select__option-suffix")).toHaveLength(3);
+    });
+
     it("ArcanaSelect triggerMode=dots mostra bolinhas e o rodapé limpa a seleção", () => {
         const onValueChange = vi.fn();
         const options = [

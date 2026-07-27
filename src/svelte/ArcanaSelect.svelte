@@ -9,6 +9,8 @@
      * quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
      */
     color?: string;
+    /** Grupo visual da opção. Grupos consecutivos recebem cabeçalho e separador. */
+    group?: string;
   }
 </script>
 
@@ -35,7 +37,7 @@
    * />
    * ```
    */
-  import { untrack } from "svelte";
+  import { untrack, type Snippet } from "svelte";
   import { portal } from "./portal";
 
   let {
@@ -51,6 +53,11 @@
     triggerMode = "labels",
     icon = "",
     iconColor = "",
+    prefix,
+    suffix,
+    optionPrefix,
+    optionSuffix,
+    groupLabel,
     showFooter = false,
     footerCountLabel = "{count} selecionada(s)",
     clearLabel = "Limpar",
@@ -73,6 +80,11 @@
     icon?: string;
     /** Cor CSS inline aplicada no `icon`. */
     iconColor?: string;
+    prefix?: Snippet<[{ selectedOptions: SelectOption[]; open: boolean }]>;
+    suffix?: Snippet<[{ selectedOptions: SelectOption[]; open: boolean }]>;
+    optionPrefix?: Snippet<[{ option: SelectOption; selected: boolean }]>;
+    optionSuffix?: Snippet<[{ option: SelectOption; selected: boolean }]>;
+    groupLabel?: Snippet<[{ group: string }]>;
     /** Rodapé do panel (só em `multiple`) com contagem + botão de limpar. */
     showFooter?: boolean;
     /** Texto da contagem; `{count}` vira o total selecionado. */
@@ -145,6 +157,10 @@
 
   const firstEnabledIndex = (list: SelectOption[]): number =>
     list.findIndex((o) => !o.disabled);
+
+  const startsGroup = (opt: SelectOption, index: number): boolean =>
+    Boolean(opt.group) &&
+    opt.group !== (index > 0 ? filteredOptions[index - 1]?.group : undefined);
 
   function updatePanelPosition() {
     const trigger = triggerEl;
@@ -344,12 +360,23 @@
     onclick={toggle}
     onkeydown={onTriggerKeydown}
   >
+    {#if prefix}
+      <span class="arcana-select__prefix">
+        {@render prefix({ selectedOptions, open: isOpen })}
+      </span>
+    {/if}
     {#if icon}
       <i
         class="arcana-select__icon {icon}"
         style={iconColor ? `color:${iconColor};` : undefined}
         aria-hidden="true"
       ></i>
+    {/if}
+
+    {#if suffix}
+      <span class="arcana-select__suffix">
+        {@render suffix({ selectedOptions, open: isOpen })}
+      </span>
     {/if}
 
     {#if isDotsMode && hasValue}
@@ -466,7 +493,19 @@
       {/if}
 
       <ul class="arcana-select__list">
-        {#each filteredOptions as opt, idx (String(opt.value))}
+        {#each filteredOptions as opt, idx (`${opt.group || ""}:${String(opt.value)}:${idx}`)}
+          {#if startsGroup(opt, idx)}
+            <li class="arcana-select__group" role="presentation">
+              {#if idx > 0}<span class="arcana-select__group-separator"></span>{/if}
+              <span class="arcana-select__group-label">
+                {#if groupLabel}
+                  {@render groupLabel({ group: opt.group! })}
+                {:else}
+                  {opt.group}
+                {/if}
+              </span>
+            </li>
+          {/if}
           <li
             class={[
               "arcana-select__item",
@@ -484,6 +523,11 @@
             }}
             onclick={() => onItemClick(opt)}
           >
+            {#if optionPrefix}
+              <span class="arcana-select__option-prefix">
+                {@render optionPrefix({ option: opt, selected: isSelected(opt) })}
+              </span>
+            {/if}
             {#if opt.color}
               <span
                 class="arcana-select__dot"
@@ -497,6 +541,11 @@
                 <span class="arcana-select__item-desc">{opt.description}</span>
               {/if}
             </span>
+            {#if optionSuffix}
+              <span class="arcana-select__option-suffix">
+                {@render optionSuffix({ option: opt, selected: isSelected(opt) })}
+              </span>
+            {/if}
             {#if isSelected(opt)}
               <svg
                 class="arcana-select__item-check"

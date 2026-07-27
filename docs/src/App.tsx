@@ -13,7 +13,12 @@ function P({ children }: { children: string }) {
   return <p>{rich(children)}</p>;
 }
 
-function PropsTable({ rows, events, msg }: { rows: PropRow[]; events?: string[]; msg: Messages }) {
+function PropsTable({ rows, events, slots, msg }: {
+  rows: PropRow[];
+  events?: string[];
+  slots?: string[];
+  msg: Messages;
+}) {
   const t = msg.propsTable;
   return <>
     <div className="ref-table-wrap">
@@ -33,6 +38,10 @@ function PropsTable({ rows, events, msg }: { rows: PropRow[]; events?: string[];
     {events?.length ? <div className="events-block">
       <div className="section-code-label">{t.eventsTitle}</div>
       <ul className="doc-list">{events.map((event) => <li key={event}><code>{event}</code></li>)}</ul>
+    </div> : null}
+    {slots?.length ? <div className="events-block">
+      <div className="section-code-label">Slots</div>
+      <ul className="doc-list">{slots.map((slot) => <li key={slot}><code>{slot}</code></li>)}</ul>
     </div> : null}
   </>;
 }
@@ -104,7 +113,7 @@ function buildGroups(msg: Messages): DocsGroup[] {
           preview: <VueDemo component={doc.demo} />,
           previewLabel: msg.demoCaption,
           code: frameworkCode(entry.name, { vue: doc.vueSnippet, ...FRAMEWORK_SNIPPETS[entry.docKey] }),
-          reference: <PropsTable rows={doc.props} events={doc.events} msg={msg} />
+          reference: <PropsTable rows={doc.props} events={doc.events} slots={doc.slots} msg={msg} />
         };
         return section;
       }

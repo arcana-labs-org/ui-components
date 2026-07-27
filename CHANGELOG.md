@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.4.0 — 2026-07-27
+
+### Novos recursos
+- **`ArcanaSelect` ganhou conteúdo customizável no campo e no popover**, nos quatro ports:
+  - Vue: slots `prefix`, `suffix`, `option-prefix`, `option-suffix` e `group-label`.
+  - React: `prefix`, `suffix`, `renderOptionPrefix`, `renderOptionSuffix` e `renderGroupLabel`.
+  - Svelte: snippets `prefix`, `suffix`, `optionPrefix`, `optionSuffix` e `groupLabel`.
+  - Angular: templates `prefixTemplate`, `suffixTemplate`, `optionPrefixTemplate`, `optionSuffixTemplate` e `groupLabelTemplate`.
+- **Opções podem declarar `group`**. Grupos consecutivos são exibidos na ordem recebida, com cabeçalho e separador automáticos. A API continua aceitando listas planas e opções sem grupo.
+
+### Documentação
+- A página do Select documenta agrupamento, opções desabilitadas e adornos de campo/popover, com exemplos completos para Vue, React, Angular e Svelte.
+
+### Testes
+- Novos cenários cobrem prefix/suffix, customização das opções, cabeçalhos de grupo e separadores.
+
 ## 2.3.0 — 2026-07-26
 
 ### Novos recursos

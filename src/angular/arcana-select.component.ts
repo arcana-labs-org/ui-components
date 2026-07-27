@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EmbeddedViewRef,
   EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild, ViewContainerRef, inject
 } from "@angular/core";
+import { NgTemplateOutlet } from "@angular/common";
 
 /**
  * `ArcanaSelectComponent` — Angular port do SFC Vue `ArcanaSelect`.
@@ -41,6 +42,8 @@ export interface SelectOption {
    * quando `triggerMode="dots"`. Ausente ⇒ item sem bolinha.
    */
   color?: string;
+  /** Grupo visual da opção. Grupos consecutivos recebem cabeçalho e separador. */
+  group?: string;
 }
 
 interface PanelPos {
@@ -53,6 +56,7 @@ interface PanelPos {
 @Component({
   selector: "div[arcanaSelect]",
   standalone: true,
+  imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { "[class]": "rootClass" },
   template: `
@@ -68,9 +72,22 @@ interface PanelPos {
       (click)="toggle()"
       (keydown)="onTriggerKeydown($event)"
     >
+      @if (prefixTemplate) {
+        <span class="arcana-select__prefix">
+          <ng-container [ngTemplateOutlet]="prefixTemplate"
+                        [ngTemplateOutletContext]="triggerTemplateContext"></ng-container>
+        </span>
+      }
       @if (icon) {
         <i [class]="'arcana-select__icon ' + icon"
            [style.color]="iconColor || null" aria-hidden="true"></i>
+      }
+
+      @if (suffixTemplate) {
+        <span class="arcana-select__suffix">
+          <ng-container [ngTemplateOutlet]="suffixTemplate"
+                        [ngTemplateOutletContext]="triggerTemplateContext"></ng-container>
+        </span>
       }
 
       @if (isDotsMode && hasValue) {
@@ -148,6 +165,21 @@ interface PanelPos {
 
         <ul class="arcana-select__list">
           @for (opt of filteredOptions; track $index) {
+            @if (startsGroup(opt, $index)) {
+              <li class="arcana-select__group" role="presentation">
+                @if ($index > 0) {
+                  <span class="arcana-select__group-separator"></span>
+                }
+                <span class="arcana-select__group-label">
+                  @if (groupLabelTemplate) {
+                    <ng-container [ngTemplateOutlet]="groupLabelTemplate"
+                                  [ngTemplateOutletContext]="{ $implicit: opt.group, group: opt.group }"></ng-container>
+                  } @else {
+                    {{ opt.group }}
+                  }
+                </span>
+              </li>
+            }
             <li
               class="arcana-select__item"
               [class.is-selected]="isSelected(opt)"
@@ -159,6 +191,12 @@ interface PanelPos {
               (mouseenter)="!opt.disabled && (highlightedIndex = $index)"
               (click)="onItemClick(opt)"
             >
+              @if (optionPrefixTemplate) {
+                <span class="arcana-select__option-prefix">
+                  <ng-container [ngTemplateOutlet]="optionPrefixTemplate"
+                                [ngTemplateOutletContext]="optionTemplateContext(opt)"></ng-container>
+                </span>
+              }
               @if (opt.color) {
                 <span class="arcana-select__dot" [style.background]="opt.color" aria-hidden="true"></span>
               }
@@ -168,6 +206,12 @@ interface PanelPos {
                   <span class="arcana-select__item-desc">{{ opt.description }}</span>
                 }
               </span>
+              @if (optionSuffixTemplate) {
+                <span class="arcana-select__option-suffix">
+                  <ng-container [ngTemplateOutlet]="optionSuffixTemplate"
+                                [ngTemplateOutletContext]="optionTemplateContext(opt)"></ng-container>
+                </span>
+              }
               @if (isSelected(opt)) {
                 <svg class="arcana-select__item-check" width="14" height="14" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
@@ -220,6 +264,28 @@ export class ArcanaSelectComponent implements OnDestroy {
   @Input() icon = "";
   /** Cor CSS inline aplicada no `icon`. */
   @Input() iconColor = "";
+  @Input() prefixTemplate?: TemplateRef<{
+    selectedOptions: SelectOption[];
+    open: boolean;
+  }>;
+  @Input() suffixTemplate?: TemplateRef<{
+    selectedOptions: SelectOption[];
+    open: boolean;
+  }>;
+  @Input() optionPrefixTemplate?: TemplateRef<{
+    $implicit: SelectOption;
+    option: SelectOption;
+    selected: boolean;
+  }>;
+  @Input() optionSuffixTemplate?: TemplateRef<{
+    $implicit: SelectOption;
+    option: SelectOption;
+    selected: boolean;
+  }>;
+  @Input() groupLabelTemplate?: TemplateRef<{
+    $implicit: string;
+    group: string;
+  }>;
   /** Rodapé do painel (só em `multiple`) com contagem + botão de limpar. */
   @Input() showFooter = false;
   /** Texto da contagem; `{count}` vira o total selecionado. */
@@ -301,6 +367,23 @@ export class ArcanaSelectComponent implements OnDestroy {
 
   get footerCountText(): string {
     return String(this.footerCountLabel).replace("{count}", String(this.selectedCount));
+  }
+
+  get triggerTemplateContext(): { selectedOptions: SelectOption[]; open: boolean } {
+    return { selectedOptions: this.selectedOptions, open: this.isOpen };
+  }
+
+  optionTemplateContext(opt: SelectOption): {
+    $implicit: SelectOption;
+    option: SelectOption;
+    selected: boolean;
+  } {
+    return { $implicit: opt, option: opt, selected: this.isSelected(opt) };
+  }
+
+  startsGroup(opt: SelectOption, index: number): boolean {
+    return Boolean(opt.group) &&
+      opt.group !== (index > 0 ? this.filteredOptions[index - 1]?.group : undefined);
   }
 
   /** Cor da bolinha; fallback zinc-500 quando a opção não define `color`. */

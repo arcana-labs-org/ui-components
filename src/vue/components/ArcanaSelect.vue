@@ -21,6 +21,9 @@
             @click="toggle"
             @keydown="onTriggerKeydown"
         >
+            <span v-if="$slots.prefix" class="arcana-select__prefix">
+                <slot name="prefix" :selected-options="selectedOptions" :open="isOpen" />
+            </span>
             <!-- Ícone opcional (classe FontAwesome) à esquerda do label/bolinhas. -->
             <i
                 v-if="icon"
@@ -54,6 +57,9 @@
                 :class="{ 'arcana-select__label--placeholder': !hasValue }"
             >
                 {{ displayLabel }}
+            </span>
+            <span v-if="$slots.suffix" class="arcana-select__suffix">
+                <slot name="suffix" :selected-options="selectedOptions" :open="isOpen" />
             </span>
             <!--
                 Clear: span (não button) pra ser HTML válido dentro do <button> trigger.
@@ -156,9 +162,21 @@
                     </div>
 
                     <ul class="arcana-select__list">
-                        <li
+                        <template
                             v-for="(opt, idx) in filteredOptions"
-                            :key="String(opt.value)"
+                            :key="`${opt.group || ''}:${String(opt.value)}:${idx}`"
+                        >
+                        <li
+                            v-if="startsGroup(opt, idx)"
+                            class="arcana-select__group"
+                            role="presentation"
+                        >
+                            <span v-if="idx > 0" class="arcana-select__group-separator"></span>
+                            <span class="arcana-select__group-label">
+                                <slot name="group-label" :group="opt.group">{{ opt.group }}</slot>
+                            </span>
+                        </li>
+                        <li
                             class="arcana-select__item"
                             :class="{
                                 'is-selected': isSelected(opt),
@@ -171,6 +189,9 @@
                             @mouseenter="!opt.disabled && (highlightedIndex = idx)"
                             @click="onItemClick(opt)"
                         >
+                            <span v-if="$slots['option-prefix']" class="arcana-select__option-prefix">
+                                <slot name="option-prefix" :option="opt" :selected="isSelected(opt)" />
+                            </span>
                             <!-- Bolinha da cor da opção (quando `option.color` presente). -->
                             <span
                                 v-if="opt.color"
@@ -184,6 +205,9 @@
                                     v-if="opt.description"
                                     class="arcana-select__item-desc"
                                 >{{ opt.description }}</span>
+                            </span>
+                            <span v-if="$slots['option-suffix']" class="arcana-select__option-suffix">
+                                <slot name="option-suffix" :option="opt" :selected="isSelected(opt)" />
                             </span>
                             <svg
                                 v-if="isSelected(opt)"
@@ -201,6 +225,7 @@
                                 <polyline points="20 6 9 17 4 12" />
                             </svg>
                         </li>
+                        </template>
 
                         <li v-if="!filteredOptions.length" class="arcana-select__empty">
                             {{ searchTerm.trim() ? 'Nenhum resultado' : 'Nenhuma opção' }}
@@ -287,6 +312,8 @@ interface SelectOption {
      * e no trigger quando `triggerMode="dots"`. Ausente ⇒ sem bolinha no item.
      */
     color?: string
+    /** Grupo visual da opção. Grupos consecutivos recebem cabeçalho e separador. */
+    group?: string
 }
 
 export default {
@@ -477,6 +504,11 @@ export default {
     },
 
     methods: {
+        startsGroup(opt: SelectOption, index: number): boolean {
+            return Boolean(opt.group) &&
+                opt.group !== (index > 0 ? this.filteredOptions[index - 1]?.group : undefined)
+        },
+
         /** Cor da bolinha; fallback zinc-500 quando a opção não define `color`. */
         dotColor(opt: SelectOption): string {
             return opt.color || '#71717a'
