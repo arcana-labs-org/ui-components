@@ -168,6 +168,7 @@
     if (!trigger || !panel) return;
     const rect = trigger.getBoundingClientRect();
     const panelHeight = panel.offsetHeight || 240;
+    const panelWidth = panel.offsetWidth || rect.width;
     const viewportHeight = window.innerHeight;
     const spaceBelow = viewportHeight - rect.bottom;
     const spaceAbove = rect.top;
@@ -178,7 +179,8 @@
     const maxHeight = flipUp
       ? Math.min(280, spaceAbove - 16)
       : Math.min(280, spaceBelow - 16);
-    panelStyle = `position:fixed;left:${rect.left}px;width:${rect.width}px;top:${top}px;max-height:${maxHeight}px;`;
+    const left = Math.max(8, Math.min(rect.left, window.innerWidth - panelWidth - 8));
+    panelStyle = `position:fixed;left:${left}px;width:max-content;min-width:${rect.width}px;max-width:calc(100vw - 16px);top:${top}px;max-height:${maxHeight}px;`;
   }
 
   function close() {
@@ -191,7 +193,7 @@
     if (disabled) return;
     if (triggerEl) {
       const rect = triggerEl.getBoundingClientRect();
-      panelStyle = `position:fixed;left:${rect.left}px;width:${rect.width}px;top:${rect.bottom + 4}px;max-height:280px;`;
+      panelStyle = `position:fixed;left:${rect.left}px;width:max-content;min-width:${rect.width}px;max-width:calc(100vw - 16px);top:${rect.bottom + 4}px;max-height:280px;`;
     }
     const currentIdx = filteredOptions.findIndex((o) => isSelected(o));
     highlightedIndex = currentIdx >= 0 ? currentIdx : firstEnabledIndex(filteredOptions);

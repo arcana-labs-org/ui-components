@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.5.0 — 2026-07-27
+
+### Melhorias
+- **O popover do `ArcanaSelect` agora cresce conforme a opção mais larga**, sem ficar menor que o campo e sem ultrapassar a viewport. O posicionamento horizontal acompanha a largura calculada nos ports Vue, React, Angular e Svelte.
+
+### Documentação
+- Revisão completa de i18n nos oito idiomas suportados, incluindo exemplos ao vivo, textos de acessibilidade, paleta, instalação e descrição atualizada do DatePicker.
+- Snippets compartilhados foram padronizados em inglês técnico para não misturar idiomas.
+
+### Testes
+- Novos testes protegem a largura intrínseca do popover do Select nos quatro frameworks e detectam textos visíveis fora do catálogo de traduções.
+
 ## 2.4.0 — 2026-07-27
 
 ### Novos recursos

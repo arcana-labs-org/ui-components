@@ -45,7 +45,7 @@ export const pt: Messages = {
   gettingStarted: {
     install: {
       title: "Instalação",
-      p1: "A biblioteca é distribuída como um único pacote npm. Instale com o gerenciador de sua preferência — <c>vue</c> (3.4+) é a única peer dependency.",
+      p1: "A biblioteca é distribuída como um único pacote npm, sem dependências de runtime. Instale com o gerenciador de sua preferência; os pacotes dos frameworks são peers opcionais, então forneça apenas o framework que você usa.",
       p2: "Cada componente é publicado para os quatro frameworks em um subpath correspondente — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> e <c>/svelte</c>; importe apenas os que você usa. Os ícones usam o Font Awesome Free — instale <c>@fortawesome/fontawesome-free</c> e importe o CSS uma vez."
     },
     usage: {
@@ -81,7 +81,8 @@ export const pt: Messages = {
     darkLabel: "Modo escuro",
     scaleCaption: "Os 12 degraus de {scale}",
     previewTitle: "Componentes reais sob a paleta escolhida",
-    hint: "Todo componente lê tokens semânticos, então trocar a classe da raiz re-tematiza a página inteira."
+    hint: "Todo componente lê tokens semânticos, então trocar a classe da raiz re-tematiza a página inteira.",
+    stepRoles: ["Fundo do aplicativo", "Fundo sutil", "Fundo do componente", "Hover do componente", "Componente ativo", "Borda sutil", "Borda", "Hover da borda", "Sólido", "Hover do sólido", "Texto secundário", "Texto de alto contraste"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const pt: Messages = {
     default: "Padrão",
     description: "Descrição",
     caption: "Props",
-    eventsTitle: "Eventos emitidos"
+    eventsTitle: "Eventos emitidos",
+    slotsTitle: "Slots nomeados"
   },
 
   demoCaption: "componente ao vivo · interaja com ele",
@@ -158,7 +160,7 @@ export const pt: Messages = {
       blurb: "Um controle segmentado para N opções mutuamente exclusivas dentro de uma pílula, com ícones e desabilitação por opção."
     },
     datePicker: {
-      blurb: "Um campo de data shadcn que combina um input mascarado <c>DD/MM/AAAA</c> com um popover de calendário; o <c>v-model</c> é uma string ISO <c>YYYY-MM-DD</c>."
+      blurb: "Um campo de calendário autocontido (sem Element Plus) com cinco <c>type</c>s — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> e <c>datetime</c> — e nomes de meses/dias via Intl pela prop <c>locale</c>."
     },
     inputCurrency: {
       blurb: "Um input de moeda que formata da direita para a esquerda enquanto você digita, com decimais configuráveis e limites <c>min</c>/<c>max</c>; BRL por padrão."
@@ -723,6 +725,35 @@ export const pt: Messages = {
     hoverDelayInstant: "Instantâneo",
     hoverDelaySlow: "Lento (600 ms)",
     hoverDisabledNote: "Desabilitado — nada abre",
+
+    selectCustomizationTitle: "Slots · prefixo / sufixo · grupos",
+    inputSearchPlaceholder: "Buscar…",
+    tabsAria: "Abas de demonstração",
+    paymentMethodAria: "Forma de pagamento",
+    sizeSmallAria: "Pequeno",
+    sizeMediumAria: "Médio",
+    sizeLargeAria: "Grande",
+    disabledAria: "Desabilitado",
+    selectGroupedPlaceholder: "Fruta agrupada",
+    selectCatalog: "Catálogo",
+    selectGroupCommon: "Comuns",
+    selectGroupSeasonal: "Sazonais",
+    selectDisabled: "Desabilitado",
+    selectSelected: "Selecionado",
+    selectCustomizationNote: "Abra o campo para ver os slots das opções, títulos de grupo, separadores e o item desabilitado.",
+    avatarPortraitAlt: "Retrato de integrante da equipe",
+    profilePictureAlt: "Foto do perfil",
+    tooltipDraftLabel: "Salva sem publicar",
+    tooltipDraftButton: "Salvar rascunho",
+    tooltipCopyLink: "Copiar link",
+    tooltipSideTop: "acima",
+    tooltipSideRight: "direita",
+    tooltipSideBottom: "abaixo",
+    tooltipSideLeft: "esquerda",
+    tooltipNoArrow: "Sem seta",
+    tooltipNoArrowTrigger: "seta = false",
+    tooltipCustomTrigger: "conteúdo personalizado",
+    tooltipUndo: "Desfazer",
 
     // ── context menu ──
     contextTriggerNote: "Clique com o botão direito nesta área",

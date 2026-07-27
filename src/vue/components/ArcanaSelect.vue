@@ -546,7 +546,9 @@ export default {
                 this.panelStyles = {
                     position: 'fixed',
                     left: `${rect.left}px`,
-                    width: `${rect.width}px`,
+                    width: 'max-content',
+                    minWidth: `${rect.width}px`,
+                    maxWidth: 'calc(100vw - 16px)',
                     top: `${rect.bottom + 4}px`,
                     maxHeight: '280px',
                 }
@@ -706,6 +708,7 @@ export default {
 
             const rect = trigger.getBoundingClientRect()
             const panelHeight = panel.offsetHeight || 240   // estimativa enquanto não mediu
+            const panelWidth = panel.offsetWidth || rect.width
             const viewportHeight = window.innerHeight
             const spaceBelow = viewportHeight - rect.bottom
             const spaceAbove = rect.top
@@ -715,8 +718,10 @@ export default {
 
             this.panelStyles = {
                 position: 'fixed',
-                left: `${rect.left}px`,
-                width: `${rect.width}px`,
+                left: `${Math.max(8, Math.min(rect.left, window.innerWidth - panelWidth - 8))}px`,
+                width: 'max-content',
+                minWidth: `${rect.width}px`,
+                maxWidth: 'calc(100vw - 16px)',
                 top: flipUp
                     ? `${Math.max(8, rect.top - panelHeight - 4)}px`
                     : `${rect.bottom + 4}px`,

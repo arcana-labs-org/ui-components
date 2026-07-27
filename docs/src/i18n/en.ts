@@ -45,7 +45,7 @@ export const en: Messages = {
   gettingStarted: {
     install: {
       title: "Installation",
-      p1: "The library ships as a single npm package. Install it with your package manager of choice — <c>vue</c> (3.4+) is the only peer dependency.",
+      p1: "The library ships as a single npm package with no runtime dependencies. Install it with your package manager of choice; framework packages are optional peers, so provide only the framework you use.",
       p2: "Every component ships for all four frameworks under a matching subpath — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> and <c>/svelte</c>; import just the ones you use. Icons use Font Awesome Free — install <c>@fortawesome/fontawesome-free</c> and import its CSS once."
     },
     usage: {
@@ -81,7 +81,8 @@ export const en: Messages = {
     darkLabel: "Dark mode",
     scaleCaption: "The 12 steps of {scale}",
     previewTitle: "Real components under the selected palette",
-    hint: "Every component reads semantic tokens, so switching the root class re-themes the whole page."
+    hint: "Every component reads semantic tokens, so switching the root class re-themes the whole page.",
+    stepRoles: ["App background", "Subtle background", "Component background", "Component hover", "Component active", "Subtle border", "Border", "Border hover", "Solid", "Solid hover", "Secondary text", "High-contrast text"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const en: Messages = {
     default: "Default",
     description: "Description",
     caption: "Props",
-    eventsTitle: "Emitted events"
+    eventsTitle: "Emitted events",
+    slotsTitle: "Named slots"
   },
 
   demoCaption: "live component · interact with it",
@@ -723,6 +725,36 @@ export const en: Messages = {
     hoverDelayInstant: "Instant",
     hoverDelaySlow: "Slow (600 ms)",
     hoverDisabledNote: "Disabled — nothing opens",
+
+    // ── shared demo accessibility + Select/Tooltip customisation ──
+    selectCustomizationTitle: "Slots · prefix / suffix · groups",
+    inputSearchPlaceholder: "Search…",
+    tabsAria: "Demo tabs",
+    paymentMethodAria: "Payment method",
+    sizeSmallAria: "Small",
+    sizeMediumAria: "Medium",
+    sizeLargeAria: "Large",
+    disabledAria: "Disabled",
+    selectGroupedPlaceholder: "Grouped fruit",
+    selectCatalog: "Catalog",
+    selectGroupCommon: "Common",
+    selectGroupSeasonal: "Seasonal",
+    selectDisabled: "Disabled",
+    selectSelected: "Selected",
+    selectCustomizationNote: "Open the field to see option slots, group labels, separators and the disabled item.",
+    avatarPortraitAlt: "Team member portrait",
+    profilePictureAlt: "Profile picture",
+    tooltipDraftLabel: "Saves without publishing",
+    tooltipDraftButton: "Save draft",
+    tooltipCopyLink: "Copy link",
+    tooltipSideTop: "top",
+    tooltipSideRight: "right",
+    tooltipSideBottom: "bottom",
+    tooltipSideLeft: "left",
+    tooltipNoArrow: "No arrow",
+    tooltipNoArrowTrigger: "arrow = false",
+    tooltipCustomTrigger: "custom content",
+    tooltipUndo: "Undo",
 
     // ── context menu ──
     contextTriggerNote: "Right-click this area",

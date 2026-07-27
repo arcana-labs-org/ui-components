@@ -45,7 +45,7 @@ export const ja: Messages = {
   gettingStarted: {
     install: {
       title: "インストール",
-      p1: "このライブラリは単一の npm パッケージとして提供されます。お好みのパッケージマネージャーでインストールしてください — <c>vue</c>（3.4+）が唯一の peer dependency です。",
+      p1: "このライブラリはランタイム依存関係のない単一の npm パッケージとして提供されます。フレームワークのパッケージは任意の peer なので、使用するフレームワークだけを用意してください。",
       p2: "各コンポーネントは 4 つのフレームワーク向けに、対応するサブパスで公開されています — <c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c>、<c>/svelte</c>。使うものだけをインポートしてください。 アイコンは Font Awesome Free を使用します。<c>@fortawesome/fontawesome-free</c> をインストールし、その CSS を一度読み込んでください。"
     },
     usage: {
@@ -81,7 +81,8 @@ export const ja: Messages = {
     darkLabel: "ダークモード",
     scaleCaption: "{scale} の 12 段階",
     previewTitle: "選択したパレットでの実際のコンポーネント",
-    hint: "すべてのコンポーネントが意味的トークンを読むので、ルートのクラスを変えるだけでページ全体のテーマが変わります。"
+    hint: "すべてのコンポーネントが意味的トークンを読むので、ルートのクラスを変えるだけでページ全体のテーマが変わります。",
+    stepRoles: ["アプリ背景", "淡い背景", "コンポーネント背景", "コンポーネントのホバー", "アクティブなコンポーネント", "淡い境界線", "境界線", "境界線のホバー", "ソリッド", "ソリッドのホバー", "補助テキスト", "高コントラストテキスト"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const ja: Messages = {
     default: "デフォルト",
     description: "説明",
     caption: "プロパティ",
-    eventsTitle: "発行イベント"
+    eventsTitle: "発行イベント",
+    slotsTitle: "名前付きスロット"
   },
 
   demoCaption: "ライブコンポーネント · 操作できます",
@@ -158,7 +160,7 @@ export const ja: Messages = {
       blurb: "ピル内に N 個の相互排他オプションを並べるセグメンテッドコントロールで、オプションごとのアイコンと無効化に対応します。"
     },
     datePicker: {
-      blurb: "マスク付きの <c>DD/MM/AAAA</c> 入力とカレンダーポップオーバーを組み合わせた shadcn 日付フィールドで、<c>v-model</c> は ISO の <c>YYYY-MM-DD</c> 文字列です。"
+      blurb: "Element Plus を使わない自己完結型カレンダーフィールド。<c>date</c>、<c>month</c>、<c>year</c>、<c>daterange</c>、<c>datetime</c> の 5 つの <c>type</c>に対応し、月名・曜日名は <c>locale</c> prop を通じて Intl で生成します。"
     },
     inputCurrency: {
       blurb: "通貨入力。入力に合わせて右から左へ整形し、小数桁は設定可能で <c>min</c>/<c>max</c> による制限に対応。既定は BRL。"
@@ -723,6 +725,35 @@ export const ja: Messages = {
     hoverDelayInstant: "即時",
     hoverDelaySlow: "遅め（600 ミリ秒）",
     hoverDisabledNote: "無効 — 何も開きません",
+
+    selectCustomizationTitle: "スロット · 接頭辞 / 接尾辞 · グループ",
+    inputSearchPlaceholder: "検索…",
+    tabsAria: "デモ用タブ",
+    paymentMethodAria: "支払い方法",
+    sizeSmallAria: "小",
+    sizeMediumAria: "中",
+    sizeLargeAria: "大",
+    disabledAria: "無効",
+    selectGroupedPlaceholder: "グループ化した果物",
+    selectCatalog: "カタログ",
+    selectGroupCommon: "定番",
+    selectGroupSeasonal: "季節限定",
+    selectDisabled: "無効",
+    selectSelected: "選択済み",
+    selectCustomizationNote: "フィールドを開くと、オプションスロット、グループ見出し、区切り線、無効な項目を確認できます。",
+    avatarPortraitAlt: "チームメンバーのポートレート",
+    profilePictureAlt: "プロフィール画像",
+    tooltipDraftLabel: "公開せずに保存",
+    tooltipDraftButton: "下書きを保存",
+    tooltipCopyLink: "リンクをコピー",
+    tooltipSideTop: "上",
+    tooltipSideRight: "右",
+    tooltipSideBottom: "下",
+    tooltipSideLeft: "左",
+    tooltipNoArrow: "矢印なし",
+    tooltipNoArrowTrigger: "矢印 = なし",
+    tooltipCustomTrigger: "カスタム内容",
+    tooltipUndo: "元に戻す",
 
     // ── context menu ──
     contextTriggerNote: "この領域を右クリック",

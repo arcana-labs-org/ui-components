@@ -45,7 +45,7 @@ export const ru: Messages = {
   gettingStarted: {
     install: {
       title: "Установка",
-      p1: "Библиотека поставляется одним npm-пакетом. Установите её вашим менеджером пакетов — <c>vue</c> (3.4+) является единственной peer-зависимостью.",
+      p1: "Библиотека поставляется одним npm-пакетом без runtime-зависимостей. Пакеты фреймворков — необязательные peer-зависимости, поэтому предоставьте только тот фреймворк, который используете.",
       p2: "Каждый компонент публикуется для всех четырёх фреймворков в соответствующем подпути — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> и <c>/svelte</c>; импортируйте только те, что используете. Иконки используют Font Awesome Free — установите <c>@fortawesome/fontawesome-free</c> и один раз подключите его CSS."
     },
     usage: {
@@ -81,7 +81,8 @@ export const ru: Messages = {
     darkLabel: "Тёмный режим",
     scaleCaption: "12 ступеней шкалы {scale}",
     previewTitle: "Реальные компоненты с выбранной палитрой",
-    hint: "Каждый компонент читает семантические токены, поэтому смена класса на корне перекрашивает всю страницу."
+    hint: "Каждый компонент читает семантические токены, поэтому смена класса на корне меняет тему всей страницы.",
+    stepRoles: ["Фон приложения", "Приглушённый фон", "Фон компонента", "Компонент при наведении", "Активный компонент", "Приглушённая граница", "Граница", "Граница при наведении", "Сплошной цвет", "Сплошной цвет при наведении", "Вторичный текст", "Высококонтрастный текст"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const ru: Messages = {
     default: "По умолчанию",
     description: "Описание",
     caption: "Пропсы",
-    eventsTitle: "Испускаемые события"
+    eventsTitle: "Испускаемые события",
+    slotsTitle: "Именованные слоты"
   },
 
   demoCaption: "живой компонент · взаимодействуйте с ним",
@@ -158,7 +160,7 @@ export const ru: Messages = {
       blurb: "Сегментированный контрол для N взаимоисключающих опций внутри капсулы, с иконками и отключением по каждой опции."
     },
     datePicker: {
-      blurb: "Поле даты shadcn, объединяющее поле с маской <c>DD/MM/AAAA</c> и всплывающий календарь; <c>v-model</c> — ISO-строка <c>YYYY-MM-DD</c>."
+      blurb: "Автономное поле календаря (без Element Plus) с пятью вариантами <c>type</c> — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> и <c>datetime</c> — и названиями месяцев/дней через Intl по prop <c>locale</c>."
     },
     inputCurrency: {
       blurb: "Поле ввода валюты: форматирует справа налево по мере набора, с настраиваемым числом десятичных знаков и ограничением <c>min</c>/<c>max</c>; по умолчанию BRL."
@@ -723,6 +725,35 @@ export const ru: Messages = {
     hoverDelayInstant: "Мгновенно",
     hoverDelaySlow: "Медленно (600 мс)",
     hoverDisabledNote: "Отключено — ничего не открывается",
+
+    selectCustomizationTitle: "Слоты · префикс / суффикс · группы",
+    inputSearchPlaceholder: "Поиск…",
+    tabsAria: "Демонстрационные вкладки",
+    paymentMethodAria: "Способ оплаты",
+    sizeSmallAria: "Маленький",
+    sizeMediumAria: "Средний",
+    sizeLargeAria: "Большой",
+    disabledAria: "Отключено",
+    selectGroupedPlaceholder: "Сгруппированные фрукты",
+    selectCatalog: "Каталог",
+    selectGroupCommon: "Обычные",
+    selectGroupSeasonal: "Сезонные",
+    selectDisabled: "Отключено",
+    selectSelected: "Выбрано",
+    selectCustomizationNote: "Откройте поле, чтобы увидеть слоты опций, заголовки групп, разделители и отключённый пункт.",
+    avatarPortraitAlt: "Портрет участника команды",
+    profilePictureAlt: "Фото профиля",
+    tooltipDraftLabel: "Сохраняет без публикации",
+    tooltipDraftButton: "Сохранить черновик",
+    tooltipCopyLink: "Копировать ссылку",
+    tooltipSideTop: "сверху",
+    tooltipSideRight: "справа",
+    tooltipSideBottom: "снизу",
+    tooltipSideLeft: "слева",
+    tooltipNoArrow: "Без стрелки",
+    tooltipNoArrowTrigger: "стрелка = выкл.",
+    tooltipCustomTrigger: "своё содержимое",
+    tooltipUndo: "Отменить",
 
     // ── context menu ──
     contextTriggerNote: "Кликните правой кнопкой по этой области",

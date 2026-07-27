@@ -149,7 +149,7 @@ const InputDemo: Component = {
       <ArcanaInput :placeholder="$dt.inputReadonly" :model-value="$dt.inputLockedValue" :readonly="true" />
 
       <!-- Ícone no início (SVG) e no fim (texto de unidade) -->
-      <ArcanaInput v-model="search" placeholder="Buscar…">
+      <ArcanaInput v-model="search" :placeholder="$dt.inputSearchPlaceholder">
         <template #icon-start>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
         </template>
@@ -228,11 +228,11 @@ const SelectDemo: Component = {
       many: [] as string[],
       statuses: ["todo", "in_progress", "in_review"] as string[],
       fruits: [
-        { label: $dt.fruitApple, value: "apple", group: "Common" },
-        { label: $dt.fruitBanana, value: "banana", group: "Common" },
-        { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc, group: "Seasonal" },
-        { label: $dt.fruitDurian, value: "durian", disabled: true, group: "Seasonal" },
-        { label: $dt.fruitElderberry, value: "elderberry", group: "Seasonal" }
+        { label: $dt.fruitApple, value: "apple", group: $dt.selectGroupCommon },
+        { label: $dt.fruitBanana, value: "banana", group: $dt.selectGroupCommon },
+        { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc, group: $dt.selectGroupSeasonal },
+        { label: $dt.fruitDurian, value: "durian", disabled: true, group: $dt.selectGroupSeasonal },
+        { label: $dt.fruitElderberry, value: "elderberry", group: $dt.selectGroupSeasonal }
       ],
       // `color` na opção vira uma bolinha; com trigger-mode="dots" o gatilho
       // mostra só as bolinhas — o padrão de um filtro rápido de status.
@@ -252,30 +252,30 @@ const SelectDemo: Component = {
       <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
 
       <div class="demo-field">
-        <span class="demo-field-label">SLOTS · PREFIX / SUFFIX · GROUPS</span>
-        <ArcanaSelect v-model="decorated" :options="fruits" placeholder="Grouped fruit">
+        <span class="demo-field-label">{{ $dt.selectCustomizationTitle }}</span>
+        <ArcanaSelect v-model="decorated" :options="fruits" :placeholder="$dt.selectGroupedPlaceholder">
           <template #prefix>
             <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
           </template>
           <template #suffix>
-            <span style="font-size: 10px; font-weight: 700; letter-spacing: .04em">CATALOG</span>
+            <span style="font-size: 10px; font-weight: 700; letter-spacing: .04em">{{ $dt.selectCatalog }}</span>
           </template>
           <template #option-prefix="{ option }">
             <span
               aria-hidden="true"
-              :style="{ color: option.group === 'Common' ? '#16a34a' : '#d97706' }"
+              :style="{ color: option.group === $dt.selectGroupCommon ? '#16a34a' : '#d97706' }"
             >●</span>
           </template>
           <template #option-suffix="{ option, selected }">
-            <span v-if="option.disabled" title="Disabled" aria-label="Disabled">🔒</span>
-            <span v-else-if="selected" aria-label="Selected">Selected</span>
+            <span v-if="option.disabled" :title="$dt.selectDisabled" :aria-label="$dt.selectDisabled">🔒</span>
+            <span v-else-if="selected" :aria-label="$dt.selectSelected">{{ $dt.selectSelected }}</span>
             <code v-else>{{ option.value }}</code>
           </template>
           <template #group-label="{ group }">
-            <span>{{ group }} fruits</span>
+            <span>{{ group }}</span>
           </template>
         </ArcanaSelect>
-        <p class="demo-note">Open the field to see option slots, group labels, separators and the disabled item.</p>
+        <p class="demo-note">{{ $dt.selectCustomizationNote }}</p>
       </div>
 
       <div class="demo-field">
@@ -346,10 +346,10 @@ const SwitchDemo: Component = {
       <label class="demo-switch-row"><ArcanaSwitch v-model="on" :aria-label="$dt.switchNotifications" /> <span>{{ $dt.switchNotifications }} ({{ on ? "on" : "off" }})</span></label>
       <label class="demo-switch-row"><ArcanaSwitch v-model="off" :aria-label="$dt.switchBetaFeatures" /> <span>{{ $dt.switchBetaFeatures }} ({{ off ? "on" : "off" }})</span></label>
       <div class="demo-row" style="align-items: center">
-        <ArcanaSwitch v-model="on" size="sm" aria-label="small" />
-        <ArcanaSwitch v-model="on" size="md" aria-label="medium" />
-        <ArcanaSwitch v-model="on" size="lg" aria-label="large" />
-        <ArcanaSwitch :model-value="true" :disabled="true" aria-label="disabled" />
+        <ArcanaSwitch v-model="on" size="sm" :aria-label="$dt.sizeSmallAria" />
+        <ArcanaSwitch v-model="on" size="md" :aria-label="$dt.sizeMediumAria" />
+        <ArcanaSwitch v-model="on" size="lg" :aria-label="$dt.sizeLargeAria" />
+        <ArcanaSwitch :model-value="true" :disabled="true" :aria-label="$dt.disabledAria" />
       </div>
     </div>
   `
@@ -383,7 +383,7 @@ const TabsDemo: Component = {
           @click="variant = v"
         >{{ v }}</button>
       </div>
-      <ArcanaTabs v-model="active" :tabs="tabs" :variant="variant" aria-label="Demo tabs">
+      <ArcanaTabs v-model="active" :tabs="tabs" :variant="variant" :aria-label="$dt.tabsAria">
         <template #overview><div class="demo-panel">{{ $dt.tabOverviewPanel }}</div></template>
         <template #activity><div class="demo-panel">{{ $dt.tabActivityPanel }}</div></template>
         <template #settings><div class="demo-panel">{{ $dt.tabSettingsPanel }}</div></template>
@@ -455,8 +455,8 @@ const NumberStepperDemo: Component = {
   data: () => ({ qty: 2, weight: 10 }),
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaNumberStepper v-model="qty" :min="0" :max="10" aria-label="Quantity" />
-      <ArcanaNumberStepper v-model="weight" :min="0" :max="100" :step="5" aria-label="Weight" />
+      <ArcanaNumberStepper v-model="qty" :min="0" :max="10" :aria-label="$dt.quantity" />
+      <ArcanaNumberStepper v-model="weight" :min="0" :max="100" :step="5" :aria-label="$dt.stepperWeightLabel" />
       <ArcanaNumberStepper :model-value="5" :disabled="true" aria-label="Disabled" />
       <p class="demo-note">{{ $dt.stepperQtyLabel }}: <strong>{{ qty }}</strong> · {{ $dt.stepperWeightLabel }}: <strong>{{ weight }}</strong></p>
     </div>
@@ -528,7 +528,7 @@ const RadioCardGroupDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaRadioCardGroup v-model="method" :options="options" aria-label="Payment method" />
+      <ArcanaRadioCardGroup v-model="method" :options="options" :aria-label="$dt.paymentMethodAria" />
       <p class="demo-note">{{ $dt.selectedLabel }}: <strong>{{ method }}</strong></p>
 
       <div class="demo-field">
@@ -586,7 +586,7 @@ const SegmentedControlDemo: Component = {
   },
   template: /* html */ `
     <div class="demo-stack" style="max-width: 440px">
-      <ArcanaSegmentedControl v-model="view" :options="options" aria-label="View mode" />
+      <ArcanaSegmentedControl v-model="view" :options="options" :aria-label="$dt.viewLabel" />
       <ArcanaSegmentedControl v-model="view" :options="options" :compact="true" :squared="true" />
 
       <div class="demo-field">
@@ -1285,7 +1285,7 @@ const AvatarDemo: Component = {
       <!-- Fallback cascade — image, initials, icon, silhouette -->
       <div class="demo-field">
         <div class="demo-row" style="align-items: center">
-          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" :alt="$dt.avatarPortraitAlt" />
           <ArcanaAvatar initials="AM" />
           <ArcanaAvatar icon="fa-solid fa-user-tie" />
           <ArcanaAvatar />
@@ -1297,11 +1297,11 @@ const AvatarDemo: Component = {
       <div class="demo-row" style="align-items: center">
         <div class="demo-field">
           <span class="demo-field-label">{{ $dt.avatarShapeCircle }}</span>
-          <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Team member portrait" shape="circle" />
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" :alt="$dt.avatarPortraitAlt" shape="circle" />
         </div>
         <div class="demo-field">
           <span class="demo-field-label">{{ $dt.avatarShapeSquare }}</span>
-          <ArcanaAvatar src="https://i.pravatar.cc/120?img=45" alt="Team member portrait" shape="square" />
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=45" :alt="$dt.avatarPortraitAlt" shape="square" />
         </div>
       </div>
 
@@ -1370,7 +1370,7 @@ const AvatarGroupDemo: Component = {
       <!-- Composition — children instead of the array -->
       <div class="demo-field">
         <ArcanaAvatarGroup :overflow-count="7" size="md">
-          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" alt="Team member portrait" />
+          <ArcanaAvatar src="https://i.pravatar.cc/120?img=12" :alt="$dt.avatarPortraitAlt" />
           <ArcanaAvatar initials="BR" color="#10b981" />
           <ArcanaAvatar icon="fa-solid fa-user-tie" color="#0ea5e9" />
         </ArcanaAvatarGroup>
@@ -1709,14 +1709,14 @@ const TooltipDemo: Component = {
     <div class="demo-stack">
       <!-- Básico: em um botão -->
       <div class="demo-row" style="gap: 12px">
-        <ArcanaTooltip label="Salva sem publicar">
-          <template #trigger><ArcanaButton variant="secondary">Salvar rascunho</ArcanaButton></template>
+        <ArcanaTooltip :label="$dt.tooltipDraftLabel">
+          <template #trigger><ArcanaButton variant="secondary">{{ $dt.tooltipDraftButton }}</ArcanaButton></template>
         </ArcanaTooltip>
 
         <!-- Em um botão de ícone (aria-label descreve; o tooltip reforça) -->
-        <ArcanaTooltip label="Copiar link">
+        <ArcanaTooltip :label="$dt.tooltipCopyLink">
           <template #trigger>
-            <button type="button" aria-label="Copiar link" class="arcana-btn arcana-btn--secondary" style="width: 36px; padding: 0; height: 34px">
+            <button type="button" :aria-label="$dt.tooltipCopyLink" class="arcana-btn arcana-btn--secondary" style="width: 36px; padding: 0; height: 34px">
               <i class="fa-solid fa-link" aria-hidden="true"></i>
             </button>
           </template>
@@ -1726,17 +1726,17 @@ const TooltipDemo: Component = {
       <!-- Quatro lados -->
       <div class="demo-field">
         <div class="demo-row" style="gap: 16px">
-          <ArcanaTooltip label="Tooltip no topo" side="top">
-            <template #trigger><ArcanaButton variant="ghost">top</ArcanaButton></template>
+          <ArcanaTooltip :label="$dt.tooltipSideTop" side="top">
+            <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipSideTop }}</ArcanaButton></template>
           </ArcanaTooltip>
-          <ArcanaTooltip label="Tooltip à direita" side="right">
-            <template #trigger><ArcanaButton variant="ghost">right</ArcanaButton></template>
+          <ArcanaTooltip :label="$dt.tooltipSideRight" side="right">
+            <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipSideRight }}</ArcanaButton></template>
           </ArcanaTooltip>
-          <ArcanaTooltip label="Tooltip embaixo" side="bottom">
-            <template #trigger><ArcanaButton variant="ghost">bottom</ArcanaButton></template>
+          <ArcanaTooltip :label="$dt.tooltipSideBottom" side="bottom">
+            <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipSideBottom }}</ArcanaButton></template>
           </ArcanaTooltip>
-          <ArcanaTooltip label="Tooltip à esquerda" side="left">
-            <template #trigger><ArcanaButton variant="ghost">left</ArcanaButton></template>
+          <ArcanaTooltip :label="$dt.tooltipSideLeft" side="left">
+            <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipSideLeft }}</ArcanaButton></template>
           </ArcanaTooltip>
         </div>
         <p class="demo-note">{{ $dt.hoverSideNote }}</p>
@@ -1744,13 +1744,13 @@ const TooltipDemo: Component = {
 
       <!-- Sem seta e com conteúdo custom via slot -->
       <div class="demo-row" style="gap: 12px">
-        <ArcanaTooltip label="Sem setinha" :arrow="false" side="bottom">
-          <template #trigger><ArcanaButton variant="ghost">arrow = false</ArcanaButton></template>
+        <ArcanaTooltip :label="$dt.tooltipNoArrow" :arrow="false" side="bottom">
+          <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipNoArrowTrigger }}</ArcanaButton></template>
         </ArcanaTooltip>
 
         <ArcanaTooltip side="top">
-          <template #trigger><ArcanaButton variant="ghost">conteúdo custom</ArcanaButton></template>
-          <span>Desfazer&nbsp;&nbsp;<strong style="opacity: .8">⌘Z</strong></span>
+          <template #trigger><ArcanaButton variant="ghost">{{ $dt.tooltipCustomTrigger }}</ArcanaButton></template>
+          <span>{{ $dt.tooltipUndo }}&nbsp;&nbsp;<strong style="opacity: .8">⌘Z</strong></span>
         </ArcanaTooltip>
       </div>
     </div>
@@ -1769,7 +1769,7 @@ const HoverCardDemo: Component = {
           </template>
 
           <div style="display: flex; gap: 10px; align-items: center">
-            <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" alt="Profile picture" size="lg" />
+            <ArcanaAvatar src="https://i.pravatar.cc/120?img=32" :alt="$dt.profilePictureAlt" size="lg" />
             <div>
               <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
               <p class="arcana-hover-card__text">{{ $dt.hoverProfileHandle }}</p>
@@ -1784,22 +1784,22 @@ const HoverCardDemo: Component = {
       <div class="demo-field">
         <div class="demo-row" style="gap: 20px; font-size: 14px">
           <ArcanaHoverCard side="top">
-            <template #trigger><a href="#" @click.prevent>top</a></template>
+            <template #trigger><a href="#" @click.prevent>{{ $dt.tooltipSideTop }}</a></template>
             <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
             <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
           </ArcanaHoverCard>
           <ArcanaHoverCard side="right">
-            <template #trigger><a href="#" @click.prevent>right</a></template>
+            <template #trigger><a href="#" @click.prevent>{{ $dt.tooltipSideRight }}</a></template>
             <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
             <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
           </ArcanaHoverCard>
           <ArcanaHoverCard side="bottom">
-            <template #trigger><a href="#" @click.prevent>bottom</a></template>
+            <template #trigger><a href="#" @click.prevent>{{ $dt.tooltipSideBottom }}</a></template>
             <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
             <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
           </ArcanaHoverCard>
           <ArcanaHoverCard side="left">
-            <template #trigger><a href="#" @click.prevent>left</a></template>
+            <template #trigger><a href="#" @click.prevent>{{ $dt.tooltipSideLeft }}</a></template>
             <p class="arcana-hover-card__title">{{ $dt.hoverProfileName }}</p>
             <p class="arcana-hover-card__text">{{ $dt.hoverProfileBio }}</p>
           </ArcanaHoverCard>
@@ -2030,7 +2030,7 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  <ArcanaInput v-model=\"qty\" type=\"number\" :min=\"0\" :max=\"99\" />",
       "",
       "  <!-- Ícones no início e/ou no fim (qualquer conteúdo) -->",
-      "  <ArcanaInput v-model=\"search\" placeholder=\"Buscar…\">",
+      "  <ArcanaInput v-model=\"search\" placeholder=\"Search…\">",
       "    <template #icon-start><i class=\"icon-search\" /></template>",
       "  </ArcanaInput>",
       "  <ArcanaInput v-model=\"qty\" type=\"number\">",
@@ -4064,8 +4064,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "<template>",
       "  <!-- Básico: texto via label -->",
-      "  <ArcanaTooltip label=\"Salva sem publicar\">",
-      "    <template #trigger><ArcanaButton variant=\"secondary\">Salvar rascunho</ArcanaButton></template>",
+      "  <ArcanaTooltip label=\"Saves without publishing\">",
+      "    <template #trigger><ArcanaButton variant=\"secondary\">Save draft</ArcanaButton></template>",
       "  </ArcanaTooltip>",
       "",
       "  <!-- Lados + sem seta -->",
@@ -4075,8 +4075,8 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "",
       "  <!-- Conteúdo custom via slot (sobrepõe label) -->",
       "  <ArcanaTooltip side=\"top\">",
-      "    <template #trigger><button aria-label=\"Desfazer\">↺</button></template>",
-      "    <span>Desfazer&nbsp;<strong>⌘Z</strong></span>",
+      "    <template #trigger><button aria-label=\"Undo\">↺</button></template>",
+      "    <span>Undo&nbsp;<strong>⌘Z</strong></span>",
       "  </ArcanaTooltip>",
       "</template>"
     ].join("\n")

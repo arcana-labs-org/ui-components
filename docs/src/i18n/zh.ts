@@ -45,7 +45,7 @@ export const zh: Messages = {
   gettingStarted: {
     install: {
       title: "安装",
-      p1: "该库以单个 npm 包的形式发布。用你喜欢的包管理器安装即可——<c>vue</c>（3.4+）是唯一的 peer dependency。",
+      p1: "该库以单个 npm 包发布，不含运行时依赖。请使用你喜欢的包管理器安装；各框架包均为可选 peer，只需提供你实际使用的框架。",
       p2: "每个组件都为四个框架发布在相应的子路径下——<c>@arcanalabs/ui-components/vue</c>、<c>/react</c>、<c>/angular</c> 和 <c>/svelte</c>；只导入你需要的即可。 图标使用 Font Awesome Free —— 安装 <c>@fortawesome/fontawesome-free</c> 并引入一次其 CSS。"
     },
     usage: {
@@ -81,7 +81,8 @@ export const zh: Messages = {
     darkLabel: "暗色模式",
     scaleCaption: "{scale} 的 12 个色阶",
     previewTitle: "所选调色板下的真实组件",
-    hint: "每个组件都读取语义令牌，所以切换根元素的类即可为整页重新配色。"
+    hint: "每个组件都读取语义令牌，所以切换根元素的类即可为整页重新配色。",
+    stepRoles: ["应用背景", "淡色背景", "组件背景", "组件悬停", "组件激活", "淡色边框", "边框", "边框悬停", "实色", "实色悬停", "次要文本", "高对比度文本"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const zh: Messages = {
     default: "默认值",
     description: "说明",
     caption: "属性",
-    eventsTitle: "触发的事件"
+    eventsTitle: "触发的事件",
+    slotsTitle: "命名插槽"
   },
 
   demoCaption: "实时组件 · 可交互",
@@ -158,7 +160,7 @@ export const zh: Messages = {
       blurb: "用于 N 个互斥选项的分段控件，置于药丸内，支持每项图标和禁用。"
     },
     datePicker: {
-      blurb: "将带掩码的 <c>DD/MM/AAAA</c> 输入框与日历弹出层配对的 shadcn 日期字段；<c>v-model</c> 为 ISO <c>YYYY-MM-DD</c> 字符串。"
+      blurb: "一个独立日历字段（不依赖 Element Plus），支持五种 <c>type</c>：<c>date</c>、<c>month</c>、<c>year</c>、<c>daterange</c> 和 <c>datetime</c>；月份与星期名称通过 <c>locale</c> prop 使用 Intl 生成。"
     },
     inputCurrency: {
       blurb: "货币输入框，输入时从右向左格式化，小数位可配置并支持 <c>min</c>/<c>max</c> 限制；默认 BRL。"
@@ -723,6 +725,35 @@ export const zh: Messages = {
     hoverDelayInstant: "即时",
     hoverDelaySlow: "慢（600 毫秒）",
     hoverDisabledNote: "已禁用——不会打开任何内容",
+
+    selectCustomizationTitle: "插槽 · 前缀 / 后缀 · 分组",
+    inputSearchPlaceholder: "搜索…",
+    tabsAria: "演示标签页",
+    paymentMethodAria: "付款方式",
+    sizeSmallAria: "小",
+    sizeMediumAria: "中",
+    sizeLargeAria: "大",
+    disabledAria: "已禁用",
+    selectGroupedPlaceholder: "分组水果",
+    selectCatalog: "目录",
+    selectGroupCommon: "常见",
+    selectGroupSeasonal: "时令",
+    selectDisabled: "已禁用",
+    selectSelected: "已选择",
+    selectCustomizationNote: "打开字段即可查看选项插槽、分组标题、分隔线和禁用项。",
+    avatarPortraitAlt: "团队成员头像",
+    profilePictureAlt: "个人头像",
+    tooltipDraftLabel: "保存但不发布",
+    tooltipDraftButton: "保存草稿",
+    tooltipCopyLink: "复制链接",
+    tooltipSideTop: "上方",
+    tooltipSideRight: "右侧",
+    tooltipSideBottom: "下方",
+    tooltipSideLeft: "左侧",
+    tooltipNoArrow: "无箭头",
+    tooltipNoArrowTrigger: "箭头 = 关闭",
+    tooltipCustomTrigger: "自定义内容",
+    tooltipUndo: "撤销",
 
     // ── context menu ──
     contextTriggerNote: "右键点击此区域",

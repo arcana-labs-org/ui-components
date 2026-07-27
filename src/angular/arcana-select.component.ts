@@ -49,7 +49,7 @@ export interface SelectOption {
 interface PanelPos {
   top: number;
   left: number;
-  width: number;
+  minWidth: number;
   maxHeight: number;
 }
 
@@ -130,10 +130,10 @@ interface PanelPos {
     <ng-template #panelTpl>
       <div
         class="arcana-select__panel"
-        style="position: fixed;"
         [style.top.px]="panelPos.top"
         [style.left.px]="panelPos.left"
-        [style.width.px]="panelPos.width"
+        style="position: fixed; width: max-content; max-width: calc(100vw - 16px);"
+        [style.minWidth.px]="panelPos.minWidth"
         [style.maxHeight.px]="panelPos.maxHeight"
         role="listbox"
         tabindex="-1"
@@ -300,7 +300,7 @@ export class ArcanaSelectComponent implements OnDestroy {
   isOpen = false;
   highlightedIndex = -1;
   searchTerm = "";
-  panelPos: PanelPos = { top: 0, left: 0, width: 0, maxHeight: 280 };
+  panelPos: PanelPos = { top: 0, left: 0, minWidth: 0, maxHeight: 280 };
 
   private view?: EmbeddedViewRef<unknown>;
   private panelEl?: HTMLElement;
@@ -420,7 +420,7 @@ export class ArcanaSelectComponent implements OnDestroy {
     const trigger = this.triggerRef?.nativeElement;
     if (trigger) {
       const rect = trigger.getBoundingClientRect();
-      this.panelPos = { top: rect.bottom + 4, left: rect.left, width: rect.width, maxHeight: 280 };
+      this.panelPos = { top: rect.bottom + 4, left: rect.left, minWidth: rect.width, maxHeight: 280 };
     }
     const list = this.filteredOptions;
     const currentIdx = list.findIndex((o) => this.isSelected(o));
@@ -463,13 +463,14 @@ export class ArcanaSelectComponent implements OnDestroy {
     if (!trigger || !panel) return;
     const rect = trigger.getBoundingClientRect();
     const panelHeight = panel.offsetHeight || 240;
+    const panelWidth = panel.offsetWidth || rect.width;
     const viewportHeight = window.innerHeight;
     const spaceBelow = viewportHeight - rect.bottom;
     const spaceAbove = rect.top;
     const flipUp = spaceBelow < panelHeight + 16 && spaceAbove > spaceBelow;
     this.panelPos = {
-      left: rect.left,
-      width: rect.width,
+      left: Math.max(8, Math.min(rect.left, window.innerWidth - panelWidth - 8)),
+      minWidth: rect.width,
       top: flipUp ? Math.max(8, rect.top - panelHeight - 4) : rect.bottom + 4,
       maxHeight: flipUp ? Math.min(280, spaceAbove - 16) : Math.min(280, spaceBelow - 16)
     };

@@ -175,8 +175,10 @@ describe("@arcanalabs/ui-components — React lote 2", () => {
         // fechado: sem panel
         expect(document.body.querySelector(".arcana-select__panel")).toBeNull();
         fireEvent.click(trigger);
-        const panel = document.body.querySelector(".arcana-select__panel")!;
+        const panel = document.body.querySelector<HTMLElement>(".arcana-select__panel")!;
         expect(panel).toBeTruthy();
+        expect(panel.style.width).toBe("max-content");
+        expect(panel.style.maxWidth).toBe("calc(100vw - 16px)");
         const items = panel.querySelectorAll(".arcana-select__item");
         expect(items.length).toBe(2);
         fireEvent.click(items[1]);

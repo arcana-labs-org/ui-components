@@ -45,7 +45,7 @@ export const de: Messages = {
   gettingStarted: {
     install: {
       title: "Installation",
-      p1: "Die Bibliothek wird als einzelnes npm-Paket ausgeliefert. Installiere sie mit dem Paketmanager deiner Wahl — <c>vue</c> (3.4+) ist die einzige Peer-Dependency.",
+      p1: "Die Bibliothek wird als einzelnes npm-Paket ohne Runtime-Abhängigkeiten ausgeliefert. Die Framework-Pakete sind optionale Peers — stelle nur das Framework bereit, das du verwendest.",
       p2: "Jede Komponente wird für alle vier Frameworks über einen passenden Subpath veröffentlicht — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> und <c>/svelte</c>; importiere nur die, die du verwendest. Die Icons nutzen Font Awesome Free — installiere <c>@fortawesome/fontawesome-free</c> und binde dessen CSS einmal ein."
     },
     usage: {
@@ -81,7 +81,8 @@ export const de: Messages = {
     darkLabel: "Dunkelmodus",
     scaleCaption: "Die 12 Stufen von {scale}",
     previewTitle: "Echte Komponenten unter der gewählten Palette",
-    hint: "Jede Komponente liest semantische Tokens — ein Klassenwechsel an der Wurzel thematisiert die ganze Seite neu."
+    hint: "Jede Komponente liest semantische Tokens — ein Klassenwechsel an der Wurzel ändert das Design der gesamten Seite.",
+    stepRoles: ["App-Hintergrund", "Dezenter Hintergrund", "Komponentenhintergrund", "Komponente bei Hover", "Aktive Komponente", "Dezenter Rahmen", "Rahmen", "Rahmen bei Hover", "Vollton", "Vollton bei Hover", "Sekundärtext", "Kontrastreicher Text"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const de: Messages = {
     default: "Standard",
     description: "Beschreibung",
     caption: "Props",
-    eventsTitle: "Ausgelöste Events"
+    eventsTitle: "Ausgelöste Events",
+    slotsTitle: "Benannte Slots"
   },
 
   demoCaption: "Live-Komponente · interagiere damit",
@@ -158,7 +160,7 @@ export const de: Messages = {
       blurb: "Ein Segmented Control für N sich gegenseitig ausschließende Optionen in einer Kapsel, mit Icons je Option und Deaktivierung."
     },
     datePicker: {
-      blurb: "Ein Datumsfeld im arcana-Stil, das ein maskiertes <c>DD/MM/AAAA</c>-Eingabefeld mit einem Kalender-Popover verbindet; das <c>v-model</c> ist ein ISO-String <c>YYYY-MM-DD</c>."
+      blurb: "Ein eigenständiges Kalenderfeld (ohne Element Plus) mit fünf <c>type</c>-Varianten — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> und <c>datetime</c> — sowie Monats-/Wochentagsnamen über Intl und die Prop <c>locale</c>."
     },
     inputCurrency: {
       blurb: "Ein Währungsfeld, das während der Eingabe von rechts nach links formatiert, mit konfigurierbaren Nachkommastellen und <c>min</c>/<c>max</c>-Begrenzung; standardmäßig BRL."
@@ -497,7 +499,7 @@ export const de: Messages = {
     specSheetChangeData: "Daten ändern",
     specSheetBilling: "Abrechnung",
     specSheetLimit: "Limit",
-    specSheetBalance: "Saldo",
+    specSheetBalance: "Kontostand",
     specSheetDueDate: "Fälligkeitsdatum",
     specSheetDueDateValue: "Tag 10",
     specSheetNotes: "Notizen",
@@ -723,6 +725,35 @@ export const de: Messages = {
     hoverDelayInstant: "Sofort",
     hoverDelaySlow: "Langsam (600 ms)",
     hoverDisabledNote: "Deaktiviert — es öffnet sich nichts",
+
+    selectCustomizationTitle: "Slots · Präfix / Suffix · Gruppen",
+    inputSearchPlaceholder: "Suchen…",
+    tabsAria: "Demo-Tabs",
+    paymentMethodAria: "Zahlungsart",
+    sizeSmallAria: "Klein",
+    sizeMediumAria: "Mittel",
+    sizeLargeAria: "Groß",
+    disabledAria: "Deaktiviert",
+    selectGroupedPlaceholder: "Gruppiertes Obst",
+    selectCatalog: "Katalog",
+    selectGroupCommon: "Gängig",
+    selectGroupSeasonal: "Saisonal",
+    selectDisabled: "Deaktiviert",
+    selectSelected: "Ausgewählt",
+    selectCustomizationNote: "Öffne das Feld, um Options-Slots, Gruppenüberschriften, Trennlinien und den deaktivierten Eintrag zu sehen.",
+    avatarPortraitAlt: "Porträt eines Teammitglieds",
+    profilePictureAlt: "Profilbild",
+    tooltipDraftLabel: "Speichert ohne zu veröffentlichen",
+    tooltipDraftButton: "Entwurf speichern",
+    tooltipCopyLink: "Link kopieren",
+    tooltipSideTop: "oben",
+    tooltipSideRight: "rechts",
+    tooltipSideBottom: "unten",
+    tooltipSideLeft: "links",
+    tooltipNoArrow: "Ohne Pfeil",
+    tooltipNoArrowTrigger: "Pfeil = aus",
+    tooltipCustomTrigger: "Eigener Inhalt",
+    tooltipUndo: "Rückgängig",
 
     // ── context menu ──
     contextTriggerNote: "Rechtsklick in diesen Bereich",

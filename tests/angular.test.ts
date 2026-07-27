@@ -438,8 +438,10 @@ describe("Angular adapter", () => {
     // Abre: painel é teleportado pro document.body.
     click(el.querySelector(".arcana-select__trigger"));
     fixture.detectChanges();
-    const panel = document.body.querySelector(".arcana-select__panel");
+    const panel = document.body.querySelector<HTMLElement>(".arcana-select__panel");
     expect(panel).toBeTruthy();
+    expect(panel!.style.width).toBe("max-content");
+    expect(panel!.style.maxWidth).toBe("calc(100vw - 16px)");
     const items = panel!.querySelectorAll(".arcana-select__item");
     expect(items).toHaveLength(2);
     expect(items[0].classList.contains("is-selected")).toBe(true);

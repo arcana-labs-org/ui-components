@@ -65,7 +65,9 @@ describe("@arcanalabs/ui-components — Vue smoke", () => {
     expect(wrapper.find(".arcana-select__suffix").text()).toBe("BR");
     await wrapper.find(".arcana-select__trigger").trigger("click");
     await nextTick();
-    const panel = document.body.querySelector(".arcana-select__panel")!;
+    const panel = document.body.querySelector<HTMLElement>(".arcana-select__panel")!;
+    expect(panel.style.width).toBe("max-content");
+    expect(panel.style.maxWidth).toBe("calc(100vw - 16px)");
     expect(panel.querySelectorAll(".arcana-select__group")).toHaveLength(2);
     expect(panel.querySelectorAll(".arcana-select__group-separator")).toHaveLength(1);
     expect(panel.querySelectorAll(".arcana-select__option-prefix")).toHaveLength(2);

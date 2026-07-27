@@ -45,7 +45,7 @@ export const es: Messages = {
   gettingStarted: {
     install: {
       title: "Instalación",
-      p1: "La biblioteca se distribuye como un único paquete npm. Instálalo con el gestor de tu preferencia — <c>vue</c> (3.4+) es la única peer dependency.",
+      p1: "La biblioteca se distribuye como un único paquete npm sin dependencias de runtime. Instálalo con el gestor que prefieras; los paquetes de los frameworks son peers opcionales, así que proporciona solo el framework que uses.",
       p2: "Cada componente se publica para los cuatro frameworks en un subpath correspondiente — <c>@arcanalabs/ui-components/vue</c>, <c>/react</c>, <c>/angular</c> y <c>/svelte</c>; importa solo los que uses. Los iconos usan Font Awesome Free — instala <c>@fortawesome/fontawesome-free</c> e importa su CSS una vez."
     },
     usage: {
@@ -81,7 +81,8 @@ export const es: Messages = {
     darkLabel: "Modo oscuro",
     scaleCaption: "Los 12 pasos de {scale}",
     previewTitle: "Componentes reales con la paleta seleccionada",
-    hint: "Cada componente lee tokens semánticos, así que cambiar la clase raíz re-tematiza toda la página."
+    hint: "Cada componente lee tokens semánticos, así que cambiar la clase raíz cambia el tema de toda la página.",
+    stepRoles: ["Fondo de la aplicación", "Fondo sutil", "Fondo del componente", "Hover del componente", "Componente activo", "Borde sutil", "Borde", "Hover del borde", "Sólido", "Hover del sólido", "Texto secundario", "Texto de alto contraste"]
   },
 
   dependencies: {
@@ -101,7 +102,8 @@ export const es: Messages = {
     default: "Por defecto",
     description: "Descripción",
     caption: "Props",
-    eventsTitle: "Eventos emitidos"
+    eventsTitle: "Eventos emitidos",
+    slotsTitle: "Slots con nombre"
   },
 
   demoCaption: "componente en vivo · interactúa con él",
@@ -158,7 +160,7 @@ export const es: Messages = {
       blurb: "Un control segmentado para N opciones mutuamente excluyentes dentro de una píldora, con iconos y desactivación por opción."
     },
     datePicker: {
-      blurb: "Un campo de fecha shadcn que combina un input con máscara <c>DD/MM/AAAA</c> y un popover de calendario; el <c>v-model</c> es una cadena ISO <c>YYYY-MM-DD</c>."
+      blurb: "Un campo de calendario autocontenido (sin Element Plus) con cinco <c>type</c>s — <c>date</c>, <c>month</c>, <c>year</c>, <c>daterange</c> y <c>datetime</c> — y nombres de meses/días mediante Intl según la prop <c>locale</c>."
     },
     inputCurrency: {
       blurb: "Un input de moneda que formatea de derecha a izquierda mientras escribes, con decimales configurables y límites <c>min</c>/<c>max</c>; BRL por defecto."
@@ -723,6 +725,35 @@ export const es: Messages = {
     hoverDelayInstant: "Instantáneo",
     hoverDelaySlow: "Lento (600 ms)",
     hoverDisabledNote: "Deshabilitado — no se abre nada",
+
+    selectCustomizationTitle: "Slots · prefijo / sufijo · grupos",
+    inputSearchPlaceholder: "Buscar…",
+    tabsAria: "Pestañas de demostración",
+    paymentMethodAria: "Método de pago",
+    sizeSmallAria: "Pequeño",
+    sizeMediumAria: "Mediano",
+    sizeLargeAria: "Grande",
+    disabledAria: "Deshabilitado",
+    selectGroupedPlaceholder: "Fruta agrupada",
+    selectCatalog: "Catálogo",
+    selectGroupCommon: "Comunes",
+    selectGroupSeasonal: "De temporada",
+    selectDisabled: "Deshabilitado",
+    selectSelected: "Seleccionado",
+    selectCustomizationNote: "Abre el campo para ver los slots de opción, encabezados de grupo, separadores y el elemento deshabilitado.",
+    avatarPortraitAlt: "Retrato de un integrante del equipo",
+    profilePictureAlt: "Foto de perfil",
+    tooltipDraftLabel: "Guarda sin publicar",
+    tooltipDraftButton: "Guardar borrador",
+    tooltipCopyLink: "Copiar enlace",
+    tooltipSideTop: "arriba",
+    tooltipSideRight: "derecha",
+    tooltipSideBottom: "abajo",
+    tooltipSideLeft: "izquierda",
+    tooltipNoArrow: "Sin flecha",
+    tooltipNoArrowTrigger: "flecha = false",
+    tooltipCustomTrigger: "contenido personalizado",
+    tooltipUndo: "Deshacer",
 
     // ── context menu ──
     contextTriggerNote: "Haz clic derecho en esta área",

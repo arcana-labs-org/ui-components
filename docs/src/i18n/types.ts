@@ -172,6 +172,11 @@ export interface Messages {
     previewTitle: string;
     /** Nota curta explicando que a troca é só uma classe no elemento raiz. */
     hint: string;
+    /** Papel semântico de cada um dos 12 degraus da escala. */
+    stepRoles: [
+      string, string, string, string, string, string,
+      string, string, string, string, string, string
+    ];
   };
 
   /** Column headers of every props reference table. */
@@ -184,6 +189,8 @@ export interface Messages {
     caption: string;
     /** Heading for the emitted-events list under a component. */
     eventsTitle: string;
+    /** Heading for the named-slots list under a component. */
+    slotsTitle: string;
   };
 
   /** Caption shown over a live component preview. */

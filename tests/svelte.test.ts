@@ -232,8 +232,10 @@ describe("Svelte adapter — lote 2", () => {
     expect(target.querySelector(".arcana-select__panel")).toBeNull();
     click(trigger);
     // Panel is teleported to document.body (not inside target).
-    const panel = document.body.querySelector(".arcana-select__panel")!;
+    const panel = document.body.querySelector<HTMLElement>(".arcana-select__panel")!;
     expect(panel).toBeTruthy();
+    expect(panel.style.width).toBe("max-content");
+    expect(panel.style.maxWidth).toBe("calc(100vw - 16px)");
     const items = panel.querySelectorAll("li.arcana-select__item");
     expect(items).toHaveLength(2);
     click(items[1]);

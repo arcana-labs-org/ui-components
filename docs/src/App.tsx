@@ -40,7 +40,7 @@ function PropsTable({ rows, events, slots, msg }: {
       <ul className="doc-list">{events.map((event) => <li key={event}><code>{event}</code></li>)}</ul>
     </div> : null}
     {slots?.length ? <div className="events-block">
-      <div className="section-code-label">Slots</div>
+      <div className="section-code-label">{t.slotsTitle}</div>
       <ul className="doc-list">{slots.map((slot) => <li key={slot}><code>{slot}</code></li>)}</ul>
     </div> : null}
   </>;

@@ -207,7 +207,7 @@ export function Fields() {
       <ArcanaInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" min={0} max={99} />
 
       {/* Ícones no início e/ou no fim (qualquer ReactNode) */}
-      <ArcanaInput value={search} onValueChange={(v) => setSearch(v as string)} placeholder="Buscar…" iconStart={<i className="icon-search" />} />
+      <ArcanaInput value={search} onValueChange={(v) => setSearch(v as string)} placeholder="Search…" iconStart={<i className="icon-search" />} />
       <ArcanaInput value={qty} onValueChange={(v) => setQty(v as number | null)} type="number" iconEnd={<span>kg</span>} />
     </>
   )
@@ -224,7 +224,7 @@ import { ArcanaInputComponent } from '@arcanalabs/ui-components/angular'
     <input arcanaInput [(value)]="qty" type="number" [min]="0" [max]="99" />
 
     <!-- Ícones no início e/ou no fim (via TemplateRef) -->
-    <input arcanaInput [(value)]="search" placeholder="Buscar…" [iconStart]="searchIcon" />
+    <input arcanaInput [(value)]="search" placeholder="Search…" [iconStart]="searchIcon" />
     <ng-template #searchIcon><i class="icon-search"></i></ng-template>
 
     <input arcanaInput [(value)]="qty" type="number" [iconEnd]="unit" />
@@ -248,7 +248,7 @@ export class FieldsComponent {
 <ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number" min={0} max={99} />
 
 <!-- Ícones no início e/ou no fim (via snippets) -->
-<ArcanaInput value={search} onValueChange={(v) => (search = v as string)} placeholder="Buscar…">
+<ArcanaInput value={search} onValueChange={(v) => (search = v as string)} placeholder="Search…">
   {#snippet iconStart()}<i class="icon-search"></i>{/snippet}
 </ArcanaInput>
 <ArcanaInput value={qty} onValueChange={(v) => (qty = v as number | null)} type="number">
@@ -4148,7 +4148,7 @@ export function Toolbar() {
   return (
     <>
       {/* Texto via label */}
-      <ArcanaTooltip label="Salva sem publicar" trigger={<button>Salvar rascunho</button>} />
+      <ArcanaTooltip label="Saves without publishing" trigger={<button>Save draft</button>} />
 
       {/* Lados */}
       <ArcanaTooltip side="top" label="No topo" trigger={<button>top</button>} />
@@ -4158,8 +4158,8 @@ export function Toolbar() {
       <ArcanaTooltip arrow={false} label="Sem setinha" trigger={<button>flat</button>} />
 
       {/* Conteúdo custom (sobrepõe label) */}
-      <ArcanaTooltip side="top" trigger={<button aria-label="Desfazer">↺</button>}>
-        <span>Desfazer <strong>⌘Z</strong></span>
+      <ArcanaTooltip side="top" trigger={<button aria-label="Undo">↺</button>}>
+        <span>Undo <strong>⌘Z</strong></span>
       </ArcanaTooltip>
     </>
   )
@@ -4173,8 +4173,8 @@ import { ArcanaTooltipComponent } from '@arcanalabs/ui-components/angular'
   imports: [ArcanaTooltipComponent],
   template: \`
     <!-- Texto via label -->
-    <span arcanaTooltip label="Salva sem publicar">
-      <button arcanaTooltipTrigger>Salvar rascunho</button>
+    <span arcanaTooltip label="Saves without publishing">
+      <button arcanaTooltipTrigger>Save draft</button>
     </span>
 
     <!-- Lados -->
@@ -4189,8 +4189,8 @@ import { ArcanaTooltipComponent } from '@arcanalabs/ui-components/angular'
 
     <!-- Conteúdo custom (sobrepõe label) -->
     <span arcanaTooltip side="top">
-      <button arcanaTooltipTrigger aria-label="Desfazer">↺</button>
-      <span>Desfazer <strong>⌘Z</strong></span>
+      <button arcanaTooltipTrigger aria-label="Undo">↺</button>
+      <span>Undo <strong>⌘Z</strong></span>
     </span>
   \`
 })
@@ -4200,8 +4200,8 @@ export class ToolbarComponent {}`,
 </script>
 
 <!-- Texto via label -->
-<ArcanaTooltip label="Salva sem publicar">
-  {#snippet trigger()}<button>Salvar rascunho</button>{/snippet}
+<ArcanaTooltip label="Saves without publishing">
+  {#snippet trigger()}<button>Save draft</button>{/snippet}
 </ArcanaTooltip>
 
 <!-- Lados + sem seta -->
@@ -4214,8 +4214,8 @@ export class ToolbarComponent {}`,
 
 <!-- Conteúdo custom (sobrepõe label) -->
 <ArcanaTooltip side="top">
-  {#snippet trigger()}<button aria-label="Desfazer">↺</button>{/snippet}
-  <span>Desfazer <strong>⌘Z</strong></span>
+  {#snippet trigger()}<button aria-label="Undo">↺</button>{/snippet}
+  <span>Undo <strong>⌘Z</strong></span>
 </ArcanaTooltip>`
   },
 

@@ -27,13 +27,6 @@ const GRAYS = ["gray", "mauve", "slate", "sage", "olive", "sand"];
 
 const STEPS = Array.from({ length: 12 }, (_, i) => i + 1);
 
-/** O papel de cada degrau, na ordem — é o contrato do modelo Radix. */
-const STEP_ROLES = [
-  "App background", "Subtle background", "Component background", "Component hover",
-  "Component active", "Subtle border", "Border", "Border hover",
-  "Solid", "Solid hover", "Secondary text", "High-contrast text"
-];
-
 export function PaletteExplorer() {
   const { msg } = useLang();
   const [accent, setAccent] = useState("indigo");
@@ -98,7 +91,7 @@ export function PaletteExplorer() {
             key={step}
             className="palette-step"
             style={{ background: `var(--arcana-accent-${step})` }}
-            title={`${step} — ${STEP_ROLES[step - 1]}`}
+            title={`${step} — ${msg.palette.stepRoles[step - 1]}`}
           ><span>{step}</span></div>)}
         </div>
       </div>
