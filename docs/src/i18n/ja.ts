@@ -170,7 +170,7 @@ export const ja: Messages = {
       blurb: "<c>ArcanaAccordion</c> 内の単一の折りたたみパネルで、<c>name</c> で識別され、<c>title</c> ヘッダーとスロット本文を持ちます。"
     },
     dropdown: {
-      blurb: "<c>&lt;body&gt;</c> にテレポートする shadcn ドロップダウンメニューで、自動配置し、外側クリック・Escape・選択で閉じます。"
+      blurb: "<c>&lt;body&gt;</c> にテレポートする shadcn ドロップダウンメニューで、自動配置し、外側クリック・Escape・選択で閉じます。2 つ目の例は <c>quick date filter</c> のレシピ（今日／昨日／過去 N 日間＋その他のオプション）を示します。"
     },
     dropdownItem: {
       blurb: "<c>ArcanaDropdown</c> 内の 1 行で、任意の <c>icon</c>・ラベル・<c>suffix</c> を持ち、色付け可能で、破壊的操作向けに <c>divided</c> の区切り線を備えます。"

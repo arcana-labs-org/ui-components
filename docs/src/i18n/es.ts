@@ -170,7 +170,7 @@ export const es: Messages = {
       blurb: "Un único panel plegable dentro de un <c>ArcanaAccordion</c>, identificado por un <c>name</c>, con cabecera <c>title</c> y cuerpo por slot."
     },
     dropdown: {
-      blurb: "Un menú desplegable shadcn que se teletransporta a <c>&lt;body&gt;</c>, se autoposiciona y cierra al clicar fuera, con Escape o al seleccionar."
+      blurb: "Un menú desplegable shadcn que se teletransporta a <c>&lt;body&gt;</c>, se autoposiciona y cierra al clicar fuera, con Escape o al seleccionar. El segundo ejemplo muestra la receta de <c>quick date filter</c> (Hoy / Ayer / Últimos N días + Más opciones)."
     },
     dropdownItem: {
       blurb: "Una fila dentro de un <c>ArcanaDropdown</c> — <c>icon</c>, etiqueta y <c>suffix</c> opcionales — coloreable, con separador <c>divided</c> para acciones destructivas."

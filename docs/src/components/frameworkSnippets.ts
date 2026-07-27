@@ -1542,8 +1542,10 @@ export class DetailsComponent {
   },
 
   dropdown: {
-    react: `import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/react'
+    react: `import { useState } from 'react'
+import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/react'
 
+// Uso básico: menu de ações
 export function RowActions() {
   return (
     <ArcanaDropdown placement="bottom-start" trigger={<ArcanaButton variant="outline">Actions ▾</ArcanaButton>}>
@@ -1551,10 +1553,46 @@ export function RowActions() {
       <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
     </ArcanaDropdown>
   )
+}
+
+// Recipe: quick date filter — trigger custom + presets com check + rodapé "Mais opções".
+// O cálculo do range ([de, até]) é lógica de negócio (fica no app); aqui só a UI.
+const PRESETS = [
+  { key: 'today', label: 'Hoje' },
+  { key: 'yesterday', label: 'Ontem' },
+  { key: 'last7', label: 'Últimos 7 dias' },
+  { key: 'last30', label: 'Últimos 30 dias' },
+]
+
+export function DateQuickFilter({ onChange, onMore }) {
+  const [activeKey, setActiveKey] = useState('today')
+  const activeLabel = PRESETS.find(p => p.key === activeKey)?.label ?? 'Período'
+
+  const pick = (key) => { setActiveKey(key); onChange(rangeFor(key)) }
+  const openMore = () => { setActiveKey(null); onMore() }
+
+  return (
+    <ArcanaDropdown
+      placement="bottom-end"
+      trigger={<ArcanaButton variant="outline"><i className="fa-solid fa-calendar-day" /> {activeLabel} ▾</ArcanaButton>}
+    >
+      {PRESETS.map(p => (
+        <ArcanaDropdownItem
+          key={p.key}
+          onClick={() => pick(p.key)}
+          suffix={activeKey === p.key ? <i className="fa-solid fa-check" /> : undefined}
+        >
+          {p.label}
+        </ArcanaDropdownItem>
+      ))}
+      <ArcanaDropdownItem icon="fa-solid fa-sliders" divided onClick={openMore}>Mais opções</ArcanaDropdownItem>
+    </ArcanaDropdown>
+  )
 }`,
     angular: `import { Component } from '@angular/core'
 import { ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent } from '@arcanalabs/ui-components/angular'
 
+// Uso básico: menu de ações
 @Component({
   selector: 'app-row-actions',
   standalone: true,
@@ -1570,19 +1608,82 @@ import { ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonCompo
 export class RowActionsComponent {
   rename() {}
   del() {}
+}
+
+// Recipe: quick date filter — trigger custom + presets com check + rodapé "Mais opções".
+// rangeFor() (o cálculo do [de, até]) é lógica de negócio; fica no app.
+@Component({
+  selector: 'app-date-quick-filter',
+  standalone: true,
+  imports: [ArcanaDropdownComponent, ArcanaDropdownItemComponent, ArcanaButtonComponent],
+  template: \`
+    <div arcanaDropdown placement="bottom-end">
+      <button arcanaDropdownTrigger arcanaButton variant="outline">
+        <i class="fa-solid fa-calendar-day"></i> {{ activeLabel }} ▾
+      </button>
+
+      <div *ngFor="let p of presets" arcanaDropdownItem (click)="pick(p.key)">
+        {{ p.label }}
+        <i *ngIf="activeKey === p.key" arcanaDropdownItemSuffix class="fa-solid fa-check"></i>
+      </div>
+
+      <div arcanaDropdownItem icon="fa-solid fa-sliders" [divided]="true" (click)="openMore()">Mais opções</div>
+    </div>
+  \`
+})
+export class DateQuickFilterComponent {
+  presets = [
+    { key: 'today', label: 'Hoje' },
+    { key: 'yesterday', label: 'Ontem' },
+    { key: 'last7', label: 'Últimos 7 dias' },
+    { key: 'last30', label: 'Últimos 30 dias' },
+  ]
+  activeKey: string | null = 'today'
+  get activeLabel() { return this.presets.find(p => p.key === this.activeKey)?.label ?? 'Período' }
+  pick(key: string) { this.activeKey = key /* emit change(rangeFor(key)) */ }
+  openMore() { this.activeKey = null /* emit more */ }
 }`,
     svelte: `<script lang="ts">
   import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/svelte'
+
+  // Uso básico
   function rename() {}
   function del() {}
+
+  // Recipe: quick date filter. rangeFor() (o [de, até]) é lógica de negócio; fica no app.
+  const presets = [
+    { key: 'today', label: 'Hoje' },
+    { key: 'yesterday', label: 'Ontem' },
+    { key: 'last7', label: 'Últimos 7 dias' },
+    { key: 'last30', label: 'Últimos 30 dias' },
+  ]
+  let activeKey: string | null = 'today'
+  $: activeLabel = presets.find(p => p.key === activeKey)?.label ?? 'Período'
+  const pick = (key: string) => { activeKey = key /* dispatch('change', rangeFor(key)) */ }
+  const openMore = () => { activeKey = null /* dispatch('more') */ }
 </script>
 
+<!-- Uso básico: menu de ações -->
 <ArcanaDropdown placement="bottom-start">
   {#snippet trigger({ toggle })}
     <ArcanaButton variant="outline" onClick={toggle}>Actions ▾</ArcanaButton>
   {/snippet}
   <ArcanaDropdownItem icon="fa-solid fa-pen" onClick={rename}>Rename</ArcanaDropdownItem>
   <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" divided onClick={del}>Delete</ArcanaDropdownItem>
+</ArcanaDropdown>
+
+<!-- Recipe: quick date filter — trigger custom + presets com check + rodapé -->
+<ArcanaDropdown placement="bottom-end">
+  {#snippet trigger({ toggle })}
+    <ArcanaButton variant="outline" onClick={toggle}><i class="fa-solid fa-calendar-day"></i> {activeLabel} ▾</ArcanaButton>
+  {/snippet}
+  {#each presets as p (p.key)}
+    <ArcanaDropdownItem onClick={() => pick(p.key)}>
+      {p.label}
+      {#snippet suffix()}{#if activeKey === p.key}<i class="fa-solid fa-check"></i>{/if}{/snippet}
+    </ArcanaDropdownItem>
+  {/each}
+  <ArcanaDropdownItem icon="fa-solid fa-sliders" divided onClick={openMore}>Mais opções</ArcanaDropdownItem>
 </ArcanaDropdown>`
   },
 

@@ -682,17 +682,59 @@ const AccordionItemDemo: Component = {
 
 const DropdownDemo: Component = {
   components: { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton },
-  data: () => ({ last: "—" }),
+  data() {
+    const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
+    return {
+      last: "—",
+      // Recipe "quick date filter": presets marcáveis. O range em si é lógica de
+      // negócio (fica no app) — aqui só demonstramos o padrão de UI.
+      activeKey: "today" as string | null,
+      presets: [
+        { key: "today", label: $dt.qdfToday },
+        { key: "yesterday", label: $dt.qdfYesterday },
+        { key: "last7", label: $dt.qdfLast7 },
+        { key: "last30", label: $dt.qdfLast30 }
+      ]
+    };
+  },
+  computed: {
+    activeLabel(): string {
+      const self = this as unknown as { presets: { key: string; label: string }[]; activeKey: string | null; $dt: Record<string, string> };
+      return self.presets.find((p) => p.key === self.activeKey)?.label ?? self.$dt.btnMoreOptions;
+    }
+  },
+  methods: {
+    pick(key: string | null) {
+      const self = this as unknown as { activeKey: string | null; last: string; presets: { key: string; label: string }[]; $dt: Record<string, string> };
+      self.activeKey = key;
+      self.last = key ? (self.presets.find((p) => p.key === key)?.label ?? key) : self.$dt.btnMoreOptions;
+    }
+  },
   template: /* html */ `
     <div class="demo-stack">
-      <ArcanaDropdown placement="bottom-start">
-        <template #trigger>
-          <ArcanaButton variant="outline">{{ $dt.dropdownActions }} ▾</ArcanaButton>
-        </template>
-        <ArcanaDropdownItem icon="fa-solid fa-pen" @click="last = $dt.ddRename">{{ $dt.ddRename }}</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-copy" @click="last = $dt.ddDuplicate">{{ $dt.ddDuplicate }}</ArcanaDropdownItem>
-        <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = $dt.ddDelete">{{ $dt.ddDelete }}</ArcanaDropdownItem>
-      </ArcanaDropdown>
+      <div class="demo-row">
+        <!-- Uso básico: menu de ações -->
+        <ArcanaDropdown placement="bottom-start">
+          <template #trigger>
+            <ArcanaButton variant="outline">{{ $dt.dropdownActions }} ▾</ArcanaButton>
+          </template>
+          <ArcanaDropdownItem icon="fa-solid fa-pen" @click="last = $dt.ddRename">{{ $dt.ddRename }}</ArcanaDropdownItem>
+          <ArcanaDropdownItem icon="fa-solid fa-copy" @click="last = $dt.ddDuplicate">{{ $dt.ddDuplicate }}</ArcanaDropdownItem>
+          <ArcanaDropdownItem icon="fa-solid fa-trash" variant="danger" :divided="true" @click="last = $dt.ddDelete">{{ $dt.ddDelete }}</ArcanaDropdownItem>
+        </ArcanaDropdown>
+
+        <!-- Recipe: quick date filter — trigger custom + presets com check + rodapé -->
+        <ArcanaDropdown placement="bottom-start">
+          <template #trigger>
+            <ArcanaButton variant="outline"><i class="fa-solid fa-calendar-day"></i> {{ activeLabel }} ▾</ArcanaButton>
+          </template>
+          <ArcanaDropdownItem v-for="p in presets" :key="p.key" @click="pick(p.key)">
+            {{ p.label }}
+            <template v-if="activeKey === p.key" #suffix><i class="fa-solid fa-check"></i></template>
+          </ArcanaDropdownItem>
+          <ArcanaDropdownItem icon="fa-solid fa-sliders" :divided="true" @click="pick(null)">{{ $dt.btnMoreOptions }}</ArcanaDropdownItem>
+        </ArcanaDropdown>
+      </div>
       <p class="demo-note">{{ $dt.lastAction }}: <strong>{{ last }}</strong></p>
     </div>
   `
@@ -2708,16 +2750,56 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
     ],
     vueSnippet: [
       "<script setup lang=\"ts\">",
+      "import { ref, computed } from 'vue'",
       "import { ArcanaDropdown, ArcanaDropdownItem, ArcanaButton } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const emit = defineEmits<{ change: [[string, string]]; more: [] }>()",
+      "",
+      "/* ─── Uso básico: menu de ações ───",
+      "  <ArcanaDropdown placement=\"bottom-start\">",
+      "    <template #trigger><ArcanaButton variant=\"outline\">Ações ▾</ArcanaButton></template>",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-pen\" @click=\"rename\">Renomear</ArcanaDropdownItem>",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-trash\" variant=\"danger\" divided @click=\"del\">Excluir</ArcanaDropdownItem>",
+      "  </ArcanaDropdown>",
+      "─────────────────────────────── */",
+      "",
+      "// ─── Recipe: quick date filter (Hoje / Ontem / Últimos N dias + Mais opções) ───",
+      "// Presets de período. O cálculo do range ([de, até]) é lógica de negócio —",
+      "// fica no app (date-fns/moment); o dropdown só cuida da UI.",
+      "const presets = [",
+      "  { key: 'today', label: 'Hoje' },",
+      "  { key: 'yesterday', label: 'Ontem' },",
+      "  { key: 'last7', label: 'Últimos 7 dias' },",
+      "  { key: 'last30', label: 'Últimos 30 dias' },",
+      "]",
+      "const activeKey = ref<string | null>('today')",
+      "const activeLabel = computed(() => presets.find(p => p.key === activeKey.value)?.label ?? 'Período')",
+      "",
+      "function pick(key: string) {",
+      "  activeKey.value = key",
+      "  emit('change', rangeFor(key)) // rangeFor: monta [de, até] a partir do preset",
+      "}",
+      "function openMore() {",
+      "  activeKey.value = null        // range custom foge dos presets → desmarca",
+      "  emit('more')                  // caller abre o dialog de filtros p/ range livre",
+      "}",
       "</script>",
       "",
       "<template>",
-      "  <ArcanaDropdown placement=\"bottom-start\">",
+      "  <ArcanaDropdown placement=\"bottom-end\">",
+      "    <!-- trigger 100% custom: ícone + label do preset ativo + chevron -->",
       "    <template #trigger>",
-      "      <ArcanaButton variant=\"outline\">Actions ▾</ArcanaButton>",
+      "      <ArcanaButton variant=\"outline\"><i class=\"fa-solid fa-calendar-day\" /> {{ activeLabel }} ▾</ArcanaButton>",
       "    </template>",
-      "    <ArcanaDropdownItem icon=\"fa-solid fa-pen\" @click=\"rename\">Rename</ArcanaDropdownItem>",
-      "    <ArcanaDropdownItem icon=\"fa-solid fa-trash\" variant=\"danger\" divided @click=\"del\">Delete</ArcanaDropdownItem>",
+      "",
+      "    <!-- check à direita (#suffix) marca o selecionado sem desalinhar os demais -->",
+      "    <ArcanaDropdownItem v-for=\"p in presets\" :key=\"p.key\" @click=\"pick(p.key)\">",
+      "      {{ p.label }}",
+      "      <template v-if=\"activeKey === p.key\" #suffix><i class=\"fa-solid fa-check\" /></template>",
+      "    </ArcanaDropdownItem>",
+      "",
+      "    <!-- rodapé \"Mais opções\": separador (divided) + ícone -->",
+      "    <ArcanaDropdownItem icon=\"fa-solid fa-sliders\" divided @click=\"openMore\">Mais opções</ArcanaDropdownItem>",
       "  </ArcanaDropdown>",
       "</template>"
     ].join("\n")

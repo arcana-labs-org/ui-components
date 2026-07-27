@@ -170,7 +170,7 @@ export const de: Messages = {
       blurb: "Ein einzelnes einklappbares Panel innerhalb eines <c>ArcanaAccordion</c>, identifiziert durch einen <c>name</c>, mit <c>title</c>-Header und Slot-Inhalt."
     },
     dropdown: {
-      blurb: "Ein Dropdown-Menü im arcana-Stil, das ins <c>&lt;body&gt;</c> teleportiert, sich automatisch positioniert und bei Außenklick, Escape oder Auswahl schließt."
+      blurb: "Ein Dropdown-Menü im arcana-Stil, das ins <c>&lt;body&gt;</c> teleportiert, sich automatisch positioniert und bei Außenklick, Escape oder Auswahl schließt. Das zweite Beispiel zeigt das <c>quick date filter</c>-Rezept (Heute / Gestern / Letzte N Tage + Mehr Optionen)."
     },
     dropdownItem: {
       blurb: "Eine Zeile innerhalb eines <c>ArcanaDropdown</c> — optionales <c>icon</c>, Label und <c>suffix</c> — färbbar, mit einer <c>divided</c>-Trennlinie für destruktive Aktionen."

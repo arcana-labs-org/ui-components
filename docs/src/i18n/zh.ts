@@ -170,7 +170,7 @@ export const zh: Messages = {
       blurb: "<c>ArcanaAccordion</c> 内的单个可折叠面板，由 <c>name</c> 标识，带 <c>title</c> 标题头和插槽内容。"
     },
     dropdown: {
-      blurb: "传送到 <c>&lt;body&gt;</c> 的 shadcn 下拉菜单，自动定位并在外部点击、按 Escape 或选择后关闭。"
+      blurb: "传送到 <c>&lt;body&gt;</c> 的 shadcn 下拉菜单，自动定位并在外部点击、按 Escape 或选择后关闭。第二个示例展示了 <c>quick date filter</c> 用法（今天 / 昨天 / 最近 N 天 + 更多选项）。"
     },
     dropdownItem: {
       blurb: "<c>ArcanaDropdown</c> 内的一行——可选 <c>icon</c>、标签和 <c>suffix</c>——可着色，并带 <c>divided</c> 分隔线用于危险操作。"

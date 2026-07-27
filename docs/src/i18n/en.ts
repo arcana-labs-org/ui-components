@@ -170,7 +170,7 @@ export const en: Messages = {
       blurb: "A single collapsible panel inside a <c>ArcanaAccordion</c>, identified by a <c>name</c>, with a <c>title</c> header and slot body."
     },
     dropdown: {
-      blurb: "A shadcn dropdown menu that teleports to <c>&lt;body&gt;</c>, auto-positions and closes on outside click, Escape or selection."
+      blurb: "A shadcn dropdown menu that teleports to <c>&lt;body&gt;</c>, auto-positions and closes on outside click, Escape or selection. The second example shows the <c>quick date filter</c> recipe (Today / Yesterday / Last N days + More options)."
     },
     dropdownItem: {
       blurb: "A row inside a <c>ArcanaDropdown</c> — optional <c>icon</c>, label and <c>suffix</c> — colourable, with a <c>divided</c> separator for destructive actions."

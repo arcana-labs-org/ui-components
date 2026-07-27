@@ -170,7 +170,7 @@ export const pt: Messages = {
       blurb: "Um único painel colapsável dentro de um <c>ArcanaAccordion</c>, identificado por um <c>name</c>, com cabeçalho <c>title</c> e corpo via slot."
     },
     dropdown: {
-      blurb: "Um menu dropdown shadcn que teleporta para <c>&lt;body&gt;</c>, se posiciona sozinho e fecha ao clicar fora, no Escape ou na seleção."
+      blurb: "Um menu dropdown shadcn que teleporta para <c>&lt;body&gt;</c>, se posiciona sozinho e fecha ao clicar fora, no Escape ou na seleção. O segundo exemplo mostra o recipe de <c>quick date filter</c> (Hoje / Ontem / Últimos N dias + Mais opções)."
     },
     dropdownItem: {
       blurb: "Uma linha dentro de um <c>ArcanaDropdown</c> — <c>icon</c>, rótulo e <c>suffix</c> opcionais — colorível, com um separador <c>divided</c> para ações destrutivas."
