@@ -76,6 +76,7 @@ export type DocumentedKey =
   | "aspectRatio"
   | "scrollArea"
   | "hoverCard"
+  | "tooltip"
   | "contextMenu"
   | "contextMenuItem";
 

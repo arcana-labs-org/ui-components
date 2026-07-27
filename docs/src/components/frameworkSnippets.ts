@@ -4003,6 +4003,84 @@ export class ScrollPanelsComponent {
 </style>`
   },
 
+  tooltip: {
+    react: `import { ArcanaTooltip } from '@arcanalabs/ui-components/react'
+
+export function Toolbar() {
+  return (
+    <>
+      {/* Texto via label */}
+      <ArcanaTooltip label="Salva sem publicar" trigger={<button>Salvar rascunho</button>} />
+
+      {/* Lados */}
+      <ArcanaTooltip side="top" label="No topo" trigger={<button>top</button>} />
+      <ArcanaTooltip side="right" label="À direita" trigger={<button>right</button>} />
+
+      {/* Sem seta */}
+      <ArcanaTooltip arrow={false} label="Sem setinha" trigger={<button>flat</button>} />
+
+      {/* Conteúdo custom (sobrepõe label) */}
+      <ArcanaTooltip side="top" trigger={<button aria-label="Desfazer">↺</button>}>
+        <span>Desfazer <strong>⌘Z</strong></span>
+      </ArcanaTooltip>
+    </>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaTooltipComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-toolbar',
+  standalone: true,
+  imports: [ArcanaTooltipComponent],
+  template: \`
+    <!-- Texto via label -->
+    <span arcanaTooltip label="Salva sem publicar">
+      <button arcanaTooltipTrigger>Salvar rascunho</button>
+    </span>
+
+    <!-- Lados -->
+    <span arcanaTooltip label="No topo" side="top">
+      <button arcanaTooltipTrigger>top</button>
+    </span>
+
+    <!-- Sem seta -->
+    <span arcanaTooltip label="Sem setinha" [arrow]="false">
+      <button arcanaTooltipTrigger>flat</button>
+    </span>
+
+    <!-- Conteúdo custom (sobrepõe label) -->
+    <span arcanaTooltip side="top">
+      <button arcanaTooltipTrigger aria-label="Desfazer">↺</button>
+      <span>Desfazer <strong>⌘Z</strong></span>
+    </span>
+  \`
+})
+export class ToolbarComponent {}`,
+    svelte: `<script lang="ts">
+  import { ArcanaTooltip } from '@arcanalabs/ui-components/svelte'
+</script>
+
+<!-- Texto via label -->
+<ArcanaTooltip label="Salva sem publicar">
+  {#snippet trigger()}<button>Salvar rascunho</button>{/snippet}
+</ArcanaTooltip>
+
+<!-- Lados + sem seta -->
+<ArcanaTooltip label="No topo" side="top">
+  {#snippet trigger()}<button>top</button>{/snippet}
+</ArcanaTooltip>
+<ArcanaTooltip label="Sem setinha" arrow={false}>
+  {#snippet trigger()}<button>flat</button>{/snippet}
+</ArcanaTooltip>
+
+<!-- Conteúdo custom (sobrepõe label) -->
+<ArcanaTooltip side="top">
+  {#snippet trigger()}<button aria-label="Desfazer">↺</button>{/snippet}
+  <span>Desfazer <strong>⌘Z</strong></span>
+</ArcanaTooltip>`
+  },
+
   hoverCard: {
     react: `import { ArcanaHoverCard, ArcanaAvatar } from '@arcanalabs/ui-components/react'
 

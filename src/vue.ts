@@ -67,6 +67,7 @@ export { default as ArcanaSwitchRow } from "./vue/components/ArcanaSwitchRow.vue
 export { default as ArcanaSwitchSegmented } from "./vue/components/ArcanaSwitchSegmented.vue";
 export { default as ArcanaTable } from "./vue/components/ArcanaTable.vue";
 export { default as ArcanaTabs } from "./vue/components/ArcanaTabs.vue";
+export { default as ArcanaTooltip } from "./vue/components/ArcanaTooltip.vue";
 export { default as ArcanaTreeSelect } from "./vue/components/ArcanaTreeSelect.vue";
 export type { TreeSelectNode } from "./vue/components/ArcanaTreeSelect.vue";
 export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
@@ -80,6 +81,11 @@ export type {
     ArcanaContextMenuVariant,
 } from "./core/context-menu";
 export type { HoverCardAlign, HoverCardPlacement, HoverCardSide } from "./core/hover-card";
+export type {
+    HoverCardAlign as TooltipAlign,
+    HoverCardPlacement as TooltipPlacement,
+    HoverCardSide as TooltipSide,
+} from "./core/hover-card";
 export { CurrencyFormatter } from "./core/currency";
 export { maskCurrency, formatCurrencyDigits, currencyDigitsFromValue } from "./core/currency";
 export { DateFormatter } from "./core/date";

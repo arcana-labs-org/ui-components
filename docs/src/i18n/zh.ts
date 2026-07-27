@@ -261,6 +261,9 @@ export const zh: Messages = {
     hoverCard: {
       blurb: "悬停或聚焦 <c>openDelay</c> 之后打开的富预览面板，通过 <c>side</c>/<c>align</c> 或 <c>placement</c> 简写定位。"
     },
+    tooltip: {
+      blurb: "在触发元素悬停或聚焦时打开的简短文字气泡，带箭头并通过 <c>side</c>/<c>align</c> 定位（自动翻转）。用 <c>label</c> 传入文字。"
+    },
     contextMenu: {
       blurb: "由 <c>items</c> 数组构建的右键菜单（图标、后缀、<c>danger</c> 变体、分隔线），也可以用子元素组合。"
     },
@@ -428,6 +431,10 @@ export const zh: Messages = {
     ddApprove: "批准",
     ddFlag: "标记",
     ddFlagLabel: "标记以供审核",
+    qdfToday: "今天",
+    qdfYesterday: "昨天",
+    qdfLast7: "最近 7 天",
+    qdfLast30: "最近 30 天",
 
     // ── table ──
     colSku: "SKU",

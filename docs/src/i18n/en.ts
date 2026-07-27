@@ -261,6 +261,9 @@ export const en: Messages = {
     hoverCard: {
       blurb: "A rich preview panel that opens on hover or focus after <c>openDelay</c>, positioned by <c>side</c>/<c>align</c> or a single <c>placement</c> shorthand."
     },
+    tooltip: {
+      blurb: "A short text bubble that opens on hover or focus of the trigger, with an arrow and <c>side</c>/<c>align</c> positioning (auto-flip). Pass the text via <c>label</c>."
+    },
     contextMenu: {
       blurb: "A right-click menu built from an <c>items</c> array (icons, suffixes, <c>danger</c> variants, dividers) or composed from children."
     },
@@ -428,6 +431,10 @@ export const en: Messages = {
     ddApprove: "Approve",
     ddFlag: "Flag",
     ddFlagLabel: "Flag for review",
+    qdfToday: "Today",
+    qdfYesterday: "Yesterday",
+    qdfLast7: "Last 7 days",
+    qdfLast30: "Last 30 days",
 
     // ── table ──
     colSku: "SKU",

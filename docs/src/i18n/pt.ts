@@ -261,6 +261,9 @@ export const pt: Messages = {
     hoverCard: {
       blurb: "Um painel de prévia rica que abre no hover ou no foco após <c>openDelay</c>, posicionado por <c>side</c>/<c>align</c> ou pelo atalho <c>placement</c>."
     },
+    tooltip: {
+      blurb: "Balão de texto curto que abre no hover ou no foco do gatilho, com setinha e posicionamento por <c>side</c>/<c>align</c> (flip automático). Passe o texto em <c>label</c>."
+    },
     contextMenu: {
       blurb: "Um menu de botão direito montado a partir de um array <c>items</c> (ícones, sufixos, variantes <c>danger</c>, divisores) ou composto pelos filhos."
     },
@@ -428,6 +431,10 @@ export const pt: Messages = {
     ddApprove: "Aprovar",
     ddFlag: "Sinalizar",
     ddFlagLabel: "Sinalizar para revisão",
+    qdfToday: "Hoje",
+    qdfYesterday: "Ontem",
+    qdfLast7: "Últimos 7 dias",
+    qdfLast30: "Últimos 30 dias",
 
     // ── table ──
     colSku: "SKU",

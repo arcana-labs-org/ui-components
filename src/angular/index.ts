@@ -55,6 +55,13 @@ export { ArcanaAspectRatioComponent } from "./arcana-aspect-ratio.component";
 export { ArcanaHoverCardComponent } from "./arcana-hover-card.component";
 export type { HoverCardAlign, HoverCardPlacement, HoverCardSide } from "../core/hover-card";
 
+export { ArcanaTooltipComponent } from "./arcana-tooltip.component";
+export type {
+  HoverCardAlign as TooltipAlign,
+  HoverCardPlacement as TooltipPlacement,
+  HoverCardSide as TooltipSide
+} from "../core/hover-card";
+
 export { ArcanaScrollAreaComponent } from "./arcana-scroll-area.component";
 export type { ScrollAreaOrientation, ScrollAreaType } from "./arcana-scroll-area.component";
 

@@ -261,6 +261,9 @@ export const ja: Messages = {
     hoverCard: {
       blurb: "ホバーまたはフォーカス後 <c>openDelay</c> で開くリッチなプレビューパネル。<c>side</c>/<c>align</c>、あるいは <c>placement</c> の短縮指定で配置します。"
     },
+    tooltip: {
+      blurb: "トリガーのホバーまたはフォーカスで開く短いテキストの吹き出し。矢印付きで <c>side</c>/<c>align</c> により配置され（自動フリップ）、テキストは <c>label</c> で渡します。"
+    },
     contextMenu: {
       blurb: "<c>items</c> 配列（アイコン、サフィックス、<c>danger</c> バリアント、区切り線）から作る右クリックメニュー。子要素で組み立てることもできます。"
     },
@@ -428,6 +431,10 @@ export const ja: Messages = {
     ddApprove: "承認",
     ddFlag: "フラグ",
     ddFlagLabel: "レビュー用にフラグを立てる",
+    qdfToday: "今日",
+    qdfYesterday: "昨日",
+    qdfLast7: "過去7日間",
+    qdfLast30: "過去30日間",
 
     // ── table ──
     colSku: "SKU",

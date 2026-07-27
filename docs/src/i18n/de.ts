@@ -261,6 +261,9 @@ export const de: Messages = {
     hoverCard: {
       blurb: "Ein reichhaltiges Vorschau-Panel, das nach <c>openDelay</c> bei Hover oder Fokus öffnet, positioniert über <c>side</c>/<c>align</c> oder die Kurzform <c>placement</c>."
     },
+    tooltip: {
+      blurb: "Kurze Textblase, die bei Hover oder Fokus des Auslösers öffnet — mit Pfeil und Positionierung über <c>side</c>/<c>align</c> (Auto-Flip). Der Text kommt über <c>label</c>."
+    },
     contextMenu: {
       blurb: "Ein Rechtsklick-Menü aus einem <c>items</c>-Array (Icons, Suffixe, <c>danger</c>-Varianten, Trenner) oder aus Kindelementen komponiert."
     },
@@ -428,6 +431,10 @@ export const de: Messages = {
     ddApprove: "Genehmigen",
     ddFlag: "Markieren",
     ddFlagLabel: "Zur Überprüfung markieren",
+    qdfToday: "Heute",
+    qdfYesterday: "Gestern",
+    qdfLast7: "Letzte 7 Tage",
+    qdfLast30: "Letzte 30 Tage",
 
     // ── table ──
     colSku: "SKU",

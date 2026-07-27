@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.3.0 — 2026-07-26
+
+### Novos recursos
+- **Novo componente `ArcanaTooltip`**, nos 4 ports (Vue, React, Angular, Svelte). Balão de texto curto que abre no hover (e no foco) do gatilho — versão enxuta e opinativa do `ArcanaHoverCard`.
+  - Texto via prop `label`, ou conteúdo custom pelo slot default (o slot vence).
+  - Posicionamento por `side`/`align` (ou o atalho `placement`) com **flip automático**, reaproveitando o `placeHoverCard` já testado do `core/hover-card`. Balão teleportado pro `<body>`.
+  - Setinha apontando pro gatilho (prop `arrow`, default `true`), com a posição calculada a partir do centro do gatilho — aponta certo mesmo com `align` start/end ou quando o balão encosta na borda.
+  - `openDelay` (200) / `closeDelay` (0), `disabled`, `panelClass`. Balão é `pointer-events: none` e nunca rouba o foco.
+  - Acessibilidade: gatilho ganha `aria-describedby` enquanto aberto, balão é `role="tooltip"`, `Escape` fecha.
+
+### Documentação
+- Nova página **Tooltip** na categoria Overlay: demo ao vivo com vários exemplos (botão, ícone, os 4 lados, sem seta, conteúdo custom), tabela de props, exemplos nos 4 frameworks e blurb nas 8 traduções.
+
+
 ## 2.2.0 — 2026-07-26
 
 ### Novos recursos

@@ -71,6 +71,7 @@ import ArcanaSpecSheetSectionComponent from "./svelte/ArcanaSpecSheetSection.sve
 import ArcanaSpecSheetFieldComponent from "./svelte/ArcanaSpecSheetField.svelte";
 import ArcanaAspectRatioComponent from "./svelte/ArcanaAspectRatio.svelte";
 import ArcanaHoverCardComponent from "./svelte/ArcanaHoverCard.svelte";
+import ArcanaTooltipComponent from "./svelte/ArcanaTooltip.svelte";
 import ArcanaScrollAreaComponent from "./svelte/ArcanaScrollArea.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
@@ -1134,6 +1135,35 @@ export interface ArcanaHoverCardProps {
   class?: string;
 }
 export const ArcanaHoverCard = ArcanaHoverCardComponent as unknown as Component<ArcanaHoverCardProps>;
+
+/* ── ArcanaTooltip ────────────────────────────────────────────────────────── */
+export type { HoverCardAlign as TooltipAlign, HoverCardPlacement as TooltipPlacement, HoverCardSide as TooltipSide } from "./core/hover-card";
+export interface ArcanaTooltipProps {
+  /** Texto do tooltip. Use o snippet `children` pra conteúdo custom (o snippet vence). */
+  label?: string;
+  /** ms até abrir depois do `mouseenter` (o foco por teclado abre na hora). Default `200`. */
+  openDelay?: number;
+  /** ms de carência antes de fechar no mouse (default `0` = imediato). */
+  closeDelay?: number;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  /** Atalho `"{side}-{align}"` (ex: `"top-start"`); vence `side`/`align`. */
+  placement?: string;
+  /** Distância entre gatilho e balão em px. Default `6`. */
+  offset?: number;
+  /** Mostra a setinha apontando pro gatilho. Default `true`. */
+  arrow?: boolean;
+  disabled?: boolean;
+  /** Classe extra no balão portado pro `<body>` (tema por instância). */
+  panelClass?: string;
+  /** O gatilho (slot `trigger` do Vue). */
+  trigger?: Snippet;
+  /** O conteúdo do balão (slot default do Vue) — sobrepõe `label`. */
+  children?: Snippet;
+  onOpenChange?: (open: boolean) => void;
+  class?: string;
+}
+export const ArcanaTooltip = ArcanaTooltipComponent as unknown as Component<ArcanaTooltipProps>;
 
 /* ── ArcanaScrollArea ─────────────────────────────────────────────────────── */
 export type ScrollAreaOrientation = "vertical" | "horizontal" | "both";

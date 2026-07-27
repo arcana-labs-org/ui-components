@@ -54,6 +54,7 @@ import ArcanaProgress from "../../../src/vue/components/ArcanaProgress.vue";
 import ArcanaAspectRatio from "../../../src/vue/components/ArcanaAspectRatio.vue";
 import ArcanaScrollArea from "../../../src/vue/components/ArcanaScrollArea.vue";
 import ArcanaHoverCard from "../../../src/vue/components/ArcanaHoverCard.vue";
+import ArcanaTooltip from "../../../src/vue/components/ArcanaTooltip.vue";
 import ArcanaContextMenu from "../../../src/vue/components/ArcanaContextMenu.vue";
 import ArcanaContextMenuItem from "../../../src/vue/components/ArcanaContextMenuItem.vue";
 
@@ -1629,6 +1630,60 @@ const ScrollAreaDemo: Component = {
 };
 
 /* ────────────────────────── ArcanaHoverCard ────────────────────────── */
+
+const TooltipDemo: Component = {
+  components: { ArcanaTooltip, ArcanaButton },
+  template: /* html */ `
+    <div class="demo-stack">
+      <!-- Básico: em um botão -->
+      <div class="demo-row" style="gap: 12px">
+        <ArcanaTooltip label="Salva sem publicar">
+          <template #trigger><ArcanaButton variant="secondary">Salvar rascunho</ArcanaButton></template>
+        </ArcanaTooltip>
+
+        <!-- Em um botão de ícone (aria-label descreve; o tooltip reforça) -->
+        <ArcanaTooltip label="Copiar link">
+          <template #trigger>
+            <button type="button" aria-label="Copiar link" class="arcana-btn arcana-btn--secondary" style="width: 36px; padding: 0; height: 34px">
+              <i class="fa-solid fa-link" aria-hidden="true"></i>
+            </button>
+          </template>
+        </ArcanaTooltip>
+      </div>
+
+      <!-- Quatro lados -->
+      <div class="demo-field">
+        <div class="demo-row" style="gap: 16px">
+          <ArcanaTooltip label="Tooltip no topo" side="top">
+            <template #trigger><ArcanaButton variant="ghost">top</ArcanaButton></template>
+          </ArcanaTooltip>
+          <ArcanaTooltip label="Tooltip à direita" side="right">
+            <template #trigger><ArcanaButton variant="ghost">right</ArcanaButton></template>
+          </ArcanaTooltip>
+          <ArcanaTooltip label="Tooltip embaixo" side="bottom">
+            <template #trigger><ArcanaButton variant="ghost">bottom</ArcanaButton></template>
+          </ArcanaTooltip>
+          <ArcanaTooltip label="Tooltip à esquerda" side="left">
+            <template #trigger><ArcanaButton variant="ghost">left</ArcanaButton></template>
+          </ArcanaTooltip>
+        </div>
+        <p class="demo-note">{{ $dt.hoverSideNote }}</p>
+      </div>
+
+      <!-- Sem seta e com conteúdo custom via slot -->
+      <div class="demo-row" style="gap: 12px">
+        <ArcanaTooltip label="Sem setinha" :arrow="false" side="bottom">
+          <template #trigger><ArcanaButton variant="ghost">arrow = false</ArcanaButton></template>
+        </ArcanaTooltip>
+
+        <ArcanaTooltip side="top">
+          <template #trigger><ArcanaButton variant="ghost">conteúdo custom</ArcanaButton></template>
+          <span>Desfazer&nbsp;&nbsp;<strong style="opacity: .8">⌘Z</strong></span>
+        </ArcanaTooltip>
+      </div>
+    </div>
+  `
+};
 
 const HoverCardDemo: Component = {
   components: { ArcanaHoverCard, ArcanaAvatar },
@@ -3853,6 +3908,49 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  <ArcanaScrollArea type=\"hover\" :max-height=\"120\">",
       "    <p v-for=\"item in items\" :key=\"item\">{{ item }}</p>",
       "  </ArcanaScrollArea>",
+      "</template>"
+    ].join("\n")
+  },
+
+  tooltip: {
+    demo: TooltipDemo,
+    props: [
+      { name: "label", type: "string", default: "''", description: "The tooltip text; use the default slot for custom content (the slot wins)." },
+      { name: "side", type: "top | right | bottom | left", default: "top", description: "Preferred side; flips automatically when it does not fit." },
+      { name: "align", type: "start | center | end", default: "center", description: "Alignment along the chosen side." },
+      { name: "placement", type: "'{side}-{align}' (e.g. top-start)", default: "undefined", description: "Shorthand; when set it wins over side/align." },
+      { name: "offset", type: "number (px)", default: "6", description: "Distance between trigger and bubble." },
+      { name: "openDelay", type: "number (ms)", default: "200", description: "Wait after mouseenter before opening; keyboard focus opens immediately." },
+      { name: "closeDelay", type: "number (ms)", default: "0", description: "Grace period before closing on leave." },
+      { name: "arrow", type: "boolean", default: "true", description: "Shows the little arrow pointing at the trigger." },
+      { name: "disabled", type: "boolean", default: "false", description: "Never opens (and closes it if open)." },
+      { name: "panelClass", type: "string", default: "undefined", description: "Extra class on the teleported bubble — the way to theme a single instance, since it lives in <body>." }
+    ],
+    events: [
+      "open-change(open: boolean) — on every transition",
+      "Slots: #trigger (put a natively focusable element in it), default (overrides label)"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ArcanaTooltip, ArcanaButton } from '@arcanalabs/ui-components/vue'",
+      "</script>",
+      "",
+      "<template>",
+      "  <!-- Básico: texto via label -->",
+      "  <ArcanaTooltip label=\"Salva sem publicar\">",
+      "    <template #trigger><ArcanaButton variant=\"secondary\">Salvar rascunho</ArcanaButton></template>",
+      "  </ArcanaTooltip>",
+      "",
+      "  <!-- Lados + sem seta -->",
+      "  <ArcanaTooltip label=\"No topo\" side=\"top\"><template #trigger><button>top</button></template></ArcanaTooltip>",
+      "  <ArcanaTooltip label=\"À direita\" side=\"right\"><template #trigger><button>right</button></template></ArcanaTooltip>",
+      "  <ArcanaTooltip label=\"Sem setinha\" :arrow=\"false\"><template #trigger><button>flat</button></template></ArcanaTooltip>",
+      "",
+      "  <!-- Conteúdo custom via slot (sobrepõe label) -->",
+      "  <ArcanaTooltip side=\"top\">",
+      "    <template #trigger><button aria-label=\"Desfazer\">↺</button></template>",
+      "    <span>Desfazer&nbsp;<strong>⌘Z</strong></span>",
+      "  </ArcanaTooltip>",
       "</template>"
     ].join("\n")
   },

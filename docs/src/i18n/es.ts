@@ -261,6 +261,9 @@ export const es: Messages = {
     hoverCard: {
       blurb: "Un panel de vista previa que se abre al pasar el ratón o al enfocar tras <c>openDelay</c>, colocado con <c>side</c>/<c>align</c> o con el atajo <c>placement</c>."
     },
+    tooltip: {
+      blurb: "Globo de texto breve que se abre al pasar el ratón o enfocar el disparador, con flecha y posicionamiento por <c>side</c>/<c>align</c> (flip automático). Pasa el texto en <c>label</c>."
+    },
     contextMenu: {
       blurb: "Un menú contextual construido desde un array <c>items</c> (iconos, sufijos, variantes <c>danger</c>, separadores) o compuesto con los hijos."
     },
@@ -428,6 +431,10 @@ export const es: Messages = {
     ddApprove: "Aprobar",
     ddFlag: "Marcar",
     ddFlagLabel: "Marcar para revisión",
+    qdfToday: "Hoy",
+    qdfYesterday: "Ayer",
+    qdfLast7: "Últimos 7 días",
+    qdfLast30: "Últimos 30 días",
 
     // ── table ──
     colSku: "SKU",

@@ -64,6 +64,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-notice", name: "ArcanaNotice", label: "Notice", category: "overlay", docKey: "notice" },
   { id: "arcana-action-panel", name: "ArcanaActionPanel", label: "Action Panel", category: "overlay", docKey: "onboardingPanel" },
   { id: "arcana-hover-card", name: "ArcanaHoverCard", label: "Hover Card", category: "overlay", docKey: "hoverCard" },
+  { id: "arcana-tooltip", name: "ArcanaTooltip", label: "Tooltip", category: "overlay", docKey: "tooltip" },
   { id: "arcana-context-menu", name: "ArcanaContextMenu", label: "Context Menu", category: "overlay", docKey: "contextMenu" },
   { id: "arcana-context-menu-item", name: "ArcanaContextMenuItem", label: "Context Menu Item", category: "overlay", docKey: "contextMenuItem" },
 

@@ -78,6 +78,14 @@ export type {
     HoverCardSide,
 } from "../core/hover-card";
 
+export { ArcanaTooltip } from "./ArcanaTooltip";
+export type { ArcanaTooltipProps } from "./ArcanaTooltip";
+export type {
+    HoverCardAlign as TooltipAlign,
+    HoverCardPlacement as TooltipPlacement,
+    HoverCardSide as TooltipSide,
+} from "../core/hover-card";
+
 export { ArcanaScrollArea } from "./ArcanaScrollArea";
 export type {
     ArcanaScrollAreaProps,

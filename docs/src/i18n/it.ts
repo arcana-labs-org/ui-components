@@ -261,6 +261,9 @@ export const it: Messages = {
     hoverCard: {
       blurb: "Un pannello di anteprima che si apre al passaggio del mouse o al focus dopo <c>openDelay</c>, posizionato con <c>side</c>/<c>align</c> o con la scorciatoia <c>placement</c>."
     },
+    tooltip: {
+      blurb: "Fumetto di testo breve che si apre al passaggio del mouse o al focus del trigger, con freccia e posizionamento tramite <c>side</c>/<c>align</c> (flip automatico). Passa il testo con <c>label</c>."
+    },
     contextMenu: {
       blurb: "Un menu contestuale costruito da un array <c>items</c> (icone, suffissi, varianti <c>danger</c>, divisori) o composto dai figli."
     },
@@ -428,6 +431,10 @@ export const it: Messages = {
     ddApprove: "Approva",
     ddFlag: "Segnala",
     ddFlagLabel: "Segnala per revisione",
+    qdfToday: "Oggi",
+    qdfYesterday: "Ieri",
+    qdfLast7: "Ultimi 7 giorni",
+    qdfLast30: "Ultimi 30 giorni",
 
     // ── table ──
     colSku: "SKU",
