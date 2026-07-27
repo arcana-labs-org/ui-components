@@ -224,14 +224,15 @@ const SelectDemo: Component = {
     const $dt = (this as unknown as { $dt: Record<string, string> }).$dt;
     return {
       single: null as string | null,
+      decorated: "banana" as string | null,
       many: [] as string[],
       statuses: ["todo", "in_progress", "in_review"] as string[],
       fruits: [
-        { label: $dt.fruitApple, value: "apple" },
-        { label: $dt.fruitBanana, value: "banana" },
-        { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc },
-        { label: $dt.fruitDurian, value: "durian", disabled: true },
-        { label: $dt.fruitElderberry, value: "elderberry" }
+        { label: $dt.fruitApple, value: "apple", group: "Common" },
+        { label: $dt.fruitBanana, value: "banana", group: "Common" },
+        { label: $dt.fruitCherry, value: "cherry", description: $dt.fruitCherryDesc, group: "Seasonal" },
+        { label: $dt.fruitDurian, value: "durian", disabled: true, group: "Seasonal" },
+        { label: $dt.fruitElderberry, value: "elderberry", group: "Seasonal" }
       ],
       // `color` na opção vira uma bolinha; com trigger-mode="dots" o gatilho
       // mostra só as bolinhas — o padrão de um filtro rápido de status.
@@ -249,6 +250,33 @@ const SelectDemo: Component = {
       <ArcanaSelect v-model="single" :options="fruits" :placeholder="$dt.selectPickFruit" searchable />
       <ArcanaSelect v-model="many" :options="fruits" :placeholder="$dt.selectPickSeveral" multiple />
       <p class="demo-note">{{ $dt.selectSingleLabel }}: <strong>{{ single ?? "null" }}</strong> · {{ $dt.selectMultipleLabel }}: <strong>[{{ many.join(", ") }}]</strong></p>
+
+      <div class="demo-field">
+        <span class="demo-field-label">SLOTS · PREFIX / SUFFIX · GROUPS</span>
+        <ArcanaSelect v-model="decorated" :options="fruits" placeholder="Grouped fruit">
+          <template #prefix>
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          </template>
+          <template #suffix>
+            <span style="font-size: 10px; font-weight: 700; letter-spacing: .04em">CATALOG</span>
+          </template>
+          <template #option-prefix="{ option }">
+            <span
+              aria-hidden="true"
+              :style="{ color: option.group === 'Common' ? '#16a34a' : '#d97706' }"
+            >●</span>
+          </template>
+          <template #option-suffix="{ option, selected }">
+            <span v-if="option.disabled" title="Disabled" aria-label="Disabled">🔒</span>
+            <span v-else-if="selected" aria-label="Selected">Selected</span>
+            <code v-else>{{ option.value }}</code>
+          </template>
+          <template #group-label="{ group }">
+            <span>{{ group }} fruits</span>
+          </template>
+        </ArcanaSelect>
+        <p class="demo-note">Open the field to see option slots, group labels, separators and the disabled item.</p>
+      </div>
 
       <div class="demo-field">
         <span class="demo-field-label">{{ $dt.selectQuickFilterTitle }}</span>
