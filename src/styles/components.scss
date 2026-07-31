@@ -705,6 +705,31 @@
 }
 
 /*
+ * Normaliza ícones IcoMoon dentro do botão.
+ *
+ * O `ArcanaButton` usa slot livre, então o consumidor cola `<i class="icon-…">` direto no botão.
+ * Sem esta regra, esses ícones herdam `font-size: 16px` + `min-width: 1em` + `top: -1px` do CSS
+ * global do IcoMoon e ficam visivelmente maiores e desalinhados que o texto de 13px do botão —
+ * o mesmo motivo do `.shadcn-btn__icon` nos consumidores.
+ *
+ * O fix já existia em `.arcana-btn .arcana-btn__icon` (bloco acima), mas aquela classe ficou órfã
+ * após o rename para `.arcana-button`: nenhum componente Vue/React/Angular/Svelte emite `arcana-btn`
+ * nem a classe `__icon` no ícone. Como o slot é livre, alcançamos o ícone pelo próprio prefixo da
+ * classe IcoMoon. FontAwesome (`fa-*`) já traz o próprio tamanho e não é alvo aqui.
+ *
+ * Especificidade 0,0,2,0 (`.arcana-button` + `[class*=icon-]`) supera o `[class^="icon-"]` 0,0,1,0
+ * do IcoMoon, sem `!important`.
+ */
+.arcana-button > [class^="icon-"],
+.arcana-button > [class*=" icon-"] {
+    font-size: 13px;
+    line-height: 1;
+    min-width: 0;
+    top: 0;
+    vertical-align: baseline;
+}
+
+/*
  * Paleta espelha EXATAMENTE as variantes shadcn do ArcanaButton (`.arcana-btn--*`).
  * Nomes legados do ArcanaButton viram aliases do semântico equivalente:
  * - primary/dark → primary preto · danger/destructive → vermelho sólido
