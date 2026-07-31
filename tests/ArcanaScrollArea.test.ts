@@ -6,6 +6,7 @@ import { render } from "@testing-library/react";
 import { mount } from "@vue/test-utils";
 import { flushSync, mount as svelteMount, unmount } from "svelte";
 import { createElement } from "react";
+import { readFileSync } from "node:fs";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import ArcanaScrollAreaVue from "../src/vue/components/ArcanaScrollArea.vue";
@@ -19,6 +20,34 @@ import { ArcanaScrollAreaComponent } from "../src/angular/arcana-scroll-area.com
  * A rolagem é nativa — o que se testa aqui é justamente que o componente só
  * configura o viewport (classes, custom properties, `tabindex`), sem JS de scroll.
  */
+/**
+ * Contrato de LAYOUT (CSS): sem `height`/`max-height`, "a altura vem do flex pai".
+ *
+ * Isso só funciona se a RAIZ for um flex column e o viewport preencher (`flex: 1; min-height: 0`).
+ * Como `display: block` + viewport `height: auto`, o viewport crescia com o conteúdo, transbordava
+ * a raiz e vazava por cima de irmãos (ex: um rodapé fixo numa sidebar). Estas asserções travam a
+ * regra na folha real para a regressão não voltar silenciosa.
+ */
+describe("ArcanaScrollArea — contrato de layout (CSS)", () => {
+    const scss = readFileSync("src/styles/parts/scroll-area.scss", "utf8");
+
+    const rootBlock = scss.slice(
+        scss.indexOf(".arcana-scroll-area {"),
+        scss.indexOf(".arcana-scroll-area__viewport {"),
+    );
+    const viewportBlock = scss.slice(scss.indexOf(".arcana-scroll-area__viewport {"));
+
+    it("a raiz é um flex column (para dar altura ao viewport pelo pai)", () => {
+        expect(rootBlock).toMatch(/display:\s*flex/);
+        expect(rootBlock).toMatch(/flex-direction:\s*column/);
+    });
+
+    it("o viewport preenche a raiz (flex: 1 + min-height: 0)", () => {
+        expect(viewportBlock.slice(0, 400)).toMatch(/flex:\s*1 1 auto/);
+        expect(viewportBlock.slice(0, 400)).toMatch(/min-height:\s*0/);
+    });
+});
+
 describe("ArcanaScrollArea — Vue", () => {
     it("aplica orientação, tipo, tokens de barra e altura no viewport", () => {
         const wrapper = mount(ArcanaScrollAreaVue, {
