@@ -1,5 +1,13 @@
 # Changelog
 
+## Não lançado
+
+### Correções
+- **Ícones IcoMoon dentro do `ArcanaButton` voltam a 13px.** A regra que normaliza o ícone (`font-size: 13px`, alinhamento) vivia em `.arcana-btn .arcana-btn__icon`, classe que ficou órfã após o rename para `.arcana-button` — nenhum port emite `arcana-btn`. Como o botão usa slot livre, um `<i class="icon-…">` herdava os `16px`/`top: -1px` do CSS global do IcoMoon e ficava maior e desalinhado que o texto. A normalização passou para `.arcana-button > [class*=icon-]`, corrigindo os quatro ports (Vue, React, Angular, Svelte) de uma vez, sem mudança de API.
+
+### Testes
+- Novo `ArcanaButtonIcon.test.tsx`: garante que a folha normaliza o ícone na classe real e que os quatro ports colocam o ícone como filho direto do `.arcana-button`.
+
 ## 2.5.0 — 2026-07-27
 
 ### Melhorias
