@@ -34,13 +34,26 @@
     --arcana-scroll-area-track-color: var(--arcana-scroll-area-track, transparent);
 
     position: relative;
-    display: block;
+    /*
+     * Column flex (não `block`) para o contrato "sem height/max-height, a altura vem do flex pai"
+     * (documentado no componente) FUNCIONAR: com a raiz recebendo altura definida do pai, o
+     * viewport `flex: 1; min-height: 0` a preenche e rola dentro dela. Como `block`, o viewport
+     * ficava `height: auto`, crescia com o conteúdo e transbordava a raiz — vazando por cima de
+     * irmãos como um rodapé fixo. `height`/`max-height` explícitos continuam mandando (a regra do
+     * viewport abaixo só entra quando nenhum dos dois é passado).
+     */
+    display: flex;
+    flex-direction: column;
     min-width: 0;
 }
 
 .arcana-scroll-area__viewport {
     box-sizing: border-box;
     width: 100%;
+    /* Preenche a raiz quando ela tem altura definida (flex pai); inócuo quando a raiz é
+       shrink-to-fit (standalone), onde a altura sai do conteúdo / do `height`/`max-height`. */
+    flex: 1 1 auto;
+    min-height: 0;
     /* `stable` reserva a calha: o conteúdo não pula quando a barra some/aparece. */
     scrollbar-gutter: stable;
 

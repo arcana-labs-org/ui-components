@@ -1,12 +1,14 @@
 # Changelog
 
-## Não lançado
+## 2.5.1 — 2026-07-31
 
 ### Correções
 - **Ícones IcoMoon dentro do `ArcanaButton` voltam a 13px.** A regra que normaliza o ícone (`font-size: 13px`, alinhamento) vivia em `.arcana-btn .arcana-btn__icon`, classe que ficou órfã após o rename para `.arcana-button` — nenhum port emite `arcana-btn`. Como o botão usa slot livre, um `<i class="icon-…">` herdava os `16px`/`top: -1px` do CSS global do IcoMoon e ficava maior e desalinhado que o texto. A normalização passou para `.arcana-button > [class*=icon-]`, corrigindo os quatro ports (Vue, React, Angular, Svelte) de uma vez, sem mudança de API.
+- **`ArcanaScrollArea` sem `height`/`max-height` agora realmente herda a altura do flex pai.** O componente documenta esse contrato, mas a raiz era `display: block` e o viewport ficava `height: auto` — crescia com o conteúdo, transbordava a raiz e vazava por cima de irmãos (ex: um rodapé fixo numa sidebar, sobrepondo a lista). A raiz virou flex column e o viewport passou a `flex: 1 1 auto; min-height: 0`, então com o pai dando altura definida a rolagem acontece DENTRO da área. `height`/`max-height` explícitos continuam mandando; sem mudança de API.
 
 ### Testes
 - Novo `ArcanaButtonIcon.test.tsx`: garante que a folha normaliza o ícone na classe real e que os quatro ports colocam o ícone como filho direto do `.arcana-button`.
+- `ArcanaScrollArea.test.ts` ganhou um contrato de layout: trava a raiz como flex column e o viewport como `flex: 1 1 auto; min-height: 0`, para o modo "altura pelo flex pai" não regredir.
 
 ## 2.5.0 — 2026-07-27
 
