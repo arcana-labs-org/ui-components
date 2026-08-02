@@ -73,6 +73,7 @@ import ArcanaAspectRatioComponent from "./svelte/ArcanaAspectRatio.svelte";
 import ArcanaHoverCardComponent from "./svelte/ArcanaHoverCard.svelte";
 import ArcanaTooltipComponent from "./svelte/ArcanaTooltip.svelte";
 import ArcanaScrollAreaComponent from "./svelte/ArcanaScrollArea.svelte";
+import ArcanaQuickSearchComponent from "./svelte/ArcanaQuickSearch.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
@@ -1195,3 +1196,25 @@ export interface ArcanaScrollAreaProps {
   children?: Snippet;
 }
 export const ArcanaScrollArea = ArcanaScrollAreaComponent as unknown as Component<ArcanaScrollAreaProps>;
+
+/* ── ArcanaQuickSearch ────────────────────────────────────────────────────── */
+export interface ArcanaQuickSearchProps {
+  /** Texto da busca (default `''`). */
+  value?: string;
+  placeholder?: string;
+  /** Lista de campos pesquisáveis; quando vazia, o gatilho de dica nem é renderizado. */
+  searchFields?: string[];
+  fieldsLabel?: string;
+  /** Número (ou string) de resultados; `null`/`undefined` esconde o pill. */
+  counter?: number | string | null;
+  unit?: string;
+  hideUnit?: boolean;
+  disabled?: boolean;
+  clearLabel?: string;
+  onValueChange?: (v: string) => void;
+  /** Ao pressionar Enter, ou ao limpar (com `''`). */
+  onSearch?: (v: string) => void;
+  onClear?: () => void;
+  class?: string;
+}
+export const ArcanaQuickSearch = ArcanaQuickSearchComponent as unknown as Component<ArcanaQuickSearchProps>;

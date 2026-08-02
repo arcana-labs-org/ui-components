@@ -5,6 +5,7 @@ import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-
 import { mount, type VueWrapper } from "@vue/test-utils";
 import { fireEvent, render } from "@testing-library/react";
 import { createRef } from "react";
+import { flushSync, mount as mountSvelte, unmount as unmountSvelte } from "svelte";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import ArcanaQuickSearch from "../src/vue/components/ArcanaQuickSearch.vue";
 import {
@@ -12,6 +13,7 @@ import {
   type ArcanaQuickSearchHandle,
 } from "../src/react/ArcanaQuickSearch";
 import { ArcanaQuickSearchComponent } from "../src/angular/arcana-quick-search.component";
+import ArcanaQuickSearchSvelte from "../src/svelte/ArcanaQuickSearch.svelte";
 
 beforeAll(() => {
   TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
@@ -140,5 +142,31 @@ describe("ArcanaQuickSearch (Angular)", () => {
     fx.detectChanges();
     expect(input.value).toBe("partial");
     expect(root.querySelector(".arcana-quick-search__counter-value").textContent).toBe("2");
+  });
+});
+
+describe("ArcanaQuickSearch (Svelte)", () => {
+  it("renders contract and emits search on Enter", () => {
+    const target = document.createElement("div");
+    document.body.appendChild(target);
+    let last = "";
+    const app = mountSvelte(ArcanaQuickSearchSvelte, {
+      target,
+      props: { searchFields: ["Code", "Name"], counter: 42, unit: "items", onSearch: (v: string) => (last = v) },
+    });
+    flushSync();
+    expect(target.querySelector(".arcana-quick-search.has-counter")).toBeTruthy();
+    expect([...target.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
+      .toEqual(["Code", "Name"]);
+    const input = target.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    // Svelte 5 delega `input`/`keyup` (perf) pra listeners em `target`/`document`
+    // no bubble phase — precisa de `bubbles: true` pra chegar lá (mesma convenção
+    // do `change` sintético em `tests/ArcanaRadio.test.tsx`).
+    input.value = "hello"; input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
+    flushSync();
+    expect(last).toBe("hello");
+    unmountSvelte(app);
+    target.remove();
   });
 });
