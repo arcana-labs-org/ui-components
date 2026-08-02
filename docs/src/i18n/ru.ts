@@ -271,7 +271,16 @@ export const ru: Messages = {
     },
     contextMenuItem: {
       blurb: "Один пункт <c>ArcanaContextMenu</c> в режиме композиции — значок, выровненный по правому краю <c>suffix</c> для сочетания клавиш, семантический <c>variant</c> и разделитель <c>divided</c> над ним."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "Компактное поле поиска с необязательной подсказкой по искомым полям и значком-счётчиком записей. Генерирует <c>search</c> при нажатии Enter и при очистке; предоставляет метод <c>reset()</c>."
+    },
+    wizard: {
+      blurb: "Многошаговая оболочка, отображающая заголовок со степпером, содержимое активного шага и футер навигации. Компонуйте её с дочерними <c>ArcanaWizardStep</c> и управляйте переходом дальше с помощью <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Маска ввода в ArcanaInputMask — используется всеми четырьмя фреймворками. Vue дополнительно регистрирует директиву v-maska.",
@@ -766,7 +775,30 @@ export const ru: Messages = {
     contextDisabledItem: "Переместить в папку",
     contextLastAction: "Последнее действие",
     contextNoneYet: "пока нет",
-    contextDisabledNote: "Отключено — вместо него показывается меню браузера"
+    contextDisabledNote: "Отключено — вместо него показывается меню браузера",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Быстрый поиск",
+    quickSearchUnit: "запис(ей)",
+    quickSearchFieldsLabel: "Поля для поиска:",
+    quickSearchFieldCode: "Код",
+    quickSearchFieldName: "Имя клиента",
+    quickSearchFieldCity: "Город",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Тип",
+    wizardStepTypeDesc: "Физическое или юридическое лицо",
+    wizardStepDocTitle: "Документ",
+    wizardStepDocDesc: "Номер документа",
+    wizardStepConfirmTitle: "Подтверждение",
+    wizardStepConfirmDesc: "Проверить и создать",
+    wizardStepContent1: "Выберите тип клиента, чтобы начать.",
+    wizardStepContent2: "Введите номер документа.",
+    wizardStepContent3: "Проверьте данные и создайте запись.",
+    wizardContinueLabel: "Продолжить",
+    wizardBackLabel: "Назад",
+    wizardFinishLabel: "Готово",
+    wizardStepLabelTpl: "Шаг {current} из {total}"
 
   }
 };

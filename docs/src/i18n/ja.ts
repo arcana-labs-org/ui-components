@@ -271,7 +271,16 @@ export const ja: Messages = {
     },
     contextMenuItem: {
       blurb: "組み合わせモードでの <c>ArcanaContextMenu</c> の 1 項目 — アイコン、ショートカット用の右寄せ <c>suffix</c>、意味づけの <c>variant</c>、そして上に引かれる <c>divided</c> 区切り線。"
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "検索可能なフィールドのヒントと件数バッジを備えたコンパクトな検索欄。Enterキーとクリア時に <c>search</c> を発火し、<c>reset()</c> を公開します。"
+    },
+    wizard: {
+      blurb: "ステッパーのヘッダー、アクティブなステップの本文、ナビゲーションフッターを描画するマルチステップシェル。<c>ArcanaWizardStep</c> の子要素で構成し、<c>validate</c> で先に進めるかを制御します。"
+    }
+  },
 
   demos: {
     depMaska: "ArcanaInputMask の入力マスク — 4 つのフレームワークすべてで使用。Vue はさらに v-maska ディレクティブを登録します。",
@@ -766,7 +775,30 @@ export const ja: Messages = {
     contextDisabledItem: "フォルダへ移動",
     contextLastAction: "最後の操作",
     contextNoneYet: "まだありません",
-    contextDisabledNote: "無効 — 代わりにブラウザのメニューが表示されます"
+    contextDisabledNote: "無効 — 代わりにブラウザのメニューが表示されます",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "クイック検索",
+    quickSearchUnit: "件",
+    quickSearchFieldsLabel: "検索対象フィールド:",
+    quickSearchFieldCode: "コード",
+    quickSearchFieldName: "顧客名",
+    quickSearchFieldCity: "市区町村",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "種別",
+    wizardStepTypeDesc: "個人または法人",
+    wizardStepDocTitle: "書類",
+    wizardStepDocDesc: "書類番号",
+    wizardStepConfirmTitle: "確認",
+    wizardStepConfirmDesc: "内容を確認して作成",
+    wizardStepContent1: "開始するには顧客種別を選択してください。",
+    wizardStepContent2: "書類番号を入力してください。",
+    wizardStepContent3: "内容を確認してレコードを作成してください。",
+    wizardContinueLabel: "次へ",
+    wizardBackLabel: "戻る",
+    wizardFinishLabel: "完了",
+    wizardStepLabelTpl: "ステップ {current}／{total}"
 
   }
 };

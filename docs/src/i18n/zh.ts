@@ -271,7 +271,16 @@ export const zh: Messages = {
     },
     contextMenuItem: {
       blurb: "组合模式下 <c>ArcanaContextMenu</c> 的单个条目 —— 图标、右对齐的快捷键 <c>suffix</c>、语义化的 <c>variant</c>，以及绘制在其上方的 <c>divided</c> 分隔线。"
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "一个紧凑的搜索框，可选显示可搜索字段提示和记录数徽标。按 Enter 或清空时触发 <c>search</c>；并提供 <c>reset()</c> 方法。"
+    },
+    wizard: {
+      blurb: "一个多步骤外壳，渲染步骤指示器头部、当前步骤内容和导航底栏。使用 <c>ArcanaWizardStep</c> 子组件进行组合，并通过 <c>validate</c> 控制是否可以继续。"
+    }
+  },
 
   demos: {
     depMaska: "ArcanaInputMask 的输入掩码 —— 四个框架都在用。Vue 额外注册 v-maska 指令。",
@@ -766,7 +775,30 @@ export const zh: Messages = {
     contextDisabledItem: "移动到文件夹",
     contextLastAction: "最近操作",
     contextNoneYet: "暂无",
-    contextDisabledNote: "已禁用——改为显示浏览器菜单"
+    contextDisabledNote: "已禁用——改为显示浏览器菜单",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "快速搜索",
+    quickSearchUnit: "条记录",
+    quickSearchFieldsLabel: "可搜索字段：",
+    quickSearchFieldCode: "编码",
+    quickSearchFieldName: "客户名称",
+    quickSearchFieldCity: "城市",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "类型",
+    wizardStepTypeDesc: "个人或公司",
+    wizardStepDocTitle: "证件",
+    wizardStepDocDesc: "证件号码",
+    wizardStepConfirmTitle: "确认",
+    wizardStepConfirmDesc: "核对并创建",
+    wizardStepContent1: "选择客户类型以开始。",
+    wizardStepContent2: "输入证件号码。",
+    wizardStepContent3: "核对信息并创建记录。",
+    wizardContinueLabel: "继续",
+    wizardBackLabel: "返回",
+    wizardFinishLabel: "完成",
+    wizardStepLabelTpl: "第 {current} 步，共 {total} 步"
 
   }
 };

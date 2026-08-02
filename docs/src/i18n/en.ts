@@ -271,7 +271,16 @@ export const en: Messages = {
     },
     contextMenuItem: {
       blurb: "One entry of an <c>ArcanaContextMenu</c> in composition mode — icon, right-aligned <c>suffix</c> for the shortcut, semantic <c>variant</c> and a <c>divided</c> separator drawn above it."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "A compact search field with an optional searchable-fields hint and a record-counter pill. Emits <c>search</c> on Enter and on clear; exposes <c>reset()</c>."
+    },
+    wizard: {
+      blurb: "A multi-step shell that renders a stepper header, one active step body, and a navigation footer. Compose it with <c>ArcanaWizardStep</c> children and gate advancement with <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Input masking in ArcanaInputMask — used by all four frameworks. Vue additionally registers the v-maska directive.",
@@ -767,7 +776,30 @@ export const en: Messages = {
     contextDisabledItem: "Move to folder",
     contextLastAction: "Last action",
     contextNoneYet: "none yet",
-    contextDisabledNote: "Disabled — the browser menu shows instead"
+    contextDisabledNote: "Disabled — the browser menu shows instead",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Quick search",
+    quickSearchUnit: "record(s)",
+    quickSearchFieldsLabel: "Searchable fields:",
+    quickSearchFieldCode: "Code",
+    quickSearchFieldName: "Customer name",
+    quickSearchFieldCity: "City",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Type",
+    wizardStepTypeDesc: "Person or company",
+    wizardStepDocTitle: "Document",
+    wizardStepDocDesc: "ID number",
+    wizardStepConfirmTitle: "Confirmation",
+    wizardStepConfirmDesc: "Review and create",
+    wizardStepContent1: "Choose the customer type to begin.",
+    wizardStepContent2: "Enter the document number.",
+    wizardStepContent3: "Review the details and create the record.",
+    wizardContinueLabel: "Continue",
+    wizardBackLabel: "Back",
+    wizardFinishLabel: "Finish",
+    wizardStepLabelTpl: "Step {current} of {total}"
 
   }
 };

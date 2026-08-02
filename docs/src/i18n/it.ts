@@ -271,7 +271,16 @@ export const it: Messages = {
     },
     contextMenuItem: {
       blurb: "Una voce dell'<c>ArcanaContextMenu</c> in modalità composizione — icona, <c>suffix</c> a destra per la scorciatoia, <c>variant</c> semantico e separatore <c>divided</c> disegnato sopra."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "Un campo di ricerca compatto con un suggerimento opzionale sui campi ricercabili e un badge con il conteggio dei record. Emette <c>search</c> alla pressione di Invio e alla cancellazione; espone <c>reset()</c>."
+    },
+    wizard: {
+      blurb: "Uno shell multi-fase che mostra un'intestazione con stepper, il corpo del passo attivo e un footer di navigazione. Componilo con figli <c>ArcanaWizardStep</c> e controlla l'avanzamento con <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Maschera di input in ArcanaInputMask — usata da tutti e quattro i framework. Vue registra in più la direttiva v-maska.",
@@ -766,7 +775,30 @@ export const it: Messages = {
     contextDisabledItem: "Sposta nella cartella",
     contextLastAction: "Ultima azione",
     contextNoneYet: "ancora nessuna",
-    contextDisabledNote: "Disabilitato — compare invece il menu del browser"
+    contextDisabledNote: "Disabilitato — compare invece il menu del browser",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Ricerca rapida",
+    quickSearchUnit: "record",
+    quickSearchFieldsLabel: "Campi ricercabili:",
+    quickSearchFieldCode: "Codice",
+    quickSearchFieldName: "Nome cliente",
+    quickSearchFieldCity: "Città",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Tipo",
+    wizardStepTypeDesc: "Persona o azienda",
+    wizardStepDocTitle: "Documento",
+    wizardStepDocDesc: "Numero di documento",
+    wizardStepConfirmTitle: "Conferma",
+    wizardStepConfirmDesc: "Rivedi e crea",
+    wizardStepContent1: "Scegli il tipo di cliente per iniziare.",
+    wizardStepContent2: "Inserisci il numero di documento.",
+    wizardStepContent3: "Rivedi i dettagli e crea il record.",
+    wizardContinueLabel: "Continua",
+    wizardBackLabel: "Indietro",
+    wizardFinishLabel: "Fine",
+    wizardStepLabelTpl: "Passo {current} di {total}"
 
   }
 };
