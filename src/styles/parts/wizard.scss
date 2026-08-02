@@ -39,6 +39,17 @@
  * Botões do rodapé (`.arcana-wizard__btn`): geometria idêntica ao `.arcana-btn`/`.arcana-button`
  * (padding/radius/font), mas sem cor própria — cor vem do modifier (`--primary` preto sólido,
  * `--default` outline neutro), igual à API dos outros botões da lib.
+ *
+ * Custom properties (fallback = valor do design original):
+ *   --arcana-wizard-indicator-size      diâmetro do círculo do indicator
+ *   --arcana-wizard-check-size          largura/altura do ícone de check
+ *   --arcana-wizard-connector-offset    `margin-top` do connector e `padding-top` do footer
+ *                                        (mesmo valor: alinha ao centro vertical do indicator)
+ *   --arcana-wizard-title-size          font-size de `__title`
+ *   --arcana-wizard-description-size    font-size de `__description`
+ *   --arcana-wizard-footer-text-size    font-size de `__footer-text`
+ *   --arcana-wizard-btn-padding         padding de `__btn`
+ *   --arcana-wizard-btn-radius          border-radius de `__btn`
  */
 
 .arcana-wizard {
@@ -76,8 +87,8 @@
 
 /* Indicator — círculo com número ou check */
 .arcana-wizard__indicator {
-    width: 28px;
-    height: 28px;
+    width: var(--arcana-wizard-indicator-size, 28px);
+    height: var(--arcana-wizard-indicator-size, 28px);
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -111,8 +122,8 @@
 }
 
 .arcana-wizard__check {
-    width: 14px;
-    height: 14px;
+    width: var(--arcana-wizard-check-size, 14px);
+    height: var(--arcana-wizard-check-size, 14px);
     display: block;
 }
 
@@ -125,7 +136,7 @@
 }
 
 .arcana-wizard__title {
-    font-size: 12.5px;
+    font-size: var(--arcana-wizard-title-size, 12.5px);
     font-weight: 500;
     color: var(--arcana-text-muted);
     line-height: 1.3;
@@ -143,7 +154,7 @@
 }
 
 .arcana-wizard__description {
-    font-size: 11px;
+    font-size: var(--arcana-wizard-description-size, 11px);
     color: var(--arcana-text-disabled);
     line-height: 1.4;
 }
@@ -153,7 +164,7 @@
     flex: 1 1 auto;
     height: 1px;
     /* Alinha ao centro vertical do indicator (28px / 2 = 14px). */
-    margin-top: 14px;
+    margin-top: var(--arcana-wizard-connector-offset, 14px);
     background: var(--arcana-border);
     min-width: 16px;
     transition: background-color 200ms ease;
@@ -194,13 +205,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding-top: 14px;
+    padding-top: var(--arcana-wizard-connector-offset, 14px);
     border-top: 1px solid var(--arcana-border);
 }
 
 .arcana-wizard__footer-text {
     color: var(--arcana-text-muted);
-    font-size: 13px;
+    font-size: var(--arcana-wizard-footer-text-size, 13px);
     font-weight: 500;
 }
 
@@ -218,8 +229,8 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 9px 16px;
-    border-radius: 6px;
+    padding: var(--arcana-wizard-btn-padding, 9px 16px);
+    border-radius: var(--arcana-wizard-btn-radius, 6px);
     border: 1px solid transparent;
     font-family: inherit;
     font-size: 13px;
