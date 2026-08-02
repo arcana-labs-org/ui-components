@@ -72,6 +72,8 @@ export { default as ArcanaTooltip } from "./vue/components/ArcanaTooltip.vue";
 export { default as ArcanaTreeSelect } from "./vue/components/ArcanaTreeSelect.vue";
 export type { TreeSelectNode } from "./vue/components/ArcanaTreeSelect.vue";
 export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
+export { default as ArcanaWizard } from "./vue/components/ArcanaWizard.vue";
+export { default as ArcanaWizardStep } from "./vue/components/ArcanaWizardStep.vue";
 
 // ── Form helpers (extraídos junto; usados por alguns Arcana* acima) ──────────
 export { default as ArcanaInputCurrency } from "./vue/components/ArcanaInputCurrency.vue";
