@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.0 — 2026-08-02
+
+### Novos recursos
+- **ArcanaQuickSearch** — campo de busca compacto com dica de campos pesquisáveis e pill de contador. Emite `search` no Enter e ao limpar; expõe `reset()`/`focus()`. Portado para Vue, React, Angular e Svelte.
+- **ArcanaWizard + ArcanaWizardStep** — shell multi-etapas (stepper + corpo do passo ativo + rodapé de navegação) com passos declarativos, hook `validate`, modo `linear` e slot de rodapé customizável. Portado para os 4 frameworks.
+
+### Documentação
+- Páginas de QuickSearch e Wizard nos 8 idiomas, com demos ao vivo e snippets React/Angular/Svelte.
+
 ## 2.5.1 — 2026-07-31
 
 ### Correções
