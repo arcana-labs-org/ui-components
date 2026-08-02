@@ -1,5 +1,6 @@
 import {
-  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild
+  ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output,
+  SimpleChanges, ViewChild
 } from "@angular/core";
 
 /** Contador de instâncias pra gerar um `id` determinístico (sem `Math.random`) usado
@@ -156,10 +157,12 @@ export class ArcanaQuickSearchComponent implements OnChanges {
   text = this.value;
   readonly hintId = `arcana-qs-${++uid}`;
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     // Mantém o buffer local sincronizado quando o consumidor controla `value`
-    // externamente (ex.: reset feito pelo pai via input, não pelo método `reset()`).
-    if (this.value !== this.text) this.text = this.value;
+    // externamente (ex.: reset feito pelo pai via input, não pelo método `reset()`). Gateado em
+    // `changes["value"]` (não em qualquer `@Input`) pra não sobrescrever o texto em digitação
+    // quando outro input (ex.: `counter`, `searchFields`) muda em modo não-controlado.
+    if (changes["value"] && this.value !== this.text) this.text = this.value;
   }
 
   onInput(ev: Event): void {

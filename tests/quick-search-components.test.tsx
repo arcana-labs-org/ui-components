@@ -1,5 +1,5 @@
 import "@angular/compiler";
-import { Component, provideZonelessChangeDetection } from "@angular/core";
+import { Component, provideZonelessChangeDetection, signal } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-browser/testing";
 import { mount, type VueWrapper } from "@vue/test-utils";
@@ -106,5 +106,39 @@ describe("ArcanaQuickSearch (Angular)", () => {
     input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
     fx.detectChanges();
     expect(fx.componentInstance.last).toBe("hello");
+  });
+
+  it("keeps in-progress text (uncontrolled) when an unrelated input changes", () => {
+    // `counter` is a `signal` (not a plain field) so that mutating it actually notifies
+    // zoneless change detection and forces a real re-check of the child's bindings on the
+    // next `detectChanges()` — a plain field mutation wouldn't reliably re-trigger CD here.
+    @Component({
+      standalone: true,
+      imports: [ArcanaQuickSearchComponent],
+      template: `<div arcanaQuickSearch [counter]="counter()"></div>`,
+    })
+    class Host { counter = signal(1); }
+
+    TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideZonelessChangeDetection()],
+    });
+    const fx = TestBed.createComponent(Host);
+    fx.detectChanges();
+    const root = fx.nativeElement.querySelector(".arcana-quick-search");
+    const input = root.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+
+    input.value = "partial"; input.dispatchEvent(new Event("input"));
+    fx.detectChanges();
+    expect(input.value).toBe("partial");
+
+    // Unrelated `@Input` (`counter`) changes — e.g. a result count streaming in — while the
+    // user is still typing in uncontrolled mode (no `[value]` bound). ngOnChanges fires
+    // (`changes` only contains `counter`), but must not touch `text` since `value` itself
+    // never changed.
+    fx.componentInstance.counter.set(2);
+    fx.detectChanges();
+    expect(input.value).toBe("partial");
+    expect(root.querySelector(".arcana-quick-search__counter-value").textContent).toBe("2");
   });
 });
