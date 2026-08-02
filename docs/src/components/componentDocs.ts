@@ -57,6 +57,10 @@ import ArcanaHoverCard from "../../../src/vue/components/ArcanaHoverCard.vue";
 import ArcanaTooltip from "../../../src/vue/components/ArcanaTooltip.vue";
 import ArcanaContextMenu from "../../../src/vue/components/ArcanaContextMenu.vue";
 import ArcanaContextMenuItem from "../../../src/vue/components/ArcanaContextMenuItem.vue";
+// ── Batch 5 ──
+import ArcanaQuickSearch from "../../../src/vue/components/ArcanaQuickSearch.vue";
+import ArcanaWizard from "../../../src/vue/components/ArcanaWizard.vue";
+import ArcanaWizardStep from "../../../src/vue/components/ArcanaWizardStep.vue";
 
 export interface PropRow {
   name: string;
@@ -1912,6 +1916,62 @@ const ContextMenuDemo: Component = {
         </ArcanaContextMenu>
         <p class="demo-note">{{ $dt.contextDisabledNote }}</p>
       </div>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaQuickSearch ─────────────────────────── */
+
+const QuickSearchDemo: Component = {
+  components: { ArcanaQuickSearch },
+  data() {
+    return {
+      lastSearch: "" as string
+    };
+  },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 420px">
+      <ArcanaQuickSearch
+        :search-fields="[$dt.quickSearchFieldCode, $dt.quickSearchFieldName, $dt.quickSearchFieldCity]"
+        :fields-label="$dt.quickSearchFieldsLabel"
+        :placeholder="$dt.quickSearchPlaceholder"
+        :counter="128"
+        :unit="$dt.quickSearchUnit"
+        @search="lastSearch = $event"
+      />
+      <p class="demo-note">→ <strong>{{ lastSearch || '…' }}</strong></p>
+    </div>
+  `
+};
+
+/* ─────────────────────────── ArcanaWizard ─────────────────────────── */
+
+const WizardDemo: Component = {
+  components: { ArcanaWizard, ArcanaWizardStep },
+  data() {
+    return {
+      step: 0
+    };
+  },
+  template: /* html */ `
+    <div class="demo-stack" style="max-width: 520px">
+      <ArcanaWizard
+        v-model="step"
+        :step-label="$dt.wizardStepLabelTpl"
+        :continue-label="$dt.wizardContinueLabel"
+        :back-label="$dt.wizardBackLabel"
+        :final-label="$dt.wizardFinishLabel"
+      >
+        <ArcanaWizardStep :title="$dt.wizardStepTypeTitle" :description="$dt.wizardStepTypeDesc">
+          <p class="demo-note">{{ $dt.wizardStepContent1 }}</p>
+        </ArcanaWizardStep>
+        <ArcanaWizardStep :title="$dt.wizardStepDocTitle" :description="$dt.wizardStepDocDesc">
+          <p class="demo-note">{{ $dt.wizardStepContent2 }}</p>
+        </ArcanaWizardStep>
+        <ArcanaWizardStep :title="$dt.wizardStepConfirmTitle" :description="$dt.wizardStepConfirmDesc">
+          <p class="demo-note">{{ $dt.wizardStepContent3 }}</p>
+        </ArcanaWizardStep>
+      </ArcanaWizard>
     </div>
   `
 };
@@ -4257,6 +4317,108 @@ export const COMPONENT_DOCS: Record<DocumentedKey, ComponentDoc> = {
       "  </ArcanaContextMenu>",
       "",
       "  <p>Last action: <strong>{{ lastAction ?? 'none yet' }}</strong></p>",
+      "</template>"
+    ].join("\n")
+  },
+
+  quickSearch: {
+    demo: QuickSearchDemo,
+    props: [
+      { name: "modelValue", type: "string", default: "''", description: "v-model of the search text; kept in an internal buffer so typing never requires a parent round-trip." },
+      { name: "placeholder", type: "string", default: "''", description: "Placeholder of the `<input>`." },
+      { name: "searchFields", type: "string[]", default: "[]", description: "List of searchable field names shown in the hint tooltip. When empty, the hint trigger is not rendered at all." },
+      { name: "fieldsLabel", type: "string", default: "'Campos pesquisáveis:'", description: "Title of the hint tooltip, shown above the field list." },
+      { name: "counter", type: "number | string | null", default: "null", description: "Result count (or any short string). null/undefined hides the counter pill entirely." },
+      { name: "unit", type: "string", default: "'registro(s)'", description: "Unit label rendered next to the counter value (e.g. \"records\")." },
+      { name: "hideUnit", type: "boolean", default: "false", description: "Hides the unit label, keeping only the counter value." },
+      { name: "disabled", type: "boolean", default: "false", description: "Disables the input." },
+      { name: "clearLabel", type: "string", default: "'Limpar busca'", description: "aria-label / title of the clear button." }
+    ],
+    events: [
+      "update:modelValue(value: string) — on every keystroke (v-model)",
+      "search(value: string) — on Enter, or on clear (with '')",
+      "clear() — when the clear button is clicked",
+      "Methods (via ref): reset() — clears the text without emitting search; focus() — focuses the input"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaQuickSearch } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const query = ref('')",
+      "const total = ref(128)",
+      "",
+      "function onSearch(value: string) {",
+      "  // …fetch results filtered by value",
+      "}",
+      "</script>",
+      "",
+      "<template>",
+      "  <ArcanaQuickSearch",
+      "    v-model=\"query\"",
+      "    placeholder=\"Quick search\"",
+      "    :search-fields=\"['Code', 'Customer name', 'City']\"",
+      "    fields-label=\"Searchable fields:\"",
+      "    :counter=\"total\"",
+      "    unit=\"record(s)\"",
+      "    @search=\"onSearch\"",
+      "  />",
+      "</template>"
+    ].join("\n")
+  },
+
+  wizard: {
+    demo: WizardDemo,
+    props: [
+      { name: "modelValue", type: "number", default: "0", description: "v-model with the active step index (0-based)." },
+      { name: "validate", type: "(step: number) => boolean | string | Promise<boolean | string>", default: "undefined", description: "Called (awaited) before advancing via Continue. Returning false or a string blocks the advance; true/undefined releases it. Not called on Finish." },
+      { name: "linear", type: "boolean", default: "true", description: "When true, clicking a stepper header only navigates to already-completed steps (no skipping ahead)." },
+      { name: "cancellable", type: "boolean", default: "false", description: "Shows a Cancel button in the footer, emitting cancel." },
+      { name: "continueLabel", type: "string", default: "'Continue'", description: "Label of the primary footer button while not on the last step." },
+      { name: "backLabel", type: "string", default: "'Back'", description: "Label of the back button (hidden on the first step)." },
+      { name: "cancelLabel", type: "string", default: "'Cancel'", description: "Label of the cancel button (shown when cancellable is true)." },
+      { name: "finalLabel", type: "string", default: "'Finish'", description: "Label of the primary footer button on the last step." },
+      { name: "finalDisabled", type: "boolean", default: "false", description: "Disables the Finish button (e.g. while an async submit is pending)." },
+      { name: "stepLabel", type: "string", default: "'Step {current} of {total}'", description: "Template for the footer text; {current} and {total} are replaced with 1-based numbers." },
+      { name: "ArcanaWizardStep: title", type: "string", default: "required", description: "Step title shown in the stepper header." },
+      { name: "ArcanaWizardStep: description", type: "string", default: "undefined", description: "Optional step subtitle shown under the title in the stepper header." }
+    ],
+    events: [
+      "update:modelValue(step: number) — whenever the active step changes",
+      "next(step: number) — right before advancing via Continue (after validate passes), with the step being left",
+      "back(step: number) — when Back is pressed, with the step being left",
+      "cancel() — when Cancel is pressed",
+      "finish() — when Finish is pressed on the last step"
+    ],
+    slots: [
+      "default — the <ArcanaWizardStep> children; only the active step's body renders",
+      "header-actions — extra controls rendered at the end of the stepper header",
+      "footer — scoped { step, total, isFirst, isLast, back, next, finish, cancel }, replaces the default Cancel/Back/Continue/Finish buttons"
+    ],
+    vueSnippet: [
+      "<script setup lang=\"ts\">",
+      "import { ref } from 'vue'",
+      "import { ArcanaWizard, ArcanaWizardStep } from '@arcanalabs/ui-components/vue'",
+      "",
+      "const step = ref(0)",
+      "",
+      "function onFinish() {",
+      "  // …submit the wizard data",
+      "}",
+      "</script>",
+      "",
+      "<template>",
+      "  <ArcanaWizard v-model=\"step\" @finish=\"onFinish\">",
+      "    <ArcanaWizardStep title=\"Type\" description=\"Person or company\">",
+      "      <p>Choose the customer type to begin.</p>",
+      "    </ArcanaWizardStep>",
+      "    <ArcanaWizardStep title=\"Document\" description=\"ID number\">",
+      "      <p>Enter the document number.</p>",
+      "    </ArcanaWizardStep>",
+      "    <ArcanaWizardStep title=\"Confirmation\" description=\"Review and create\">",
+      "      <p>Review the details and create the record.</p>",
+      "    </ArcanaWizardStep>",
+      "  </ArcanaWizard>",
       "</template>"
     ].join("\n")
   },

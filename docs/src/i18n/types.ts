@@ -78,7 +78,10 @@ export type DocumentedKey =
   | "hoverCard"
   | "tooltip"
   | "contextMenu"
-  | "contextMenuItem";
+  | "contextMenuItem"
+  // ── Batch 5 ──
+  | "quickSearch"
+  | "wizard";
 
 export interface SectionProse {
   title: string;

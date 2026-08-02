@@ -48,6 +48,7 @@ export { default as ArcanaSegmentedControl } from "./vue/components/ArcanaSegmen
 export { default as ArcanaStatistic } from "./vue/components/ArcanaStatistic.vue";
 export { default as ArcanaCountdown } from "./vue/components/ArcanaCountdown.vue";
 export { default as ArcanaProgress } from "./vue/components/ArcanaProgress.vue";
+export { default as ArcanaQuickSearch } from "./vue/components/ArcanaQuickSearch.vue";
 export { default as ArcanaScrollArea } from "./vue/components/ArcanaScrollArea.vue";
 export type { ScrollAreaOrientation, ScrollAreaType } from "./vue/components/ArcanaScrollArea.vue";
 export { default as ArcanaSelect } from "./vue/components/ArcanaSelect.vue";
@@ -71,6 +72,8 @@ export { default as ArcanaTooltip } from "./vue/components/ArcanaTooltip.vue";
 export { default as ArcanaTreeSelect } from "./vue/components/ArcanaTreeSelect.vue";
 export type { TreeSelectNode } from "./vue/components/ArcanaTreeSelect.vue";
 export { default as ArcanaMultiSelectPopover } from "./vue/components/ArcanaMultiSelectPopover.vue";
+export { default as ArcanaWizard } from "./vue/components/ArcanaWizard.vue";
+export { default as ArcanaWizardStep } from "./vue/components/ArcanaWizardStep.vue";
 
 // ── Form helpers (extraídos junto; usados por alguns Arcana* acima) ──────────
 export { default as ArcanaInputCurrency } from "./vue/components/ArcanaInputCurrency.vue";
@@ -103,3 +106,5 @@ export type { CountdownParts } from "./core/countdown";
 export { formatStatisticValue } from "./core/statistic";
 export type { StatisticFormatOptions } from "./core/statistic";
 export { clampProgressValue, formatProgressLabel, progressPercent } from "./core/progress";
+export { canNavigateTo, clampStep, formatStepLabel, stepStatus } from "./core/wizard";
+export type { WizardStepStatus } from "./core/wizard";

@@ -1,0 +1,307 @@
+/**
+ * ArcanaWizard — shell de passos (stepper + corpo + rodapé), compartilhado por
+ * `<ArcanaWizard>` + `<ArcanaWizardStep>` em todos os ports. Espelha a variante
+ * shadcn do protótipo original (`WizardShell.vue`, `.wizard-shell-stepper`),
+ * agora com classes próprias e só tokens de uso.
+ *
+ * Anatomia:
+ *   .arcana-wizard                        wrapper vertical (stepper + body + footer)
+ *     .arcana-wizard__stepper             linha horizontal dos passos
+ *       .arcana-wizard__step              um passo (`.is-active|.is-completed|.is-pending`)
+ *         .arcana-wizard__indicator       círculo 28px — número OU check
+ *           .arcana-wizard__check         ícone de check (passo concluído)
+ *         .arcana-wizard__label
+ *           .arcana-wizard__title
+ *           .arcana-wizard__description   escondida em mobile
+ *       .arcana-wizard__connector         linha entre dois passos (`.is-completed`)
+ *       .arcana-wizard__header-actions    slot livre, empurrado pro fim da linha
+ *     .arcana-wizard__body                conteúdo do passo ativo
+ *       .arcana-wizard-step                (raiz de `<ArcanaWizardStep>` — sem `__`,
+ *                                            é outro componente, não um elemento do shell)
+ *     .arcana-wizard__footer
+ *       .arcana-wizard__footer-text       "Passo {n} de {total}"
+ *       .arcana-wizard__footer-actions
+ *         .arcana-wizard__btn             botão cru (os ports usam <button>, não ArcanaButton)
+ *
+ * Estados do passo: `.is-active` (preto/quase-preto), `.is-completed` (verde), `.is-pending`
+ * (neutro) — mutuamente exclusivos, computados por `core/wizard.ts#stepStatus`. `.is-clickable`
+ * é aditivo (navegação em modo não-linear).
+ *
+ * Cores: só tokens de uso — acompanha a paleta ativa e o `.arcana-dark`. Não existe token
+ * `--arcana-success` puro (só `-solid/-text/-bg/-border`); usamos `--arcana-success-solid`
+ * pro preenchimento e `--arcana-success-text` pro texto, como o resto da lib. O ativo usa
+ * `--arcana-text` (não `--arcana-solid`): o indicador ativo é sempre quase-preto/quase-branco,
+ * independente do acento cromático da paleta — mesma leitura do protótipo original (`#18181b`
+ * fixo). O texto de contraste dele é `--arcana-gray-1` (não `--arcana-on-solid`, que segue o
+ * ACENTO): par direto da mesma escala neutra que `--arcana-text` usa, garantindo que os dois
+ * se invertam juntos sob `.arcana-dark` — mesmo raciocínio do `--arcana-btn--ghost`.
+ *
+ * Botões do rodapé (`.arcana-wizard__btn`): geometria idêntica ao `.arcana-btn`/`.arcana-button`
+ * (padding/radius/font), mas sem cor própria — cor vem do modifier (`--primary` preto sólido,
+ * `--default` outline neutro), igual à API dos outros botões da lib.
+ *
+ * Custom properties (fallback = valor do design original):
+ *   --arcana-wizard-indicator-size      diâmetro do círculo do indicator
+ *   --arcana-wizard-check-size          largura/altura do ícone de check
+ *   --arcana-wizard-connector-offset    `margin-top` do connector e `padding-top` do footer
+ *                                        (mesmo valor: alinha ao centro vertical do indicator)
+ *   --arcana-wizard-title-size          font-size de `__title`
+ *   --arcana-wizard-description-size    font-size de `__description`
+ *   --arcana-wizard-footer-text-size    font-size de `__footer-text`
+ *   --arcana-wizard-btn-padding         padding de `__btn`
+ *   --arcana-wizard-btn-radius          border-radius de `__btn`
+ */
+
+.arcana-wizard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: inherit;
+}
+
+/* ── stepper ─────────────────────────────────────────────────────────────── */
+
+.arcana-wizard__stepper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding: 4px 0 8px;
+}
+
+.arcana-wizard__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    min-width: 80px;
+    text-align: center;
+}
+
+.arcana-wizard__step.is-clickable {
+    cursor: pointer;
+}
+.arcana-wizard__step.is-clickable:hover .arcana-wizard__indicator {
+    border-color: var(--arcana-border-hover);
+}
+
+/* Indicator — círculo com número ou check */
+.arcana-wizard__indicator {
+    width: var(--arcana-wizard-indicator-size, 28px);
+    height: var(--arcana-wizard-indicator-size, 28px);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--arcana-border);
+    background: var(--arcana-surface);
+    color: var(--arcana-text-muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.arcana-wizard__step.is-active .arcana-wizard__indicator {
+    background: var(--arcana-text);
+    border-color: var(--arcana-text);
+    /* Ver nota de anatomia: par da mesma escala neutra de --arcana-text, não --arcana-on-solid. */
+    color: var(--arcana-gray-1);
+}
+
+/*
+ * Passos concluídos = verde (success). Comunica "feito" em vez do preto neutro do ativo,
+ * que confundiria os dois estados — mesma decisão do protótipo original.
+ */
+.arcana-wizard__step.is-completed .arcana-wizard__indicator {
+    background: var(--arcana-success-solid);
+    border-color: var(--arcana-success-solid);
+    color: var(--arcana-on-success);
+}
+
+.arcana-wizard__check {
+    width: var(--arcana-wizard-check-size, 14px);
+    height: var(--arcana-wizard-check-size, 14px);
+    display: block;
+}
+
+/* Label (título + descrição abaixo do indicator) */
+.arcana-wizard__label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 140px;
+}
+
+.arcana-wizard__title {
+    font-size: var(--arcana-wizard-title-size, 12.5px);
+    font-weight: 500;
+    color: var(--arcana-text-muted);
+    line-height: 1.3;
+    transition: color 200ms ease;
+}
+
+.arcana-wizard__step.is-active .arcana-wizard__title {
+    color: var(--arcana-text);
+    font-weight: 600;
+}
+
+.arcana-wizard__step.is-completed .arcana-wizard__title {
+    color: var(--arcana-success-text);
+    font-weight: 600;
+}
+
+.arcana-wizard__description {
+    font-size: var(--arcana-wizard-description-size, 11px);
+    color: var(--arcana-text-disabled);
+    line-height: 1.4;
+}
+
+/* Connector — linha entre dois passos */
+.arcana-wizard__connector {
+    flex: 1 1 auto;
+    height: 1px;
+    /* Alinha ao centro vertical do indicator (28px / 2 = 14px). */
+    margin-top: var(--arcana-wizard-connector-offset, 14px);
+    background: var(--arcana-border);
+    min-width: 16px;
+    transition: background-color 200ms ease;
+}
+
+.arcana-wizard__connector.is-completed {
+    background: var(--arcana-success-solid);
+}
+
+/* Slot livre no fim da linha do stepper (ex.: botão "pular etapa"). */
+.arcana-wizard__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: center;
+}
+
+/* ── body ────────────────────────────────────────────────────────────────── */
+
+.arcana-wizard__body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* No Angular todos os hosts `<div arcanaWizardStep>` ficam no DOM (desvio aceito do
+   port), e os inativos ficam vazios — sem isso o `gap` do flex acima ainda entraria
+   entre eles, criando espaço fantasma só nesse port. Nos demais (Vue/React/Svelte)
+   o body sempre tem um único filho (o passo ativo), então isto é um no-op. */
+.arcana-wizard__body > *:empty {
+    display: none;
+}
+
+.arcana-wizard-step {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+/* ── footer ──────────────────────────────────────────────────────────────── */
+
+.arcana-wizard__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: var(--arcana-wizard-connector-offset, 14px);
+    border-top: 1px solid var(--arcana-border);
+}
+
+.arcana-wizard__footer-text {
+    color: var(--arcana-text-muted);
+    font-size: var(--arcana-wizard-footer-text-size, 13px);
+    font-weight: 500;
+}
+
+.arcana-wizard__footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* Botão cru do rodapé — mesma geometria do `.arcana-btn`/`.arcana-button`, sem cor
+   própria (vem do modifier). Os ports usam <button> puro aqui, não <ArcanaButton>. */
+.arcana-wizard__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: var(--arcana-wizard-btn-padding, 9px 16px);
+    border-radius: var(--arcana-wizard-btn-radius, 6px);
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+
+.arcana-wizard__btn:focus-visible {
+    outline: 2px solid var(--arcana-focus-ring);
+    outline-offset: 2px;
+}
+
+.arcana-wizard__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Modifier: primary — preto sólido (avançar/concluir). */
+.arcana-wizard__btn--primary {
+    background-color: var(--arcana-solid);
+    color: var(--arcana-on-solid);
+}
+.arcana-wizard__btn--primary:hover:not(:disabled) { background-color: var(--arcana-solid-hover); }
+.arcana-wizard__btn--primary:active:not(:disabled) { background-color: var(--arcana-solid-active); }
+
+/* Modifier: default — outline neutro (voltar/cancelar). */
+.arcana-wizard__btn--default {
+    background-color: transparent;
+    color: var(--arcana-text-muted);
+    border-color: var(--arcana-border);
+}
+.arcana-wizard__btn--default:hover:not(:disabled) {
+    background-color: var(--arcana-ui-hover);
+    color: var(--arcana-text);
+    border-color: var(--arcana-border-hover);
+}
+.arcana-wizard__btn--default:active:not(:disabled) {
+    background-color: var(--arcana-ui-active);
+    color: var(--arcana-text);
+    border-color: var(--arcana-border-active);
+}
+
+/* ── mobile ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .arcana-wizard__step {
+        min-width: 56px;
+    }
+
+    .arcana-wizard__description {
+        display: none;
+    }
+
+    .arcana-wizard__footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .arcana-wizard__footer-actions {
+        justify-content: stretch;
+    }
+}

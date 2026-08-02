@@ -271,7 +271,16 @@ export const es: Messages = {
     },
     contextMenuItem: {
       blurb: "Una entrada del <c>ArcanaContextMenu</c> en modo composición — icono, <c>suffix</c> a la derecha para el atajo, <c>variant</c> semántico y separador <c>divided</c> dibujado encima."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "Un campo de búsqueda compacto con una pista opcional de campos buscables y una píldora con el contador de registros. Emite <c>search</c> al pulsar Enter y al limpiar; expone <c>reset()</c>."
+    },
+    wizard: {
+      blurb: "Un shell de varios pasos que renderiza un encabezado con stepper, el cuerpo del paso activo y un pie de navegación. Compónlo con hijos <c>ArcanaWizardStep</c> y controla el avance con <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Máscara de entrada en ArcanaInputMask — usada por los cuatro frameworks. Vue además registra la directiva v-maska.",
@@ -766,7 +775,30 @@ export const es: Messages = {
     contextDisabledItem: "Mover a carpeta",
     contextLastAction: "Última acción",
     contextNoneYet: "ninguna todavía",
-    contextDisabledNote: "Deshabilitado — se muestra el menú del navegador"
+    contextDisabledNote: "Deshabilitado — se muestra el menú del navegador",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Búsqueda rápida",
+    quickSearchUnit: "registro(s)",
+    quickSearchFieldsLabel: "Campos buscables:",
+    quickSearchFieldCode: "Código",
+    quickSearchFieldName: "Nombre del cliente",
+    quickSearchFieldCity: "Ciudad",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Tipo",
+    wizardStepTypeDesc: "Persona o empresa",
+    wizardStepDocTitle: "Documento",
+    wizardStepDocDesc: "Número de documento",
+    wizardStepConfirmTitle: "Confirmación",
+    wizardStepConfirmDesc: "Revisar y crear",
+    wizardStepContent1: "Elige el tipo de cliente para comenzar.",
+    wizardStepContent2: "Introduce el número de documento.",
+    wizardStepContent3: "Revisa los datos y crea el registro.",
+    wizardContinueLabel: "Continuar",
+    wizardBackLabel: "Atrás",
+    wizardFinishLabel: "Finalizar",
+    wizardStepLabelTpl: "Paso {current} de {total}"
 
   }
 };

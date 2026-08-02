@@ -271,7 +271,16 @@ export const pt: Messages = {
     },
     contextMenuItem: {
       blurb: "Uma entrada do <c>ArcanaContextMenu</c> no modo de composição — ícone, <c>suffix</c> à direita para o atalho, <c>variant</c> semântico e separador <c>divided</c> desenhado acima dela."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "Um campo de busca compacto com uma dica opcional de campos pesquisáveis e um selo com o contador de registros. Emite <c>search</c> ao pressionar Enter e ao limpar; expõe <c>reset()</c>."
+    },
+    wizard: {
+      blurb: "Um shell multi-etapas que renderiza um cabeçalho com stepper, o corpo da etapa ativa e um rodapé de navegação. Componha com filhos <c>ArcanaWizardStep</c> e controle o avanço com <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Máscara de entrada no ArcanaInputMask — usada pelos quatro frameworks. O Vue ainda registra a diretiva v-maska.",
@@ -766,7 +775,30 @@ export const pt: Messages = {
     contextDisabledItem: "Mover para pasta",
     contextLastAction: "Última ação",
     contextNoneYet: "nenhuma ainda",
-    contextDisabledNote: "Desabilitado — o menu do navegador aparece no lugar"
+    contextDisabledNote: "Desabilitado — o menu do navegador aparece no lugar",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Busca rápida",
+    quickSearchUnit: "registro(s)",
+    quickSearchFieldsLabel: "Campos pesquisáveis:",
+    quickSearchFieldCode: "Código",
+    quickSearchFieldName: "Nome do cliente",
+    quickSearchFieldCity: "Cidade",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Tipo",
+    wizardStepTypeDesc: "Pessoa física ou jurídica",
+    wizardStepDocTitle: "Documento",
+    wizardStepDocDesc: "Número do documento",
+    wizardStepConfirmTitle: "Confirmação",
+    wizardStepConfirmDesc: "Revisar e criar",
+    wizardStepContent1: "Escolha o tipo de cliente para começar.",
+    wizardStepContent2: "Informe o número do documento.",
+    wizardStepContent3: "Revise os dados e crie o registro.",
+    wizardContinueLabel: "Continuar",
+    wizardBackLabel: "Voltar",
+    wizardFinishLabel: "Concluir",
+    wizardStepLabelTpl: "Etapa {current} de {total}"
 
   }
 };

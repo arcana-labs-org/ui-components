@@ -1,0 +1,100 @@
+/**
+ * ArcanaQuickSearch — campo de busca compacto com dica dos campos pesquisáveis e
+ * contador opcional de resultados.
+ *
+ * Anatomia:
+ *   .arcana-quick-search                 wrapper do campo (borda + foco via `:focus-within`)
+ *     .arcana-quick-search__info         gatilho da dica (`role="button"`, abre no hover/foco)
+ *       .arcana-quick-search__info-icon
+ *       .arcana-quick-search__hint       balão da dica (`role="tooltip"`)
+ *         .arcana-quick-search__hint-label
+ *         .arcana-quick-search__hint-list
+ *           .arcana-quick-search__hint-item
+ *     .arcana-quick-search__icon         lupa
+ *     .arcana-quick-search__input
+ *     .arcana-quick-search__clear        botão de limpar
+ *     .arcana-quick-search__counter      contador opcional de resultados
+ *       .arcana-quick-search__counter-value
+ *       .arcana-quick-search__counter-unit
+ *
+ * Estados: `.is-disabled` (campo inabilitado) e `.has-counter` (marcador para o
+ * consumidor saber que o contador está presente — sem regra própria aqui: o
+ * `padding` do wrapper já reserva o espaço).
+ *
+ * Cores: só tokens de uso — acompanha a paleta ativa e o `.arcana-dark`. O balão da
+ * dica reusa o mesmo par escuro do ArcanaTooltip (`--arcana-solid` / `--arcana-on-solid`),
+ * e o anel de foco espelha o do ArcanaMultiSelect (`--arcana-focus-ring` + `--arcana-accent-a5`).
+ *
+ * Custom properties (fallback = valor fixo do design original):
+ *   --arcana-quick-search-gap / --arcana-quick-search-width
+ *   --arcana-quick-search-height / --arcana-quick-search-radius
+ */
+
+.arcana-quick-search {
+    display: flex;
+    align-items: center;
+    gap: var(--arcana-quick-search-gap, 12px);
+    width: var(--arcana-quick-search-width, 450px);
+    max-width: 100%;
+    height: var(--arcana-quick-search-height, 38px);
+    padding: 0 6px 0 14px;
+    background: var(--arcana-surface);
+    border: 1px solid var(--arcana-border);
+    border-radius: var(--arcana-quick-search-radius, 8px);
+    box-shadow: var(--arcana-shadow-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover { border-color: var(--arcana-border-hover); }
+    &:focus-within {
+        border-color: var(--arcana-focus-ring);
+        box-shadow: 0 0 0 3px var(--arcana-accent-a5);
+    }
+    &:focus-within .arcana-quick-search__icon { color: var(--arcana-solid); }
+    &.is-disabled { opacity: 0.6; pointer-events: none; }
+}
+
+.arcana-quick-search__icon,
+.arcana-quick-search__clear {
+    width: 12px; height: 12px; flex: none;
+    color: var(--arcana-text-muted);
+}
+.arcana-quick-search__clear { background: none; border: 0; padding: 0; cursor: pointer; }
+.arcana-quick-search__clear:hover { color: var(--arcana-text); }
+
+.arcana-quick-search__info { position: relative; display: inline-flex; cursor: help; }
+.arcana-quick-search__info-icon { width: 13px; height: 13px; color: var(--arcana-info-text); }
+
+.arcana-quick-search__hint {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    min-width: 180px; padding: 8px 10px;
+    background: var(--arcana-solid);
+    color: var(--arcana-on-solid);
+    border-radius: 6px; font-size: 11px; line-height: 1.4;
+    opacity: 0; visibility: hidden; transition: opacity 0.12s ease; z-index: 20;
+}
+.arcana-quick-search__info:hover .arcana-quick-search__hint,
+.arcana-quick-search__info:focus-within .arcana-quick-search__hint { opacity: 1; visibility: visible; }
+.arcana-quick-search__hint-label { display: block; font-weight: 600; margin-bottom: 4px; }
+.arcana-quick-search__hint-list { margin: 0; padding-left: 16px; list-style: disc; }
+
+.arcana-quick-search__input {
+    flex: 1; min-width: 0; height: 100%;
+    background: transparent; border: 0; outline: none;
+    color: var(--arcana-text); font-size: 13px;
+    caret-color: var(--arcana-solid);
+}
+.arcana-quick-search__input::placeholder { color: var(--arcana-text-placeholder); font-size: 11px; }
+
+.arcana-quick-search__counter {
+    flex: none; display: inline-flex; align-items: baseline; gap: 2px;
+    padding: 3px 7px; border-radius: 5px;
+    background: var(--arcana-ui);
+    border: 1px solid var(--arcana-border);
+    color: var(--arcana-text-muted);
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 10.5px; font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+    .arcana-quick-search { width: 100%; }
+}

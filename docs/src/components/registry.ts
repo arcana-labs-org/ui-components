@@ -37,6 +37,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-segmented-control", name: "ArcanaSegmentedControl", label: "Segmented Control", category: "forms", docKey: "segmentedOptions" },
   { id: "arcana-date-picker", name: "ArcanaDatePicker", label: "Date Picker", category: "forms", docKey: "datePicker" },
   { id: "arcana-rate", name: "ArcanaRate", label: "Rate", category: "forms", docKey: "rate" },
+  { id: "arcana-quick-search", name: "ArcanaQuickSearch", label: "Quick Search", category: "forms", docKey: "quickSearch" },
 
   // ── Data display ───────────────────────────────────────────────────────
   { id: "arcana-badge", name: "ArcanaBadge", label: "Badge", category: "dataDisplay", docKey: "badge" },
@@ -77,6 +78,7 @@ export const COMPONENTS: ComponentEntry[] = [
   { id: "arcana-switch-segmented", name: "ArcanaSwitchSegmented", label: "Switch Segmented", category: "layoutNav", docKey: "switchSegmented" },
   { id: "arcana-aspect-ratio", name: "ArcanaAspectRatio", label: "Aspect Ratio", category: "layoutNav", docKey: "aspectRatio" },
   { id: "arcana-scroll-area", name: "ArcanaScrollArea", label: "Scroll Area", category: "layoutNav", docKey: "scrollArea" },
+  { id: "arcana-wizard", name: "ArcanaWizard", label: "Wizard", category: "layoutNav", docKey: "wizard" },
 
   // ── Feedback ───────────────────────────────────────────────────────────
   { id: "arcana-skeleton", name: "ArcanaSkeleton", label: "Skeleton", category: "feedback", docKey: "skeleton" },

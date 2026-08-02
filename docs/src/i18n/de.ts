@@ -271,7 +271,16 @@ export const de: Messages = {
     },
     contextMenuItem: {
       blurb: "Ein Eintrag eines <c>ArcanaContextMenu</c> im Kompositionsmodus — Icon, rechtsbündiges <c>suffix</c> für das Tastenkürzel, semantische <c>variant</c> und ein <c>divided</c>-Trenner darüber."
-    },  },
+    },
+
+    // ── Batch 5 ──
+    quickSearch: {
+      blurb: "Ein kompaktes Suchfeld mit optionalem Hinweis auf durchsuchbare Felder und einer Treffer-Zähler-Pille. Löst <c>search</c> bei Enter und beim Leeren aus; stellt <c>reset()</c> bereit."
+    },
+    wizard: {
+      blurb: "Eine mehrstufige Hülle, die einen Stepper-Header, den Inhalt des aktiven Schritts und eine Navigationsfußzeile rendert. Setze sie mit <c>ArcanaWizardStep</c>-Kindern zusammen und steuere das Fortschreiten mit <c>validate</c>."
+    }
+  },
 
   demos: {
     depMaska: "Eingabemaske in ArcanaInputMask — von allen vier Frameworks genutzt. Vue registriert zusätzlich die v-maska-Direktive.",
@@ -766,7 +775,30 @@ export const de: Messages = {
     contextDisabledItem: "In Ordner verschieben",
     contextLastAction: "Letzte Aktion",
     contextNoneYet: "noch keine",
-    contextDisabledNote: "Deaktiviert — stattdessen erscheint das Browsermenü"
+    contextDisabledNote: "Deaktiviert — stattdessen erscheint das Browsermenü",
+
+    // ── quick search ──
+    quickSearchPlaceholder: "Schnellsuche",
+    quickSearchUnit: "Datensatz/Datensätze",
+    quickSearchFieldsLabel: "Durchsuchbare Felder:",
+    quickSearchFieldCode: "Code",
+    quickSearchFieldName: "Kundenname",
+    quickSearchFieldCity: "Stadt",
+
+    // ── wizard ──
+    wizardStepTypeTitle: "Typ",
+    wizardStepTypeDesc: "Privatperson oder Unternehmen",
+    wizardStepDocTitle: "Dokument",
+    wizardStepDocDesc: "Ausweisnummer",
+    wizardStepConfirmTitle: "Bestätigung",
+    wizardStepConfirmDesc: "Prüfen und erstellen",
+    wizardStepContent1: "Wählen Sie den Kundentyp, um zu beginnen.",
+    wizardStepContent2: "Geben Sie die Dokumentnummer ein.",
+    wizardStepContent3: "Prüfen Sie die Angaben und erstellen Sie den Datensatz.",
+    wizardContinueLabel: "Weiter",
+    wizardBackLabel: "Zurück",
+    wizardFinishLabel: "Fertig",
+    wizardStepLabelTpl: "Schritt {current} von {total}"
 
   }
 };

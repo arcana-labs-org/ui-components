@@ -4607,5 +4607,181 @@ export class FileActionsComponent {
 </ArcanaContextMenu>
 
 <p>Last action: <strong>{lastAction ?? 'none yet'}</strong></p>`
+  },
+
+  quickSearch: {
+    react: `import { useState } from 'react'
+import { ArcanaQuickSearch } from '@arcanalabs/ui-components/react'
+
+export function CustomerSearch() {
+  const [query, setQuery] = useState('')
+  const [total, setTotal] = useState(128)
+
+  function onSearch(value: string) {
+    // …fetch results filtered by value
+  }
+
+  return (
+    <ArcanaQuickSearch
+      value={query}
+      onValueChange={setQuery}
+      placeholder="Quick search"
+      searchFields={['Code', 'Customer name', 'City']}
+      fieldsLabel="Searchable fields:"
+      counter={total}
+      unit="record(s)"
+      onSearch={onSearch}
+    />
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaQuickSearchComponent } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-customer-search',
+  standalone: true,
+  imports: [ArcanaQuickSearchComponent],
+  template: \`
+    <div
+      arcanaQuickSearch
+      [(value)]="query"
+      placeholder="Quick search"
+      [searchFields]="['Code', 'Customer name', 'City']"
+      fieldsLabel="Searchable fields:"
+      [counter]="total"
+      unit="record(s)"
+      (search)="onSearch($event)"
+    ></div>
+  \`
+})
+export class CustomerSearchComponent {
+  query = ''
+  total = 128
+
+  onSearch(value: string) {
+    // …fetch results filtered by value
+  }
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaQuickSearch } from '@arcanalabs/ui-components/svelte'
+
+  let query = $state('')
+  let total = $state(128)
+
+  function onSearch(value: string) {
+    // …fetch results filtered by value
+  }
+</script>
+
+<ArcanaQuickSearch
+  value={query}
+  onValueChange={(v) => (query = v)}
+  placeholder="Quick search"
+  searchFields={['Code', 'Customer name', 'City']}
+  fieldsLabel="Searchable fields:"
+  counter={total}
+  unit="record(s)"
+  {onSearch}
+/>`
+  },
+
+  wizard: {
+    react: `import { useState } from 'react'
+import { ArcanaWizard, ArcanaWizardStep } from '@arcanalabs/ui-components/react'
+
+export function CreateCustomerWizard() {
+  const [step, setStep] = useState(0)
+  const [documentNumber, setDocumentNumber] = useState('')
+
+  // Blocks advancing past the "Document" step until a number is filled in.
+  // Not called on Finish.
+  function validate(current: number) {
+    if (current === 1 && documentNumber.trim() === '') return 'Enter the document number'
+    return true
+  }
+
+  function onFinish() {
+    // …submit the wizard data
+  }
+
+  return (
+    <ArcanaWizard value={step} onValueChange={setStep} validate={validate} onFinish={onFinish}>
+      <ArcanaWizardStep title="Type" description="Person or company">
+        <p>Choose the customer type to begin.</p>
+      </ArcanaWizardStep>
+      <ArcanaWizardStep title="Document" description="ID number">
+        <input value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)} />
+      </ArcanaWizardStep>
+      <ArcanaWizardStep title="Confirmation" description="Review and create">
+        <p>Review the details and create the record.</p>
+      </ArcanaWizardStep>
+    </ArcanaWizard>
+  )
+}`,
+    angular: `import { Component } from '@angular/core'
+import { ArcanaWizardComponent, ArcanaWizardStepComponent, type ArcanaWizardValidate } from '@arcanalabs/ui-components/angular'
+
+@Component({
+  selector: 'app-create-customer-wizard',
+  standalone: true,
+  imports: [ArcanaWizardComponent, ArcanaWizardStepComponent],
+  template: \`
+    <div arcanaWizard [(value)]="step" [validate]="validate" (finish)="onFinish()">
+      <div arcanaWizardStep title="Type" description="Person or company">
+        <p>Choose the customer type to begin.</p>
+      </div>
+      <div arcanaWizardStep title="Document" description="ID number">
+        <input [value]="documentNumber" (input)="documentNumber = $any($event.target).value" />
+      </div>
+      <div arcanaWizardStep title="Confirmation" description="Review and create">
+        <p>Review the details and create the record.</p>
+      </div>
+    </div>
+  \`
+})
+export class CreateCustomerWizardComponent {
+  step = 0
+  documentNumber = ''
+
+  // Blocks advancing past the "Document" step until a number is filled in.
+  // Not called on Finish.
+  validate: ArcanaWizardValidate = (current) => {
+    if (current === 1 && this.documentNumber.trim() === '') return 'Enter the document number'
+    return true
+  }
+
+  onFinish() {
+    // …submit the wizard data
+  }
+}`,
+    svelte: `<script lang="ts">
+  import { ArcanaWizard, ArcanaWizardStep } from '@arcanalabs/ui-components/svelte'
+
+  let step = $state(0)
+  let documentNumber = $state('')
+
+  // Blocks advancing past the "Document" step until a number is filled in.
+  // Not called on Finish.
+  function validate(current: number) {
+    if (current === 1 && documentNumber.trim() === '') return 'Enter the document number'
+    return true
+  }
+
+  function onFinish() {
+    // …submit the wizard data
+  }
+</script>
+
+<ArcanaWizard value={step} onValueChange={(v) => (step = v)} {validate} {onFinish}>
+  <ArcanaWizardStep title="Type" description="Person or company">
+    <p>Choose the customer type to begin.</p>
+  </ArcanaWizardStep>
+  <ArcanaWizardStep title="Document" description="ID number">
+    <input bind:value={documentNumber} />
+  </ArcanaWizardStep>
+  <ArcanaWizardStep title="Confirmation" description="Review and create">
+    <p>Review the details and create the record.</p>
+  </ArcanaWizardStep>
+</ArcanaWizard>`
   }
 };
