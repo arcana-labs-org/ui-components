@@ -158,7 +158,7 @@ export default {
             default: 'Campos pesquisáveis:',
         },
         counter: {
-            type: [Number, String, null] as PropType<number | string | null>,
+            type: [Number, String] as PropType<number | string | null>,
             default: null,
         },
         unit: {

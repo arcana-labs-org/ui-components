@@ -192,6 +192,14 @@
     gap: 18px;
 }
 
+/* No Angular todos os hosts `<div arcanaWizardStep>` ficam no DOM (desvio aceito do
+   port), e os inativos ficam vazios — sem isso o `gap` do flex acima ainda entraria
+   entre eles, criando espaço fantasma só nesse port. Nos demais (Vue/React/Svelte)
+   o body sempre tem um único filho (o passo ativo), então isto é um no-op. */
+.arcana-wizard__body > *:empty {
+    display: none;
+}
+
 .arcana-wizard-step {
     display: block;
     width: 100%;
