@@ -48,6 +48,7 @@ export { default as ArcanaSegmentedControl } from "./vue/components/ArcanaSegmen
 export { default as ArcanaStatistic } from "./vue/components/ArcanaStatistic.vue";
 export { default as ArcanaCountdown } from "./vue/components/ArcanaCountdown.vue";
 export { default as ArcanaProgress } from "./vue/components/ArcanaProgress.vue";
+export { default as ArcanaQuickSearch } from "./vue/components/ArcanaQuickSearch.vue";
 export { default as ArcanaScrollArea } from "./vue/components/ArcanaScrollArea.vue";
 export type { ScrollAreaOrientation, ScrollAreaType } from "./vue/components/ArcanaScrollArea.vue";
 export { default as ArcanaSelect } from "./vue/components/ArcanaSelect.vue";
