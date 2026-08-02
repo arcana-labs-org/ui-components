@@ -248,3 +248,8 @@ export type {
 
 export { ArcanaQuickSearch } from "./ArcanaQuickSearch";
 export type { ArcanaQuickSearchProps, ArcanaQuickSearchHandle } from "./ArcanaQuickSearch";
+
+export { ArcanaWizard, WizardContext } from "./ArcanaWizard";
+export type { ArcanaWizardProps, WizardApi, WizardFooterScope } from "./ArcanaWizard";
+export { ArcanaWizardStep } from "./ArcanaWizardStep";
+export type { ArcanaWizardStepProps } from "./ArcanaWizardStep";
