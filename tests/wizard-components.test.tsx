@@ -5,6 +5,7 @@ import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-
 import { flushPromises, mount } from "@vue/test-utils";
 import { act, fireEvent, render } from "@testing-library/react";
 import { useState } from "react";
+import { flushSync, mount as mountSvelte, unmount as unmountSvelte } from "svelte";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { defineComponent } from "vue";
 import ArcanaWizard from "../src/vue/components/ArcanaWizard.vue";
@@ -15,6 +16,7 @@ import {
   type ArcanaWizardProps,
 } from "../src/react";
 import { ArcanaWizardComponent, ArcanaWizardStepComponent } from "../src/angular";
+import WizardHarness from "./fixtures/WizardHarness.svelte";
 
 beforeAll(() => {
   TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
@@ -244,5 +246,76 @@ describe("ArcanaWizard (Angular)", () => {
     finishBtn.click();
     fx.detectChanges();
     expect(fx.componentInstance.finished).toBe(true);
+  });
+});
+
+function mountWizardHarness(props: Record<string, unknown> = {}) {
+  const target = document.createElement("div");
+  document.body.appendChild(target);
+  const app = mountSvelte(WizardHarness, { target, props });
+  flushSync();
+  return {
+    target,
+    unmount: () => {
+      unmountSvelte(app);
+      target.remove();
+    },
+  };
+}
+
+const clickLastFooterButton = async (target: HTMLElement) => {
+  const btn = target.querySelector(".arcana-wizard__footer-actions button:last-child") as HTMLButtonElement;
+  btn.click();
+  // `handleNext` awaits `validate(...)` — flush the microtask queue before asserting.
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  flushSync();
+};
+
+describe("ArcanaWizard (Svelte)", () => {
+  it("renders stepper titles and only the active step body", () => {
+    const { target, unmount } = mountWizardHarness();
+    expect([...target.querySelectorAll(".arcana-wizard__title")].map((n) => n.textContent)).toEqual([
+      "Type",
+      "Doc",
+      "Confirm",
+    ]);
+    expect(target.querySelector(".c0")).toBeTruthy();
+    expect(target.querySelector(".c1")).toBeFalsy();
+    const steps = target.querySelectorAll(".arcana-wizard__step");
+    expect(steps[0].classList.contains("is-active")).toBe(true);
+    expect(steps[2].classList.contains("is-pending")).toBe(true);
+    unmount();
+  });
+
+  it("advances on Continue and marks completed", async () => {
+    const { target, unmount } = mountWizardHarness();
+    await clickLastFooterButton(target);
+    expect(target.querySelector(".c1")).toBeTruthy();
+    expect(target.querySelector(".c0")).toBeFalsy();
+    const steps = target.querySelectorAll(".arcana-wizard__step");
+    expect(steps[0].classList.contains("is-completed")).toBe(true);
+    unmount();
+  });
+
+  it("validate returning false blocks advance", async () => {
+    const { target, unmount } = mountWizardHarness({ validate: () => false });
+    await clickLastFooterButton(target);
+    expect(target.querySelector(".c0")).toBeTruthy();
+    expect(target.querySelector(".c1")).toBeFalsy();
+    unmount();
+  });
+
+  it("last step shows Finish and emits onFinish", async () => {
+    const onFinish = vi.fn();
+    const { target, unmount } = mountWizardHarness({ onFinish });
+    // Drives to the last step for real (two Continue clicks), not by jumping state directly.
+    await clickLastFooterButton(target); // step 0 -> 1
+    await clickLastFooterButton(target); // step 1 -> 2 (last)
+    const finishBtn = target.querySelector(".arcana-wizard__footer-actions button:last-child") as HTMLButtonElement;
+    expect(finishBtn.textContent).toBe("Finish");
+    finishBtn.click();
+    flushSync();
+    expect(onFinish).toHaveBeenCalledTimes(1);
+    unmount();
   });
 });

@@ -74,6 +74,8 @@ import ArcanaHoverCardComponent from "./svelte/ArcanaHoverCard.svelte";
 import ArcanaTooltipComponent from "./svelte/ArcanaTooltip.svelte";
 import ArcanaScrollAreaComponent from "./svelte/ArcanaScrollArea.svelte";
 import ArcanaQuickSearchComponent from "./svelte/ArcanaQuickSearch.svelte";
+import ArcanaWizardComponent from "./svelte/ArcanaWizard.svelte";
+import ArcanaWizardStepComponent from "./svelte/ArcanaWizardStep.svelte";
 
 // ── Utilitários compartilhados (agnósticos de framework) ────────────────────
 export { CurrencyFormatter } from "./core/currency";
@@ -1218,3 +1220,45 @@ export interface ArcanaQuickSearchProps {
   class?: string;
 }
 export const ArcanaQuickSearch = ArcanaQuickSearchComponent as unknown as Component<ArcanaQuickSearchProps>;
+
+/* ── ArcanaWizard (+Step) ─────────────────────────────────────────────────── */
+export interface WizardFooterScope {
+  step: number;
+  total: number;
+  isFirst: boolean;
+  isLast: boolean;
+  back: () => void;
+  next: () => void | Promise<void>;
+  finish: () => void;
+  cancel: () => void;
+}
+export interface ArcanaWizardProps {
+  value?: number;
+  onValueChange?: (value: number) => void;
+  validate?: (step: number) => boolean | string | Promise<boolean | string>;
+  /** `true` (default): navegação direta no stepper só pra passos já alcançados. */
+  linear?: boolean;
+  cancellable?: boolean;
+  continueLabel?: string;
+  backLabel?: string;
+  cancelLabel?: string;
+  finalLabel?: string;
+  finalDisabled?: boolean;
+  stepLabel?: string;
+  class?: string;
+  children?: Snippet;
+  headerActions?: Snippet;
+  footer?: Snippet<[WizardFooterScope]>;
+  onNext?: (step: number) => void;
+  onBack?: (step: number) => void;
+  onCancel?: () => void;
+  onFinish?: () => void;
+}
+export const ArcanaWizard = ArcanaWizardComponent as unknown as Component<ArcanaWizardProps>;
+
+export interface ArcanaWizardStepProps {
+  title: string;
+  description?: string;
+  children?: Snippet;
+}
+export const ArcanaWizardStep = ArcanaWizardStepComponent as unknown as Component<ArcanaWizardStepProps>;
