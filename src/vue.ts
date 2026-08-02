@@ -104,3 +104,5 @@ export type { CountdownParts } from "./core/countdown";
 export { formatStatisticValue } from "./core/statistic";
 export type { StatisticFormatOptions } from "./core/statistic";
 export { clampProgressValue, formatProgressLabel, progressPercent } from "./core/progress";
+export { canNavigateTo, clampStep, formatStepLabel, stepStatus } from "./core/wizard";
+export type { WizardStepStatus } from "./core/wizard";
