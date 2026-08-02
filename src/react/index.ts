@@ -245,3 +245,6 @@ export type {
     ArcanaSpecSheetSectionProps,
     ArcanaSpecSheetFieldProps,
 } from "./ArcanaSpecSheet";
+
+export { ArcanaQuickSearch } from "./ArcanaQuickSearch";
+export type { ArcanaQuickSearchProps, ArcanaQuickSearchHandle } from "./ArcanaQuickSearch";

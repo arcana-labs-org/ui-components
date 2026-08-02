@@ -1,6 +1,12 @@
 import { mount, type VueWrapper } from "@vue/test-utils";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render } from "@testing-library/react";
+import { createRef } from "react";
+import { describe, expect, it, vi } from "vitest";
 import ArcanaQuickSearch from "../src/vue/components/ArcanaQuickSearch.vue";
+import {
+  ArcanaQuickSearch as RQuickSearch,
+  type ArcanaQuickSearchHandle,
+} from "../src/react/ArcanaQuickSearch";
 
 /** Último payload de um evento. `.at(-1)` não existe no lib target do projeto. */
 const lastEmit = (wrapper: VueWrapper, event: string): unknown[] | undefined => {
@@ -40,5 +46,29 @@ describe("ArcanaQuickSearch (Vue)", () => {
     (w.vm as unknown as { reset: () => void }).reset();
     await w.vm.$nextTick();
     expect(w.emitted("search")).toBeFalsy();
+  });
+});
+
+describe("ArcanaQuickSearch (React)", () => {
+  it("matches DOM contract and emits search on Enter", () => {
+    const onSearch = vi.fn();
+    const { container } = render(
+      <RQuickSearch searchFields={["Code", "Name"]} counter={42} unit="items" onSearch={onSearch} />
+    );
+    expect(container.querySelector(".arcana-quick-search.has-counter")).toBeTruthy();
+    expect([...container.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
+      .toEqual(["Code", "Name"]);
+    const input = container.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    fireEvent.change(input, { target: { value: "hello" } });
+    fireEvent.keyUp(input, { key: "Enter" });
+    expect(onSearch).toHaveBeenLastCalledWith("hello");
+  });
+
+  it("reset() via handle clears without onSearch", () => {
+    const ref = createRef<ArcanaQuickSearchHandle>();
+    const onSearch = vi.fn();
+    render(<RQuickSearch ref={ref} value="abc" onSearch={onSearch} />);
+    ref.current!.reset();
+    expect(onSearch).not.toHaveBeenCalled();
   });
 });
