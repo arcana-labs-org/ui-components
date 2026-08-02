@@ -157,3 +157,5 @@ export { ArcanaSpecSheetSectionComponent } from "./arcana-spec-sheet-section.com
 export type { SpecSheetAccentColor } from "./arcana-spec-sheet-section.component";
 
 export { ArcanaSpecSheetFieldComponent } from "./arcana-spec-sheet-field.component";
+
+export { ArcanaQuickSearchComponent } from "./arcana-quick-search.component";

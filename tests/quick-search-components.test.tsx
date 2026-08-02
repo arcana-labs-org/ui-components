@@ -1,12 +1,21 @@
+import "@angular/compiler";
+import { Component, provideZonelessChangeDetection } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { BrowserTestingModule, platformBrowserTesting } from "@angular/platform-browser/testing";
 import { mount, type VueWrapper } from "@vue/test-utils";
 import { fireEvent, render } from "@testing-library/react";
 import { createRef } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import ArcanaQuickSearch from "../src/vue/components/ArcanaQuickSearch.vue";
 import {
   ArcanaQuickSearch as RQuickSearch,
   type ArcanaQuickSearchHandle,
 } from "../src/react/ArcanaQuickSearch";
+import { ArcanaQuickSearchComponent } from "../src/angular/arcana-quick-search.component";
+
+beforeAll(() => {
+  TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
+});
 
 /** Último payload de um evento. `.at(-1)` não existe no lib target do projeto. */
 const lastEmit = (wrapper: VueWrapper, event: string): unknown[] | undefined => {
@@ -70,5 +79,32 @@ describe("ArcanaQuickSearch (React)", () => {
     render(<RQuickSearch ref={ref} value="abc" onSearch={onSearch} />);
     ref.current!.reset();
     expect(onSearch).not.toHaveBeenCalled();
+  });
+});
+
+describe("ArcanaQuickSearch (Angular)", () => {
+  it("renders contract and emits search on Enter", async () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaQuickSearchComponent],
+      template: `<div arcanaQuickSearch [searchFields]="['Code','Name']" [counter]="42" unit="items" (search)="last = $event"></div>`,
+    })
+    class Host { last = ""; }
+
+    TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideZonelessChangeDetection()],
+    });
+    const fx = TestBed.createComponent(Host);
+    fx.detectChanges();
+    const root = fx.nativeElement.querySelector(".arcana-quick-search");
+    expect(root.classList.contains("has-counter")).toBe(true);
+    expect([...root.querySelectorAll(".arcana-quick-search__hint-item")].map((n: Element) => n.textContent))
+      .toEqual(["Code", "Name"]);
+    const input = root.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    input.value = "hello"; input.dispatchEvent(new Event("input"));
+    input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
+    fx.detectChanges();
+    expect(fx.componentInstance.last).toBe("hello");
   });
 });
