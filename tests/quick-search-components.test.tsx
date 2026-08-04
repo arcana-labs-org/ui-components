@@ -30,6 +30,9 @@ const lastEmit = (wrapper: VueWrapper, event: string): unknown[] | undefined => 
   return all ? (all[all.length - 1] as unknown[]) : undefined;
 };
 
+/** Espera um `requestAnimationFrame` (usado pelo port Angular pra medir o balão real). */
+const nextFrame = () => new Promise((r) => setTimeout(r, 0));
+
 describe("ArcanaQuickSearch (Vue)", () => {
   it("renders info trigger only when searchFields provided; hint teleports to body on hover", async () => {
     const w = mount(ArcanaQuickSearch, {
@@ -180,7 +183,7 @@ describe("ArcanaQuickSearch (React)", () => {
 });
 
 describe("ArcanaQuickSearch (Angular)", () => {
-  it("renders contract and emits search on Enter", async () => {
+  it("renders info trigger only when searchFields provided; hint portals to body on hover", async () => {
     @Component({
       standalone: true,
       imports: [ArcanaQuickSearchComponent],
@@ -196,13 +199,113 @@ describe("ArcanaQuickSearch (Angular)", () => {
     fx.detectChanges();
     const root = fx.nativeElement.querySelector(".arcana-quick-search");
     expect(root.classList.contains("has-counter")).toBe(true);
-    expect([...root.querySelectorAll(".arcana-quick-search__hint-item")].map((n: Element) => n.textContent))
+    const info = root.querySelector(".arcana-quick-search__info") as HTMLElement;
+    expect(info).toBeTruthy();
+    // O balão só monta (teleportado pro <body>) ao abrir — nada no root antes disso.
+    expect(root.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
+    info.dispatchEvent(new MouseEvent("mouseenter"));
+    fx.detectChanges();
+    await nextFrame();
+    expect([...document.body.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
       .toEqual(["Code", "Name"]);
+
+    info.dispatchEvent(new MouseEvent("mouseleave"));
+    fx.detectChanges();
+    await nextFrame();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
     const input = root.querySelector(".arcana-quick-search__input") as HTMLInputElement;
     input.value = "hello"; input.dispatchEvent(new Event("input"));
     input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
     fx.detectChanges();
     expect(fx.componentInstance.last).toBe("hello");
+  });
+
+  it("bare (no searchFields) renders no info trigger", () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaQuickSearchComponent],
+      template: `<div arcanaQuickSearch></div>`,
+    })
+    class Host {}
+
+    TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideZonelessChangeDetection()],
+    });
+    const fx = TestBed.createComponent(Host);
+    fx.detectChanges();
+    const root = fx.nativeElement.querySelector(".arcana-quick-search");
+    expect(root.querySelector(".arcana-quick-search__info")).toBeNull();
+  });
+
+  it("gates aria-describedby to the hint being open (id would be dangling otherwise)", async () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaQuickSearchComponent],
+      template: `<div arcanaQuickSearch [searchFields]="['Code','Name']"></div>`,
+    })
+    class Host {}
+
+    TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideZonelessChangeDetection()],
+    });
+    const fx = TestBed.createComponent(Host);
+    fx.detectChanges();
+    const root = fx.nativeElement.querySelector(".arcana-quick-search");
+    const info = root.querySelector(".arcana-quick-search__info") as HTMLElement;
+    const input = root.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+
+    info.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+    fx.detectChanges();
+    await nextFrame();
+    const hintId = document.body.querySelector(".arcana-quick-search__hint")!.id;
+    expect(input.getAttribute("aria-describedby")).toBe(hintId);
+
+    info.dispatchEvent(new FocusEvent("focusout", { bubbles: true }));
+    fx.detectChanges();
+    await nextFrame();
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+  });
+
+  it("closes the open hint (and detaches its listeners) when searchFields is emptied by the parent", async () => {
+    @Component({
+      standalone: true,
+      imports: [ArcanaQuickSearchComponent],
+      template: `<div arcanaQuickSearch [searchFields]="fields()"></div>`,
+    })
+    class Host { fields = signal(["Code", "Name"]); }
+
+    const removeSpy = vi.spyOn(document, "removeEventListener");
+    TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideZonelessChangeDetection()],
+    });
+    const fx = TestBed.createComponent(Host);
+    fx.detectChanges();
+    const root = fx.nativeElement.querySelector(".arcana-quick-search");
+    const info = root.querySelector(".arcana-quick-search__info") as HTMLElement;
+
+    info.dispatchEvent(new MouseEvent("mouseenter"));
+    fx.detectChanges();
+    await nextFrame();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).not.toBeNull();
+
+    // Parent shrinks searchFields to [] while the hint is open — the `.info` trigger
+    // unmounts (`@if (searchFields.length)`) without ever firing mouseleave/focusout.
+    removeSpy.mockClear();
+    fx.componentInstance.fields.set([]);
+    fx.detectChanges();
+    await nextFrame();
+
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    expect(root.querySelector(".arcana-quick-search__info")).toBeNull();
+    expect(removeSpy).toHaveBeenCalledWith("keydown", expect.any(Function));
+    removeSpy.mockRestore();
   });
 
   it("keeps in-progress text (uncontrolled) when an unrelated input changes", () => {
