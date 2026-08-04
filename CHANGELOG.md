@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.1 — 2026-08-04
+
+### Correções
+- **ArcanaQuickSearch** — a dica de campos pesquisáveis (tooltip do ícone de info) era `position: absolute` e ficava recortada por qualquer ancestral com `overflow: hidden` (painéis, toolbars, cabeçalhos de página). Agora é teleportada pro `<body>` com `position: fixed`, posicionada via `core/hover-card` (mesmo mecanismo do `ArcanaTooltip`) — reposiciona no scroll/resize, fecha no Esc/blur e escapa de qualquer container com overflow. Corrigido nos 4 frameworks. Sem mudança de classes/DOM (patch compatível).
+
 ## 2.6.0 — 2026-08-02
 
 ### Novos recursos
