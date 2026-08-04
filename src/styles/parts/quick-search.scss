@@ -6,16 +6,21 @@
  *   .arcana-quick-search                 wrapper do campo (borda + foco via `:focus-within`)
  *     .arcana-quick-search__info         gatilho da dica (`role="button"`, abre no hover/foco)
  *       .arcana-quick-search__info-icon
- *       .arcana-quick-search__hint       balão da dica (`role="tooltip"`)
- *         .arcana-quick-search__hint-label
- *         .arcana-quick-search__hint-list
- *           .arcana-quick-search__hint-item
  *     .arcana-quick-search__icon         lupa
  *     .arcana-quick-search__input
  *     .arcana-quick-search__clear        botão de limpar
  *     .arcana-quick-search__counter      contador opcional de resultados
  *       .arcana-quick-search__counter-value
  *       .arcana-quick-search__counter-unit
+ *   .arcana-quick-search__hint           balão da dica (`role="tooltip"`), TELEPORTADO pro
+ *                                         `<body>` e posicionado com `position: fixed` via JS
+ *                                         (mesma técnica do ArcanaTooltip) — escapa de
+ *                                         qualquer ancestral com `overflow: hidden`. Montado/
+ *                                         desmontado pelo JS do gatilho (hover/foco), não por
+ *                                         CSS `:hover`. Por isso este seletor é GLOBAL.
+ *     .arcana-quick-search__hint-label
+ *     .arcana-quick-search__hint-list
+ *       .arcana-quick-search__hint-item
  *
  * Estados: `.is-disabled` (campo inabilitado) e `.has-counter` (marcador para o
  * consumidor saber que o contador está presente — sem regra própria aqui: o
@@ -28,6 +33,7 @@
  * Custom properties (fallback = valor fixo do design original):
  *   --arcana-quick-search-gap / --arcana-quick-search-width
  *   --arcana-quick-search-height / --arcana-quick-search-radius
+ *   --arcana-quick-search-hint-z-index / --arcana-quick-search-hint-min-width
  */
 
 .arcana-quick-search {
@@ -61,19 +67,34 @@
 .arcana-quick-search__clear { background: none; border: 0; padding: 0; cursor: pointer; }
 .arcana-quick-search__clear:hover { color: var(--arcana-text); }
 
-.arcana-quick-search__info { position: relative; display: inline-flex; cursor: help; }
+.arcana-quick-search__info { display: inline-flex; cursor: help; }
 .arcana-quick-search__info-icon { width: 13px; height: 13px; color: var(--arcana-info-text); }
 
 .arcana-quick-search__hint {
-    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-    min-width: 180px; padding: 8px 10px;
+    position: fixed;
+    /* Mesmo patamar do ArcanaTooltip: acima do ArcanaDialog (10000/10001) e do
+       TreeSelect (10100) — o balão pode nascer de dentro de qualquer um deles.
+       `left`/`top` ficam de fora do CSS: são escritos inline pelo JS do gatilho. */
+    z-index: var(--arcana-quick-search-hint-z-index, 10200);
+    min-width: var(--arcana-quick-search-hint-min-width, 180px);
+    padding: 8px 10px;
     background: var(--arcana-solid);
     color: var(--arcana-on-solid);
     border-radius: 6px; font-size: 11px; line-height: 1.4;
-    opacity: 0; visibility: hidden; transition: opacity 0.12s ease; z-index: 20;
+    /* Nunca é alvo do mouse — o `mouseleave` do gatilho fecha limpo. */
+    pointer-events: none;
+    animation: arcana-quick-search-hint-in 120ms ease-out;
 }
-.arcana-quick-search__info:hover .arcana-quick-search__hint,
-.arcana-quick-search__info:focus-within .arcana-quick-search__hint { opacity: 1; visibility: visible; }
+
+@keyframes arcana-quick-search-hint-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .arcana-quick-search__hint { animation: none; }
+}
+
 .arcana-quick-search__hint-label { display: block; font-weight: 600; margin-bottom: 4px; }
 .arcana-quick-search__hint-list { margin: 0; padding-left: 16px; list-style: disc; }
 

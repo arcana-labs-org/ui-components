@@ -3,7 +3,17 @@
         class="arcana-quick-search"
         :class="{ 'is-disabled': disabled, 'has-counter': counter != null }"
     >
-        <div v-if="searchFields.length" class="arcana-quick-search__info" role="button" tabindex="0">
+        <div
+            v-if="searchFields.length"
+            ref="infoRef"
+            class="arcana-quick-search__info"
+            role="button"
+            tabindex="0"
+            @mouseenter="openHint"
+            @mouseleave="closeHint"
+            @focusin="openHint"
+            @focusout="closeHint"
+        >
             <svg
                 class="arcana-quick-search__info-icon"
                 viewBox="0 0 24 24"
@@ -18,7 +28,22 @@
                 <path d="M12 16v-4" />
                 <path d="M12 8h.01" />
             </svg>
-            <div :id="hintId" class="arcana-quick-search__hint" role="tooltip">
+        </div>
+
+        <!--
+            Balão teleportado pro <body> (position: fixed via `placeHoverCard`) pra
+            escapar de qualquer ancestral com overflow:hidden / z-index restritivo —
+            mesma técnica do ArcanaTooltip.
+        -->
+        <Teleport to="body">
+            <div
+                v-if="hintOpen"
+                :id="hintId"
+                ref="hintRef"
+                class="arcana-quick-search__hint"
+                :style="hintStyle"
+                role="tooltip"
+            >
                 <span class="arcana-quick-search__hint-label">{{ fieldsLabel }}</span>
                 <ul class="arcana-quick-search__hint-list">
                     <li v-for="field in searchFields" :key="field" class="arcana-quick-search__hint-item">
@@ -26,7 +51,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </Teleport>
 
         <svg
             class="arcana-quick-search__icon"
@@ -49,7 +74,7 @@
             :value="text"
             :placeholder="placeholder"
             :disabled="disabled"
-            :aria-describedby="searchFields.length ? hintId : undefined"
+            :aria-describedby="hintOpen ? hintId : undefined"
             @input="onInput"
             @keyup.enter="search"
         />
@@ -87,10 +112,14 @@
 
 <script lang="ts">
 import type { Component, PropType } from "vue"
+import { placeHoverCard } from "../../core/hover-card"
 
 /** Contador de instâncias pra gerar um `id` determinístico (sem `Math.random`) usado
  *  no `aria-describedby` do input e no `id` do balão de dica. */
 let uid = 0
+
+/** Tamanho presumido antes da 1ª medição (evita flip errado no 1º frame). */
+const HINT_ESTIMATE = { width: 200, height: 80 }
 
 /**
  * `<ArcanaQuickSearch>` — campo de busca compacto com dica dos campos pesquisáveis e
@@ -100,16 +129,21 @@ let uid = 0
  *   .arcana-quick-search                 wrapper do campo (borda + foco via `:focus-within`)
  *     .arcana-quick-search__info         gatilho da dica (`role="button"`, abre no hover/foco)
  *       .arcana-quick-search__info-icon
- *       .arcana-quick-search__hint       balão da dica (`role="tooltip"`)
- *         .arcana-quick-search__hint-label
- *         .arcana-quick-search__hint-list
- *           .arcana-quick-search__hint-item
  *     .arcana-quick-search__icon         lupa
  *     .arcana-quick-search__input
  *     .arcana-quick-search__clear        botão de limpar
  *     .arcana-quick-search__counter      contador opcional de resultados
  *       .arcana-quick-search__counter-value
  *       .arcana-quick-search__counter-unit
+ *   .arcana-quick-search__hint           balão da dica (`role="tooltip"`), TELEPORTADO pro
+ *                                         `<body>` e posicionado com `position: fixed` via JS
+ *                                         (`core/hover-card`, mesma técnica do ArcanaTooltip) —
+ *                                         escapa de qualquer ancestral com `overflow: hidden`.
+ *                                         Montado/desmontado no hover/foco do gatilho, não por
+ *                                         CSS `:hover`.
+ *     .arcana-quick-search__hint-label
+ *     .arcana-quick-search__hint-list
+ *       .arcana-quick-search__hint-item
  *
  * Estados: `.is-disabled` (campo inabilitado) e `.has-counter` (contador presente).
  *
@@ -183,6 +217,13 @@ export default {
         return {
             text: this.modelValue,
             hintId: `arcana-qs-${++uid}`,
+            hintOpen: false,
+            hintStyle: {} as Record<string, string>,
+            // Só vira `true` no `mounted()` e volta a `false` no `beforeUnmount()` — usado
+            // por `openHint()` pra descartar um `reposition()`/`attachHintListeners()`
+            // tardio (resumido depois de um `await $nextTick()`) contra uma instância já
+            // destruída ou um hint que fechou nesse meio-tempo (ver `openHint`).
+            hintMounted: false,
         }
     },
 
@@ -192,9 +233,93 @@ export default {
         modelValue(value: string) {
             if (value !== this.text) this.text = value
         },
+
+        // Se o pai encolher `searchFields` pra `[]` enquanto o hint está aberto, o
+        // gatilho `.info` desmonta (`v-if="searchFields.length"`) sem disparar
+        // `mouseleave`/`focusout` — sem isso o balão e os listeners globais ficam
+        // órfãos (painel preso na tela, `keydown`/`scroll`/`resize` vazando).
+        searchFields(value: string[]) {
+            if (!value.length && this.hintOpen) this.closeHint()
+        },
+    },
+
+    mounted() {
+        this.hintMounted = true
+    },
+
+    beforeUnmount() {
+        this.hintMounted = false
+        this.detachHintListeners()
     },
 
     methods: {
+        async openHint() {
+            if (!this.searchFields.length || this.hintOpen) return
+            this.hintOpen = true
+            await this.$nextTick()
+            // A instância pode ter desmontado, ou o hint pode ter fechado de novo
+            // (mouseleave rápido, `searchFields` esvaziado), enquanto esperávamos o
+            // tick — sem essa checagem, `attachHintListeners()` prenderia listeners
+            // globais que nunca mais seriam removidos (o `detach` do `beforeUnmount`/
+            // `closeHint` já rodou antes deles existirem).
+            if (!this.hintMounted || !this.hintOpen) return
+            this.repositionHint()
+            this.attachHintListeners()
+        },
+
+        closeHint() {
+            if (!this.hintOpen) return
+            this.hintOpen = false
+            this.detachHintListeners()
+        },
+
+        repositionHint() {
+            const info = this.$refs.infoRef as HTMLElement | undefined
+            const hint = this.$refs.hintRef as HTMLElement | undefined
+            if (!info) return
+
+            const rect = info.getBoundingClientRect()
+            const hintWidth = hint?.offsetWidth || HINT_ESTIMATE.width
+            const hintHeight = hint?.offsetHeight || HINT_ESTIMATE.height
+
+            const place = placeHoverCard(
+                rect,
+                { width: hintWidth, height: hintHeight },
+                { width: window.innerWidth, height: window.innerHeight },
+                { side: "top", align: "center", gap: 8 },
+            )
+
+            this.hintStyle = {
+                position: "fixed",
+                left: `${place.left}px`,
+                top: `${place.top}px`,
+            }
+        },
+
+        onHintKeydown(event: KeyboardEvent) {
+            if (event.key === "Escape") this.closeHint()
+        },
+
+        onHintWindowScroll() {
+            this.repositionHint()
+        },
+
+        onHintWindowResize() {
+            this.repositionHint()
+        },
+
+        attachHintListeners() {
+            document.addEventListener("keydown", this.onHintKeydown)
+            window.addEventListener("scroll", this.onHintWindowScroll, true)
+            window.addEventListener("resize", this.onHintWindowResize)
+        },
+
+        detachHintListeners() {
+            document.removeEventListener("keydown", this.onHintKeydown)
+            window.removeEventListener("scroll", this.onHintWindowScroll, true)
+            window.removeEventListener("resize", this.onHintWindowResize)
+        },
+
         onInput(e: Event) {
             this.text = (e.target as HTMLInputElement).value
             this.$emit('update:modelValue', this.text)
