@@ -74,7 +74,7 @@
             :value="text"
             :placeholder="placeholder"
             :disabled="disabled"
-            :aria-describedby="searchFields.length ? hintId : undefined"
+            :aria-describedby="hintOpen ? hintId : undefined"
             @input="onInput"
             @keyup.enter="search"
         />
@@ -219,6 +219,11 @@ export default {
             hintId: `arcana-qs-${++uid}`,
             hintOpen: false,
             hintStyle: {} as Record<string, string>,
+            // Só vira `true` no `mounted()` e volta a `false` no `beforeUnmount()` — usado
+            // por `openHint()` pra descartar um `reposition()`/`attachHintListeners()`
+            // tardio (resumido depois de um `await $nextTick()`) contra uma instância já
+            // destruída ou um hint que fechou nesse meio-tempo (ver `openHint`).
+            hintMounted: false,
         }
     },
 
@@ -228,9 +233,22 @@ export default {
         modelValue(value: string) {
             if (value !== this.text) this.text = value
         },
+
+        // Se o pai encolher `searchFields` pra `[]` enquanto o hint está aberto, o
+        // gatilho `.info` desmonta (`v-if="searchFields.length"`) sem disparar
+        // `mouseleave`/`focusout` — sem isso o balão e os listeners globais ficam
+        // órfãos (painel preso na tela, `keydown`/`scroll`/`resize` vazando).
+        searchFields(value: string[]) {
+            if (!value.length && this.hintOpen) this.closeHint()
+        },
+    },
+
+    mounted() {
+        this.hintMounted = true
     },
 
     beforeUnmount() {
+        this.hintMounted = false
         this.detachHintListeners()
     },
 
@@ -239,6 +257,12 @@ export default {
             if (!this.searchFields.length || this.hintOpen) return
             this.hintOpen = true
             await this.$nextTick()
+            // A instância pode ter desmontado, ou o hint pode ter fechado de novo
+            // (mouseleave rápido, `searchFields` esvaziado), enquanto esperávamos o
+            // tick — sem essa checagem, `attachHintListeners()` prenderia listeners
+            // globais que nunca mais seriam removidos (o `detach` do `beforeUnmount`/
+            // `closeHint` já rodou antes deles existirem).
+            if (!this.hintMounted || !this.hintOpen) return
             this.repositionHint()
             this.attachHintListeners()
         },

@@ -56,6 +56,49 @@ describe("ArcanaQuickSearch (Vue)", () => {
     bare.unmount();
   });
 
+  it("gates aria-describedby to the hint being open (id would be dangling otherwise)", async () => {
+    const w = mount(ArcanaQuickSearch, {
+      props: { searchFields: ["Code", "Name"] },
+      attachTo: document.body,
+    });
+    const input = w.find(".arcana-quick-search__input");
+    expect(input.attributes("aria-describedby")).toBeUndefined();
+
+    await w.find(".arcana-quick-search__info").trigger("focusin");
+    await w.vm.$nextTick();
+    const hintId = document.body.querySelector(".arcana-quick-search__hint")!.id;
+    expect(input.attributes("aria-describedby")).toBe(hintId);
+
+    await w.find(".arcana-quick-search__info").trigger("focusout");
+    await w.vm.$nextTick();
+    expect(input.attributes("aria-describedby")).toBeUndefined();
+    w.unmount();
+  });
+
+  it("closes the open hint (and detaches its listeners) when searchFields is emptied by the parent", async () => {
+    const removeSpy = vi.spyOn(document, "removeEventListener");
+    const w = mount(ArcanaQuickSearch, {
+      props: { searchFields: ["Code", "Name"] },
+      attachTo: document.body,
+    });
+
+    await w.find(".arcana-quick-search__info").trigger("mouseenter");
+    await w.vm.$nextTick();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).not.toBeNull();
+
+    // Parent shrinks searchFields to [] while the hint is open — the `.info` trigger
+    // unmounts (`v-if="searchFields.length"`) without ever firing mouseleave/focusout.
+    removeSpy.mockClear();
+    await w.setProps({ searchFields: [] });
+    await w.vm.$nextTick();
+
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    expect(w.find(".arcana-quick-search__info").exists()).toBe(false);
+    expect(removeSpy).toHaveBeenCalledWith("keydown", expect.any(Function));
+    w.unmount();
+    removeSpy.mockRestore();
+  });
+
   it("shows counter pill with unit only when counter set", () => {
     const w = mount(ArcanaQuickSearch, { props: { counter: 42, unit: "items" } });
     expect(w.find(".arcana-quick-search__counter-value").text()).toBe("42");
