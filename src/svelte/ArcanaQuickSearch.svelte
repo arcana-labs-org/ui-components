@@ -10,8 +10,14 @@
    * `<ArcanaQuickSearch>` — Svelte 5 port. Campo de busca compacto com dica dos
    * campos pesquisáveis e contador opcional de resultados. Reproduz
    * `<div class="arcana-quick-search">` (+ `is-disabled`/`has-counter`), o
-   * `__info`/`__hint` (só quando `searchFields.length`), o `__icon`, o `__input`,
-   * o `__clear` e o `__counter` (só quando `counter != null`), idêntico ao SFC.
+   * `__info` (só quando `searchFields.length`), o `__icon`, o `__input`, o
+   * `__clear` e o `__counter` (só quando `counter != null`), idêntico ao SFC.
+   *
+   * O balão `__hint` é TELEPORTADO pro `<body>` (`use:portal`) e posicionado com
+   * `position: fixed` via `placeHoverCard` (`core/hover-card`) — mesma técnica do
+   * `ArcanaTooltip` — pra escapar de qualquer ancestral com `overflow: hidden` /
+   * z-index restritivo. É montado/desmontado no hover/foco do gatilho `__info`,
+   * não por CSS `:hover`.
    *
    * Equivalências Vue → Svelte 5:
    * - `modelValue` (v-model) → prop `value` + callback `onValueChange(value)`
@@ -20,8 +26,19 @@
    *   retornada por `mount()`)
    * - `watch(modelValue)` → `$effect` que só reage à prop `value` (lê `text` via
    *   `untrack` pra não recriar um loop quando a digitação local muda `text`)
+   * - `<Teleport to="body">` do hint → action `use:portal`
+   * - `mounted/beforeUnmount` + listeners manuais do hint → um único `$effect`
+   *   gated em `hintOpen && hintEl` que reposiciona e registra
+   *   `scroll`(capture)/`resize`/`keydown` Escape, devolvendo o cleanup que os
+   *   remove — roda tanto ao fechar quanto ao destruir o componente (idioma
+   *   "leak-safe" do Svelte, sem precisar de flags tipo `hintMounted`)
    */
   import { untrack } from "svelte";
+  import { placeHoverCard } from "../core/hover-card";
+  import { portal } from "./portal";
+
+  /** Tamanho presumido antes da 1ª medição (evita flip errado no 1º frame). */
+  const HINT_ESTIMATE = { width: 200, height: 80 };
 
   let {
     value = "",
@@ -62,6 +79,11 @@
   let text = $state(value);
   let inputEl = $state<HTMLInputElement | undefined>(undefined);
 
+  let hintOpen = $state(false);
+  let hintStyle = $state("");
+  let infoEl = $state<HTMLElement | undefined>(undefined);
+  let hintEl = $state<HTMLElement | undefined>(undefined);
+
   // Mantém o buffer local sincronizado quando o consumidor controla `value`
   // externamente (ex.: reset feito pelo pai via prop, não pelo método `reset()`).
   // `untrack` isola a leitura de `text` — só a mudança de `value` reexecuta isto.
@@ -70,6 +92,67 @@
     untrack(() => {
       if (incoming !== text) text = incoming;
     });
+  });
+
+  /* ─────────────────────────── dica de campos ──────────────────────────────── */
+
+  function reposition() {
+    if (!infoEl) return;
+
+    const rect = infoEl.getBoundingClientRect();
+    const hintWidth = hintEl?.offsetWidth || HINT_ESTIMATE.width;
+    const hintHeight = hintEl?.offsetHeight || HINT_ESTIMATE.height;
+
+    const place = placeHoverCard(
+      rect,
+      { width: hintWidth, height: hintHeight },
+      { width: window.innerWidth, height: window.innerHeight },
+      { side: "top", align: "center", gap: 8 }
+    );
+
+    hintStyle = `position: fixed; left: ${place.left}px; top: ${place.top}px;`;
+  }
+
+  function openHint() {
+    if (!searchFields.length || hintOpen) return;
+    hintOpen = true;
+  }
+
+  function closeHint() {
+    if (!hintOpen) return;
+    hintOpen = false;
+  }
+
+  // Se o pai encolher `searchFields` pra `[]` enquanto o hint está aberto, o
+  // gatilho `.info` desmonta (`{#if searchFields.length}`) sem disparar
+  // `mouseleave`/`focusout` — sem isso o balão e os listeners globais ficam
+  // órfãos (painel preso na tela, `keydown`/`scroll`/`resize` vazando).
+  $effect(() => {
+    if (!searchFields.length && hintOpen) closeHint();
+  });
+
+  // Mede/posiciona assim que o balão entra no DOM e registra os listeners
+  // globais só enquanto ele está aberto. O cleanup devolvido roda tanto ao
+  // fechar (hintOpen vira false) quanto ao destruir o componente.
+  $effect(() => {
+    if (!hintOpen || !hintEl) return;
+
+    reposition();
+
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeHint();
+    };
+    const onScroll = () => reposition();
+    const onResize = () => reposition();
+
+    document.addEventListener("keydown", onKeydown);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKeydown);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onResize);
+    };
   });
 
   function onInput(e: Event) {
@@ -117,7 +200,16 @@
 
 <div class={rootClasses}>
   {#if searchFields.length}
-    <div class="arcana-quick-search__info" role="button" tabindex="0">
+    <div
+      bind:this={infoEl}
+      class="arcana-quick-search__info"
+      role="button"
+      tabindex="0"
+      onmouseenter={openHint}
+      onmouseleave={closeHint}
+      onfocusin={openHint}
+      onfocusout={closeHint}
+    >
       <svg
         class="arcana-quick-search__info-icon"
         viewBox="0 0 24 24"
@@ -132,14 +224,29 @@
         <path d="M12 16v-4" />
         <path d="M12 8h.01" />
       </svg>
-      <div id={hintId} class="arcana-quick-search__hint" role="tooltip">
-        <span class="arcana-quick-search__hint-label">{fieldsLabel}</span>
-        <ul class="arcana-quick-search__hint-list">
-          {#each searchFields as field (field)}
-            <li class="arcana-quick-search__hint-item">{field}</li>
-          {/each}
-        </ul>
-      </div>
+    </div>
+  {/if}
+
+  <!--
+    Balão portado pro <body> (position: fixed via `placeHoverCard`) pra escapar
+    de qualquer ancestral com overflow:hidden / z-index restritivo — mesma
+    técnica do ArcanaTooltip.
+  -->
+  {#if hintOpen}
+    <div
+      use:portal
+      bind:this={hintEl}
+      id={hintId}
+      class="arcana-quick-search__hint"
+      style={hintStyle}
+      role="tooltip"
+    >
+      <span class="arcana-quick-search__hint-label">{fieldsLabel}</span>
+      <ul class="arcana-quick-search__hint-list">
+        {#each searchFields as field (field)}
+          <li class="arcana-quick-search__hint-item">{field}</li>
+        {/each}
+      </ul>
     </div>
   {/if}
 
@@ -164,7 +271,7 @@
     value={text}
     {placeholder}
     {disabled}
-    aria-describedby={searchFields.length ? hintId : undefined}
+    aria-describedby={hintOpen ? hintId : undefined}
     oninput={onInput}
     onkeyup={onKeyUp}
   />

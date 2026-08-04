@@ -344,7 +344,7 @@ describe("ArcanaQuickSearch (Angular)", () => {
 });
 
 describe("ArcanaQuickSearch (Svelte)", () => {
-  it("renders contract and emits search on Enter", () => {
+  it("renders info trigger only when searchFields provided; hint teleports to body on hover", () => {
     const target = document.createElement("div");
     document.body.appendChild(target);
     let last = "";
@@ -354,16 +354,63 @@ describe("ArcanaQuickSearch (Svelte)", () => {
     });
     flushSync();
     expect(target.querySelector(".arcana-quick-search.has-counter")).toBeTruthy();
-    expect([...target.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
+    const info = target.querySelector(".arcana-quick-search__info") as HTMLElement;
+    expect(info).toBeTruthy();
+    // O balão só monta (teleportado pro <body>) ao abrir — nada no target antes disso.
+    expect(target.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
+    // Svelte 5 delega listeners (perf) pra `target`/`document` no bubble phase —
+    // precisa de `bubbles: true` pra chegar lá (mesma convenção do `change`
+    // sintético em `tests/ArcanaRadio.test.tsx`).
+    info.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
+    flushSync();
+    expect([...document.body.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
       .toEqual(["Code", "Name"]);
+
     const input = target.querySelector(".arcana-quick-search__input") as HTMLInputElement;
-    // Svelte 5 delega `input`/`keyup` (perf) pra listeners em `target`/`document`
-    // no bubble phase — precisa de `bubbles: true` pra chegar lá (mesma convenção
-    // do `change` sintético em `tests/ArcanaRadio.test.tsx`).
     input.value = "hello"; input.dispatchEvent(new Event("input", { bubbles: true }));
     input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
     flushSync();
     expect(last).toBe("hello");
+
+    info.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+    flushSync();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
+    unmountSvelte(app);
+    target.remove();
+
+    const bareTarget = document.createElement("div");
+    document.body.appendChild(bareTarget);
+    const bare = mountSvelte(ArcanaQuickSearchSvelte, { target: bareTarget });
+    flushSync();
+    expect(bareTarget.querySelector(".arcana-quick-search__info")).toBeNull();
+    unmountSvelte(bare);
+    bareTarget.remove();
+  });
+
+  it("gates aria-describedby to the hint being open (id would be dangling otherwise)", () => {
+    const target = document.createElement("div");
+    document.body.appendChild(target);
+    const app = mountSvelte(ArcanaQuickSearchSvelte, {
+      target,
+      props: { searchFields: ["Code", "Name"] },
+    });
+    flushSync();
+    const input = target.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    const info = target.querySelector(".arcana-quick-search__info") as HTMLElement;
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+
+    info.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+    flushSync();
+    const hintId = document.body.querySelector(".arcana-quick-search__hint")!.id;
+    expect(input.getAttribute("aria-describedby")).toBe(hintId);
+
+    info.dispatchEvent(new FocusEvent("focusout", { bubbles: true }));
+    flushSync();
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+
     unmountSvelte(app);
     target.remove();
   });
