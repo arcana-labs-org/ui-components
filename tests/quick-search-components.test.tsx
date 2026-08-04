@@ -126,18 +126,48 @@ describe("ArcanaQuickSearch (Vue)", () => {
 });
 
 describe("ArcanaQuickSearch (React)", () => {
-  it("matches DOM contract and emits search on Enter", () => {
+  it("renders info trigger only when searchFields provided; hint portals to body on hover", () => {
     const onSearch = vi.fn();
-    const { container } = render(
+    const { container, unmount } = render(
       <RQuickSearch searchFields={["Code", "Name"]} counter={42} unit="items" onSearch={onSearch} />
     );
     expect(container.querySelector(".arcana-quick-search.has-counter")).toBeTruthy();
-    expect([...container.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
+    const info = container.querySelector(".arcana-quick-search__info") as HTMLElement;
+    expect(info).toBeTruthy();
+    // O balão só monta (em portal no body) ao abrir — nada no document antes disso.
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
+    fireEvent.mouseEnter(info);
+    expect([...document.body.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
       .toEqual(["Code", "Name"]);
+
     const input = container.querySelector(".arcana-quick-search__input") as HTMLInputElement;
     fireEvent.change(input, { target: { value: "hello" } });
     fireEvent.keyUp(input, { key: "Enter" });
     expect(onSearch).toHaveBeenLastCalledWith("hello");
+
+    fireEvent.mouseLeave(info);
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    unmount();
+
+    const bare = render(<RQuickSearch />);
+    expect(bare.container.querySelector(".arcana-quick-search__info")).toBeNull();
+    bare.unmount();
+  });
+
+  it("gates aria-describedby to the hint being open", () => {
+    const { container, unmount } = render(<RQuickSearch searchFields={["Code", "Name"]} />);
+    const input = container.querySelector(".arcana-quick-search__input") as HTMLInputElement;
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+
+    const info = container.querySelector(".arcana-quick-search__info") as HTMLElement;
+    fireEvent.focus(info);
+    const hintId = document.body.querySelector(".arcana-quick-search__hint")!.id;
+    expect(input.getAttribute("aria-describedby")).toBe(hintId);
+
+    fireEvent.blur(info);
+    expect(input.getAttribute("aria-describedby")).toBeNull();
+    unmount();
   });
 
   it("reset() via handle clears without onSearch", () => {
