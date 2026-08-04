@@ -6,7 +6,7 @@ import { mount, type VueWrapper } from "@vue/test-utils";
 import { fireEvent, render } from "@testing-library/react";
 import { createRef } from "react";
 import { flushSync, mount as mountSvelte, unmount as unmountSvelte } from "svelte";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import ArcanaQuickSearch from "../src/vue/components/ArcanaQuickSearch.vue";
 import {
   ArcanaQuickSearch as RQuickSearch,
@@ -19,6 +19,11 @@ beforeAll(() => {
   TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
 });
 
+afterEach(() => {
+  // Limpa balões de dica teleportados que tenham escapado do cleanup de algum teste.
+  document.body.querySelectorAll(".arcana-quick-search__hint").forEach((n) => n.remove());
+});
+
 /** Último payload de um evento. `.at(-1)` não existe no lib target do projeto. */
 const lastEmit = (wrapper: VueWrapper, event: string): unknown[] | undefined => {
   const all = wrapper.emitted(event);
@@ -26,12 +31,29 @@ const lastEmit = (wrapper: VueWrapper, event: string): unknown[] | undefined => 
 };
 
 describe("ArcanaQuickSearch (Vue)", () => {
-  it("renders info hint only when searchFields provided", () => {
-    const w = mount(ArcanaQuickSearch, { props: { searchFields: ["Code", "Name"] } });
+  it("renders info trigger only when searchFields provided; hint teleports to body on hover", async () => {
+    const w = mount(ArcanaQuickSearch, {
+      props: { searchFields: ["Code", "Name"] },
+      attachTo: document.body,
+    });
     expect(w.find(".arcana-quick-search__info").exists()).toBe(true);
-    expect(w.findAll(".arcana-quick-search__hint-item").map((n) => n.text())).toEqual(["Code", "Name"]);
+    // O balão só monta (teleportado pro <body>) ao abrir — nada no wrapper antes disso.
+    expect(w.find(".arcana-quick-search__hint-item").exists()).toBe(false);
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+
+    await w.find(".arcana-quick-search__info").trigger("mouseenter");
+    await w.vm.$nextTick();
+    expect([...document.body.querySelectorAll(".arcana-quick-search__hint-item")].map((n) => n.textContent))
+      .toEqual(["Code", "Name"]);
+
+    await w.find(".arcana-quick-search__info").trigger("mouseleave");
+    await w.vm.$nextTick();
+    expect(document.body.querySelector(".arcana-quick-search__hint-item")).toBeNull();
+    w.unmount();
+
     const bare = mount(ArcanaQuickSearch);
     expect(bare.find(".arcana-quick-search__info").exists()).toBe(false);
+    bare.unmount();
   });
 
   it("shows counter pill with unit only when counter set", () => {
